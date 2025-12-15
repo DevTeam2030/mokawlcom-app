@@ -1,0 +1,20 @@
+{
+  "welcome": "مرحبا بكم في",
+  "mokawlcom_app": "تطبيق مقاولاتكم",
+  "welcome2": "حلول البناء والصيانة في متناول يدك",
+  "welcome_again": "مرحبا بكم مرة أخرى",
+  "email": "البريد إلكتروني",
+  "password": "كلمة المرور",
+  "forget_password": "هل نسيت كلمة المرور؟",
+  "login": " تسجيل دخول",
+  "or": "أو",
+  "do_not_have_an_account": "لا تمتلك حساب؟",
+  "sign_up": " تسجل جديد",
+  "sign_in_as_visitor": "التصفح كـ زائر",
+  "name": "الاسم",
+  "phone": "الجوال",
+  "confirm_password": "تأكيد كلمة المرور",
+  "already_have_an_account": "لديك حساب بالفعل؟",
+  "create_account": "إنشاء حساب",
+  "register_new_user": "تسجيل مستخدم  جديد"
+}

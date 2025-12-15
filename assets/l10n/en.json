@@ -1,0 +1,20 @@
+{
+  "welcome": "Welcome to",
+  "mokawlcom_app": "Mokawlcom app",
+  "welcome2": "Construction and maintenance solutions \n at your fingertips",
+  "welcome_again": "Welcome again",
+  "email": "Email",
+  "password": "Password",
+  "forget_password": "Forget Password?",
+  "login": "Login",
+  "or": "OR",
+  "do_not_have_an_account": "Don't have an account?",
+  "sign_up": " Sign Up",
+  "sign_in_as_visitor": "Sign in as visitor",
+  "name": "Name",
+  "phone": "Phone",
+  "confirm_password": "Confirm Password",
+  "already_have_an_account": "Already have an account? ",
+  "create_account": "Create Account",
+  "register_new_user": "Register a new user"
+}
