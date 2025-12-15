@@ -27,6 +27,22 @@ class AuthRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ClassificationScreen]
+class ClassificationRoute extends PageRouteInfo<void> {
+  const ClassificationRoute({List<PageRouteInfo>? children})
+    : super(ClassificationRoute.name, initialChildren: children);
+
+  static const String name = 'ClassificationRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ClassificationScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [LoginScreen]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
@@ -59,22 +75,6 @@ class OnBoardingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SignupScreen]
-class SignupRoute extends PageRouteInfo<void> {
-  const SignupRoute({List<PageRouteInfo>? children})
-    : super(SignupRoute.name, initialChildren: children);
-
-  static const String name = 'SignupRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const SignupScreen();
-    },
-  );
-}
-
-/// generated route for
 /// [Splash]
 class SplashTabRoute extends PageRouteInfo<void> {
   const SplashTabRoute({List<PageRouteInfo>? children})
@@ -102,6 +102,22 @@ class SplashRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const SplashScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [UserSignupScreen]
+class UserSignupRoute extends PageRouteInfo<void> {
+  const UserSignupRoute({List<PageRouteInfo>? children})
+    : super(UserSignupRoute.name, initialChildren: children);
+
+  static const String name = 'UserSignupRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const UserSignupScreen();
     },
   );
 }

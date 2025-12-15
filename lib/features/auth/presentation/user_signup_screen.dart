@@ -2,14 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/custom_auth_divider.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/google_and_apple_sign_in_widgets.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/signup_form.dart';
+import 'package:mokawlcom_app/features/auth/presentation/widgets/shared/custom_auth_divider.dart';
+import 'package:mokawlcom_app/features/auth/presentation/widgets/shared/google_and_apple_sign_in_widgets.dart';
+import 'package:mokawlcom_app/features/auth/presentation/widgets/signup/signup_form.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
-class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+class UserSignupScreen extends StatelessWidget {
+  const UserSignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

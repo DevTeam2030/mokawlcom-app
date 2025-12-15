@@ -26,7 +26,7 @@
             AutoRouteObserver(),
           ],
         ),
-        locale: const Locale('en'),
+        locale: const Locale('ar'),
         localizationsDelegates: const[
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

@@ -16,5 +16,8 @@
   "confirm_password": "تأكيد كلمة المرور",
   "already_have_an_account": "لديك حساب بالفعل؟",
   "create_account": "إنشاء حساب",
-  "register_new_user": "تسجيل مستخدم  جديد"
+  "register_new_user": "تسجيل مستخدم  جديد",
+  "register_new_contractor": "تسجيل مقاول جديد",
+  "choose_classification": "قم باختيار التصنيف ",
+  "next": "التالي"
 }

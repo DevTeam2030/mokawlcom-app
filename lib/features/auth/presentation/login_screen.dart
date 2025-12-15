@@ -6,9 +6,9 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/password_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/custom_auth_divider.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/google_and_apple_sign_in_widgets.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/login_form.dart';
+import 'package:mokawlcom_app/features/auth/presentation/widgets/shared/custom_auth_divider.dart';
+import 'package:mokawlcom_app/features/auth/presentation/widgets/shared/google_and_apple_sign_in_widgets.dart';
+import 'package:mokawlcom_app/features/auth/presentation/widgets/login/login_form.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      context.router.push(const SignupRoute());
+                      context.pushRoute(const UserSignupRoute());
                     },
                     child: Text(
                       LocaleKeys.signUp,
@@ -77,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                   child: Text(
                     LocaleKeys.signInAsVisitor,
                     style: theme.textTheme.bodyLarge!.copyWith(
-                      color: ColorsManager.primaryColor,
+                      color: Colors.black,
                     ),
                   ),
                 ),

@@ -16,5 +16,8 @@
   "confirm_password": "Confirm Password",
   "already_have_an_account": "Already have an account? ",
   "create_account": "Create Account",
-  "register_new_user": "Register a new user"
+  "register_new_user": "Register a new user",
+  "register_new_contractor": "Register a new contractor",
+  "choose_classification": "Choose Classification",
+  "next": "Next"
 }

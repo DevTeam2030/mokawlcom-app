@@ -5,4 +5,5 @@ class AssetsManager {
   static const String appLogo = 'assets/images/app_logo.png';
   static const String googleIcon = 'assets/images/google.png';
   static const String appleIcon = 'assets/images/Apple.png';
+  static const String mockawel = "assets/images/mockawel.png";
 }
