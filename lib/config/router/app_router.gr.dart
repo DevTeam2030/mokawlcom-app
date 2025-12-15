@@ -75,6 +75,22 @@ class OnBoardingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ServicesScreen]
+class ServicesRoute extends PageRouteInfo<void> {
+  const ServicesRoute({List<PageRouteInfo>? children})
+    : super(ServicesRoute.name, initialChildren: children);
+
+  static const String name = 'ServicesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ServicesScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [Splash]
 class SplashTabRoute extends PageRouteInfo<void> {
   const SplashTabRoute({List<PageRouteInfo>? children})

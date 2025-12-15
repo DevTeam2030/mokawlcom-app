@@ -26,5 +26,6 @@ class LocaleKeys {
   static String get registerNewUser => 'register_new_user'.tr();
   static String get registerNewContractor => 'register_new_contractor'.tr();
   static String get chooseClassification => 'choose_classification'.tr();
+  static String get chooseServices => 'choose_services'.tr();
   static String get next => 'next'.tr();
 }
