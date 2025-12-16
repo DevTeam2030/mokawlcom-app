@@ -43,6 +43,22 @@ class ClassificationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ContractorSignupScreen]
+class ContractorSignupRoute extends PageRouteInfo<void> {
+  const ContractorSignupRoute({List<PageRouteInfo>? children})
+    : super(ContractorSignupRoute.name, initialChildren: children);
+
+  static const String name = 'ContractorSignupRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ContractorSignupScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [LoginScreen]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})

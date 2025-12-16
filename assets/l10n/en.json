@@ -20,5 +20,6 @@
   "register_new_contractor": "Register a new contractor",
   "choose_classification": "Choose Classification",
   "choose_services": "Choose Services",
-  "next": "Next"
+  "next": "Next",
+  "company_name": "Company Name"
 }

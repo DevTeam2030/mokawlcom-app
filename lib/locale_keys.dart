@@ -28,4 +28,5 @@ class LocaleKeys {
   static String get chooseClassification => 'choose_classification'.tr();
   static String get chooseServices => 'choose_services'.tr();
   static String get next => 'next'.tr();
+  static String get companyName => 'company_name'.tr();
 }
