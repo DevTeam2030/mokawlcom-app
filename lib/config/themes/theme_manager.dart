@@ -15,6 +15,7 @@ class ThemeManager {
         scrolledUnderElevation: 0,
         elevation: 0,
         titleSpacing: 10,
+        iconTheme: IconThemeData(color: ColorsManager.primaryColor, size: 24.0),
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,

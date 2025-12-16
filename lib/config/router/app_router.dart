@@ -5,6 +5,7 @@ import 'package:mokawlcom_app/features/auth/presentation/contractor_signup_scree
 import 'package:mokawlcom_app/features/auth/presentation/login_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/services_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/user_signup_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/verification_screen.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
 import 'package:mokawlcom_app/features/splash/splash_screen.dart';
 
@@ -35,9 +36,10 @@ class AppRouter extends RootStackRouter {
       children: [
         _buildCustomRoute( page: LoginRoute.page),
         _buildCustomRoute(page: UserSignupRoute.page),
-        _buildCustomRoute(initial: true,page: ContractorSignupRoute.page),
+        _buildCustomRoute(page: ContractorSignupRoute.page),
         _buildCustomRoute(page: ClassificationRoute.page),
         _buildCustomRoute(page: ServicesRoute.page),
+        _buildCustomRoute(initial: true,page: VerificationRoute.page),
       ],
     ),
   ];

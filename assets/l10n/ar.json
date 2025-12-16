@@ -21,5 +21,14 @@
   "choose_classification": "قم باختيار التصنيف ",
   "choose_services": "قم باختيار الخدمات",
   "next": "التالي",
-  "company_name": "اسم الشركة"
+  "company_name": "اسم الشركة",
+  "verification_code": "كود التحقق",
+  "verification_code_sent": "تم إرسال رمز التحقق إلى بريدك الإلكتروني.",
+  "verify": "تحقق",
+  "register_success": "تم التسجيل بنجاح",
+  "your_account_created_successfully": "تم إنشاء حسابك بنجاح.",
+  "continue_key": "استمرار",
+  "try_again": "اعادة المحاولة",
+  "verification_code_is_invalid": "رمز التحقق غير صالح",
+  "please_enter_the_correct_code": "الرجاء إدخال رمز التحقق الصحيح"
 }

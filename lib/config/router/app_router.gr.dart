@@ -153,3 +153,19 @@ class UserSignupRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [VerificationScreen]
+class VerificationRoute extends PageRouteInfo<void> {
+  const VerificationRoute({List<PageRouteInfo>? children})
+    : super(VerificationRoute.name, initialChildren: children);
+
+  static const String name = 'VerificationRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const VerificationScreen();
+    },
+  );
+}

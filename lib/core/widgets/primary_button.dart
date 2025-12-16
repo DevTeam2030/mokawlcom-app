@@ -10,6 +10,7 @@ class PrimaryButton extends StatelessWidget {
     this.icon,
     this.isLoading = false,
     this.width,
+    this.backgroundColor,
   });
 
   final VoidCallback onPressed;
@@ -17,6 +18,7 @@ class PrimaryButton extends StatelessWidget {
   final Icon? icon;
   final bool isLoading;
   final double? width;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -25,32 +27,31 @@ class PrimaryButton extends StatelessWidget {
       height: 48.0,
       child: TextButton(
         style: TextButton.styleFrom(
-          backgroundColor: ColorsManager.primaryColor,
+          backgroundColor: backgroundColor ?? ColorsManager.primaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
         ),
         onPressed: onPressed,
-        child:
-            isLoading
-                ? const SpinKitThreeBounce(
-                  color: Colors.white,
-                  size: 20.0,
-                  duration: Duration(milliseconds: 900),
-                )
-                : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    icon ?? const SizedBox.shrink(),
-                    const SizedBox(width: 10.0),
-                    Text(
-                      text,
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
+        child: isLoading
+            ? const SpinKitThreeBounce(
+                color: Colors.white,
+                size: 20.0,
+                duration: Duration(milliseconds: 900),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  icon ?? const SizedBox.shrink(),
+                  const SizedBox(width: 10.0),
+                  Text(
+                    text,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
       ),
     );
   }

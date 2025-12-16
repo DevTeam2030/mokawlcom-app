@@ -21,5 +21,14 @@
   "choose_classification": "Choose Classification",
   "choose_services": "Choose Services",
   "next": "Next",
-  "company_name": "Company Name"
+  "company_name": "Company Name",
+  "verification_code": "Verification_code",
+  "verification_code_sent": "Verification code sent to your mail",
+  "verify": "Verify",
+  "register_success": "Register Success",
+  "your_account_created_successfully": "Your account created successfully",
+  "continue_key": "continue",
+  "verification_code_is_invalid": "Verification code is invalid",
+  "please_enter_the_correct_code": "Please enter the correct code",
+  "try_again": "Try Again"
 }

@@ -6,4 +6,6 @@ class AssetsManager {
   static const String googleIcon = 'assets/images/google.png';
   static const String appleIcon = 'assets/images/Apple.png';
   static const String mockawel = "assets/images/mockawel.png";
+  static const String successCheck = "assets/images/success_check.json";
+  static const String wrongAnimation = "assets/images/wrong.json";
 }
