@@ -30,5 +30,12 @@
   "continue_key": "استمرار",
   "try_again": "اعادة المحاولة",
   "verification_code_is_invalid": "رمز التحقق غير صالح",
-  "please_enter_the_correct_code": "الرجاء إدخال رمز التحقق الصحيح"
+  "please_enter_the_correct_code": "الرجاء إدخال رمز التحقق الصحيح",
+  "upload_files": "رفع المستندات",
+  "commercial_register":"السجل التجاري",
+  "commercial_license":"الرخصة التجارية",
+  "record_of_origin":"قيد المنشأ",
+  "authorized_signatory_card":"بطاقة المخول بالتوقيع",
+  "expiry_date": "تاريخ الانتهاء",
+  "upload_file": "رفع الملف "
 }

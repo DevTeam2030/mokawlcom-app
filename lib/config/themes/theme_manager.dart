@@ -12,6 +12,7 @@ class ThemeManager {
       useMaterial3: true,
       appBarTheme: const AppBarTheme(
        backgroundColor: Colors.transparent,
+        centerTitle: true,
         scrolledUnderElevation: 0,
         elevation: 0,
         titleSpacing: 10,
@@ -29,7 +30,7 @@ class ThemeManager {
       ),
       textTheme: const TextTheme(
         displayLarge: TextStyle(fontSize: 57),
-        displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.w400),
+        displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.w400,),
         displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.w600),
         headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
         headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),

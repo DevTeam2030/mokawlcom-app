@@ -7,6 +7,7 @@ import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/presentation/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/auth/presentation/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/my_icons.dart';
 import 'package:pinput/pinput.dart';
 
 @RoutePage()
@@ -19,12 +20,6 @@ class VerificationScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            context.pop();
-          },
-          icon: const Icon(Icons.arrow_back_ios),
-        ),
         title: Text(
           LocaleKeys.verificationCode,
           style: theme.textTheme.headlineSmall!.copyWith(
@@ -100,7 +95,7 @@ class VerificationScreen extends StatelessWidget {
               onPressed: () {
                 showAdaptiveDialog(
                   context: context,
-                  builder: (context) => const SuccessDialog(),
+                  builder: (context) => const ErrorDialog(),
                 );
               },
               text: LocaleKeys.verify,

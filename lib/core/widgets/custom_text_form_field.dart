@@ -21,6 +21,9 @@ class CustomTextFormField extends StatelessWidget {
     this.textInputAction,
     this.contentPadding = 20.0,
     this.validator,
+    this.onTap,
+    this.enabled = true,
+    this.readOnly = false,
   });
 
   final TextEditingController? controller;
@@ -40,11 +43,17 @@ class CustomTextFormField extends StatelessWidget {
   final double contentPadding;
   final TextInputAction? textInputAction;
   final String? Function(String?)? validator;
+  final void Function()? onTap;
+  final bool? enabled;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      readOnly: readOnly,
+      onTap: onTap,
+      enabled: enabled,
       textInputAction: textInputAction ?? TextInputAction.next,
       keyboardType: type,
       obscureText: obscureText,

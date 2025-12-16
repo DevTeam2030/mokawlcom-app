@@ -30,5 +30,14 @@
   "continue_key": "continue",
   "verification_code_is_invalid": "Verification code is invalid",
   "please_enter_the_correct_code": "Please enter the correct code",
-  "try_again": "Try Again"
+  "try_again": "Try Again",
+  "upload_files": "Upload Files",
+  "commercial_register":"Commercial register",
+  "commercial_license":"Commercial license",
+  "record_of_origin":"Record of origin",
+  "authorized_signatory_card":"Authorized Signatory Card",
+  "expiry_date": "Expiry Date",
+  "upload_file":"Upload File"
+
+
 }

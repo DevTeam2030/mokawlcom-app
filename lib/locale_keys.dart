@@ -72,4 +72,11 @@ class LocaleKeys {
       'please_enter_the_correct_code'.tr();
 
   static String get tryAgain => 'try_again'.tr();
+  static String get uploadFiles => 'upload_files'.tr();
+  static String get commercialRegister => 'commercial_register'.tr();
+  static String get commercialLicense => 'commercial_license'.tr();
+  static String get recordOfOrigin => 'record_of_origin'.tr();
+  static String get authorizedSignatoryCard => 'authorized_signatory_card'.tr();
+  static String get expiryDate => 'expiry_date'.tr();
+  static String get uploadFile => 'upload_file'.tr();
 }

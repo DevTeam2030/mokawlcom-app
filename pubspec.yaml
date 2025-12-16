@@ -92,9 +92,9 @@ flutter:
              weight: 500
            - asset: assets/fonts/Cairo-Bold.ttf
              weight: 700
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+    - family: MyFont
+      fonts:
+         - asset: assets/fonts/MyFont.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

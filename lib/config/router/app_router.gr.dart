@@ -139,6 +139,22 @@ class SplashRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [UploadFilesScreen]
+class UploadFilesRoute extends PageRouteInfo<void> {
+  const UploadFilesRoute({List<PageRouteInfo>? children})
+    : super(UploadFilesRoute.name, initialChildren: children);
+
+  static const String name = 'UploadFilesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const UploadFilesScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [UserSignupScreen]
 class UserSignupRoute extends PageRouteInfo<void> {
   const UserSignupRoute({List<PageRouteInfo>? children})
