@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/features/auth/presentation/classification_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/complete_data_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/contractor_signup_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/forget_password_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/login_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/services_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/subscription_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/upload_files_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/user_signup_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/verification_screen.dart';
@@ -35,13 +38,16 @@ class AppRouter extends RootStackRouter {
     _buildCustomRoute(
       page: AuthRoute.page,
       children: [
-        _buildCustomRoute( page: LoginRoute.page),
+        _buildCustomRoute(page: LoginRoute.page),
         _buildCustomRoute(page: UserSignupRoute.page),
         _buildCustomRoute(page: ContractorSignupRoute.page),
         _buildCustomRoute(page: ClassificationRoute.page),
         _buildCustomRoute(page: ServicesRoute.page),
+        _buildCustomRoute(page: ForgetPasswordRoute.page),
         _buildCustomRoute(page: VerificationRoute.page),
-        _buildCustomRoute(initial: true,page: UploadFilesRoute.page),
+        _buildCustomRoute(page: UploadFilesRoute.page),
+        _buildCustomRoute(page: SubscriptionRoute.page),
+        _buildCustomRoute(initial: true, page: CompleteDataRoute.page),
       ],
     ),
   ];

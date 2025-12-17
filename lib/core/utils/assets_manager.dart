@@ -8,4 +8,6 @@ class AssetsManager {
   static const String mockawel = "assets/images/mockawel.png";
   static const String successCheck = "assets/images/success_check.json";
   static const String wrongAnimation = "assets/images/wrong.json";
+  static const String subscriptionPackage =
+      "assets/images/subscription_package_inage.png";
 }

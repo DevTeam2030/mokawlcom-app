@@ -27,6 +27,7 @@ class ForgetPasswordScreen extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+
             children: [
               const SizedBox(height: 60.0),
               Align(

@@ -24,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onTap,
     this.enabled = true,
     this.readOnly = false,
+    this.maxLines = 1,
   });
 
   final TextEditingController? controller;
@@ -46,6 +47,7 @@ class CustomTextFormField extends StatelessWidget {
   final void Function()? onTap;
   final bool? enabled;
   final bool readOnly;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,7 @@ class CustomTextFormField extends StatelessWidget {
       readOnly: readOnly,
       onTap: onTap,
       enabled: enabled,
+      maxLines: maxLines,
       textInputAction: textInputAction ?? TextInputAction.next,
       keyboardType: type,
       obscureText: obscureText,

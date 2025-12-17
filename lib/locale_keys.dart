@@ -79,4 +79,25 @@ class LocaleKeys {
   static String get authorizedSignatoryCard => 'authorized_signatory_card'.tr();
   static String get expiryDate => 'expiry_date'.tr();
   static String get uploadFile => 'upload_file'.tr();
+  static String get resetPassword => 'reset_password'.tr();
+  static String get enterYourMail => 'enter_your_mail'.tr();
+  static String get send => 'send'.tr();
+  static String get subscriptionPackages => 'subscription_packages'.tr();
+  static String get startYourJourney => 'start_your_journey'.tr();
+  static String get readyToGrowUp => 'ready_to_grow_up'.tr();
+  static String get yourContractingPackageIsFreeForALimitedTime =>
+      'your_contracting_package_is_free_for_a_limited_time'.tr();
+  static String get tryNow => 'try_now'.tr();
+  static String get completeData => 'complete_data'.tr();
+
+  static String get whatsApp => 'whats_app'.tr();
+
+  static String get snapchat => 'snapchat'.tr();
+
+  static String get twitter => 'twitter'.tr();
+
+  static String get facebook => 'facebook'.tr();
+
+  static String get hintAboutCompany => 'hint_about_company'.tr();
+  static String get save => 'save'.tr();
 }

@@ -32,12 +32,25 @@
   "please_enter_the_correct_code": "Please enter the correct code",
   "try_again": "Try Again",
   "upload_files": "Upload Files",
-  "commercial_register":"Commercial register",
-  "commercial_license":"Commercial license",
-  "record_of_origin":"Record of origin",
-  "authorized_signatory_card":"Authorized Signatory Card",
+  "commercial_register": "Commercial register",
+  "commercial_license": "Commercial license",
+  "record_of_origin": "Record of origin",
+  "authorized_signatory_card": "Authorized Signatory Card",
   "expiry_date": "Expiry Date",
-  "upload_file":"Upload File"
-
-
+  "upload_file": "Upload File",
+  "reset_password": "Reset Password",
+  "enter_your_mail": "Enter your mail",
+  "send": "Send",
+  "subscription_packages": "Subscription Packages",
+  "start_your_journey": "Start towards more clients and projects.Choose the package that suits you.",
+  "ready_to_grow_up": "Ready to grow up? It starts here.",
+  "your_contracting_package_is_free_for_a_limited_time": "Your contracting package is free for a limited time",
+  "try_now": "Try Now",
+  "complete_data": "Complete Data",
+  "whats_app": "WhatsApp",
+  "snapchat": "Snapchat",
+  "twitter": "Twitter",
+  "facebook": "Facebook",
+  "hint_about_company": "Hint about company",
+  "save": "Save"
 }

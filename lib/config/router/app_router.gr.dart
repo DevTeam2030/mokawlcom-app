@@ -43,6 +43,22 @@ class ClassificationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CompleteDataScreen]
+class CompleteDataRoute extends PageRouteInfo<void> {
+  const CompleteDataRoute({List<PageRouteInfo>? children})
+    : super(CompleteDataRoute.name, initialChildren: children);
+
+  static const String name = 'CompleteDataRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CompleteDataScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ContractorSignupScreen]
 class ContractorSignupRoute extends PageRouteInfo<void> {
   const ContractorSignupRoute({List<PageRouteInfo>? children})
@@ -54,6 +70,22 @@ class ContractorSignupRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ContractorSignupScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [ForgetPasswordScreen]
+class ForgetPasswordRoute extends PageRouteInfo<void> {
+  const ForgetPasswordRoute({List<PageRouteInfo>? children})
+    : super(ForgetPasswordRoute.name, initialChildren: children);
+
+  static const String name = 'ForgetPasswordRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ForgetPasswordScreen();
     },
   );
 }
@@ -134,6 +166,22 @@ class SplashRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const SplashScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [SubscriptionScreen]
+class SubscriptionRoute extends PageRouteInfo<void> {
+  const SubscriptionRoute({List<PageRouteInfo>? children})
+    : super(SubscriptionRoute.name, initialChildren: children);
+
+  static const String name = 'SubscriptionRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SubscriptionScreen();
     },
   );
 }

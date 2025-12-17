@@ -37,5 +37,21 @@
   "record_of_origin":"قيد المنشأ",
   "authorized_signatory_card":"بطاقة المخول بالتوقيع",
   "expiry_date": "تاريخ الانتهاء",
-  "upload_file": "رفع الملف "
+  "upload_file": "رفع الملف ",
+  "reset_password": "استعادة كلمة المرور",
+  "enter_your_mail":"ادخل بريدك الالكتروني",
+  "send": "إرسال",
+  "subscription_packages": "باقات الاشتراك",
+  "start_your_journey":"ابدأ رحلتك نحو المزيد من العملاء والمشاريع… اختر الباقة اللي تناسبك.",
+  "ready_to_grow_up":"جاهز تكبر؟ البداية من هنا.",
+  "your_contracting_package_is_free_for_a_limited_time":"باقة مقاولتكم مجانا لفترة محدودة",
+  "try_now":"جرب الآن",
+  "complete_data":"استكمال البيانات",
+  "whats_app": "واتساب",
+  "snapchat": "سناب شات",
+  "twitter": "تويتر",
+  "facebook": "فيسبوك",
+  "hint_about_company": "نبذة عن الشركة",
+  "save": "حفظ"
+
 }
