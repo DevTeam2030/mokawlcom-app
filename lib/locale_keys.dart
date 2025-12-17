@@ -100,4 +100,7 @@ class LocaleKeys {
 
   static String get hintAboutCompany => 'hint_about_company'.tr();
   static String get save => 'save'.tr();
+  static String get home => 'home'.tr();
+  static String get notifications => 'notifications'.tr();
+  static String get profile => 'profile'.tr();
 }

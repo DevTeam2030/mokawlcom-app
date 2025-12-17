@@ -52,5 +52,8 @@
   "twitter": "Twitter",
   "facebook": "Facebook",
   "hint_about_company": "Hint about company",
-  "save": "Save"
+  "save": "Save",
+  "home": "Home",
+  "notifications": "Notifications",
+  "profile": "Profile"
 }

@@ -11,7 +11,7 @@ class ThemeManager {
       colorScheme: ColorScheme.fromSeed(seedColor: ColorsManager.primaryColor),
       useMaterial3: true,
       appBarTheme: const AppBarTheme(
-       backgroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         centerTitle: true,
         scrolledUnderElevation: 0,
         elevation: 0,
@@ -30,7 +30,7 @@ class ThemeManager {
       ),
       textTheme: const TextTheme(
         displayLarge: TextStyle(fontSize: 57),
-        displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.w400,),
+        displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.w400),
         displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.w600),
         headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
         headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
@@ -46,12 +46,13 @@ class ThemeManager {
         labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
       ),
       iconTheme: const IconThemeData(color: Colors.black26, size: 24.0),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black.withValues(alpha: 0.8),
-        unselectedItemColor: Colors.white.withValues(alpha: 0.6),
+        backgroundColor: Color(0xFFFBFCFE),
+        selectedItemColor: ColorsManager.primaryColor,
+        unselectedItemColor: Color(0xFF798AA3),
       ),
     );
   }

@@ -27,6 +27,38 @@ class AuthRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [Authenticated]
+class AuthenticatedRoute extends PageRouteInfo<void> {
+  const AuthenticatedRoute({List<PageRouteInfo>? children})
+    : super(AuthenticatedRoute.name, initialChildren: children);
+
+  static const String name = 'AuthenticatedRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const Authenticated();
+    },
+  );
+}
+
+/// generated route for
+/// [BottomNavBarScreen]
+class BottomNavBarRoute extends PageRouteInfo<void> {
+  const BottomNavBarRoute({List<PageRouteInfo>? children})
+    : super(BottomNavBarRoute.name, initialChildren: children);
+
+  static const String name = 'BottomNavBarRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const BottomNavBarScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ClassificationScreen]
 class ClassificationRoute extends PageRouteInfo<void> {
   const ClassificationRoute({List<PageRouteInfo>? children})
@@ -91,6 +123,22 @@ class ForgetPasswordRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [HomeScreen]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
+    : super(HomeRoute.name, initialChildren: children);
+
+  static const String name = 'HomeRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const HomeScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [LoginScreen]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
@@ -107,6 +155,22 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [NotificationsScreen]
+class NotificationsRoute extends PageRouteInfo<void> {
+  const NotificationsRoute({List<PageRouteInfo>? children})
+    : super(NotificationsRoute.name, initialChildren: children);
+
+  static const String name = 'NotificationsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const NotificationsScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [OnBoardingScreen]
 class OnBoardingRoute extends PageRouteInfo<void> {
   const OnBoardingRoute({List<PageRouteInfo>? children})
@@ -118,6 +182,22 @@ class OnBoardingRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const OnBoardingScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [ProfileScreen]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
+    : super(ProfileRoute.name, initialChildren: children);
+
+  static const String name = 'ProfileRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ProfileScreen();
     },
   );
 }
