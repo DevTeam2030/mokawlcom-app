@@ -41,7 +41,7 @@ class CompleteDataScreen extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 48,
                         backgroundColor: ColorsManager.secondaryColor,
-                        backgroundImage: AssetImage(AssetsManager.appLogo),
+                        backgroundImage: AssetImage(AssetsManager.logoImage),
                       ),
                     ),
                     Positioned(
@@ -106,6 +106,14 @@ class CompleteDataScreen extends StatelessWidget {
                 type: TextInputType.phone,
                 hintText: "WhatsApp number",
                 textInputAction: TextInputAction.next,
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                LocaleKeys.socialMedia,
+                style: theme.textTheme.titleMedium!.copyWith(
+                  color: ColorsManager.primaryColor,
+                  fontSize: 16,
+                ),
               ),
               const SizedBox(height: 8.0),
               Text(

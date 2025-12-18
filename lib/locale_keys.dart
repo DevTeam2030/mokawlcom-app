@@ -103,4 +103,10 @@ class LocaleKeys {
   static String get home => 'home'.tr();
   static String get notifications => 'notifications'.tr();
   static String get profile => 'profile'.tr();
+  static String get socialMedia => 'social_media'.tr();
+  static String get mokawlatcom => 'mokawlatcom'.tr();
+  static String get fasterAcessBestResults => 'faster_acess_best_results'.tr();
+  static String get searchForWordOrDepartment =>
+      'search_for_word_or_department'.tr();
+  static String get departments => 'departments'.tr();
 }

@@ -39,6 +39,7 @@ class AppRouter extends RootStackRouter {
       ],
     ),
     _buildCustomRoute(
+      //initial: true,
       page: AuthRoute.page,
       children: [
         _buildCustomRoute(page: LoginRoute.page),
