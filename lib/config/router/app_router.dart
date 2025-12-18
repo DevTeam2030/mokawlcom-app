@@ -5,13 +5,14 @@ import 'package:mokawlcom_app/features/auth/presentation/complete_data_screen.da
 import 'package:mokawlcom_app/features/auth/presentation/contractor_signup_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/forget_password_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/login_screen.dart';
-import 'package:mokawlcom_app/features/auth/presentation/services_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/select_services_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/subscription_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/upload_files_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/user_signup_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/verification_screen.dart';
 import 'package:mokawlcom_app/features/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:mokawlcom_app/features/home/presentation/home_screen.dart';
+import 'package:mokawlcom_app/features/home/presentation/services_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/notifications_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
@@ -46,7 +47,7 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: UserSignupRoute.page),
         _buildCustomRoute(page: ContractorSignupRoute.page),
         _buildCustomRoute(page: ClassificationRoute.page),
-        _buildCustomRoute(page: ServicesRoute.page),
+        _buildCustomRoute(page: SelectServicesRoute.page),
         _buildCustomRoute(page: ForgetPasswordRoute.page),
         _buildCustomRoute(page: VerificationRoute.page),
         _buildCustomRoute(page: UploadFilesRoute.page),
@@ -62,7 +63,14 @@ class AppRouter extends RootStackRouter {
           initial: true,
           page: BottomNavBarRoute.page,
           children: [
-            _buildCustomRoute(initial: true, page: HomeRoute.page),
+            _buildCustomRoute(
+              initial: true,
+              page: HomeTabRoute.page,
+              children: [
+                _buildCustomRoute(initial: true, page: HomeRoute.page),
+                _buildCustomRoute(page: ServicesRoute.page),
+              ],
+            ),
             _buildCustomRoute(page: NotificationsRoute.page),
             _buildCustomRoute(page: ProfileRoute.page),
           ],
@@ -94,6 +102,11 @@ class Splash extends AutoRouter {
 @RoutePage(name: 'AuthRoute')
 class Auth extends AutoRouter {
   const Auth({super.key});
+}
+
+@RoutePage(name: 'HomeTabRoute')
+class HomeTab extends AutoRouter {
+  const HomeTab({super.key});
 }
 
 @RoutePage(name: 'AuthenticatedRoute')

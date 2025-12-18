@@ -6,14 +6,14 @@ import 'package:mokawlcom_app/features/auth/presentation/widgets/services/servic
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
-class ServicesScreen extends StatefulWidget {
-  const ServicesScreen({super.key});
+class SelectServicesScreen extends StatefulWidget {
+  const SelectServicesScreen({super.key});
 
   @override
-  State<ServicesScreen> createState() => _ServicesScreenState();
+  State<SelectServicesScreen> createState() => _SelectServicesScreenState();
 }
 
-class _ServicesScreenState extends State<ServicesScreen> {
+class _SelectServicesScreenState extends State<SelectServicesScreen> {
   late final ValueNotifier<Set<int>> selectedIndices;
 
   @override
