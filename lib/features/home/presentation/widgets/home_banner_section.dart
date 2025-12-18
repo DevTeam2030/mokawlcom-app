@@ -30,6 +30,7 @@ class _HomeBannerSectionState extends State<HomeBannerSection> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: 16),
         CarouselSlider.builder(
           itemCount: _images.length,
           itemBuilder: (context, index, _) {
@@ -69,6 +70,7 @@ class _HomeBannerSectionState extends State<HomeBannerSection> {
             );
           },
         ),
+        const SizedBox(height: 16),
       ],
     );
   }

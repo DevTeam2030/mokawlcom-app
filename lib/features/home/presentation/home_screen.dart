@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/home/presentation/widgets/home_banner_section.dart';
+import 'package:mokawlcom_app/features/home/presentation/widgets/home_departments_section.dart';
 import 'package:mokawlcom_app/features/home/presentation/widgets/home_header.dart';
+import 'package:mokawlcom_app/features/home/presentation/widgets/home_search_section.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -13,58 +15,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Scaffold(
+    return const Scaffold(
       body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(vertical: 10),
+        padding: EdgeInsetsDirectional.symmetric(vertical: 10),
         child: SafeArea(
-          child: Column(
-            children: [
-              const HomeHeader(),
-              const SizedBox(height: 16),
-              const HomeBannerSection(),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsetsDirectional.symmetric(horizontal: 5),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          suffixIcon: const Icon(
-                            Icons.search,
-                            color: ColorsManager.secondaryColor,
-                          ),
-                          hintText: LocaleKeys.searchForWordOrDepartment,
-                          hintStyle: theme.textTheme.labelSmall!.copyWith(
-                            color: ColorsManager.primaryColor,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            borderSide: BorderSide(
-                              color: ColorsManager.secondaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.filter_list, size: 48),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 16),
-              Text(
-                LocaleKeys.departments,
-                style: theme.textTheme.labelMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFFF494949),
-                ),
-              ),
+          child: CustomScrollView(
+            physics: BouncingScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(child: HomeHeader()),
+              SliverToBoxAdapter(child: HomeBannerSection()),
+              SliverToBoxAdapter(child: HomeSearchSection()),
+              SliverToBoxAdapter(child: HomeDepartmentsSection()),
             ],
           ),
         ),

@@ -1,0 +1,38 @@
+import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/core/utils/assets_manager.dart';
+import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/features/home/presentation/widgets/worker_item.dart';
+import 'package:mokawlcom_app/locale_keys.dart';
+
+class HomeDepartmentsSection extends StatelessWidget {
+  const HomeDepartmentsSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+          const SizedBox(height: 16),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              LocaleKeys.departments,
+              style: theme.textTheme.labelMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: ColorsManager.textColor,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Wrap(
+            spacing: 30,
+            runSpacing: 12,
+            children: List.generate(9, (index) => const WorkerItem()),
+          ),
+        ],
+      ),
+    );
+  }
+}
