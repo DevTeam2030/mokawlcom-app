@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/features/home/presentation/widgets/filter_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class HomeSearchSection extends StatelessWidget {
@@ -33,7 +34,16 @@ class HomeSearchSection extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await showModalBottomSheet(
+                backgroundColor: Colors.white,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                ),
+                context: context,
+                builder: (context) => const FilterBottomSheet(),
+              );
+            },
             icon: const Icon(Icons.filter_list, size: 48),
           ),
         ],

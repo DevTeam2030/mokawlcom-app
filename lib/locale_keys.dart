@@ -109,4 +109,8 @@ class LocaleKeys {
   static String get searchForWordOrDepartment =>
       'search_for_word_or_department'.tr();
   static String get departments => 'departments'.tr();
+  static String get resultsFilter => 'results_filter'.tr();
+  static String get applyFilter => 'apply_filter'.tr();
+  static String get classification => 'classification'.tr();
+  static String get services => 'services'.tr();
 }

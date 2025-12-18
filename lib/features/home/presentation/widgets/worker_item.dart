@@ -14,7 +14,7 @@ class WorkerItem extends StatelessWidget {
           width: 90,
           height: 90,
           decoration: BoxDecoration(
-            color: ColorsManager.filColor,
+            color: ColorsManager.fillColor,
             shape: BoxShape.circle,
             border: Border.all(color: ColorsManager.secondaryColor, width: 2),
             image: const DecorationImage(

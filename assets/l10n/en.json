@@ -60,5 +60,9 @@
   "mokawlatcom": "Mokawlatcom",
   "faster_acess_best_results": "Faster access.. best results",
   "search_for_word_or_department": "Search for word or department",
-  "departments": "Departments"
+  "departments": "Departments",
+  "results_filter": "Results Filter",
+  "classification": "Classification",
+  "services": "Services",
+  "apply_filter": "Apply Filter"
 }
