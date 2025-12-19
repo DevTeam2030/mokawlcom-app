@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
-import 'package:mokawlcom_app/features/home/presentation/widgets/filter_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/home/presentation/widgets/home/home_filter_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class HomeSearchSection extends StatelessWidget {
@@ -41,7 +41,7 @@ class HomeSearchSection extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
                 ),
                 context: context,
-                builder: (context) => const FilterBottomSheet(),
+                builder: (context) => const HomeFilterBottomSheet(),
               );
             },
             icon: const Icon(Icons.filter_list, size: 48),

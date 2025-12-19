@@ -113,4 +113,5 @@ class LocaleKeys {
   static String get applyFilter => 'apply_filter'.tr();
   static String get classification => 'classification'.tr();
   static String get services => 'services'.tr();
+  static String get showPrice => 'show_price'.tr();
 }

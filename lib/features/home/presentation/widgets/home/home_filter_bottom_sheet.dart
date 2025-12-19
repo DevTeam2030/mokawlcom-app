@@ -4,14 +4,14 @@ import 'package:mokawlcom_app/core/widgets/custom_dropdown_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
-class FilterBottomSheet extends StatefulWidget {
-  const FilterBottomSheet({super.key});
+class HomeFilterBottomSheet extends StatefulWidget {
+  const HomeFilterBottomSheet({super.key});
 
   @override
-  State<FilterBottomSheet> createState() => _FilterBottomSheetState();
+  State<HomeFilterBottomSheet> createState() => _HomeFilterBottomSheetState();
 }
 
-class _FilterBottomSheetState extends State<FilterBottomSheet> {
+class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
   final ValueNotifier<String?> selectedClassification = ValueNotifier<String?>(
     null,
   );

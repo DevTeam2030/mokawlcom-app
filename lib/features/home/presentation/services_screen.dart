@@ -41,7 +41,7 @@ class ServicesScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Wrap(
                 spacing: 30,
-                runSpacing: 22,
+                runSpacing: 24,
                 children: List.generate(9, (index) => const WorkerItem()),
               ),
             ],

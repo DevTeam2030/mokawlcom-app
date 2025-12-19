@@ -12,6 +12,7 @@ import 'package:mokawlcom_app/features/auth/presentation/user_signup_screen.dart
 import 'package:mokawlcom_app/features/auth/presentation/verification_screen.dart';
 import 'package:mokawlcom_app/features/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:mokawlcom_app/features/home/presentation/home_screen.dart';
+import 'package:mokawlcom_app/features/home/presentation/job_offers_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/services_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/notifications_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart';
@@ -67,8 +68,9 @@ class AppRouter extends RootStackRouter {
               initial: true,
               page: HomeTabRoute.page,
               children: [
-                _buildCustomRoute(initial: true, page: HomeRoute.page),
+                _buildCustomRoute(page: HomeRoute.page),
                 _buildCustomRoute(page: ServicesRoute.page),
+                _buildCustomRoute(initial: true, page: JobOffersRoute.page),
               ],
             ),
             _buildCustomRoute(page: NotificationsRoute.page),

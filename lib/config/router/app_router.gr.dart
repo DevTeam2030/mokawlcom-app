@@ -155,6 +155,22 @@ class HomeTabRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [JobOffersScreen]
+class JobOffersRoute extends PageRouteInfo<void> {
+  const JobOffersRoute({List<PageRouteInfo>? children})
+    : super(JobOffersRoute.name, initialChildren: children);
+
+  static const String name = 'JobOffersRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const JobOffersScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [LoginScreen]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
