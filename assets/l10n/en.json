@@ -66,5 +66,11 @@
   "services": "Services",
   "apply_filter": "Apply Filter",
   "show_price": "Show Price",
-  "company_details": "Company Details"
+  "company_details": "Company Details",
+  "commuincations_data":" Commuincations Data",
+  "address": "Address",
+  "phone_number": "Phone Number",
+  "whats_number":"WhatsApp Number",
+  "service_name":"Service Name",
+  "offer_price":"Offer Price"
 }

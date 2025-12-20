@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/home/presentation/widgets/job_details/job_details_top_section.dart';
 import 'package:mokawlcom_app/features/home/presentation/widgets/job_details/service_item.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -16,6 +17,7 @@ class JobDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF2F3F6),
       appBar: AppBar(
         actions: [
           IconButton(
@@ -46,9 +48,9 @@ class JobDetailsScreen extends StatelessWidget {
                       TabBar(
                         controller: controller,
                         indicatorSize: TabBarIndicatorSize.tab,
-                        dividerColor: ColorsManager.primaryColor.withValues(
-                          alpha: .2,
-                        ),
+                        // dividerColor: ColorsManager.primaryColor.withValues(
+                        //   alpha: .2,
+                        // ),
                         dividerHeight: 2,
                         indicator: const UnderlineTabIndicator(
                           borderSide: BorderSide(
@@ -73,6 +75,11 @@ class JobDetailsScreen extends StatelessWidget {
 
                       const SizedBox(height: 16),
                       Expanded(child: child),
+                      const SizedBox(height: 24),
+                      PrimaryButton(
+                        onPressed: () {},
+                        text: LocaleKeys.offerPrice,
+                      ),
                     ],
                   );
                 },

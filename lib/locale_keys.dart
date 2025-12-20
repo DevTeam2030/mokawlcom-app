@@ -115,4 +115,11 @@ class LocaleKeys {
   static String get services => 'services'.tr();
   static String get showPrice => 'show_price'.tr();
   static String get companyDetails => 'company_details'.tr();
+  static String get commuincationsData => 'commuincations_data'.tr();
+  static String get address => 'address'.tr();
+  static String get phoneNumber => 'phone_number'.tr();
+  static String get whatsNumber => 'whats_number'.tr();
+  static String get serviceName => 'service_name'.tr();
+
+  static String get offerPrice => 'offer_price'.tr();
 }

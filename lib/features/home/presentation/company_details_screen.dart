@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/my_icons.dart';
 
 @RoutePage()
 class CompanyDetailsScreen extends StatelessWidget {
@@ -7,6 +10,136 @@ class CompanyDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Company Details Screen')));
+    final theme = Theme.of(context);
+    return SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20),
+          Text(
+            LocaleKeys.hintAboutCompany,
+            style: theme.textTheme.bodySmall!.copyWith(
+              fontWeight: FontWeight.w700,
+              color: ColorsManager.primaryColor,
+            ),
+          ),
+          const Divider(
+            color: ColorsManager.secondaryColor,
+            thickness: .55,
+            height: 20,
+          ),
+          Text(
+            'شركة المقاولات العامة هي شركة رائدة في مجال البناء والتشييد، تأسست منذ أكثر من 20 عامًا وتتمتع بسجل حافل من المشاريع الناجحة في مختلف القطاعات. نحن ملتزمون بتقديم أعلى مستويات الجودة والخدمة لعملائنا، مع التركيز على الابتكار والاستدامة في جميع جوانب عملنا. فريقنا من المهندسين والفنيين ذوي الخبرة يعملون بلا كلل لضمان تحقيق رؤى عملائنا وتحويلها إلى واقع ملموس.',
+            style: theme.textTheme.bodySmall!.copyWith(height: 1.5),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            LocaleKeys.commuincationsData,
+            style: theme.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+              color: ColorsManager.primaryColor,
+            ),
+          ),
+          const Divider(
+            color: ColorsManager.secondaryColor,
+            thickness: .55,
+            height: 20,
+          ),
+          Text(
+            LocaleKeys.email,
+            style: theme.textTheme.labelSmall!.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 10,
+              color: ColorsManager.textColor,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            "hr@example.net",
+            style: theme.textTheme.bodyMedium!.copyWith(
+              decoration: TextDecoration.underline,
+              decorationColor: Colors.blueAccent,
+              color: Colors.blueAccent,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            LocaleKeys.address,
+            style: theme.textTheme.labelSmall!.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 10,
+              color: ColorsManager.textColor,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'الخليج الغربي - الدوحة',
+            style: theme.textTheme.bodySmall!.copyWith(
+              color: ColorsManager.primaryColor,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            LocaleKeys.phoneNumber,
+            style: theme.textTheme.labelSmall!.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 10,
+              color: ColorsManager.textColor,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            '+974 4455 6677',
+            style: theme.textTheme.bodyMedium!.copyWith(
+              color: ColorsManager.primaryColor,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            LocaleKeys.whatsNumber,
+            style: theme.textTheme.labelSmall!.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 10,
+              color: ColorsManager.textColor,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            '+974 4455 6677',
+            style: theme.textTheme.bodyMedium!.copyWith(
+              color: ColorsManager.primaryColor,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 16,
+            children: [
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: ColorsManager.primaryColor,
+                child: Icon(MyIcons.facebook, color: Colors.white, size: 20),
+              ),
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: ColorsManager.primaryColor,
+                child: Icon(MyIcons.twitter, color: Colors.white, size: 20),
+              ),
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: ColorsManager.primaryColor,
+                child: Icon(MyIcons.instagram, color: Colors.white, size: 20),
+              ),
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: ColorsManager.primaryColor,
+                child: Icon(MyIcons.snapchat, color: Colors.white, size: 20),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
