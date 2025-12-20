@@ -114,4 +114,5 @@ class LocaleKeys {
   static String get classification => 'classification'.tr();
   static String get services => 'services'.tr();
   static String get showPrice => 'show_price'.tr();
+  static String get companyDetails => 'company_details'.tr();
 }

@@ -65,5 +65,6 @@
   "classification": "Classification",
   "services": "Services",
   "apply_filter": "Apply Filter",
-  "show_price": "Show Price"
+  "show_price": "Show Price",
+  "company_details": "Company Details"
 }

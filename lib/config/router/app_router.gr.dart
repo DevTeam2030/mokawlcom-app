@@ -75,6 +75,22 @@ class ClassificationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CompanyDetailsScreen]
+class CompanyDetailsRoute extends PageRouteInfo<void> {
+  const CompanyDetailsRoute({List<PageRouteInfo>? children})
+    : super(CompanyDetailsRoute.name, initialChildren: children);
+
+  static const String name = 'CompanyDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CompanyDetailsScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [CompleteDataScreen]
 class CompleteDataRoute extends PageRouteInfo<void> {
   const CompleteDataRoute({List<PageRouteInfo>? children})
@@ -150,6 +166,22 @@ class HomeTabRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const HomeTab();
+    },
+  );
+}
+
+/// generated route for
+/// [JobDetailsScreen]
+class JobDetailsRoute extends PageRouteInfo<void> {
+  const JobDetailsRoute({List<PageRouteInfo>? children})
+    : super(JobDetailsRoute.name, initialChildren: children);
+
+  static const String name = 'JobDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const JobDetailsScreen();
     },
   );
 }
@@ -246,6 +278,22 @@ class SelectServicesRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const SelectServicesScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [ServicesDetailsScreen]
+class ServicesDetailsRoute extends PageRouteInfo<void> {
+  const ServicesDetailsRoute({List<PageRouteInfo>? children})
+    : super(ServicesDetailsRoute.name, initialChildren: children);
+
+  static const String name = 'ServicesDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ServicesDetailsScreen();
     },
   );
 }

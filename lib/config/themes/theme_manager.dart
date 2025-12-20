@@ -54,6 +54,23 @@ class ThemeManager {
         selectedItemColor: ColorsManager.primaryColor,
         unselectedItemColor: Color(0xFF798AA3),
       ),
+      tabBarTheme: const TabBarThemeData(
+        labelColor: Colors.white,
+        unselectedLabelColor: Colors.white,
+        dividerColor: Colors.transparent,
+        indicatorColor: ColorsManager.primaryColor,
+        indicatorSize: TabBarIndicatorSize.label,
+        labelStyle: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+          color: ColorsManager.primaryColor,
+        ),
+        unselectedLabelStyle: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+          color: ColorsManager.secondaryColor,
+        ),
+      ),
     );
   }
 
