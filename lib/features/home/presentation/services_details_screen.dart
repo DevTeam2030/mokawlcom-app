@@ -13,10 +13,10 @@ class ServicesDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) => ServiceDetailsListItem(theme: theme),
       separatorBuilder: (_, __) => const SizedBox(height: 14),
-      itemCount: 4,
+      itemCount: 3,
     );
   }
 }

@@ -122,4 +122,7 @@ class LocaleKeys {
   static String get serviceName => 'service_name'.tr();
 
   static String get offerPrice => 'offer_price'.tr();
+  static String get price => 'price'.tr();
+  static String get message => 'message'.tr();
+  static String get attachAFile => 'attach_a_file'.tr();
 }

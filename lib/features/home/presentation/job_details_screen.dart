@@ -6,6 +6,7 @@ import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/home/presentation/widgets/job_details/job_details_top_section.dart';
+import 'package:mokawlcom_app/features/home/presentation/widgets/job_details/offer_price_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/home/presentation/widgets/job_details/service_item.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
@@ -77,7 +78,13 @@ class JobDetailsScreen extends StatelessWidget {
                       Expanded(child: child),
                       const SizedBox(height: 24),
                       PrimaryButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) => const OfferPriceBottomSheet(),
+                          );
+                        },
                         text: LocaleKeys.offerPrice,
                       ),
                     ],

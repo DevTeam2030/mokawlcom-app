@@ -72,5 +72,10 @@
   "phone_number": "Phone Number",
   "whats_number":"WhatsApp Number",
   "service_name":"Service Name",
-  "offer_price":"Offer Price"
+  "offer_price":"Offer Price",
+  "price": "Price",
+  "message": "Message",
+  "attach_a_file": "Attach a file"
+  
+  
 }

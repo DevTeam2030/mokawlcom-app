@@ -72,7 +72,9 @@
   "phone_number": "رقم الجوال",
   "whats_number":"رقم الواتساب",
   "service_name":"اسم الخدمة",
-  "offer_price":"تقديم عرض سعر"
-  
+  "offer_price":"تقديم عرض سعر",
+  "price": "السعر",
+  "message": "الرسالة",
+  "attach_a_file":"ارفاق ملف"
 
 }
