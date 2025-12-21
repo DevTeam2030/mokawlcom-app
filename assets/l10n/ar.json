@@ -79,7 +79,11 @@
   "public_notifications":"الاشعارات العامة",
   "prices_offers":"عروض الأسعار",
   "offer_address":"عنوان العرض",
-  "offered_by":"مقدم من"
+  "offered_by":"مقدم من",
+  "offer_details":"تفاصيل العرض",
+  "add_reply": "اضافة رد",
+  "replys": "الردود",
+  "message_address":"عنوان الرسالة"
   
   
 

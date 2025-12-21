@@ -18,6 +18,7 @@ import 'package:mokawlcom_app/features/home/presentation/job_offers_screen.dart'
 import 'package:mokawlcom_app/features/home/presentation/services_details_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/services_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/notifications_screen.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/offer_details_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/price_offers_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/public_notifications_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart';
@@ -99,6 +100,7 @@ class AppRouter extends RootStackRouter {
             _buildCustomRoute(page: ServicesDetailsRoute.page),
           ],
         ),
+        _buildCustomRoute(page: OfferDetailsRoute.page),
       ],
     ),
   ];

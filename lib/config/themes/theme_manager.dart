@@ -55,20 +55,15 @@ class ThemeManager {
         unselectedItemColor: Color(0xFF798AA3),
       ),
       tabBarTheme: const TabBarThemeData(
-        labelColor: Colors.white,
-        unselectedLabelColor: Colors.white,
+        labelColor: ColorsManager.primaryColor,
+        unselectedLabelColor: Color(0xFFB7BBDE),
         dividerColor: Colors.transparent,
         indicatorColor: ColorsManager.primaryColor,
-        indicatorSize: TabBarIndicatorSize.label,
-        labelStyle: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w700,
-          color: ColorsManager.primaryColor,
-        ),
+        indicatorSize: TabBarIndicatorSize.tab,
+        labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
         unselectedLabelStyle: TextStyle(
           fontSize: 12,
-          fontWeight: FontWeight.w700,
-          color: Color(0xFFB7BBDE),
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

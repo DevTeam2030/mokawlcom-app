@@ -79,7 +79,11 @@
   "public_notifications": "Public Notifications",
   "prices_offers": "Prices Offers",
   "offer_address":"Offer Address",
-  "offered_by":"Offered by"
+  "offered_by":"Offered by",
+  "offer_details":"Offer Details",
+  "add_reply": "Add Reply",
+  "replys": "Replys",
+  "message_address": "Message Address"
   
   
 }

@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -8,10 +10,10 @@ class PriceOfferItem extends StatelessWidget {
   final ThemeData theme;
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: const Color(0xFFFBFCFE),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(vertical: 12),
+    return InkWell(
+      onTap: () => context.pushRoute(const OfferDetailsRoute()),
+      child: ColoredBox(
+        color: const Color(0xFFFBFCFE),
         child: Padding(
           padding: const EdgeInsetsDirectional.symmetric(
             horizontal: 14,

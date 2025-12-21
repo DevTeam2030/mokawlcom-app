@@ -44,20 +44,16 @@ class NotificationsScreen extends StatelessWidget {
                       width: 2,
                     ),
                   ),
+                  labelStyle: theme.textTheme.labelMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  unselectedLabelStyle: theme.textTheme.labelMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                   onTap: tabsRouter.setActiveIndex,
                   tabs: [
-                    Text(
-                      LocaleKeys.publicNotifications,
-                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      LocaleKeys.pricesOffers,
-                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    Tab(text: LocaleKeys.publicNotifications),
+                    Tab(text: LocaleKeys.pricesOffers),
                   ],
                 ),
 

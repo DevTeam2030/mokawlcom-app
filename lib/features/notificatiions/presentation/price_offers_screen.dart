@@ -15,10 +15,10 @@ class PriceOffersScreen extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       physics: const BouncingScrollPhysics(),
-      itemCount: 3,
+      itemCount: 5,
       separatorBuilder: (context, index) => const Divider(
         color: ColorsManager.secondaryColor,
-        thickness: .5,
+        thickness: .8,
         height: 1,
       ),
       itemBuilder: (context, index) => PriceOfferItem(theme: theme),

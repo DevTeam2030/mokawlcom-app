@@ -132,4 +132,12 @@ class LocaleKeys {
   static String get offerAddress => 'offer_address'.tr();
 
   static String get offeredBy => 'offered_by'.tr();
+
+  static String get offerDetails => 'offer_details'.tr();
+
+  static String get addReply => 'add_reply'.tr();
+
+  static String get replys => 'replys'.tr();
+
+  static String get messageAddress => 'message_address'.tr();
 }

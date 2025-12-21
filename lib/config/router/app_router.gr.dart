@@ -235,6 +235,22 @@ class NotificationsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [OfferDetailsScreen]
+class OfferDetailsRoute extends PageRouteInfo<void> {
+  const OfferDetailsRoute({List<PageRouteInfo>? children})
+    : super(OfferDetailsRoute.name, initialChildren: children);
+
+  static const String name = 'OfferDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const OfferDetailsScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [OnBoardingScreen]
 class OnBoardingRoute extends PageRouteInfo<void> {
   const OnBoardingRoute({List<PageRouteInfo>? children})

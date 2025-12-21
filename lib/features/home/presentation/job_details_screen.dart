@@ -17,6 +17,7 @@ class JobDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: const Color(0xFFF2F3F6),
       appBar: AppBar(
@@ -59,18 +60,15 @@ class JobDetailsScreen extends StatelessWidget {
                             width: 2,
                           ),
                         ),
+                        labelStyle: theme.textTheme.labelMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        unselectedLabelStyle: theme.textTheme.labelMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
                         onTap: tabsRouter.setActiveIndex,
                         tabs: [
-                          Text(
-                            LocaleKeys.companyDetails,
-                            style: Theme.of(context).textTheme.labelMedium!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            LocaleKeys.services,
-                            style: Theme.of(context).textTheme.labelMedium!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
+                          Tab(text: LocaleKeys.companyDetails),
+                          Tab(text: LocaleKeys.services),
                         ],
                       ),
 
