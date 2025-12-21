@@ -125,4 +125,11 @@ class LocaleKeys {
   static String get price => 'price'.tr();
   static String get message => 'message'.tr();
   static String get attachAFile => 'attach_a_file'.tr();
+
+  static String get publicNotifications => 'public_notifications'.tr();
+
+  static String get pricesOffers => 'prices_offers'.tr();
+  static String get offerAddress => 'offer_address'.tr();
+
+  static String get offeredBy => 'offered_by'.tr();
 }

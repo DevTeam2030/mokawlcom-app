@@ -68,7 +68,7 @@ class ThemeManager {
         unselectedLabelStyle: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w700,
-          color: ColorsManager.secondaryColor,
+          color: Color(0xFFB7BBDE),
         ),
       ),
     );

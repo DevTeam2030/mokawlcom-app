@@ -1,0 +1,27 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/core/utils/assets_manager.dart';
+import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/widgets/price_offer_item.dart';
+import 'package:mokawlcom_app/locale_keys.dart';
+
+@RoutePage()
+class PriceOffersScreen extends StatelessWidget {
+  const PriceOffersScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      physics: const BouncingScrollPhysics(),
+      itemCount: 3,
+      separatorBuilder: (context, index) => const Divider(
+        color: ColorsManager.secondaryColor,
+        thickness: .5,
+        height: 1,
+      ),
+      itemBuilder: (context, index) => PriceOfferItem(theme: theme),
+    );
+  }
+}

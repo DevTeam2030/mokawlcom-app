@@ -75,6 +75,14 @@
   "offer_price":"تقديم عرض سعر",
   "price": "السعر",
   "message": "الرسالة",
-  "attach_a_file":"ارفاق ملف"
+  "attach_a_file":"ارفاق ملف",
+  "public_notifications":"الاشعارات العامة",
+  "prices_offers":"عروض الأسعار",
+  "offer_address":"عنوان العرض",
+  "offered_by":"مقدم من"
+  
+  
+
+
 
 }

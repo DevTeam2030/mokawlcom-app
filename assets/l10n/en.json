@@ -75,7 +75,11 @@
   "offer_price":"Offer Price",
   "price": "Price",
   "message": "Message",
-  "attach_a_file": "Attach a file"
+  "attach_a_file": "Attach a file",
+  "public_notifications": "Public Notifications",
+  "prices_offers": "Prices Offers",
+  "offer_address":"Offer Address",
+  "offered_by":"Offered by"
   
   
 }

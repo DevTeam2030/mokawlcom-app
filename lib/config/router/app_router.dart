@@ -18,6 +18,8 @@ import 'package:mokawlcom_app/features/home/presentation/job_offers_screen.dart'
 import 'package:mokawlcom_app/features/home/presentation/services_details_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/services_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/notifications_screen.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/price_offers_screen.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/public_notifications_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
 import 'package:mokawlcom_app/features/splash/splash_screen.dart';
@@ -64,11 +66,11 @@ class AppRouter extends RootStackRouter {
       page: AuthenticatedRoute.page,
       children: [
         _buildCustomRoute(
-          //initial: true,
+          initial: true,
           page: BottomNavBarRoute.page,
           children: [
             _buildCustomRoute(
-              initial: true,
+              //initial: true,
               page: HomeTabRoute.page,
               children: [
                 _buildCustomRoute(page: HomeRoute.page),
@@ -76,12 +78,21 @@ class AppRouter extends RootStackRouter {
                 _buildCustomRoute(page: JobOffersRoute.page),
               ],
             ),
-            _buildCustomRoute(page: NotificationsRoute.page),
+            _buildCustomRoute(
+              initial: true,
+              page: NotificationsRoute.page,
+              children: [
+                _buildCustomRoute(
+                  initial: true,
+                  page: PublicNotificationsRoute.page,
+                ),
+                _buildCustomRoute(page: PriceOffersRoute.page),
+              ],
+            ),
             _buildCustomRoute(page: ProfileRoute.page),
           ],
         ),
         _buildCustomRoute(
-          initial: true,
           page: JobDetailsRoute.page,
           children: [
             _buildCustomRoute(initial: true, page: CompanyDetailsRoute.page),

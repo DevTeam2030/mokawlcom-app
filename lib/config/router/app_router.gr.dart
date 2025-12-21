@@ -251,6 +251,22 @@ class OnBoardingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PriceOffersScreen]
+class PriceOffersRoute extends PageRouteInfo<void> {
+  const PriceOffersRoute({List<PageRouteInfo>? children})
+    : super(PriceOffersRoute.name, initialChildren: children);
+
+  static const String name = 'PriceOffersRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PriceOffersScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ProfileScreen]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})
@@ -262,6 +278,22 @@ class ProfileRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ProfileScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [PublicNotificationsScreen]
+class PublicNotificationsRoute extends PageRouteInfo<void> {
+  const PublicNotificationsRoute({List<PageRouteInfo>? children})
+    : super(PublicNotificationsRoute.name, initialChildren: children);
+
+  static const String name = 'PublicNotificationsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PublicNotificationsScreen();
     },
   );
 }
