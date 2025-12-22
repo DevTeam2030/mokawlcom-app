@@ -139,6 +139,22 @@ class ContractorSignupRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [EditUserProfileScreen]
+class EditUserProfileRoute extends PageRouteInfo<void> {
+  const EditUserProfileRoute({List<PageRouteInfo>? children})
+    : super(EditUserProfileRoute.name, initialChildren: children);
+
+  static const String name = 'EditUserProfileRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const EditUserProfileScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ForgetPasswordScreen]
 class ForgetPasswordRoute extends PageRouteInfo<void> {
   const ForgetPasswordRoute({List<PageRouteInfo>? children})

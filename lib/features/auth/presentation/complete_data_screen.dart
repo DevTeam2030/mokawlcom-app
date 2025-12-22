@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/shared/widgets/profile_avatar_with_edit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
@@ -31,38 +31,7 @@ class CompleteDataScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 28.0),
-              Center(
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    const CircleAvatar(
-                      radius: 50,
-                      backgroundColor: ColorsManager.primaryColor,
-                      child: CircleAvatar(
-                        radius: 48,
-                        backgroundColor: ColorsManager.secondaryColor,
-                        backgroundImage: AssetImage(AssetsManager.logoImage),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: -4,
-                      right: -4,
-                      child: InkWell(
-                        onTap: () {},
-                        child: const CircleAvatar(
-                          backgroundColor: ColorsManager.primaryColor,
-                          radius: 16,
-                          child: Icon(
-                            Icons.edit,
-                            size: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const ProfileAvatarWithEdit(),
               const SizedBox(height: 8.0),
               Text(
                 LocaleKeys.name,

@@ -13,4 +13,5 @@ class AssetsManager {
   static const String contractor = "assets/images/contractor.png";
   static const String subscriptionPackage =
       "assets/images/subscription_package_inage.png";
+  static const String userImage = "assets/images/user.png";
 }

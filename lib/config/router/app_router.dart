@@ -22,6 +22,7 @@ import 'package:mokawlcom_app/features/notificatiions/presentation/offer_details
 import 'package:mokawlcom_app/features/notificatiions/presentation/price_offers_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/public_notifications_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/change_password_screen.dart';
+import 'package:mokawlcom_app/features/profile/presentation/edit_user_profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
 import 'package:mokawlcom_app/features/splash/splash_screen.dart';
@@ -68,7 +69,7 @@ class AppRouter extends RootStackRouter {
       page: AuthenticatedRoute.page,
       children: [
         _buildCustomRoute(
-          initial: true,
+          // initial: true,
           page: BottomNavBarRoute.page,
           children: [
             _buildCustomRoute(
@@ -103,6 +104,7 @@ class AppRouter extends RootStackRouter {
         ),
         _buildCustomRoute(page: OfferDetailsRoute.page),
         _buildCustomRoute(page: ChangePasswordRoute.page),
+        _buildCustomRoute(initial: true, page: EditUserProfileRoute.page),
       ],
     ),
   ];
