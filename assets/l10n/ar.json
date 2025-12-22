@@ -92,7 +92,10 @@
   "edit_my_profile":"تعديل بياناتى",
   "presented_offers":"العروض المقدمة",
   "change_password":"تغيير كلمة المرور",
-  "logout":"تسجيل خروج"
+  "logout":"تسجيل خروج",
+  "my_services":"خدماتي",
+  "available_deals":"صفقات متاحة",
+  "subscription_details":"تفاصيل الاشتراك"
 
 
 }

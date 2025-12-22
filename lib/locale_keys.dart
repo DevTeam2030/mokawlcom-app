@@ -149,4 +149,7 @@ class LocaleKeys {
   static String get presentedOffers => 'presented_offers'.tr();
   static String get changePassword => 'change_password'.tr();
   static String get logout => 'logout'.tr();
+  static String get myServices => 'my_services'.tr();
+  static String get availableDeals => 'available_deals'.tr();
+  static String get subscriptionDetails => 'subscription_details'.tr();
 }
