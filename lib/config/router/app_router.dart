@@ -80,7 +80,7 @@ class AppRouter extends RootStackRouter {
               ],
             ),
             _buildCustomRoute(
-              initial: true,
+              //initial: true,
               page: NotificationsRoute.page,
               children: [
                 _buildCustomRoute(
@@ -90,7 +90,7 @@ class AppRouter extends RootStackRouter {
                 _buildCustomRoute(page: PriceOffersRoute.page),
               ],
             ),
-            _buildCustomRoute(page: ProfileRoute.page),
+            _buildCustomRoute(initial: true, page: ProfileRoute.page),
           ],
         ),
         _buildCustomRoute(

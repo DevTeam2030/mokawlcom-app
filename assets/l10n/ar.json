@@ -83,10 +83,12 @@
   "offer_details":"تفاصيل العرض",
   "add_reply": "اضافة رد",
   "replys": "الردود",
-  "message_address":"عنوان الرسالة"
-  
-  
-
+  "message_address":"عنوان الرسالة",
+  "reply_to_the_offer_price":"الرد على عرض السعر",
+  "register_as_contractor":"تسجيل كـ مقاول",
+  "language":"اللغة",
+  "english":"الانجليزية",
+  "arabic":"العربية"
 
 
 }

@@ -6,8 +6,8 @@ import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 class OfferPriceBottomSheet extends StatelessWidget {
-  const OfferPriceBottomSheet({super.key});
-
+  const OfferPriceBottomSheet({super.key, required this.address});
+  final String address;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -24,7 +24,7 @@ class OfferPriceBottomSheet extends StatelessWidget {
           Align(
             alignment: AlignmentDirectional.center,
             child: Text(
-              LocaleKeys.offerPrice,
+              address,
               style: theme.textTheme.headlineSmall!.copyWith(
                 fontWeight: FontWeight.w700,
               ),

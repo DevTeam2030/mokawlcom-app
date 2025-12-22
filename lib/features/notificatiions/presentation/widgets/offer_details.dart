@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/features/shared/widgets/offer_price_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class OfferDetails extends StatelessWidget {
@@ -96,7 +97,15 @@ class OfferDetails extends StatelessWidget {
                   ),
                   const Spacer(),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => OfferPriceBottomSheet(
+                          address: LocaleKeys.replyToThePriceOffer,
+                        ),
+                      );
+                    },
                     child: Text(
                       LocaleKeys.addReply,
                       style: theme.textTheme.bodyMedium!.copyWith(

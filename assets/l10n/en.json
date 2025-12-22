@@ -83,7 +83,12 @@
   "offer_details":"Offer Details",
   "add_reply": "Add Reply",
   "replys": "Replys",
-  "message_address": "Message Address"
+  "message_address": "Message Address",
+  "reply_to_the_offer_price":"Reply to the price offer",
+  "register_as_contractor": "Login as contractor",
+  "language": "Language",
+  "english": "English",
+  "arabic": "Arabic"
   
   
 }

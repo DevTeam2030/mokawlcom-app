@@ -140,4 +140,9 @@ class LocaleKeys {
   static String get replys => 'replys'.tr();
 
   static String get messageAddress => 'message_address'.tr();
+  static String get replyToThePriceOffer => 'reply_to_the_offer_price'.tr();
+  static String get registerAsContractor => 'register_as_contractor'.tr();
+  static String get language => 'language'.tr();
+  static String get english => 'english'.tr();
+  static String get arabic => 'arabic'.tr();
 }
