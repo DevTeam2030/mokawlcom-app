@@ -3,8 +3,8 @@ import 'package:mokawlcom_app/features/profile/presentation/widgets/profile_item
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
-class VisitorWidget extends StatelessWidget {
-  const VisitorWidget({super.key});
+class VisitorProfileWidget extends StatelessWidget {
+  const VisitorProfileWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -88,7 +88,11 @@
   "register_as_contractor":"تسجيل كـ مقاول",
   "language":"اللغة",
   "english":"الانجليزية",
-  "arabic":"العربية"
+  "arabic":"العربية",
+  "edit_my_profile":"تعديل بياناتى",
+  "presented_offers":"العروض المقدمة",
+  "change_password":"تغيير كلمة المرور",
+  "logout":"تسجيل خروج"
 
 
 }

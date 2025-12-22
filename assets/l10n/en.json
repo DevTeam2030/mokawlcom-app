@@ -88,7 +88,11 @@
   "register_as_contractor": "Login as contractor",
   "language": "Language",
   "english": "English",
-  "arabic": "Arabic"
+  "arabic": "Arabic",
+  "edit_my_profile": "Edit My Profile",
+  "presented_offers": "Presented Offers",
+  "change_password": "Change Password",
+  "logout": "Logout"
   
   
 }

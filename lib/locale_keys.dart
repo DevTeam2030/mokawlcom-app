@@ -145,4 +145,8 @@ class LocaleKeys {
   static String get language => 'language'.tr();
   static String get english => 'english'.tr();
   static String get arabic => 'arabic'.tr();
+  static String get editMyProfile => 'edit_my_profile'.tr();
+  static String get presentedOffers => 'presented_offers'.tr();
+  static String get changePassword => 'change_password'.tr();
+  static String get logout => 'logout'.tr();
 }

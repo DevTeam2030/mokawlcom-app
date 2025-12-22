@@ -2,7 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/profile_item.dart';
-import 'package:mokawlcom_app/features/profile/presentation/widgets/visitor_widget.dart';
+import 'package:mokawlcom_app/features/profile/presentation/widgets/user_profile_widget.dart';
+import 'package:mokawlcom_app/features/profile/presentation/widgets/visitor_profile_widget.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -23,11 +24,11 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: const Padding(
-        padding: EdgeInsetsDirectional.all(16.0),
+      body: Padding(
+        padding: const EdgeInsetsDirectional.all(16.0),
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: VisitorWidget(),
+          physics: const BouncingScrollPhysics(),
+          child: UserProfileWidget(theme: theme),
         ),
       ),
     );

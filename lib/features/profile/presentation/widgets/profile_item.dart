@@ -11,12 +11,14 @@ class ProfileItem extends StatelessWidget {
     required this.icon,
     required this.onTap,
     this.isLanguage = false,
+    this.iconSize,
   });
   final ThemeData theme;
   final String title;
   final IconData icon;
   final VoidCallback onTap;
   final bool isLanguage;
+  final double? iconSize;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -28,11 +30,15 @@ class ProfileItem extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: ColorsManager.secondaryColor, width: 1.5),
+          border: Border.all(color: ColorsManager.secondaryColor, width: 1.2),
         ),
         child: Row(
           children: [
-            Icon(icon, color: ColorsManager.primaryColor),
+            Icon(
+              icon,
+              color: ColorsManager.primaryColor,
+              size: iconSize ?? 24.0,
+            ),
             const SizedBox(width: 12.0),
             Text(
               title,
