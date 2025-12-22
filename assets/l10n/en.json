@@ -92,10 +92,13 @@
   "edit_my_profile": "Edit My Profile",
   "presented_offers": "Presented Offers",
   "change_password": "Change Password",
+  "old_password": "Old Password",
+  "new_password": "New Password",
   "logout": "Logout",
   "my_services": "My Services",
   "available_deals": "Available Deals",
-  "subscription_details": "Subscription Details"
+  "subscription_details": "Subscription Details",
+  "update": "Update"
   
   
 }

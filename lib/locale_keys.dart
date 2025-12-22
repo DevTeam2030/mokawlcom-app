@@ -148,8 +148,11 @@ class LocaleKeys {
   static String get editMyProfile => 'edit_my_profile'.tr();
   static String get presentedOffers => 'presented_offers'.tr();
   static String get changePassword => 'change_password'.tr();
+  static String get oldPassword => 'old_password'.tr();
+  static String get newPassword => 'new_password'.tr();
   static String get logout => 'logout'.tr();
   static String get myServices => 'my_services'.tr();
   static String get availableDeals => 'available_deals'.tr();
   static String get subscriptionDetails => 'subscription_details'.tr();
+  static String get update => 'update'.tr();
 }

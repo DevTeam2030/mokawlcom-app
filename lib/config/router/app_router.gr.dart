@@ -59,6 +59,22 @@ class BottomNavBarRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ChangePasswordScreen]
+class ChangePasswordRoute extends PageRouteInfo<void> {
+  const ChangePasswordRoute({List<PageRouteInfo>? children})
+    : super(ChangePasswordRoute.name, initialChildren: children);
+
+  static const String name = 'ChangePasswordRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ChangePasswordScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ClassificationScreen]
 class ClassificationRoute extends PageRouteInfo<void> {
   const ClassificationRoute({List<PageRouteInfo>? children})

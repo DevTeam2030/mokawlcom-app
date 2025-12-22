@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/profile_item.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
@@ -53,7 +55,9 @@ class ContractorProfileWidget extends StatelessWidget {
           theme: theme,
           title: LocaleKeys.changePassword,
           icon: MyIcons.eyeSolid,
-          onTap: () {},
+          onTap: () {
+            context.pushRoute(const ChangePasswordRoute());
+          },
           iconSize: 16.0,
         ),
         const SizedBox(height: 16.0),

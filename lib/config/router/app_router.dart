@@ -21,6 +21,7 @@ import 'package:mokawlcom_app/features/notificatiions/presentation/notifications
 import 'package:mokawlcom_app/features/notificatiions/presentation/offer_details_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/price_offers_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/public_notifications_screen.dart';
+import 'package:mokawlcom_app/features/profile/presentation/change_password_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
 import 'package:mokawlcom_app/features/splash/splash_screen.dart';
@@ -101,6 +102,7 @@ class AppRouter extends RootStackRouter {
           ],
         ),
         _buildCustomRoute(page: OfferDetailsRoute.page),
+        _buildCustomRoute(page: ChangePasswordRoute.page),
       ],
     ),
   ];
