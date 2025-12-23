@@ -314,6 +314,22 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [MyCurrentPackageScreen]
+class MyCurrentPackageRoute extends PageRouteInfo<void> {
+  const MyCurrentPackageRoute({List<PageRouteInfo>? children})
+    : super(MyCurrentPackageRoute.name, initialChildren: children);
+
+  static const String name = 'MyCurrentPackageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const MyCurrentPackageScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [MyServicesScreen]
 class MyServicesRoute extends PageRouteInfo<void> {
   const MyServicesRoute({List<PageRouteInfo>? children})

@@ -164,4 +164,9 @@ class LocaleKeys {
   static String get uploadPhoto => 'upload_photo'.tr();
   static String get servicePhotos => 'service_photos'.tr();
   static String get uploadPhotos => 'upload_photos'.tr();
+  static String get myCurrentPackage => 'my_current_package'.tr();
+  static String get youAreNowSubscribedToTheFreePackage =>
+      'you_are_now_subscribed_to_the_free_package'.tr();
+  static String get subscriptionDate => 'subscription_date'.tr();
+  static String get expireAt => 'expire_at'.tr();
 }

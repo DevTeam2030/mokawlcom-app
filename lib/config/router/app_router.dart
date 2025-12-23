@@ -25,6 +25,7 @@ import 'package:mokawlcom_app/features/profile/presentation/add_new_service_scre
 import 'package:mokawlcom_app/features/profile/presentation/change_password_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/edit_contractor_profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/edit_user_profile_screen.dart';
+import 'package:mokawlcom_app/features/profile/presentation/my_current_package_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/my_services_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
@@ -109,8 +110,9 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: ChangePasswordRoute.page),
         _buildCustomRoute(page: EditUserProfileRoute.page),
         _buildCustomRoute(page: EditContractorProfileRoute.page),
-        _buildCustomRoute(initial: true, page: MyServicesRoute.page),
+        _buildCustomRoute(page: MyServicesRoute.page),
         _buildCustomRoute(page: AddNewServiceRoute.page),
+        _buildCustomRoute(initial: true, page: MyCurrentPackageRoute.page),
       ],
     ),
   ];

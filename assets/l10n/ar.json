@@ -107,5 +107,9 @@
   "add_service": "إضافة خدمة",
   "service_details": "تفاصيل الخدمة",
   "service_photos": "صور الخدمة",
-  "upload_photos": "رفع الصور"
+  "upload_photos": "رفع الصور",
+  "my_current_package": "باقتى الحالية",
+  "you_are_now_subscribed_to_the_free_package": "أنت الان مشترك في الباقة المجانية",
+  "subscription_date": "تاريخ الاشتراك",
+  "expire_at": "وتنتهى فى"
 }

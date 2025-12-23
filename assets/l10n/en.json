@@ -107,5 +107,9 @@
   "add_service": "Add Service",
   "service_details": "Service Details",
   "service_photos": "Service Photos",
-  "upload_photos": "Upload Photos"
+  "upload_photos": "Upload Photos",
+  "my_current_package": "My Current Package",
+  "you_are_now_subscribed_to_the_free_package": "You are now subscribed to the free package",
+  "subscription_date": "Subscription Date",
+  "expire_at": "Expire At"
 }
