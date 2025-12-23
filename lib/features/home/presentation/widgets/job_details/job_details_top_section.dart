@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/home/presentation/widgets/job_details/service_item.dart';
 
 class JobDetailsTopSection extends StatelessWidget {
@@ -66,11 +67,7 @@ class JobDetailsTopSection extends StatelessWidget {
               ),
             ],
           ),
-          const Divider(
-            color: ColorsManager.secondaryColor,
-            thickness: .5,
-            height: 20,
-          ),
+          const CustomDivider(thickness: 0.5),
           FittedBox(
             child: Container(
               alignment: AlignmentDirectional.center,

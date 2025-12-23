@@ -11,6 +11,53 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [AddNewServiceScreen]
+class AddNewServiceRoute extends PageRouteInfo<AddNewServiceRouteArgs> {
+  AddNewServiceRoute({
+    Key? key,
+    required ThemeData theme,
+    List<PageRouteInfo>? children,
+  }) : super(
+         AddNewServiceRoute.name,
+         args: AddNewServiceRouteArgs(key: key, theme: theme),
+         initialChildren: children,
+       );
+
+  static const String name = 'AddNewServiceRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<AddNewServiceRouteArgs>();
+      return AddNewServiceScreen(key: args.key, theme: args.theme);
+    },
+  );
+}
+
+class AddNewServiceRouteArgs {
+  const AddNewServiceRouteArgs({this.key, required this.theme});
+
+  final Key? key;
+
+  final ThemeData theme;
+
+  @override
+  String toString() {
+    return 'AddNewServiceRouteArgs{key: $key, theme: $theme}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! AddNewServiceRouteArgs) return false;
+    return key == other.key && theme == other.theme;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ theme.hashCode;
+}
+
+/// generated route for
 /// [Auth]
 class AuthRoute extends PageRouteInfo<void> {
   const AuthRoute({List<PageRouteInfo>? children})
@@ -262,6 +309,22 @@ class LoginRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const LoginScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [MyServicesScreen]
+class MyServicesRoute extends PageRouteInfo<void> {
+  const MyServicesRoute({List<PageRouteInfo>? children})
+    : super(MyServicesRoute.name, initialChildren: children);
+
+  static const String name = 'MyServicesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const MyServicesScreen();
     },
   );
 }

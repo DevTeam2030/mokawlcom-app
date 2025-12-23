@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/shared/widgets/offer_price_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
@@ -116,12 +117,7 @@ class OfferDetails extends StatelessWidget {
                   ),
                 ],
               ),
-            if (isOffer)
-              const Divider(
-                color: ColorsManager.secondaryColor,
-                thickness: .5,
-                height: 1,
-              ),
+            if (isOffer) const CustomDivider(thickness: 0.5, height: 1),
           ],
         ),
       ),

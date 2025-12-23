@@ -100,5 +100,12 @@
   "subscription_details": "Subscription Details",
   "update": "Update",
   "main_classification": "Main Classification",
-  "subcategory": "Subcategory"
+  "subcategory": "Subcategory",
+  "add_new_service": "Add new service",
+  "service_address": "Service Address",
+  "price_average": "Price Average",
+  "add_service": "Add Service",
+  "service_details": "Service Details",
+  "service_photos": "Service Photos",
+  "upload_photos": "Upload Photos"
 }

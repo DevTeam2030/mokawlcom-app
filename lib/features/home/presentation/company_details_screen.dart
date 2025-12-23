@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -25,11 +26,7 @@ class CompanyDetailsScreen extends StatelessWidget {
               color: ColorsManager.primaryColor,
             ),
           ),
-          const Divider(
-            color: ColorsManager.secondaryColor,
-            thickness: .55,
-            height: 20,
-          ),
+          const CustomDivider(),
           Text(
             'شركة المقاولات العامة هي شركة رائدة في مجال البناء والتشييد، تأسست منذ أكثر من 20 عامًا وتتمتع بسجل حافل من المشاريع الناجحة في مختلف القطاعات. نحن ملتزمون بتقديم أعلى مستويات الجودة والخدمة لعملائنا، مع التركيز على الابتكار والاستدامة في جميع جوانب عملنا. فريقنا من المهندسين والفنيين ذوي الخبرة يعملون بلا كلل لضمان تحقيق رؤى عملائنا وتحويلها إلى واقع ملموس.',
             style: theme.textTheme.bodySmall!.copyWith(height: 1.5),
@@ -42,11 +39,7 @@ class CompanyDetailsScreen extends StatelessWidget {
               color: ColorsManager.primaryColor,
             ),
           ),
-          const Divider(
-            color: ColorsManager.secondaryColor,
-            thickness: .55,
-            height: 20,
-          ),
+          const CustomDivider(),
           Text(
             LocaleKeys.email,
             style: theme.textTheme.labelSmall!.copyWith(

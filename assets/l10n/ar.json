@@ -100,5 +100,12 @@
   "subscription_details": "تفاصيل الاشتراك",
   "update": "تحديث",
   "main_classification": "التصنيف الرئيسي",
-  "subcategory": "التصنيف الفرعي"
+  "subcategory": "التصنيف الفرعي",
+  "add_new_service": "إضافة خدمة جديدة",
+  "service_address": "عنوان الخدمة",
+  "price_average": "متوسط السعر",
+  "add_service": "إضافة خدمة",
+  "service_details": "تفاصيل الخدمة",
+  "service_photos": "صور الخدمة",
+  "upload_photos": "رفع الصور"
 }

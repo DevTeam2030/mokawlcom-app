@@ -157,4 +157,11 @@ class LocaleKeys {
   static String get update => 'update'.tr();
   static String get mainClassification => 'main_classification'.tr();
   static String get subcategory => 'subcategory'.tr();
+  static String get addNewService => 'add_new_service'.tr();
+  static String get serviceAddress => 'service_address'.tr();
+  static String get priceAverage => 'price_average'.tr();
+  static String get serviceDetails => 'service_details'.tr();
+  static String get uploadPhoto => 'upload_photo'.tr();
+  static String get servicePhotos => 'service_photos'.tr();
+  static String get uploadPhotos => 'upload_photos'.tr();
 }
