@@ -139,6 +139,22 @@ class ContractorSignupRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [EditContractorProfileScreen]
+class EditContractorProfileRoute extends PageRouteInfo<void> {
+  const EditContractorProfileRoute({List<PageRouteInfo>? children})
+    : super(EditContractorProfileRoute.name, initialChildren: children);
+
+  static const String name = 'EditContractorProfileRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const EditContractorProfileScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [EditUserProfileScreen]
 class EditUserProfileRoute extends PageRouteInfo<void> {
   const EditUserProfileRoute({List<PageRouteInfo>? children})

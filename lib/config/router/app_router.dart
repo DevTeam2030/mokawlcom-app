@@ -22,6 +22,7 @@ import 'package:mokawlcom_app/features/notificatiions/presentation/offer_details
 import 'package:mokawlcom_app/features/notificatiions/presentation/price_offers_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/public_notifications_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/change_password_screen.dart';
+import 'package:mokawlcom_app/features/profile/presentation/edit_contractor_profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/edit_user_profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
@@ -104,7 +105,8 @@ class AppRouter extends RootStackRouter {
         ),
         _buildCustomRoute(page: OfferDetailsRoute.page),
         _buildCustomRoute(page: ChangePasswordRoute.page),
-        _buildCustomRoute(initial: true, page: EditUserProfileRoute.page),
+        _buildCustomRoute(page: EditUserProfileRoute.page),
+        _buildCustomRoute(initial: true, page: EditContractorProfileRoute.page),
       ],
     ),
   ];

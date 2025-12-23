@@ -155,4 +155,6 @@ class LocaleKeys {
   static String get availableDeals => 'available_deals'.tr();
   static String get subscriptionDetails => 'subscription_details'.tr();
   static String get update => 'update'.tr();
+  static String get mainClassification => 'main_classification'.tr();
+  static String get subcategory => 'subcategory'.tr();
 }
