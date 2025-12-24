@@ -169,4 +169,7 @@ class LocaleKeys {
       'you_are_now_subscribed_to_the_free_package'.tr();
   static String get subscriptionDate => 'subscription_date'.tr();
   static String get expireAt => 'expire_at'.tr();
+  static String get addNewOffer => 'add_new_offer'.tr();
+  static String get sendOfferToContractors => 'send_offer_to_contractors'.tr();
+  static String get shareYourDealNow => 'share_your_deal_now'.tr();
 }

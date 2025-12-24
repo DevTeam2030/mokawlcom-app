@@ -90,6 +90,22 @@ class AuthenticatedRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [AvailableDealsScreen]
+class AvailableDealsRoute extends PageRouteInfo<void> {
+  const AvailableDealsRoute({List<PageRouteInfo>? children})
+    : super(AvailableDealsRoute.name, initialChildren: children);
+
+  static const String name = 'AvailableDealsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AvailableDealsScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [BottomNavBarScreen]
 class BottomNavBarRoute extends PageRouteInfo<void> {
   const BottomNavBarRoute({List<PageRouteInfo>? children})
@@ -453,6 +469,22 @@ class SelectServicesRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const SelectServicesScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [SendOfferToContractorsScreen]
+class SendOfferToContractorsRoute extends PageRouteInfo<void> {
+  const SendOfferToContractorsRoute({List<PageRouteInfo>? children})
+    : super(SendOfferToContractorsRoute.name, initialChildren: children);
+
+  static const String name = 'SendOfferToContractorsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SendOfferToContractorsScreen();
     },
   );
 }

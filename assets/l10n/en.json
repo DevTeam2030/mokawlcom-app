@@ -111,5 +111,8 @@
   "my_current_package": "My Current Package",
   "you_are_now_subscribed_to_the_free_package": "You are now subscribed to the free package",
   "subscription_date": "Subscription Date",
-  "expire_at": "Expire At"
+  "expire_at": "Expire At",
+  "add_new_offer": "Add New Offer",
+  "send_offer_to_contractors": "Send Offer to Contractors",
+  "share_your_deal_now": "Share your deal now and let contractors contact you"
 }
