@@ -172,4 +172,6 @@ class LocaleKeys {
   static String get addNewOffer => 'add_new_offer'.tr();
   static String get sendOfferToContractors => 'send_offer_to_contractors'.tr();
   static String get shareYourDealNow => 'share_your_deal_now'.tr();
+  static String get submittedPriceOffers => 'submitted_price_offers'.tr();
+  static String get submittedTo => 'submitted_to'.tr();
 }

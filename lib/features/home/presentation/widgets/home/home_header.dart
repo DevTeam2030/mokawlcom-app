@@ -56,7 +56,7 @@ class HomeHeader extends StatelessWidget {
           InkWell(
             onTap: () {},
             child: const Icon(
-              MyIcons.notificationBold,
+              MyIcons.boldnotification,
               color: ColorsManager.primaryColor,
             ),
           ),

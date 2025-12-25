@@ -30,6 +30,7 @@ import 'package:mokawlcom_app/features/profile/presentation/my_current_package_s
 import 'package:mokawlcom_app/features/profile/presentation/my_services_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/send_offer_to_contractors_screen.dart';
+import 'package:mokawlcom_app/features/profile/presentation/submitted_price_offers_screen.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
 import 'package:mokawlcom_app/features/splash/splash_screen.dart';
 
@@ -48,17 +49,17 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
     AutoRoute(
+      initial: true,
       page: SplashTabRoute.page,
       children: [
-        AutoRoute(page: SplashRoute.page),
+        AutoRoute(initial: true,page: SplashRoute.page),
         _buildCustomRoute(page: OnBoardingRoute.page),
       ],
     ),
     _buildCustomRoute(
-      //initial: true,
       page: AuthRoute.page,
       children: [
-        _buildCustomRoute(page: LoginRoute.page),
+        _buildCustomRoute(initial: true, page: LoginRoute.page),
         _buildCustomRoute(page: UserSignupRoute.page),
         _buildCustomRoute(page: ContractorSignupRoute.page),
         _buildCustomRoute(page: ClassificationRoute.page),
@@ -67,28 +68,26 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: VerificationRoute.page),
         _buildCustomRoute(page: UploadFilesRoute.page),
         _buildCustomRoute(page: SubscriptionRoute.page),
-        _buildCustomRoute(initial: true, page: CompleteDataRoute.page),
+        _buildCustomRoute( page: CompleteDataRoute.page),
       ],
     ),
     _buildCustomRoute(
-      initial: true,
       page: AuthenticatedRoute.page,
       children: [
         _buildCustomRoute(
-          // initial: true,
+          initial: true,
           page: BottomNavBarRoute.page,
           children: [
             _buildCustomRoute(
-              //initial: true,
+              initial: true,
               page: HomeTabRoute.page,
               children: [
-                _buildCustomRoute(page: HomeRoute.page),
+                _buildCustomRoute(initial: true, page: HomeRoute.page),
                 _buildCustomRoute(page: ServicesRoute.page),
                 _buildCustomRoute(page: JobOffersRoute.page),
               ],
             ),
             _buildCustomRoute(
-              //initial: true,
               page: NotificationsRoute.page,
               children: [
                 _buildCustomRoute(
@@ -98,7 +97,7 @@ class AppRouter extends RootStackRouter {
                 _buildCustomRoute(page: PriceOffersRoute.page),
               ],
             ),
-            _buildCustomRoute(initial: true, page: ProfileRoute.page),
+            _buildCustomRoute( page: ProfileRoute.page),
           ],
         ),
         _buildCustomRoute(
@@ -116,7 +115,8 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: AddNewServiceRoute.page),
         _buildCustomRoute(page: MyCurrentPackageRoute.page),
         _buildCustomRoute(page: AvailableDealsRoute.page),
-        _buildCustomRoute(initial: true,page: SendOfferToContractorsRoute.page),
+        _buildCustomRoute(page: SendOfferToContractorsRoute.page),
+        _buildCustomRoute(page: SubmittedPriceOffersRoute.page),
       ],
     ),
   ];

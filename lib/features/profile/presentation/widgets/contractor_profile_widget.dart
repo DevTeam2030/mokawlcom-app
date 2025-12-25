@@ -22,7 +22,7 @@ class ContractorProfileWidget extends StatelessWidget {
         ProfileItem(
           theme: theme,
           title: LocaleKeys.notifications,
-          icon: MyIcons.notificationSolid,
+          icon: MyIcons.solidnotifications,
           onTap: () {},
           iconSize: 22.0,
         ),
@@ -46,7 +46,7 @@ class ContractorProfileWidget extends StatelessWidget {
         ProfileItem(
           theme: theme,
           title: LocaleKeys.subscriptionDetails,
-          icon: MyIcons.subscription,
+          icon: MyIcons.subscribtion,
           onTap: () {},
           iconSize: 20.0,
         ),
@@ -54,7 +54,7 @@ class ContractorProfileWidget extends StatelessWidget {
         ProfileItem(
           theme: theme,
           title: LocaleKeys.changePassword,
-          icon: MyIcons.eyeSolid,
+          icon: MyIcons.eyesolid,
           onTap: () {
             context.pushRoute(const ChangePasswordRoute());
           },

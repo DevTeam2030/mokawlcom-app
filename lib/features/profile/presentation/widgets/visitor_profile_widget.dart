@@ -14,7 +14,7 @@ class VisitorProfileWidget extends StatelessWidget {
         ProfileItem(
           theme: theme,
           title: LocaleKeys.login,
-          icon: MyIcons.lockFill,
+          icon: MyIcons.lockfill,
           onTap: () {},
         ),
         const SizedBox(height: 16.0),

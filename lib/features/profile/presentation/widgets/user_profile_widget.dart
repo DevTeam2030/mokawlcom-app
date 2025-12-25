@@ -20,7 +20,7 @@ class UserProfileWidget extends StatelessWidget {
         ProfileItem(
           theme: theme,
           title: LocaleKeys.notifications,
-          icon: MyIcons.notificationSolid,
+          icon: MyIcons.solidnotifications,
           onTap: () {},
           iconSize: 22.0,
         ),
@@ -36,7 +36,7 @@ class UserProfileWidget extends StatelessWidget {
         ProfileItem(
           theme: theme,
           title: LocaleKeys.changePassword,
-          icon: MyIcons.eyeSolid,
+          icon: MyIcons.eyesolid,
           onTap: () {},
           iconSize: 16.0,
         ),

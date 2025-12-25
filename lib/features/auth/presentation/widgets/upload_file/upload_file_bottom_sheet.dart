@@ -80,8 +80,8 @@ class UploadFileBottomSheet extends StatelessWidget {
             ),
             child: Column(
               children: [
-                const Icon(
-                  MyIcons.uploadFile,
+                 const Icon(
+                  MyIcons.uploadfile,
                   size: 48,
                   color: ColorsManager.secondaryColor,
                 ),

@@ -114,5 +114,7 @@
   "expire_at": "Expire At",
   "add_new_offer": "Add New Offer",
   "send_offer_to_contractors": "Send Offer to Contractors",
-  "share_your_deal_now": "Share your deal now and let contractors contact you"
+  "share_your_deal_now": "Share your deal now and let contractors contact you",
+  "submitted_price_offers": "Submitted Price Offers",
+  "submitted_to": "Submitted to"
 }

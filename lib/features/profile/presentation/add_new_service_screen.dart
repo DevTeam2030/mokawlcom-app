@@ -123,7 +123,7 @@ class AddNewServiceScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(
-                      MyIcons.uploadFile,
+                      MyIcons.uploadfile,
                       size: 48,
                       color: ColorsManager.secondaryColor,
                     ),

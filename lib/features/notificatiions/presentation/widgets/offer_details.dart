@@ -4,6 +4,8 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/shared/widgets/offer_price_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/my_icons.dart';
+import 'package:vector_graphics/vector_graphics.dart';
 
 class OfferDetails extends StatelessWidget {
   const OfferDetails({super.key, required this.theme, this.isOffer = false});
@@ -85,16 +87,15 @@ class OfferDetails extends StatelessWidget {
             if (isOffer)
               Row(
                 children: [
-                  const Icon(
-                    Icons.picture_as_pdf_sharp,
-                    color: ColorsManager.primaryColor,
-                    size: 40,
+                  const VectorGraphic(
+                    loader: AssetBytesLoader(AssetsManager.pdf),
                   ),
                   const SizedBox(width: 10),
+                  // 
                   const Icon(
                     Icons.image_outlined,
+                    size: 45,
                     color: ColorsManager.primaryColor,
-                    size: 40,
                   ),
                   const Spacer(),
                   TextButton(

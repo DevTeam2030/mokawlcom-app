@@ -73,7 +73,9 @@ class LoginScreen extends StatelessWidget {
               Align(
                 alignment: AlignmentDirectional.center,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.replaceRoute(const AuthenticatedRoute());
+                  },
                   child: Text(
                     LocaleKeys.signInAsVisitor,
                     style: theme.textTheme.bodyLarge!.copyWith(

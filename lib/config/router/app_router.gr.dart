@@ -554,6 +554,22 @@ class SplashRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SubmittedPriceOffersScreen]
+class SubmittedPriceOffersRoute extends PageRouteInfo<void> {
+  const SubmittedPriceOffersRoute({List<PageRouteInfo>? children})
+    : super(SubmittedPriceOffersRoute.name, initialChildren: children);
+
+  static const String name = 'SubmittedPriceOffersRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SubmittedPriceOffersScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [SubscriptionScreen]
 class SubscriptionRoute extends PageRouteInfo<void> {
   const SubscriptionRoute({List<PageRouteInfo>? children})

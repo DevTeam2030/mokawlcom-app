@@ -39,7 +39,7 @@ class AvailableDealsItem extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               const Icon(
-                MyIcons.editSolid,
+                MyIcons.editsolid,
                 color: ColorsManager.primaryColor,
                 size: 18,
               ),

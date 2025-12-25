@@ -74,7 +74,7 @@ class OfferPriceBottomSheet extends StatelessWidget {
             child: Column(
               children: [
                 const Icon(
-                  MyIcons.uploadFile,
+                  MyIcons.uploadfile,
                   size: 48,
                   color: ColorsManager.secondaryColor,
                 ),

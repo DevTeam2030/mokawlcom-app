@@ -6,8 +6,9 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class PriceOfferItem extends StatelessWidget {
-  const PriceOfferItem({super.key, required this.theme});
+  const PriceOfferItem({super.key, required this.theme,  this.isUser = false});
   final ThemeData theme;
+  final bool isUser;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -58,7 +59,7 @@ class PriceOfferItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "${LocaleKeys.offeredBy} :  محمد احمد",
+                   isUser?"${LocaleKeys.submittedTo} :  محمد احمد": "${LocaleKeys.offeredBy} :  محمد احمد",
                     style: theme.textTheme.labelSmall!.copyWith(
                       fontWeight: FontWeight.w400,
                       fontSize: 10,

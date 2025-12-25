@@ -14,4 +14,6 @@ class AssetsManager {
   static const String subscriptionPackage =
       "assets/images/subscription_package_inage.png";
   static const String userImage = "assets/images/user.png";
+  static const String pdf = "assets/svgs/pdf.svg";
+  static const String image = "assets/svgs/image.svg";
 }

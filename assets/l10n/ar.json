@@ -114,5 +114,7 @@
   "expire_at": "وتنتهى فى",
   "add_new_offer": "اضافة عرض جديد",
   "send_offer_to_contractors": "إرسال عرض للمقاولين",
-  "share_your_deal_now": "شارك صفقتك الآن ودع المقاولين يتواصلون معك"
+  "share_your_deal_now": "شارك صفقتك الآن ودع المقاولين يتواصلون معك",
+  "submitted_price_offers": "عروض الأسعار المقدمة",
+  "submitted_to": "مقدم إلى"
 }
