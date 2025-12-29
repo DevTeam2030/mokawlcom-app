@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -64,13 +66,14 @@ class JobOfferItem extends StatelessWidget {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 4),
                     RatingBar.builder(
                       initialRating: 4,
                       allowHalfRating: true,
                       ignoreGestures: true,
                       itemSize: 18,
                       itemBuilder: (context, index) {
-                        return const Icon(Icons.star, color: Colors.amber);
+                        return const Icon(MyIcons.star, color: Colors.amber);
                       },
                       unratedColor: ColorsManager.secondaryColor,
                       onRatingUpdate: (_) {},
@@ -136,7 +139,9 @@ class JobOfferItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushRoute(const JobDetailsRoute());
+                  },
                   child: Text(
                     LocaleKeys.showPrice,
                     style: theme.textTheme.bodySmall!.copyWith(

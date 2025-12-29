@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/password_field.dart';
@@ -42,13 +44,18 @@ class LoginForm extends StatelessWidget {
           textInputAction: TextInputAction.done,
         ),
         const SizedBox(height: 16.0),
-        Align(
-          alignment: AlignmentDirectional.center,
-          child: Text(
-            LocaleKeys.forgetPassword,
-            style: theme.textTheme.bodyMedium!.copyWith(
-              color: ColorsManager.primaryColor,
-              fontWeight: FontWeight.w500,
+        InkWell(
+          onTap: () {
+            context.pushRoute(const ForgetPasswordRoute());
+          },
+          child: Align(
+            alignment: AlignmentDirectional.center,
+            child: Text(
+              LocaleKeys.forgetPassword,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                color: ColorsManager.primaryColor,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ),

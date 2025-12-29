@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
@@ -44,7 +45,8 @@ class SubscriptionScreen extends StatelessWidget {
             const Image(
               width: 300,
               height: 300,
-              image: AssetImage(AssetsManager.subscriptionPackage),
+              fit: BoxFit.cover,
+              image: AssetImage(AssetsManager.subscriptionPackageImage),
             ),
             const SizedBox(height: 10),
             Text(
@@ -56,17 +58,18 @@ class SubscriptionScreen extends StatelessWidget {
             ),
             const Spacer(),
             PrimaryButton(
-              onPressed: () async {
-                await showDialog(
-                  context: context,
-                  builder: (context) => SuccessDialog(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    theme: theme,
-                    text: LocaleKeys.completeData,
-                  ),
-                );
+              onPressed: ()  {
+                // await showDialog(
+                //   context: context,
+                //   builder: (context) => SuccessDialog(
+                //     onPressed: () {
+                //       Navigator.of(context).pop();
+                //     },
+                //     theme: theme,
+                //     text: LocaleKeys.completeData,
+                //   ),
+                // );
+                context.pushRoute(const CompleteDataRoute());
               },
               text: LocaleKeys.tryNow,
             ),

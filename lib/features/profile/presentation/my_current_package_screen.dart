@@ -40,7 +40,7 @@ class MyCurrentPackageScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Image(
-              image: AssetImage(AssetsManager.subscriptionPackage),
+              image: AssetImage(AssetsManager.subscriptionPackageImageWithoutBackground),
               width: 70,
               height: 70,
               fit: BoxFit.contain,

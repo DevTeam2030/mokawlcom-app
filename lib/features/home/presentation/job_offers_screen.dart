@@ -29,7 +29,6 @@ class JobOffersScreen extends StatelessWidget {
           vertical: 13.0,
         ),
         child: ListView.separated(
-          physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) => const JobOfferItem(),
           separatorBuilder: (_, _) => const SizedBox(height: 13),
           itemCount: 3,

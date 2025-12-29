@@ -15,7 +15,6 @@ class ContractorSignupScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsetsDirectional.all(20.0),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -62,4 +61,3 @@ class ContractorSignupScreen extends StatelessWidget {
     );
   }
 }
-

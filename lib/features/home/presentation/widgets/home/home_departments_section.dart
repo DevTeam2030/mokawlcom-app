@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/home/presentation/widgets/worker_item.dart';
@@ -29,7 +31,11 @@ class HomeDepartmentsSection extends StatelessWidget {
           Wrap(
             spacing: 30,
             runSpacing: 24,
-            children: List.generate(9, (index) => const WorkerItem()),
+            children: List.generate(9, (index) =>  WorkerItem(
+              onTap: () {
+                context.pushRoute(const ServicesRoute());
+              },
+            )),
           ),
         ],
       ),

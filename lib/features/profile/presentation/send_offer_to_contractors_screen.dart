@@ -28,7 +28,6 @@ class SendOfferToContractorsScreen extends StatelessWidget {
           vertical: 32,
         ),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

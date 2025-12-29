@@ -13,7 +13,6 @@ class PublicNotificationsScreen extends StatelessWidget {
     final theme = Theme.of(context);
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      physics: const BouncingScrollPhysics(),
       itemCount: 3,
       separatorBuilder: (context, index) =>
           const CustomDivider(thickness: 0.5, height: 1),

@@ -37,21 +37,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                stops: const[0.65, 0.8, .97],
-                begin: AlignmentDirectional.topCenter,
-                end: AlignmentDirectional.bottomCenter,
-                // tileMode: TileMode.decal,
-                colors: [
-                  ColorsManager.primaryColor.withValues(alpha: 0.8),
-                  ColorsManager.primaryColor,
-                  const Color(0xFF080C2D),
-                ],
-              ),
-            ),
-          ),
           PositionedDirectional(
             bottom: 40,
             start: 20,

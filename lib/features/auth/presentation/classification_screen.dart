@@ -1,5 +1,6 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
@@ -64,7 +65,6 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
               builder: (context, value, _) {
                 return Expanded(
                   child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
                     itemCount: 5,
                     separatorBuilder: (_, __) => const SizedBox(height: 16.0),
                     itemBuilder: (context, index) => ClassificationListItem(
@@ -78,12 +78,14 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
                 );
               },
             ),
-            const SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0),
             PrimaryButton(
-              onPressed: () {},
+              onPressed: () {
+                context.pushRoute(const SelectServicesRoute());
+              },
               text: LocaleKeys.next,
             ),
-            const SizedBox(height: 40.0,),
+            const SizedBox(height: 40.0),
           ],
         ),
       ),

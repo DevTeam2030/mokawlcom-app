@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
@@ -26,7 +27,6 @@ class CompleteDataScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsetsDirectional.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -141,7 +141,12 @@ class CompleteDataScreen extends StatelessWidget {
                 textInputAction: TextInputAction.done,
               ),
               const SizedBox(height: 40.0),
-              PrimaryButton(onPressed: () {}, text: LocaleKeys.save),
+              PrimaryButton(
+                onPressed: () {
+                  context.replaceRoute(const AuthenticatedRoute());
+                },
+                text: LocaleKeys.save,
+              ),
               const SizedBox(height: 40.0),
             ],
           ),

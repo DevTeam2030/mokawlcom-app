@@ -1,0 +1,5 @@
+Analyzing google_sign_in.dart...                                
+
+  error - This expression has a type of 'void' so its value can't be used - lib\core\services\google_sign_in.dart:20:39 - use_of_void_result
+
+1 issue found. (ran in 1.0s)

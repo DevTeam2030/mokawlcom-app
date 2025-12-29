@@ -12,23 +12,24 @@ class SubmittedPriceOffersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: Text(LocaleKeys.submittedPriceOffers,
-        style: theme.textTheme.headlineSmall!.copyWith(
-          color: ColorsManager.primaryColor,
-          fontWeight: FontWeight.bold,  
-        ),
+        title: Text(
+          LocaleKeys.submittedPriceOffers,
+          style: theme.textTheme.headlineSmall!.copyWith(
+            color: ColorsManager.primaryColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      physics: const BouncingScrollPhysics(),
-      itemCount: 5,
-      separatorBuilder: (context, index) =>
-          const CustomDivider(thickness: 0.8, height: 1),
-      itemBuilder: (context, index) => PriceOfferItem(theme: theme, isUser: true),
-    ),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemCount: 5,
+        separatorBuilder: (context, index) =>
+            const CustomDivider(thickness: 0.8, height: 1),
+        itemBuilder: (context, index) =>
+            PriceOfferItem(theme: theme, isUser: true),
+      ),
     );
   }
 }

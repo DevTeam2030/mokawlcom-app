@@ -27,10 +27,7 @@ class ProfileScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsetsDirectional.all(16.0),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: ContractorProfileWidget(theme: theme),
-        ),
+        child: SingleChildScrollView(child: VisitorProfileWidget(theme: theme)),
       ),
     );
   }

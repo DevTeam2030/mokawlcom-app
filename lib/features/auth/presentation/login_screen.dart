@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/services/google_sign_in_service.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
@@ -12,8 +14,19 @@ import 'package:mokawlcom_app/features/auth/presentation/widgets/login/login_for
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void dispose() {
+    GoogleSignInService.instance.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +35,6 @@ class LoginScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsetsDirectional.all(20.0),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -46,7 +58,11 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 16.0),
               const CustomAuthDivider(),
               const SizedBox(height: 16.0),
-              const GoogleAndAppleSignInWidgets(),
+              GoogleAndAppleSignInWidgets(
+                onGoogleTap: () async {
+                  await GoogleSignInService.instance.signIn();
+                },
+              ),
               const SizedBox(height: 16.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -65,6 +81,8 @@ class LoginScreen extends StatelessWidget {
                       LocaleKeys.signUp,
                       style: theme.textTheme.bodyMedium!.copyWith(
                         color: ColorsManager.primaryColor,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ),

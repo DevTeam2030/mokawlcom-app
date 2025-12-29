@@ -19,7 +19,6 @@ class ServiceDetailsListItem extends StatelessWidget {
             SizedBox(
               height: 168,
               child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsetsDirectional.symmetric(
                   horizontal: 10.0,
                 ),

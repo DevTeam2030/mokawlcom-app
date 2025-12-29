@@ -91,17 +91,16 @@ class OfferDetails extends StatelessWidget {
                     loader: AssetBytesLoader(AssetsManager.pdf),
                   ),
                   const SizedBox(width: 10),
-                  // 
-                  const Icon(
-                    Icons.image_outlined,
-                    size: 45,
-                    color: ColorsManager.primaryColor,
-                  ),
+                  // const VectorGraphic(
+                  //   loader: AssetBytesLoader(AssetsManager.image),
+                  // ),
+                  const Icon(Icons.image_outlined,size: 45,color: ColorsManager.primaryColor,),
                   const Spacer(),
                   TextButton(
                     onPressed: () async {
                       await showModalBottomSheet(
                         isScrollControlled: true,
+                        backgroundColor: Colors.white,
                         context: context,
                         builder: (context) => OfferPriceBottomSheet(
                           address: LocaleKeys.replyToThePriceOffer,

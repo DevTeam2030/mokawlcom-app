@@ -174,4 +174,6 @@ class LocaleKeys {
   static String get shareYourDealNow => 'share_your_deal_now'.tr();
   static String get submittedPriceOffers => 'submitted_price_offers'.tr();
   static String get submittedTo => 'submitted_to'.tr();
+  static String get pleaseEnterYourName => 'please_enter_your_name'.tr();
+  static String get pleaseEnterYourPhone => 'please_enter_your_phone'.tr();
 }

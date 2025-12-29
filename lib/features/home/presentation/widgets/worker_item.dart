@@ -5,7 +5,8 @@ import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 
 class WorkerItem extends StatelessWidget {
-  const WorkerItem({super.key});
+  const WorkerItem({super.key, required this.onTap});
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +14,7 @@ class WorkerItem extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          onTap: () {
-            context.pushRoute(const ServicesRoute());
-          },
+          onTap:onTap,
           child: Container(
             width: 90,
             height: 90,

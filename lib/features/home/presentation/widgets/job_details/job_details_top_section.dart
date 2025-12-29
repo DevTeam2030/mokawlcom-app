@@ -88,7 +88,6 @@ class JobDetailsTopSection extends StatelessWidget {
           SizedBox(
             height: 46,
             child: ListView.separated(
-              physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => const ServiceItem(),
               separatorBuilder: (_, _) => const SizedBox(width: 13),

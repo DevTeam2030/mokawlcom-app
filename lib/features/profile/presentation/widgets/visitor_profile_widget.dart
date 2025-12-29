@@ -1,28 +1,35 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/profile_item.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 class VisitorProfileWidget extends StatelessWidget {
-  const VisitorProfileWidget({super.key});
-
+  const VisitorProfileWidget({super.key, required this.theme});
+  final ThemeData theme;
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Column(
       children: [
         ProfileItem(
           theme: theme,
           title: LocaleKeys.login,
           icon: MyIcons.lockfill,
-          onTap: () {},
+          onTap: () {
+            context.pushRoute(const AuthRoute());
+          },
         ),
         const SizedBox(height: 16.0),
         ProfileItem(
           theme: theme,
           title: LocaleKeys.registerAsContractor,
           icon: MyIcons.contractor,
-          onTap: () {},
+          onTap: () {
+            context.replaceRoute(
+              const AuthRoute(children: [ClassificationRoute()]),
+            );
+          },
         ),
         const SizedBox(height: 16.0),
         ProfileItem(

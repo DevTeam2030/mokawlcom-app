@@ -11,9 +11,10 @@ class AssetsManager {
   static const String wrongAnimation = "assets/images/wrong.json";
   static const String homeBanner = "assets/images/home_banner.png";
   static const String contractor = "assets/images/contractor.png";
-  static const String subscriptionPackage =
-      "assets/images/subscription_package_inage.png";
+  static const String subscriptionPackageImageWithoutBackground =
+      "assets/images/subscription_package_image.png";
+  static const String subscriptionPackageImage =
+      "assets/images/subscription_package.png";
   static const String userImage = "assets/images/user.png";
   static const String pdf = "assets/svgs/pdf.svg";
-  static const String image = "assets/svgs/image.svg";
 }

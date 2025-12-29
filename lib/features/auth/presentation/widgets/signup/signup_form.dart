@@ -22,10 +22,10 @@ class SignupForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8.0),
-        const CustomTextFormField(
+         CustomTextFormField(
           type: TextInputType.name,
-          hintText: "Abdullah Ahmed",
-          autofillHints: [AutofillHints.name],
+          hintText: LocaleKeys.pleaseEnterYourName,
+          autofillHints: const [AutofillHints.name],
           textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 8.0),
@@ -37,9 +37,9 @@ class SignupForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8.0),
-        const CustomTextFormField(
+         const CustomTextFormField(
           type: TextInputType.emailAddress,
-          hintText: "example@gmail.com",
+          hintText: "user@example.com",
           autofillHints: [AutofillHints.email],
           textInputAction: TextInputAction.next,
         ),
@@ -79,10 +79,10 @@ class SignupForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8.0),
-        const CustomTextFormField(
+         CustomTextFormField(
           type: TextInputType.phone,
-          hintText: "Enter your phone number",
-          autofillHints: [AutofillHints.telephoneNumber],
+          hintText: LocaleKeys.pleaseEnterYourPhone,
+          autofillHints: const [AutofillHints.telephoneNumber],
           textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 16.0),

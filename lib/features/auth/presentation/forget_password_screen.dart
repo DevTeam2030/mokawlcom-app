@@ -12,7 +12,9 @@ class ForgetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           LocaleKeys.resetPassword,
@@ -21,42 +23,49 @@ class ForgetPasswordScreen extends StatelessWidget {
           ),
         ),
       ),
+
       body: Padding(
         padding: const EdgeInsetsDirectional.all(20.0),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-
-            children: [
-              const SizedBox(height: 60.0),
-              Align(
-                alignment: AlignmentDirectional.center,
-                child: Text(
-                  LocaleKeys.enterYourMail,
-                  style: theme.textTheme.bodyMedium!.copyWith(
-                    color: ColorsManager.secondaryColor,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 90.0),
-              Text(
-                LocaleKeys.email,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 12),
+            Align(
+              alignment: AlignmentDirectional.center,
+              child: Text(
+                LocaleKeys.enterYourMail,
+                textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium!.copyWith(
-                  color: ColorsManager.primaryColor,
-                  fontWeight: FontWeight.bold,
+                  color: ColorsManager.secondaryColor,
                 ),
               ),
-              const SizedBox(height: 8.0),
-              const CustomTextFormField(
-                type: TextInputType.emailAddress,
-                hintText: "example@gmail.com",
-                autofillHints: [AutofillHints.email],
-                textInputAction: TextInputAction.done,
+            ),
+
+            const SizedBox(height: 40),
+
+            Text(
+              LocaleKeys.email,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                color: ColorsManager.primaryColor,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 62),
-              PrimaryButton(onPressed: () {}, text: LocaleKeys.send),
-            ],
+            ),
+            const SizedBox(height: 8),
+            const CustomTextFormField(
+              type: TextInputType.emailAddress,
+              hintText: "user@example.com",
+              autofillHints: [AutofillHints.email],
+              textInputAction: TextInputAction.done,
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
+          child: PrimaryButton(
+            onPressed: () {},
+            text: LocaleKeys.send,
           ),
         ),
       ),

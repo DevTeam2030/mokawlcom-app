@@ -39,7 +39,7 @@
   "expiry_date": "Expiry Date",
   "upload_file": "Upload File",
   "reset_password": "Reset Password",
-  "enter_your_mail": "Enter your mail",
+  "enter_your_mail": "Please enter the email address registered in the app to receive a new password. You can check your inbox or spam folder.",
   "send": "Send",
   "subscription_packages": "Subscription Packages",
   "start_your_journey": "Start towards more clients and projects.Choose the package that suits you.",
@@ -116,5 +116,7 @@
   "send_offer_to_contractors": "Send Offer to Contractors",
   "share_your_deal_now": "Share your deal now and let contractors contact you",
   "submitted_price_offers": "Submitted Price Offers",
-  "submitted_to": "Submitted to"
+  "submitted_to": "Submitted to",
+  "please_enter_your_name":"Please enter your name",
+  "please_enter_your_phone":"Please enter your phone number"
 }

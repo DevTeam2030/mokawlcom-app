@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/password_field.dart';
@@ -39,7 +41,7 @@ class ContractorSignupForm extends StatelessWidget {
         const SizedBox(height: 8.0),
         const CustomTextFormField(
           type: TextInputType.emailAddress,
-          hintText: "example@gmail.com",
+          hintText: "user@example.com",
           autofillHints: [AutofillHints.email],
           textInputAction: TextInputAction.next,
         ),
@@ -85,9 +87,13 @@ class ContractorSignupForm extends StatelessWidget {
           textInputAction: TextInputAction.done,
         ),
         const SizedBox(height: 90.0),
-        PrimaryButton(onPressed: () {}, text: LocaleKeys.createAccount),
+        PrimaryButton(
+          onPressed: () {
+            context.pushRoute(const VerificationRoute());
+          },
+          text: LocaleKeys.createAccount,
+        ),
       ],
     );
   }
 }
-

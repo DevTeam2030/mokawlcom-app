@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/auth/presentation/subscription_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/widgets/upload_file/upload_file_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
@@ -33,6 +35,15 @@ class UploadFilesScreen extends StatelessWidget {
             theme: theme,
             text: LocaleKeys.authorizedSignatoryCard,
           ),
+          const Spacer(),
+          PrimaryButton(
+            
+            onPressed: () {
+              context.pushRoute(const SubscriptionRoute());
+            },
+            text: "علشان تروح للإسكرين إللى بعدها بس",
+          ),
+          const Spacer(),
         ],
       ),
     );
@@ -52,10 +63,7 @@ class UploadFileItem extends StatelessWidget {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
-          builder: (context) => UploadFileBottomSheet(
-            theme: theme,
-            text: text,
-          ),
+          builder: (context) => UploadFileBottomSheet(theme: theme, text: text),
         );
       },
       child: Container(

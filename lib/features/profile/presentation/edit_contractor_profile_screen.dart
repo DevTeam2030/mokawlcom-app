@@ -27,7 +27,6 @@ class EditContractorProfileScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsetsDirectional.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

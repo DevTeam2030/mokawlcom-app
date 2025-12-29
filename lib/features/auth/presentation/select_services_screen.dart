@@ -1,5 +1,6 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/presentation/widgets/services/services_list_item.dart';
@@ -74,7 +75,6 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
                 valueListenable: selectedIndices,
                 builder: (context, value, _) {
                   return ListView.separated(
-                    physics: const BouncingScrollPhysics(),
                     itemCount: 5,
                     separatorBuilder: (_, __) => const SizedBox(height: 16.0),
                     itemBuilder: (context, index) => ServicesListItem(
@@ -87,7 +87,12 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
               ),
             ),
             const SizedBox(height: 10.0),
-            PrimaryButton(onPressed: () {}, text: LocaleKeys.next),
+            PrimaryButton(
+              onPressed: () {
+                context.pushRoute(const ContractorSignupRoute());
+              },
+              text: LocaleKeys.next,
+            ),
             const SizedBox(height: 40.0),
           ],
         ),

@@ -34,7 +34,6 @@ class JobDetailsScreen extends StatelessWidget {
           vertical: 20.0,
         ),
         child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
           slivers: [
             const SliverToBoxAdapter(child: JobDetailsTopSection()),
             const SliverToBoxAdapter(child: SizedBox(height: 34)),

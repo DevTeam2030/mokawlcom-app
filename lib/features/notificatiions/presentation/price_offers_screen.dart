@@ -15,7 +15,6 @@ class PriceOffersScreen extends StatelessWidget {
     final theme = Theme.of(context);
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      physics: const BouncingScrollPhysics(),
       itemCount: 5,
       separatorBuilder: (context, index) =>
           const CustomDivider(thickness: 0.8, height: 1),

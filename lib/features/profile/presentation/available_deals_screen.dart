@@ -43,7 +43,6 @@ class AvailableDealsScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
               child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) =>
                     AvailableDealsItem(theme: theme),
                 separatorBuilder: (_, _) => const SizedBox(height: 20),
