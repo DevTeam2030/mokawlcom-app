@@ -14,21 +14,25 @@ class HomeSearchSection extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                suffixIcon: const Icon(
-                  Icons.search,
-                  color: ColorsManager.secondaryColor,
-                ),
-                hintText: LocaleKeys.searchForWordOrDepartment,
-                hintStyle: theme.textTheme.labelSmall!.copyWith(
-                  color: ColorsManager.primaryColor,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w400,
-                ),
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide(color: ColorsManager.secondaryColor),
+            child: SizedBox(
+              height: 54,
+              child: TextField(
+                onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                decoration: InputDecoration(
+                  suffixIcon: const Icon(
+                    Icons.search,
+                    color: ColorsManager.secondaryColor,
+                  ),
+                  hintText: LocaleKeys.searchForWordOrDepartment,
+                  hintStyle: theme.textTheme.labelSmall!.copyWith(
+                    color: ColorsManager.primaryColor,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderSide: BorderSide(color: ColorsManager.secondaryColor),
+                  ),
                 ),
               ),
             ),
@@ -44,7 +48,7 @@ class HomeSearchSection extends StatelessWidget {
                 builder: (context) => const HomeFilterBottomSheet(),
               );
             },
-            icon: const Icon(Icons.filter_list, size: 48),
+            icon: const Icon(Icons.filter_list, size: 46),
           ),
         ],
       ),

@@ -31,11 +31,14 @@ class HomeDepartmentsSection extends StatelessWidget {
           Wrap(
             spacing: 30,
             runSpacing: 24,
-            children: List.generate(9, (index) =>  WorkerItem(
-              onTap: () {
-                context.pushRoute(const ServicesRoute());
-              },
-            )),
+            children: List.generate(
+              9,
+              (index) => WorkerItem(
+                onTap: () {
+                  context.pushRoute(const ServicesRoute());
+                },
+              ),
+            ),
           ),
         ],
       ),

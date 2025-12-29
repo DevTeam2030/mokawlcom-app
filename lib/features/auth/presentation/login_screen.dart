@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: AlignmentDirectional.center,
                 child: TextButton(
                   onPressed: () {
-                    context.replaceRoute(const AuthenticatedRoute());
+                    context.pushRoute(const AuthenticatedRoute());
                   },
                   child: Text(
                     LocaleKeys.signInAsVisitor,

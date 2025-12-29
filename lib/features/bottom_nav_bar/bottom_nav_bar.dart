@@ -28,31 +28,39 @@ class BottomNavBarScreen extends StatelessWidget {
         return Container(
           height: 72,
           decoration: const BoxDecoration(
-            border: Border(top: BorderSide(color: Color(0xFFDEE7ED))),
+            border: Border(
+              top: BorderSide(color: Color(0xFFDEE7ED), width: 1.5),
+            ),
             borderRadius: BorderRadiusDirectional.only(
               topStart: Radius.circular(16),
               topEnd: Radius.circular(16),
             ),
           ),
-          child: BottomNavigationBar(
-            currentIndex: tabsRouter.activeIndex,
-            onTap: (index) {
-              tabsRouter.setActiveIndex(index);
-            },
-            items: [
-              BottomNavigationBarItem(
-                icon: const Icon(MyIcons.home),
-                label: LocaleKeys.home,
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(MyIcons.notification),
-                label: LocaleKeys.notifications,
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(MyIcons.user),
-                label: LocaleKeys.profile,
-              ),
-            ],
+          child: ClipRRect(
+            borderRadius: const BorderRadiusDirectional.only(
+              topStart: Radius.circular(16),
+              topEnd: Radius.circular(16),
+            ),
+            child: BottomNavigationBar(
+              currentIndex: tabsRouter.activeIndex,
+              onTap: (index) {
+                tabsRouter.setActiveIndex(index);
+              },
+              items: [
+                BottomNavigationBarItem(
+                  icon: const Icon(MyIcons.home),
+                  label: LocaleKeys.home,
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(MyIcons.notification),
+                  label: LocaleKeys.notifications,
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(MyIcons.user),
+                  label: LocaleKeys.profile,
+                ),
+              ],
+            ),
           ),
         );
       },
