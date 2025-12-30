@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
+import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
@@ -30,14 +31,14 @@ class SuccessDialog extends StatelessWidget {
               LocaleKeys.registerSuccess,
               style: theme.textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.w400,
-                color: const Color(0xFF235C04),
+                color: ColorsManager.successDark,
               ),
               textAlign: TextAlign.center,
             ),
             Text(
               LocaleKeys.yourAccountCreatedSuccessfully,
               style: theme.textTheme.titleMedium!.copyWith(
-                color: const Color(0xFF449C0A),
+                color: ColorsManager.successLight,
                 fontWeight: FontWeight.w400,
               ),
               textAlign: TextAlign.center,

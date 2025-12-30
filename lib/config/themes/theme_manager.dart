@@ -50,9 +50,9 @@ class ThemeManager {
         showSelectedLabels: true,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xFFFBFCFE),
+        backgroundColor: ColorsManager.surfaceColor,
         selectedItemColor: ColorsManager.primaryColor,
-        unselectedItemColor: Color(0xFF798AA3),
+        unselectedItemColor: ColorsManager.unselectedNavColor,
       ),
       tabBarTheme: const TabBarThemeData(
         labelColor: ColorsManager.primaryColor,

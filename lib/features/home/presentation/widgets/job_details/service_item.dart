@@ -13,7 +13,7 @@ class ServiceItem extends StatelessWidget {
         padding: const EdgeInsetsDirectional.all(12.0),
         height: 46,
         decoration: BoxDecoration(
-          color: const Color(0xFFF5F8FA),
+          color: ColorsManager.fillColor,
           borderRadius: BorderRadius.circular(24.0),
           border: Border.all(),
         ),

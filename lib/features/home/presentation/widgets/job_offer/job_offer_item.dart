@@ -17,7 +17,7 @@ class JobOfferItem extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color: const Color(0xFFD3DFE7), width: .8),
+        border: Border.all(color: ColorsManager.borderLightBlue, width: .8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,17 +98,17 @@ class JobOfferItem extends StatelessWidget {
                   ),
                   height: 26,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE9F0F4),
+                    color: ColorsManager.lightBlueBg,
                     borderRadius: BorderRadius.circular(8.0),
                     border: Border.all(
-                      color: const Color(0xFFD3DFE7),
+                      color: ColorsManager.borderLightBlue,
                       width: 1.2,
                     ),
                   ),
                   child: Text(
                     "مقاول",
                     style: theme.textTheme.bodySmall!.copyWith(
-                      color: const Color(0xFF858BBD),
+                      color: ColorsManager.labelColor,
                     ),
                   ),
                 ),

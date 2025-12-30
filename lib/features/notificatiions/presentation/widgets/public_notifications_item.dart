@@ -68,13 +68,18 @@ class PublicNotificationItem extends StatelessWidget {
                           Align(
                             alignment: AlignmentDirectional.centerStart,
                             child: TextButton(
-                              onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
-                              child:  Text(
+                              onPressed: () => Navigator.of(
+                                context,
+                                rootNavigator: true,
+                              ).pop(),
+                              child: Text(
                                 LocaleKeys.close,
-                                style: const TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -89,16 +94,13 @@ class PublicNotificationItem extends StatelessWidget {
                 begin: const Offset(0, 1),
                 end: Offset.zero,
               ).animate(anim),
-              child: FadeTransition(
-                opacity: anim,
-                child: child,
-              ),
+              child: FadeTransition(opacity: anim, child: child),
             );
           },
         );
       },
       child: ColoredBox(
-        color: const Color(0xFFFBFCFE),
+        color: ColorsManager.surfaceColor,
         child: Padding(
           padding: const EdgeInsetsDirectional.symmetric(
             vertical: 12,

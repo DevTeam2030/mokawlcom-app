@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
+import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
@@ -24,14 +25,14 @@ class ErrorDialog extends StatelessWidget {
               LocaleKeys.verificationCodeIsInvalid,
               style: theme.textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.w400,
-                color: const Color(0xFFA3072B),
+                color: ColorsManager.errorDark,
               ),
               textAlign: TextAlign.center,
             ),
             Text(
               LocaleKeys.pleaseEnterTheCorrectCode,
               style: theme.textTheme.titleMedium!.copyWith(
-                color: const Color(0xFFDD214F),
+                color: ColorsManager.errorLight,
                 fontWeight: FontWeight.w400,
               ),
               textAlign: TextAlign.center,

@@ -34,11 +34,15 @@ class _HomeBannerSectionState extends State<HomeBannerSection> {
         CarouselSlider.builder(
           itemCount: _images.length,
           itemBuilder: (context, index, _) {
-            return Image.asset(
-              _images[index],
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: 190,
+            return ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: Image.asset(
+                _images[index],
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 190,
+              ),
             );
           },
           options: CarouselOptions(

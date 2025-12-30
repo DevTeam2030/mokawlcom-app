@@ -35,7 +35,7 @@ class ServicesScreen extends StatelessWidget {
                   "مقاول",
                   style: theme.textTheme.bodyLarge!.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFF949494),
+                    color: ColorsManager.grayText,
                   ),
                 ),
               ),
@@ -43,11 +43,14 @@ class ServicesScreen extends StatelessWidget {
               Wrap(
                 spacing: 30,
                 runSpacing: 24,
-                children: List.generate(9, (index) =>  WorkerItem(
-                  onTap: () {
-                    context.pushRoute(const JobOffersRoute());
-                  },
-                )),
+                children: List.generate(
+                  9,
+                  (index) => WorkerItem(
+                    onTap: () {
+                      context.pushRoute(const JobOffersRoute());
+                    },
+                  ),
+                ),
               ),
             ],
           ),

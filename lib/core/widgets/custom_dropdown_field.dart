@@ -107,9 +107,9 @@ class CustomDropdownField<T> extends StatelessWidget {
               Text(
                 label ?? hintText!,
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: ColorsManager.primaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: ColorsManager.primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             const SizedBox(height: 12),
             _itemsList(context, state),
@@ -139,28 +139,29 @@ class CustomDropdownField<T> extends StatelessWidget {
           height: 1,
           indent: 24,
           endIndent: 24,
-          color: Color(0xFFEEEEEE),
+          color: ColorsManager.dividerGray,
         ),
         itemBuilder: (_, index) {
           final item = items[index];
           final selected = item.value == state.value;
 
           return ListTile(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 24,
+              vertical: 4,
+            ),
             title: DefaultTextStyle(
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: selected
-                        ? ColorsManager.primaryColor
-                        : Colors.black87,
-                    fontWeight:
-                        selected ? FontWeight.bold : FontWeight.normal,
-                  ),
+                color: selected ? ColorsManager.primaryColor : Colors.black87,
+                fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+              ),
               child: item.child,
             ),
             trailing: selected
-                ? const Icon(Icons.check_circle,
-                    color: ColorsManager.primaryColor)
+                ? const Icon(
+                    Icons.check_circle,
+                    color: ColorsManager.primaryColor,
+                  )
                 : null,
             onTap: () {
               state.didChange(item.value);

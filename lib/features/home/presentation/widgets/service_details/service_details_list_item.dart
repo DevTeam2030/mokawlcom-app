@@ -62,7 +62,7 @@ class ServiceDetailsListItem extends StatelessWidget {
                     LocaleKeys.serviceName,
                     style: theme.textTheme.bodySmall!.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: const Color(0xFF42498A),
+                      color: ColorsManager.accentTextColor,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -70,7 +70,7 @@ class ServiceDetailsListItem extends StatelessWidget {
                     "متوسط السعر : 100 ريال",
                     style: theme.textTheme.labelSmall!.copyWith(
                       fontSize: 10,
-                      color: const Color(0xFF4F378B),
+                      color: ColorsManager.purpleAccent,
                     ),
                   ),
                   const SizedBox(height: 10),

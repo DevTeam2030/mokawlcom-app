@@ -17,7 +17,7 @@ class JobDetailsTopSection extends StatelessWidget {
         vertical: 16.0,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFFFBFCFE),
+        color: ColorsManager.surfaceColor,
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(color: ColorsManager.secondaryColor, width: .5),
       ),
@@ -76,14 +76,17 @@ class JobDetailsTopSection extends StatelessWidget {
               padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
               height: 38,
               decoration: BoxDecoration(
-                color: const Color(0xFFE9F0F4),
+                color: ColorsManager.lightBlueBg,
                 borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(color: const Color(0xFFD3DFE7), width: 1.2),
+                border: Border.all(
+                  color: ColorsManager.borderLightBlue,
+                  width: 1.2,
+                ),
               ),
               child: Text(
                 "مقاول",
                 style: theme.textTheme.bodySmall!.copyWith(
-                  color: const Color(0xFF858BBD),
+                  color: ColorsManager.labelColor,
                 ),
               ),
             ),

@@ -31,7 +31,7 @@ class CompanyDetailsScreen extends StatelessWidget {
             'شركة المقاولات العامة هي شركة رائدة في مجال البناء والتشييد، تأسست منذ أكثر من 20 عامًا وتتمتع بسجل حافل من المشاريع الناجحة في مختلف القطاعات. نحن ملتزمون بتقديم أعلى مستويات الجودة والخدمة لعملائنا، مع التركيز على الابتكار والاستدامة في جميع جوانب عملنا. فريقنا من المهندسين والفنيين ذوي الخبرة يعملون بلا كلل لضمان تحقيق رؤى عملائنا وتحويلها إلى واقع ملموس.',
             style: theme.textTheme.bodySmall!.copyWith(
               height: 1.5,
-              color: const Color(0xFF42498A),
+              color: ColorsManager.accentTextColor,
             ),
           ),
           const SizedBox(height: 10),

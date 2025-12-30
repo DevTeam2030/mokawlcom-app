@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 
 class PasswordField extends StatefulWidget {
@@ -60,20 +61,19 @@ class _PasswordFieldState extends State<PasswordField> {
         return CustomTextFormField(
           type: TextInputType.visiblePassword,
           hintText: widget.hintText ?? "Password",
-          label: widget.label ,
+          label: widget.label,
           textInputAction: widget.textInputAction ?? TextInputAction.done,
-        //  prefixIcon: const Icon(Icons.lock_outline),
+          //  prefixIcon: const Icon(Icons.lock_outline),
           autofillHints: const [AutofillHints.password],
           obscureText: isObscured,
           suffixIcon: IconButton(
             onPressed: () => _obscureTextNotifier.value = !isObscured,
-            icon:
-                isObscured
-                    ? const Icon(Icons.visibility, color: Color(0xFFC9CECF),)
-                    : const Icon(
-                      Icons.visibility_off,
-                      color: Color(0xFFC9CECF),
-                    ),
+            icon: isObscured
+                ? const Icon(Icons.visibility, color: ColorsManager.iconGray)
+                : const Icon(
+                    Icons.visibility_off,
+                    color: ColorsManager.iconGray,
+                  ),
           ),
           onSaved: widget.onSaved,
           onSubmit: widget.onSubmit,

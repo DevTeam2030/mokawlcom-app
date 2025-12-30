@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -29,7 +30,7 @@ class BottomNavBarScreen extends StatelessWidget {
           height: 72,
           decoration: const BoxDecoration(
             border: Border(
-              top: BorderSide(color: Color(0xFFDEE7ED), width: 1.5),
+              top: BorderSide(color: ColorsManager.navBorderColor, width: 1.5),
             ),
             borderRadius: BorderRadiusDirectional.only(
               topStart: Radius.circular(16),

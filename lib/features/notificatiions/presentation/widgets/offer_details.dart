@@ -21,7 +21,7 @@ class OfferDetails extends StatelessWidget {
       child: Column(
         children: [
           ColoredBox(
-            color: isOffer ? const Color(0xFFFBFCFE) : Colors.transparent,
+            color: isOffer ? ColorsManager.surfaceColor : Colors.transparent,
             child: Column(
               children: [
                 Row(
@@ -61,7 +61,7 @@ class OfferDetails extends StatelessWidget {
                           style: theme.textTheme.labelSmall!.copyWith(
                             fontWeight: FontWeight.w400,
                             fontSize: 10,
-                            color: const Color(0xFF858BBD),
+                            color: ColorsManager.labelColor,
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -70,7 +70,7 @@ class OfferDetails extends StatelessWidget {
                           style: theme.textTheme.labelSmall!.copyWith(
                             fontWeight: FontWeight.w400,
                             fontSize: 10,
-                            color: const Color(0xFF858BBD),
+                            color: ColorsManager.labelColor,
                           ),
                         ),
                       ],
@@ -82,7 +82,7 @@ class OfferDetails extends StatelessWidget {
                   "هذا نص تجريبي لاختبار شكل و حجم النصوص و طريقة عرضها في هذا المكان",
                   style: theme.textTheme.labelSmall!.copyWith(
                     height: 1.5,
-                    color: const Color(0xFF42498A),
+                    color: ColorsManager.accentTextColor,
                   ),
                 ),
                 const SizedBox(height: 16),
