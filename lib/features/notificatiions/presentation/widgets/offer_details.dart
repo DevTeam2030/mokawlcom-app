@@ -13,113 +13,121 @@ class OfferDetails extends StatelessWidget {
   final bool isOffer;
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: isOffer ? const Color(0xFFFBFCFE) : Colors.transparent,
-      child: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: 14,
-          vertical: 16,
-        ),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: 14,
+        vertical: 16,
+      ),
+      child: Column(
+        children: [
+          ColoredBox(
+            color: isOffer ? const Color(0xFFFBFCFE) : Colors.transparent,
+            child: Column(
               children: [
-                Container(
-                  height: 48,
-                  width: 48,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: ColorsManager.primaryColor,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                    image: const DecorationImage(
-                      image: AssetImage(AssetsManager.appLogo),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 13),
-                Column(
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      isOffer
-                          ? LocaleKeys.offerPrice
-                          : LocaleKeys.messageAddress,
-                      style: theme.textTheme.labelMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: ColorsManager.primaryColor,
+                    Container(
+                      height: 48,
+                      width: 48,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: ColorsManager.primaryColor,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        image: const DecorationImage(
+                          image: AssetImage(AssetsManager.appLogo),
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(width: 13),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          isOffer
+                              ? LocaleKeys.offerPrice
+                              : LocaleKeys.messageAddress,
+                          style: theme.textTheme.labelMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: ColorsManager.primaryColor,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
 
-                    Text(
-                      "2-12-2025 16:00",
-                      style: theme.textTheme.labelSmall!.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10,
-                        color: ColorsManager.textColor,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      "${LocaleKeys.offeredBy} :  محمد احمد",
-                      style: theme.textTheme.labelSmall!.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10,
-                        color: ColorsManager.textColor,
-                      ),
+                        Text(
+                          "2-12-2025 16:00",
+                          style: theme.textTheme.labelSmall!.copyWith(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10,
+                            color: const Color(0xFF858BBD),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          "${LocaleKeys.offeredBy} :  محمد احمد",
+                          style: theme.textTheme.labelSmall!.copyWith(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10,
+                            color: const Color(0xFF858BBD),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
+                const SizedBox(height: 8),
+                Text(
+                  "هذا نص تجريبي لاختبار شكل و حجم النصوص و طريقة عرضها في هذا المكان",
+                  style: theme.textTheme.labelSmall!.copyWith(
+                    height: 1.5,
+                    color: const Color(0xFF42498A),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                if (isOffer)
+                  Row(
+                    children: [
+                      const VectorGraphic(
+                        loader: AssetBytesLoader(AssetsManager.pdf),
+                      ),
+                      const SizedBox(width: 10),
+                      // const VectorGraphic(
+                      //   loader: AssetBytesLoader(AssetsManager.image),
+                      // ),
+                      const Icon(
+                        Icons.image_outlined,
+                        size: 50,
+                        color: ColorsManager.primaryColor,
+                      ),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () async {
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.white,
+                            context: context,
+                            builder: (context) => OfferPriceBottomSheet(
+                              address: LocaleKeys.replyToThePriceOffer,
+                            ),
+                          );
+                        },
+                        child: Text(
+                          LocaleKeys.addReply,
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            color: ColorsManager.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
               ],
             ),
-            const SizedBox(height: 8),
-            Text(
-              "هذا نص تجريبي لاختبار شكل و حجم النصوص و طريقة عرضها في هذا المكان",
-              style: theme.textTheme.labelSmall!.copyWith(
-                height: 1.5,
-                color: ColorsManager.textColor,
-              ),
-            ),
-            const SizedBox(height: 16),
-            if (isOffer)
-              Row(
-                children: [
-                  const VectorGraphic(
-                    loader: AssetBytesLoader(AssetsManager.pdf),
-                  ),
-                  const SizedBox(width: 10),
-                  // const VectorGraphic(
-                  //   loader: AssetBytesLoader(AssetsManager.image),
-                  // ),
-                  const Icon(Icons.image_outlined,size: 45,color: ColorsManager.primaryColor,),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () async {
-                      await showModalBottomSheet(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.white,
-                        context: context,
-                        builder: (context) => OfferPriceBottomSheet(
-                          address: LocaleKeys.replyToThePriceOffer,
-                        ),
-                      );
-                    },
-                    child: Text(
-                      LocaleKeys.addReply,
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        color: ColorsManager.primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            if (isOffer) const CustomDivider(thickness: 0.5, height: 1),
-          ],
-        ),
+          ),
+          if (isOffer) const CustomDivider(thickness: 0.5, height: 3),
+        ],
       ),
     );
   }

@@ -34,21 +34,19 @@ class _HomeBannerSectionState extends State<HomeBannerSection> {
         CarouselSlider.builder(
           itemCount: _images.length,
           itemBuilder: (context, index, _) {
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-
-              child: Image.asset(
-                _images[index],
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+            return Image.asset(
+              _images[index],
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: 190,
             );
           },
           options: CarouselOptions(
             height: 190,
             autoPlay: true,
-            viewportFraction: 0.98,
-            enlargeCenterPage: true,
+            viewportFraction: 1.1,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            padEnds: false,
             onPageChanged: (index, _) {
               _currentIndex.value = index;
             },

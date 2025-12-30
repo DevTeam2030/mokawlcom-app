@@ -12,9 +12,11 @@ class OfferPriceBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: 20,
-        vertical: 32,
+      padding: const EdgeInsetsDirectional.only(
+        start: 20,
+        end: 20,
+        bottom: 32,
+        top: 10
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
