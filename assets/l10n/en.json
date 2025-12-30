@@ -23,7 +23,7 @@
   "next": "Next",
   "company_name": "Company Name",
   "verification_code": "Verification_code",
-  "verification_code_sent": "Verification code sent to your mail",
+  "verification_code_sent": "The verification code has been sent to your email address.Please check your inbox or spam folder.",
   "verify": "Verify",
   "register_success": "Register Success",
   "your_account_created_successfully": "Your account created successfully",
@@ -118,5 +118,6 @@
   "submitted_price_offers": "Submitted Price Offers",
   "submitted_to": "Submitted to",
   "please_enter_your_name":"Please enter your name",
-  "please_enter_your_phone":"Please enter your phone number"
+  "please_enter_your_phone":"Please enter your phone number",
+  "please_enter_company_name":"Please enter company name"
 }

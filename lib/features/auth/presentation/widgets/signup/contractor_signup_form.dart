@@ -24,10 +24,10 @@ class ContractorSignupForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8.0),
-        const CustomTextFormField(
+         CustomTextFormField(
           type: TextInputType.name,
-          hintText: "Enter company name",
-          autofillHints: [AutofillHints.organizationName],
+          hintText: LocaleKeys.pleaseEnterCompanyName,
+          autofillHints: const [AutofillHints.organizationName],
           textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 8.0),
@@ -80,10 +80,10 @@ class ContractorSignupForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8.0),
-        const CustomTextFormField(
+         CustomTextFormField(
           type: TextInputType.phone,
-          hintText: "Enter your phone number",
-          autofillHints: [AutofillHints.telephoneNumber],
+          hintText:LocaleKeys.pleaseEnterYourPhone,
+          autofillHints: const [AutofillHints.telephoneNumber],
           textInputAction: TextInputAction.done,
         ),
         const SizedBox(height: 90.0),

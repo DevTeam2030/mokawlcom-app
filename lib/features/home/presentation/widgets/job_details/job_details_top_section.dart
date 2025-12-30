@@ -17,6 +17,7 @@ class JobDetailsTopSection extends StatelessWidget {
         vertical: 16.0,
       ),
       decoration: BoxDecoration(
+        color: const Color(0xFFE9F0F4),
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(color: ColorsManager.secondaryColor, width: .5),
       ),
@@ -44,6 +45,7 @@ class JobDetailsTopSection extends StatelessWidget {
                 'شركة المقاولات العامة',
                 style: theme.textTheme.bodySmall!.copyWith(
                   fontWeight: FontWeight.bold,
+                  color: ColorsManager.primaryColor,
                 ),
               ),
               const SizedBox(height: 5),
@@ -71,17 +73,19 @@ class JobDetailsTopSection extends StatelessWidget {
           FittedBox(
             child: Container(
               alignment: AlignmentDirectional.center,
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
               height: 38,
               decoration: BoxDecoration(
-                color: ColorsManager.fillColor,
+                color: const Color(0xFFE9F0F4),
                 borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(
-                  color: ColorsManager.secondaryColor,
-                  width: .3,
+                border: Border.all(color: const Color(0xFFD3DFE7), width: 1.2),
+              ),
+              child: Text(
+                "مقاول",
+                style: theme.textTheme.bodySmall!.copyWith(
+                  color: const Color(0xFF858BBD),
                 ),
               ),
-              child: Text("مقاول", style: theme.textTheme.bodySmall),
             ),
           ),
           const SizedBox(height: 20),

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/auth/presentation/widgets/signup/contractor_signup_form.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -12,24 +13,21 @@ class ContractorSignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          LocaleKeys.registerNewContractor,
+          style: theme.textTheme.headlineSmall!.copyWith(
+            fontWeight: FontWeight.w700,
+            color: ColorsManager.primaryColor,
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsetsDirectional.all(20.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 50.0),
-              Align(
-                alignment: AlignmentDirectional.center,
-                child: Text(
-                  LocaleKeys.registerNewContractor,
-                  style: theme.textTheme.headlineSmall!.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: ColorsManager.primaryColor,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16.0),
               const ContractorSignupForm(),
               const SizedBox(height: 16.0),
               Row(
@@ -43,12 +41,14 @@ class ContractorSignupScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      context.pop();
+                      context.navigateTo(const LoginRoute());
                     },
                     child: Text(
                       LocaleKeys.login,
                       style: theme.textTheme.bodyMedium!.copyWith(
                         color: ColorsManager.primaryColor,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ),

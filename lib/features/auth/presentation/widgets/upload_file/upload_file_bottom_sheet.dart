@@ -26,6 +26,17 @@ class UploadFileBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Align(
+            alignment: AlignmentDirectional.center,
+            child: Text(
+              text,
+              style: theme.textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: ColorsManager.primaryColor,
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
           Text(
             text,
             style: theme.textTheme.bodyLarge!.copyWith(
@@ -80,7 +91,7 @@ class UploadFileBottomSheet extends StatelessWidget {
             ),
             child: Column(
               children: [
-                 const Icon(
+                const Icon(
                   MyIcons.uploadfile,
                   size: 48,
                   color: ColorsManager.secondaryColor,

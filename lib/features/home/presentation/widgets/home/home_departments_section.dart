@@ -23,7 +23,7 @@ class HomeDepartmentsSection extends StatelessWidget {
               LocaleKeys.departments,
               style: theme.textTheme.labelMedium!.copyWith(
                 fontWeight: FontWeight.bold,
-                color: ColorsManager.textColor,
+                color: const Color(0xFF949494),
               ),
             ),
           ),

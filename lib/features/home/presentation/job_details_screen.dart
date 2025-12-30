@@ -12,8 +12,24 @@ import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 @RoutePage()
-class JobDetailsScreen extends StatelessWidget {
-  const JobDetailsScreen({super.key});
+class JobDetailsScreen extends StatefulWidget {
+  const JobDetailsScreen({super.key, this.isOfferrice = false});
+  final bool isOfferrice;
+
+  @override
+  State<JobDetailsScreen> createState() => _JobDetailsScreenState();
+}
+
+class _JobDetailsScreenState extends State<JobDetailsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.isOfferrice) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showBottomSheet(context);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +45,10 @@ class JobDetailsScreen extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: 16.0,
-          vertical: 20.0,
+        padding: const EdgeInsetsDirectional.only(
+          start: 16.0,
+          end: 16.0,
+          bottom: 20.0,
         ),
         child: CustomScrollView(
           slivers: [
@@ -76,13 +93,7 @@ class JobDetailsScreen extends StatelessWidget {
                       const SizedBox(height: 24),
                       PrimaryButton(
                         onPressed: () async {
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) => OfferPriceBottomSheet(
-                              address: LocaleKeys.offerPrice,
-                            ),
-                          );
+                          await _showBottomSheet(context);
                         },
                         text: LocaleKeys.offerPrice,
                       ),
@@ -94,6 +105,17 @@ class JobDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _showBottomSheet(BuildContext context) async {
+    if (!mounted) return;
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      context: context,
+      builder: (context) =>
+          OfferPriceBottomSheet(address: LocaleKeys.offerPrice),
     );
   }
 }

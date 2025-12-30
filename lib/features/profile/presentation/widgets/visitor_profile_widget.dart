@@ -26,7 +26,7 @@ class VisitorProfileWidget extends StatelessWidget {
           title: LocaleKeys.registerAsContractor,
           icon: MyIcons.contractor,
           onTap: () {
-            context.replaceRoute(
+            context.pushRoute(
               const AuthRoute(children: [ClassificationRoute()]),
             );
           },

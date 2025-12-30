@@ -30,14 +30,11 @@ class ForgetPasswordScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 12),
-            Align(
-              alignment: AlignmentDirectional.center,
-              child: Text(
-                LocaleKeys.enterYourMail,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium!.copyWith(
-                  color: ColorsManager.secondaryColor,
-                ),
+            Text(
+              LocaleKeys.enterYourMail,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                color: ColorsManager.secondaryColor,
               ),
             ),
 

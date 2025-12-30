@@ -63,6 +63,7 @@ class UploadFileItem extends StatelessWidget {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
+          backgroundColor: Colors.white,
           builder: (context) => UploadFileBottomSheet(theme: theme, text: text),
         );
       },
@@ -79,7 +80,7 @@ class UploadFileItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const Icon(MyIcons.file, color: ColorsManager.secondaryColor),
+            const Icon(MyIcons.file, color: ColorsManager.primaryColor),
             const SizedBox(width: 14),
             Text(
               text,

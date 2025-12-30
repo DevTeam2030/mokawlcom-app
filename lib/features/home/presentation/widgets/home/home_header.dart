@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -54,7 +56,10 @@ class HomeHeader extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           InkWell(
-            onTap: () {},
+            onTap: () {
+             final tabsRouter = AutoTabsRouter.of(context);
+    tabsRouter.setActiveIndex(1); 
+            },
             child: const Icon(
               MyIcons.boldnotification,
               color: ColorsManager.primaryColor,

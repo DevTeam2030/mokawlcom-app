@@ -17,7 +17,7 @@ class JobOfferItem extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color: ColorsManager.secondaryColor, width: .5),
+        border: Border.all(color: const Color(0xFFD3DFE7), width: .8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,21 +31,31 @@ class JobOfferItem extends StatelessWidget {
             ),
             child: Row(
               children: [
-                const CircleAvatar(
-                  radius: 26,
-                  backgroundColor: ColorsManager.secondaryColor,
-                  child: CircleAvatar(
-                    radius: 25,
-                    backgroundImage: AssetImage(AssetsManager.logoImage),
+                InkWell(
+                  onTap: () {
+                    context.pushRoute(JobDetailsRoute());
+                  },
+                  child: const CircleAvatar(
+                    radius: 26,
+                    backgroundColor: ColorsManager.secondaryColor,
+                    child: CircleAvatar(
+                      radius: 25,
+                      backgroundImage: AssetImage(AssetsManager.logoImage),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 14),
                 Column(
                   children: [
-                    Text(
-                      'شركة المقاولات العامة',
-                      style: theme.textTheme.bodySmall!.copyWith(
-                        fontWeight: FontWeight.bold,
+                    InkWell(
+                      onTap: () {
+                        context.pushRoute(JobDetailsRoute());
+                      },
+                      child: Text(
+                        'شركة المقاولات العامة',
+                        style: theme.textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -83,24 +93,39 @@ class JobOfferItem extends StatelessWidget {
                 const Spacer(),
                 Container(
                   alignment: AlignmentDirectional.center,
-                  height: 26,
-                  width: 77,
-                  decoration: BoxDecoration(
-                    color: ColorsManager.fillColor,
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(color: ColorsManager.secondaryColor),
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: 20,
                   ),
-                  child: Text("مقاول", style: theme.textTheme.bodySmall),
+                  height: 26,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE9F0F4),
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(
+                      color: const Color(0xFFD3DFE7),
+                      width: 1.2,
+                    ),
+                  ),
+                  child: Text(
+                    "مقاول",
+                    style: theme.textTheme.bodySmall!.copyWith(
+                      color: const Color(0xFF858BBD),
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 17.0),
-            child: Text(
-              LocaleKeys.hintAboutCompany,
-              style: theme.textTheme.bodySmall!.copyWith(
-                fontWeight: FontWeight.bold,
+            child: InkWell(
+              onTap: () {
+                context.pushRoute(JobDetailsRoute());
+              },
+              child: Text(
+                LocaleKeys.hintAboutCompany,
+                style: theme.textTheme.bodySmall!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -140,7 +165,7 @@ class JobOfferItem extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    context.pushRoute(const JobDetailsRoute());
+                    context.pushRoute(JobDetailsRoute(isOfferrice: true));
                   },
                   child: Text(
                     LocaleKeys.showPrice,

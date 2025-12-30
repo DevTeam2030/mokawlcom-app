@@ -33,25 +33,22 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Scaffold(
+      appBar: AppBar(
+        leading: const AutoLeadingButton(),
+        title: Text(
+          LocaleKeys.registerNewContractor,
+          style: theme.textTheme.headlineSmall!.copyWith(
+            fontWeight: FontWeight.w700,
+            color: ColorsManager.primaryColor,
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsetsDirectional.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 50.0),
-            Align(
-              alignment: AlignmentDirectional.center,
-              child: Text(
-                LocaleKeys.registerNewContractor,
-                style: theme.textTheme.headlineSmall!.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: ColorsManager.primaryColor,
-                ),
-              ),
-            ),
-            const SizedBox(height: 30.0),
             Text(
               LocaleKeys.chooseClassification,
               style: theme.textTheme.bodyLarge!.copyWith(
@@ -59,7 +56,7 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(height: 30.0),
+            const SizedBox(height: 20,),
             ValueListenableBuilder<int>(
               valueListenable: activeIndex,
               builder: (context, value, _) {

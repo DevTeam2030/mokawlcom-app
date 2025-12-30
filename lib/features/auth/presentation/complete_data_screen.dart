@@ -41,10 +41,10 @@ class CompleteDataScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              const CustomTextFormField(
+               CustomTextFormField(
                 type: TextInputType.name,
-                hintText: "Abdullah Ahmed",
-                autofillHints: [AutofillHints.name],
+                hintText: LocaleKeys.pleaseEnterYourName,
+                autofillHints: const [AutofillHints.name],
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 8.0),
@@ -56,10 +56,10 @@ class CompleteDataScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              const CustomTextFormField(
+              CustomTextFormField(
                 type: TextInputType.phone,
-                hintText: "Enter your phone number",
-                autofillHints: [AutofillHints.telephoneNumber],
+                hintText: LocaleKeys.pleaseEnterYourPhone,
+                autofillHints: const [AutofillHints.telephoneNumber],
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 8.0),
@@ -73,7 +73,7 @@ class CompleteDataScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               const CustomTextFormField(
                 type: TextInputType.phone,
-                hintText: "WhatsApp number",
+                hintText: "966132627722+",
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 8.0),
@@ -82,6 +82,7 @@ class CompleteDataScreen extends StatelessWidget {
                 style: theme.textTheme.titleMedium!.copyWith(
                   color: ColorsManager.primaryColor,
                   fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 8.0),
@@ -95,7 +96,7 @@ class CompleteDataScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               const CustomTextFormField(
                 type: TextInputType.text,
-                hintText: "snap_user",
+                hintText: "@snap_user",
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 8.0),

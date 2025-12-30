@@ -35,7 +35,7 @@ class ServicesScreen extends StatelessWidget {
                   "مقاول",
                   style: theme.textTheme.bodyLarge!.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: ColorsManager.secondaryColor,
+                    color: const Color(0xFF949494),
                   ),
                 ),
               ),

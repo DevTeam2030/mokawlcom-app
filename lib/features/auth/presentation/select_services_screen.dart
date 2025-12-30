@@ -45,23 +45,20 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          LocaleKeys.registerNewContractor,
+          style: theme.textTheme.headlineSmall!.copyWith(
+            fontWeight: FontWeight.w700,
+            color: ColorsManager.primaryColor,
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsetsDirectional.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 50.0),
-            Align(
-              alignment: AlignmentDirectional.center,
-              child: Text(
-                LocaleKeys.registerNewContractor,
-                style: theme.textTheme.headlineSmall!.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: ColorsManager.primaryColor,
-                ),
-              ),
-            ),
-            const SizedBox(height: 30.0),
             Text(
               LocaleKeys.chooseServices,
               style: theme.textTheme.bodyLarge!.copyWith(
@@ -69,7 +66,7 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(height: 30.0),
+            const SizedBox(height: 20.0),
             Expanded(
               child: ValueListenableBuilder<Set<int>>(
                 valueListenable: selectedIndices,
