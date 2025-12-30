@@ -179,4 +179,5 @@ class LocaleKeys {
   static String get pleaseEnterCompanyName => 'please_enter_company_name'.tr();
   static String get showMore => 'show_more'.tr();
   static String get showLess => 'show_less'.tr();
+  static String get close => 'close'.tr();
 }

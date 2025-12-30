@@ -30,7 +30,7 @@ class NotificationsScreen extends StatelessWidget {
 
             return Column(
               children: [
-                const SizedBox(height: 24),
+                const SizedBox(height: 10),
                 TabBar(
                   controller: controller,
                   indicatorSize: TabBarIndicatorSize.tab,
