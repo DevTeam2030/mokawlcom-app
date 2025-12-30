@@ -18,7 +18,7 @@ class CompanyDetailsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Text(
             LocaleKeys.hintAboutCompany,
             style: theme.textTheme.bodySmall!.copyWith(
@@ -29,9 +29,12 @@ class CompanyDetailsScreen extends StatelessWidget {
           const CustomDivider(),
           Text(
             'شركة المقاولات العامة هي شركة رائدة في مجال البناء والتشييد، تأسست منذ أكثر من 20 عامًا وتتمتع بسجل حافل من المشاريع الناجحة في مختلف القطاعات. نحن ملتزمون بتقديم أعلى مستويات الجودة والخدمة لعملائنا، مع التركيز على الابتكار والاستدامة في جميع جوانب عملنا. فريقنا من المهندسين والفنيين ذوي الخبرة يعملون بلا كلل لضمان تحقيق رؤى عملائنا وتحويلها إلى واقع ملموس.',
-            style: theme.textTheme.bodySmall!.copyWith(height: 1.5),
+            style: theme.textTheme.bodySmall!.copyWith(
+              height: 1.5,
+              color: const Color(0xFF42498A),
+            ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
           Text(
             LocaleKeys.commuincationsData,
             style: theme.textTheme.bodyMedium!.copyWith(

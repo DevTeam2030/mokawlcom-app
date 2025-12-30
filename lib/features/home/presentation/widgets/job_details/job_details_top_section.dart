@@ -17,7 +17,7 @@ class JobDetailsTopSection extends StatelessWidget {
         vertical: 16.0,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFFE9F0F4),
+        color: const Color(0xFFFBFCFE),
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(color: ColorsManager.secondaryColor, width: .5),
       ),

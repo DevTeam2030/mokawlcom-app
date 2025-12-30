@@ -56,7 +56,7 @@ class ThemeManager {
       ),
       tabBarTheme: const TabBarThemeData(
         labelColor: ColorsManager.primaryColor,
-        unselectedLabelColor: Color(0xFFB7BBDE),
+        unselectedLabelColor: ColorsManager.secondaryColor,
         dividerColor: Colors.transparent,
         indicatorColor: ColorsManager.primaryColor,
         indicatorSize: TabBarIndicatorSize.tab,
@@ -64,6 +64,7 @@ class ThemeManager {
         unselectedLabelStyle: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.bold,
+          color: ColorsManager.secondaryColor,
         ),
       ),
     );

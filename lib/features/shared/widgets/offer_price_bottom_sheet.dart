@@ -26,7 +26,8 @@ class OfferPriceBottomSheet extends StatelessWidget {
             child: Text(
               address,
               style: theme.textTheme.headlineSmall!.copyWith(
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.bold,
+                color: ColorsManager.primaryColor,
               ),
             ),
           ),
@@ -35,6 +36,7 @@ class OfferPriceBottomSheet extends StatelessWidget {
             LocaleKeys.price,
             style: theme.textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.w400,
+              color: ColorsManager.primaryColor,
             ),
           ),
           const SizedBox(height: 8),
@@ -47,6 +49,7 @@ class OfferPriceBottomSheet extends StatelessWidget {
             LocaleKeys.message,
             style: theme.textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.w400,
+              color: ColorsManager.primaryColor,
             ),
           ),
           const SizedBox(height: 8),
@@ -60,6 +63,7 @@ class OfferPriceBottomSheet extends StatelessWidget {
             LocaleKeys.attachAFile,
             style: theme.textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.w400,
+              color: ColorsManager.primaryColor,
             ),
           ),
           const SizedBox(height: 8),

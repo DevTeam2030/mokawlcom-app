@@ -35,7 +35,6 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F3F6),
       appBar: AppBar(
         actions: [
           IconButton(
@@ -53,7 +52,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
         child: CustomScrollView(
           slivers: [
             const SliverToBoxAdapter(child: JobDetailsTopSection()),
-            const SliverToBoxAdapter(child: SizedBox(height: 34)),
+            const SliverToBoxAdapter(child: SizedBox(height: 10)),
 
             SliverFillRemaining(
               child: AutoTabsRouter.tabBar(
@@ -83,14 +82,13 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             .copyWith(fontWeight: FontWeight.bold),
                         onTap: tabsRouter.setActiveIndex,
                         tabs: [
-                          Tab(text: LocaleKeys.companyDetails),
+                          Tab(text: LocaleKeys.companyDetails,),
                           Tab(text: LocaleKeys.services),
                         ],
                       ),
-
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 10),
                       Expanded(child: child),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 10),
                       PrimaryButton(
                         onPressed: () async {
                           await _showBottomSheet(context);

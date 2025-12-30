@@ -119,5 +119,7 @@
   "submitted_to": "مقدم إلى",
   "please_enter_your_name": "من فضلك أدخل اسمك",
   "please_enter_your_phone": "من فضلك أدخل رقم هاتفك",
-  "please_enter_company_name": "من فضلك أدخل اسم الشركة"
+  "please_enter_company_name": "من فضلك أدخل اسم الشركة",
+  "show_more":"عرض المزيد",
+  "show_less":"عرض أقل"
 }
