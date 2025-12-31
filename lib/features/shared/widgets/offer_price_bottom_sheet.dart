@@ -16,7 +16,7 @@ class OfferPriceBottomSheet extends StatelessWidget {
         start: 20,
         end: 20,
         bottom: 32,
-        top: 10
+        top: 10,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -42,9 +42,10 @@ class OfferPriceBottomSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          const CustomTextFormField(
+          CustomTextFormField(
             textInputAction: TextInputAction.next,
             type: TextInputType.number,
+            fieldName: LocaleKeys.price,
           ),
           const SizedBox(height: 16),
           Text(
@@ -55,10 +56,11 @@ class OfferPriceBottomSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          const CustomTextFormField(
+          CustomTextFormField(
             textInputAction: TextInputAction.next,
             type: TextInputType.text,
             maxLines: 5,
+            fieldName: LocaleKeys.message,
           ),
           const SizedBox(height: 16),
           Text(

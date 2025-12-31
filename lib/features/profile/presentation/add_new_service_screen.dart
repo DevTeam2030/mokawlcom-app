@@ -41,10 +41,11 @@ class AddNewServiceScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              const CustomTextFormField(
+              CustomTextFormField(
                 textInputAction: TextInputAction.next,
                 type: TextInputType.text,
                 hintText: "Enter service name",
+                fieldName: LocaleKeys.serviceName,
               ),
               const SizedBox(height: 16),
               Text(
@@ -82,10 +83,11 @@ class AddNewServiceScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              const CustomTextFormField(
+              CustomTextFormField(
                 textInputAction: TextInputAction.next,
                 type: TextInputType.number,
                 hintText: "Enter average price",
+                fieldName: LocaleKeys.priceAverage,
               ),
               const SizedBox(height: 16),
               Text(
@@ -96,11 +98,12 @@ class AddNewServiceScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              const CustomTextFormField(
+              CustomTextFormField(
                 textInputAction: TextInputAction.next,
                 type: TextInputType.multiline,
                 maxLines: 5,
                 hintText: "Enter service details",
+                fieldName: LocaleKeys.serviceDetails,
               ),
               const SizedBox(height: 16),
               Text(

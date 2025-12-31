@@ -48,11 +48,12 @@ class ForgetPasswordScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            const CustomTextFormField(
+            CustomTextFormField(
               type: TextInputType.emailAddress,
               hintText: "user@example.com",
               autofillHints: [AutofillHints.email],
               textInputAction: TextInputAction.done,
+              fieldName: LocaleKeys.email,
             ),
           ],
         ),
@@ -60,10 +61,7 @@ class ForgetPasswordScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
-          child: PrimaryButton(
-            onPressed: () {},
-            text: LocaleKeys.send,
-          ),
+          child: PrimaryButton(onPressed: () {}, text: LocaleKeys.send),
         ),
       ),
     );

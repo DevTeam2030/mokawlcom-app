@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
+import 'package:mokawlcom_app/locale_keys.dart';
 
 class PasswordField extends StatefulWidget {
   const PasswordField({
@@ -10,6 +11,8 @@ class PasswordField extends StatefulWidget {
     this.hintText,
     this.label,
     this.textInputAction,
+    this.validator,
+    this.onChanged,
   });
 
   final void Function(String?)? onSaved;
@@ -17,6 +20,8 @@ class PasswordField extends StatefulWidget {
   final String? hintText;
   final String? label;
   final TextInputAction? textInputAction;
+  final String? Function(String?)? validator;
+  final void Function(String?)? onChanged;
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
@@ -33,23 +38,12 @@ class _PasswordFieldState extends State<PasswordField> {
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return "Password is required";
+      return LocaleKeys.passwordIsRequired;
     }
 
-    final hasUppercase = value.contains(RegExp(r'[A-Z]'));
-    final hasLowercase = value.contains(RegExp(r'[a-z]'));
-    final hasDigit = value.contains(RegExp(r'\d'));
+    final minLength = value.length >= 6;
 
-    final minLength = value.length >= 8;
-
-    if (!hasUppercase) {
-      return "Password must contain at least one uppercase letter";
-    }
-    if (!hasLowercase) {
-      return "Password must contain at least one lowercase letter";
-    }
-    if (!hasDigit) return "Password must contain at least one number";
-    if (!minLength) return "Password must be at least 8 characters long";
+    if (!minLength) return LocaleKeys.passwordIsTooShort;
     return null;
   }
 
@@ -77,7 +71,9 @@ class _PasswordFieldState extends State<PasswordField> {
           ),
           onSaved: widget.onSaved,
           onSubmit: widget.onSubmit,
-          validator: _validatePassword,
+          onChanged: widget.onChanged,
+          validator: widget.validator ?? _validatePassword,
+          fieldName: LocaleKeys.password,
         );
       },
     );

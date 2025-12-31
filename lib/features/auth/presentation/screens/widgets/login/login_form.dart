@@ -24,11 +24,12 @@ class LoginForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8.0),
-        const CustomTextFormField(
+        CustomTextFormField(
           type: TextInputType.text,
           hintText: "example@gmai.com",
           autofillHints: [AutofillHints.email],
           textInputAction: TextInputAction.next,
+          fieldName: LocaleKeys.email,
         ),
         const SizedBox(height: 8.0),
         Text(

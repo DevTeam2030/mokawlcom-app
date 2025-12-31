@@ -53,6 +53,12 @@ dependencies:
   equatable: ^2.0.7
   sign_in_with_apple: ^7.0.1
   crypto: ^3.0.7
+  pretty_dio_logger: ^1.4.0
+  dartz: ^0.10.1
+  bloc: ^9.1.0
+  flutter_bloc: ^9.1.1
+  firebase_messaging: ^16.1.0
+  awesome_notifications: ^0.10.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

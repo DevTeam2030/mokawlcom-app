@@ -122,5 +122,11 @@
   "please_enter_company_name":"Please enter company name",
   "show_more":"Show more",
   "show_less":"Show less",
-  "close":"Close"
+  "close":"Close",
+  "password_is_required":"Password is required",
+  "password_is_too_short":"Password must be at least 6 characters long",
+  "confirmation_password_is_required":"Confirmation password is required",
+  "confirmation_password_is_too_short":"Confirmation password must be at least 6 characters long",
+  "passwords_do_not_match":"Passwords do not match",
+  "required":"Required"
 }

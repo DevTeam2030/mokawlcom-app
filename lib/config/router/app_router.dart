@@ -1,15 +1,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:mokawlcom_app/features/auth/presentation/classification_screen.dart';
-import 'package:mokawlcom_app/features/auth/presentation/complete_data_screen.dart';
-import 'package:mokawlcom_app/features/auth/presentation/contractor_signup_screen.dart';
-import 'package:mokawlcom_app/features/auth/presentation/forget_password_screen.dart';
-import 'package:mokawlcom_app/features/auth/presentation/login_screen.dart';
-import 'package:mokawlcom_app/features/auth/presentation/select_services_screen.dart';
-import 'package:mokawlcom_app/features/auth/presentation/subscription_screen.dart';
-import 'package:mokawlcom_app/features/auth/presentation/upload_files_screen.dart';
-import 'package:mokawlcom_app/features/auth/presentation/user_signup_screen.dart';
-import 'package:mokawlcom_app/features/auth/presentation/verification_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/classification_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/complete_data_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/contractor_signup_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/forget_password_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/login_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/select_services_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/subscription_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/upload_files_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/user_signup_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/verification_screen.dart';
 import 'package:mokawlcom_app/features/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:mokawlcom_app/features/home/presentation/company_details_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/home_screen.dart';
@@ -52,7 +55,7 @@ class AppRouter extends RootStackRouter {
       initial: true,
       page: SplashTabRoute.page,
       children: [
-        AutoRoute(initial: true,page: SplashRoute.page),
+        AutoRoute(initial: true, page: SplashRoute.page),
         _buildCustomRoute(page: OnBoardingRoute.page),
       ],
     ),
@@ -68,7 +71,7 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: VerificationRoute.page),
         _buildCustomRoute(page: UploadFilesRoute.page),
         _buildCustomRoute(page: SubscriptionRoute.page),
-        _buildCustomRoute( page: CompleteDataRoute.page),
+        _buildCustomRoute(page: CompleteDataRoute.page),
       ],
     ),
     _buildCustomRoute(
@@ -97,7 +100,7 @@ class AppRouter extends RootStackRouter {
                 _buildCustomRoute(page: PriceOffersRoute.page),
               ],
             ),
-            _buildCustomRoute( page: ProfileRoute.page),
+            _buildCustomRoute(page: ProfileRoute.page),
           ],
         ),
         _buildCustomRoute(
@@ -142,8 +145,14 @@ class Splash extends AutoRouter {
 }
 
 @RoutePage(name: 'AuthRoute')
-class Auth extends AutoRouter {
+class Auth extends AutoRouter implements AutoRouteWrapper {
   const Auth({super.key});
+
+  @override
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
+    providers: [BlocProvider(create: (context) => getIt<UserAuthCubit>())],
+    child: this,
+  );
 }
 
 @RoutePage(name: 'HomeTabRoute')

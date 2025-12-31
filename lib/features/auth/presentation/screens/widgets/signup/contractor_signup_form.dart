@@ -24,11 +24,12 @@ class ContractorSignupForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8.0),
-         CustomTextFormField(
+        CustomTextFormField(
           type: TextInputType.name,
           hintText: LocaleKeys.pleaseEnterCompanyName,
           autofillHints: const [AutofillHints.organizationName],
           textInputAction: TextInputAction.next,
+          fieldName: LocaleKeys.companyName,
         ),
         const SizedBox(height: 8.0),
         Text(
@@ -39,11 +40,12 @@ class ContractorSignupForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8.0),
-        const CustomTextFormField(
+        CustomTextFormField(
           type: TextInputType.emailAddress,
           hintText: "user@example.com",
           autofillHints: [AutofillHints.email],
           textInputAction: TextInputAction.next,
+          fieldName: LocaleKeys.email,
         ),
         const SizedBox(height: 8.0),
         Text(
@@ -80,16 +82,17 @@ class ContractorSignupForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8.0),
-         CustomTextFormField(
+        CustomTextFormField(
           type: TextInputType.phone,
-          hintText:LocaleKeys.pleaseEnterYourPhone,
+          hintText: LocaleKeys.pleaseEnterYourPhone,
           autofillHints: const [AutofillHints.telephoneNumber],
           textInputAction: TextInputAction.done,
+          fieldName: LocaleKeys.phone,
         ),
         const SizedBox(height: 90.0),
         PrimaryButton(
           onPressed: () {
-            context.pushRoute(const VerificationRoute());
+            context.pushRoute(VerificationRoute(email: ""));
           },
           text: LocaleKeys.createAccount,
         ),

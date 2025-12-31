@@ -180,4 +180,10 @@ class LocaleKeys {
   static String get showMore => 'show_more'.tr();
   static String get showLess => 'show_less'.tr();
   static String get close => 'close'.tr();
+  static String get passwordIsRequired => 'password_is_required'.tr();
+  static String get passwordIsTooShort => 'password_is_too_short'.tr();
+  static String get confirmationPasswordIsRequired => 'confirmation_password_is_required'.tr();
+  static String get confirmationPasswordIsTooShort => 'confirmation_password_is_too_short'.tr();
+  static String get passwordsDoNotMatch => 'passwords_do_not_match'.tr();
+  static String get required => 'required'.tr();
 }

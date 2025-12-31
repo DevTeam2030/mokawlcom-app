@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/locale_keys.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -24,7 +25,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onTap,
     this.enabled = true,
     this.readOnly = false,
-    this.maxLines = 1,
+    this.maxLines = 1, required this.fieldName, this.onChanged,
   });
 
   final TextEditingController? controller;
@@ -36,6 +37,7 @@ class CustomTextFormField extends StatelessWidget {
   final List<String>? autofillHints;
   final Function(String submittedText)? onSubmit;
   final Function(String? value)? onSaved;
+  final void Function(String? value)? onChanged;
   final VoidCallback? onSuffixPress;
   final String? hintText;
   final double? borderRadius;
@@ -48,6 +50,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? enabled;
   final bool readOnly;
   final int maxLines;
+  final String fieldName;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +64,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: type,
       obscureText: obscureText,
       onSaved: onSaved,
+      onChanged: onChanged,
       autofillHints: autofillHints,
       onFieldSubmitted: onSubmit,
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
@@ -90,7 +94,10 @@ class CustomTextFormField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
-          borderSide: const BorderSide(color: ColorsManager.primaryColor,width: 2),
+          borderSide: const BorderSide(
+            color: ColorsManager.primaryColor,
+            width: 2,
+          ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
@@ -107,7 +114,7 @@ class CustomTextFormField extends StatelessWidget {
           validator ??
           (value) {
             if (value!.isEmpty) {
-              return '$label required';
+              return '$fieldName ${LocaleKeys.required}';
             }
             return null;
           },

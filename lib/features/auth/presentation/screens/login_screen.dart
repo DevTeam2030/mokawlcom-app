@@ -8,9 +8,9 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/password_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/shared/custom_auth_divider.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/shared/google_and_apple_sign_in_widgets.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/login/login_form.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/shared/custom_auth_divider.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/shared/google_and_apple_sign_in_widgets.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/login/login_form.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()

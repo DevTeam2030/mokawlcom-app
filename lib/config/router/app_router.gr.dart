@@ -68,7 +68,7 @@ class AuthRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const Auth();
+      return WrappedRoute(child: const Auth());
     },
   );
 }
@@ -652,16 +652,47 @@ class UserSignupRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [VerificationScreen]
-class VerificationRoute extends PageRouteInfo<void> {
-  const VerificationRoute({List<PageRouteInfo>? children})
-    : super(VerificationRoute.name, initialChildren: children);
+class VerificationRoute extends PageRouteInfo<VerificationRouteArgs> {
+  VerificationRoute({
+    Key? key,
+    required String email,
+    List<PageRouteInfo>? children,
+  }) : super(
+         VerificationRoute.name,
+         args: VerificationRouteArgs(key: key, email: email),
+         initialChildren: children,
+       );
 
   static const String name = 'VerificationRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const VerificationScreen();
+      final args = data.argsAs<VerificationRouteArgs>();
+      return VerificationScreen(key: args.key, email: args.email);
     },
   );
+}
+
+class VerificationRouteArgs {
+  const VerificationRouteArgs({this.key, required this.email});
+
+  final Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return 'VerificationRouteArgs{key: $key, email: $email}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! VerificationRouteArgs) return false;
+    return key == other.key && email == other.email;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ email.hashCode;
 }

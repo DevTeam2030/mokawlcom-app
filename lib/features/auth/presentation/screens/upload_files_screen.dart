@@ -4,8 +4,8 @@ import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/features/auth/presentation/subscription_screen.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/upload_file/upload_file_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/subscription_screen.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/upload_file/upload_file_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 

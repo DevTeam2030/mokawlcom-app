@@ -4,7 +4,7 @@ import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/verification/success_dialog.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()

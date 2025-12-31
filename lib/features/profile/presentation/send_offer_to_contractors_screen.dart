@@ -49,10 +49,11 @@ class SendOfferToContractorsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              const CustomTextFormField(
+              CustomTextFormField(
                 textInputAction: TextInputAction.next,
                 type: TextInputType.text,
                 hintText: "",
+                fieldName: LocaleKeys.offerAddress,
               ),
               const SizedBox(height: 16),
               Text(
@@ -63,11 +64,12 @@ class SendOfferToContractorsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              const CustomTextFormField(
+              CustomTextFormField(
                 textInputAction: TextInputAction.done,
                 type: TextInputType.multiline,
                 maxLines: 20,
                 hintText: "",
+                fieldName: LocaleKeys.offerDetails,
               ),
               const SizedBox(height: 72),
               PrimaryButton(onPressed: () {}, text: LocaleKeys.save),

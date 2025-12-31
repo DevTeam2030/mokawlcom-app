@@ -122,5 +122,11 @@
   "please_enter_company_name": "من فضلك أدخل اسم الشركة",
   "show_more":"عرض المزيد",
   "show_less":"عرض أقل",
-  "close":"إغلاق"
+  "close":"إغلاق",
+  "password_is_required":"كلمة المرور مطلوبة",
+  "password_is_too_short":"كلمة المرور يجب أن تكون على الأقل 6 أحرف",
+  "confirmation_password_is_required":"تأكيد كلمة المرور مطلوب",
+  "confirmation_password_is_too_short":"تأكيد كلمة المرور يجب أن تكون على الأقل 6 أحرف",
+  "passwords_do_not_match":"كلمتان المرور غير متطابقتان",
+  "required":"مطلوب"
 }

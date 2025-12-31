@@ -41,11 +41,12 @@ class CompleteDataScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-               CustomTextFormField(
+              CustomTextFormField(
                 type: TextInputType.name,
                 hintText: LocaleKeys.pleaseEnterYourName,
                 autofillHints: const [AutofillHints.name],
                 textInputAction: TextInputAction.next,
+                fieldName: LocaleKeys.name,
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -61,6 +62,7 @@ class CompleteDataScreen extends StatelessWidget {
                 hintText: LocaleKeys.pleaseEnterYourPhone,
                 autofillHints: const [AutofillHints.telephoneNumber],
                 textInputAction: TextInputAction.next,
+                fieldName: LocaleKeys.phone,
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -71,10 +73,11 @@ class CompleteDataScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              const CustomTextFormField(
+              CustomTextFormField(
                 type: TextInputType.phone,
                 hintText: "966132627722+",
                 textInputAction: TextInputAction.next,
+                fieldName: LocaleKeys.whatsApp,
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -94,10 +97,11 @@ class CompleteDataScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              const CustomTextFormField(
+              CustomTextFormField(
                 type: TextInputType.text,
                 hintText: "@snap_user",
                 textInputAction: TextInputAction.next,
+                fieldName: LocaleKeys.snapchat,
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -108,10 +112,11 @@ class CompleteDataScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              const CustomTextFormField(
+              CustomTextFormField(
                 type: TextInputType.text,
                 hintText: "@username",
                 textInputAction: TextInputAction.next,
+                fieldName: LocaleKeys.twitter,
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -122,10 +127,11 @@ class CompleteDataScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              const CustomTextFormField(
+              CustomTextFormField(
                 type: TextInputType.text,
                 hintText: "Profile link",
                 textInputAction: TextInputAction.next,
+                fieldName: LocaleKeys.facebook,
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -136,10 +142,11 @@ class CompleteDataScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              const CustomTextFormField(
+              CustomTextFormField(
                 type: TextInputType.text,
                 maxLines: 10,
                 textInputAction: TextInputAction.done,
+                fieldName: LocaleKeys.hintAboutCompany,
               ),
               const SizedBox(height: 40.0),
               PrimaryButton(

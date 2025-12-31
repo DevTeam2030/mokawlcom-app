@@ -44,9 +44,10 @@ class UploadFileBottomSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          const CustomTextFormField(
+          CustomTextFormField(
             textInputAction: TextInputAction.next,
             type: TextInputType.number,
+            fieldName: text,
           ),
           const SizedBox(height: 8),
           Text(
@@ -72,6 +73,7 @@ class UploadFileBottomSheet extends StatelessWidget {
             },
             textInputAction: TextInputAction.done,
             type: TextInputType.datetime,
+            fieldName: LocaleKeys.expiryDate,
           ),
           const SizedBox(height: 8),
           Text(

@@ -5,9 +5,9 @@ import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/shared/custom_auth_divider.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/shared/google_and_apple_sign_in_widgets.dart';
-import 'package:mokawlcom_app/features/auth/presentation/widgets/signup/signup_form.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/shared/custom_auth_divider.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/shared/google_and_apple_sign_in_widgets.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/signup/signup_form.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
@@ -44,19 +44,21 @@ class _UserSignupScreenState extends State<UserSignupScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SignupForm(),
+               SignupForm(
+                theme: theme,
+               ),
               const SizedBox(height: 16.0),
               const CustomAuthDivider(),
               const SizedBox(height: 16.0),
               GoogleAndAppleSignInWidgets(
-                onGoogleTap: () async {
-                  try {
-                    await GoogleSignInService.instance.signIn();
-                  } on ServerException catch (e) {
-                    debugPrint(e.errorMessage);
-                  } catch (e) {
-                    debugPrint(e.toString());
-                  }
+                onGoogleTap: ()  {
+                  // try {
+                  //   await GoogleSignInService.instance.signIn();
+                  // } on ServerException catch (e) {
+                  //   debugPrint(e.errorMessage);
+                  // } catch (e) {
+                  //   debugPrint(e.toString());
+                  // }
                 },
               ),
               const SizedBox(height: 16.0),

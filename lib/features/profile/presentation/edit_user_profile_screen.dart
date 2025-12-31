@@ -40,11 +40,12 @@ class EditUserProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              const CustomTextFormField(
+              CustomTextFormField(
                 type: TextInputType.name,
                 hintText: "Abdullah Ahmed",
                 autofillHints: [AutofillHints.name],
                 textInputAction: TextInputAction.next,
+                fieldName: LocaleKeys.name,
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -55,11 +56,12 @@ class EditUserProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              const CustomTextFormField(
+              CustomTextFormField(
                 type: TextInputType.emailAddress,
                 hintText: "example@email.com",
                 autofillHints: [AutofillHints.email],
                 textInputAction: TextInputAction.next,
+                fieldName: LocaleKeys.email,
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -70,11 +72,12 @@ class EditUserProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              const CustomTextFormField(
+              CustomTextFormField(
                 type: TextInputType.phone,
                 hintText: "Enter your phone number",
                 autofillHints: [AutofillHints.telephoneNumber],
                 textInputAction: TextInputAction.next,
+                fieldName: LocaleKeys.phone,
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -85,11 +88,12 @@ class EditUserProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              const CustomTextFormField(
+              CustomTextFormField(
                 type: TextInputType.streetAddress,
                 hintText: "Enter your address",
                 autofillHints: [AutofillHints.fullStreetAddress],
                 textInputAction: TextInputAction.done,
+                fieldName: LocaleKeys.address,
               ),
               const SizedBox(height: 40.0),
               PrimaryButton(onPressed: () {}, text: LocaleKeys.save),
