@@ -51,7 +51,7 @@ class ForgetPasswordScreen extends StatelessWidget {
             CustomTextFormField(
               type: TextInputType.emailAddress,
               hintText: "user@example.com",
-              autofillHints: [AutofillHints.email],
+              autofillHints: const [AutofillHints.email],
               textInputAction: TextInputAction.done,
               fieldName: LocaleKeys.email,
             ),

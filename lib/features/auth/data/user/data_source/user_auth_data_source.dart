@@ -1,10 +1,15 @@
 import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
+import 'package:mokawlcom_app/features/auth/data/shared/models/activate_account_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/user/models/user_signup_request_model.dart';
 
 abstract class UserAuthDataSource {
   Future<String> signup({required UserSignupRequestModel userRequestModel});
+  Future<ActivateAccountResponseModel> activateUserAccount({
+    required String email,
+    required String verificationCode,
+  });
 }
 
 class UserAuthDataSourceImpl implements UserAuthDataSource {
@@ -21,6 +26,25 @@ class UserAuthDataSourceImpl implements UserAuthDataSource {
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response.data["message"];
+    } else {
+      throw ServerException(errorMessage: response.data["message"]);
+    }
+  }
+
+  @override
+  Future<ActivateAccountResponseModel> activateUserAccount({
+    required String email,
+    required String verificationCode,
+  }) async {
+    final response = await dioHelper.post(
+      url: ApiConstants.activateAccount,
+      data: {
+        "email": email,
+        "verification_code": verificationCode,
+      },
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return ActivateAccountResponseModel.fromJson(response.data);
     } else {
       throw ServerException(errorMessage: response.data["message"]);
     }

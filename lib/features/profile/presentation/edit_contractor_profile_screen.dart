@@ -98,7 +98,7 @@ class EditContractorProfileScreen extends StatelessWidget {
               CustomTextFormField(
                 type: TextInputType.name,
                 hintText: "Enter contractor name",
-                autofillHints: [AutofillHints.name],
+                autofillHints: const [AutofillHints.name],
                 textInputAction: TextInputAction.next,
                 fieldName: LocaleKeys.name,
               ),
@@ -115,7 +115,7 @@ class EditContractorProfileScreen extends StatelessWidget {
               CustomTextFormField(
                 type: TextInputType.phone,
                 hintText: "Enter phone number",
-                autofillHints: [AutofillHints.telephoneNumber],
+                autofillHints: const [AutofillHints.telephoneNumber],
                 textInputAction: TextInputAction.next,
                 fieldName: LocaleKeys.phone,
               ),
@@ -147,7 +147,7 @@ class EditContractorProfileScreen extends StatelessWidget {
               CustomTextFormField(
                 type: TextInputType.streetAddress,
                 hintText: "الخليج الغربي - الدوحة",
-                autofillHints: [AutofillHints.addressCityAndState],
+                autofillHints: const [AutofillHints.addressCityAndState],
                 textInputAction: TextInputAction.next,
                 fieldName: LocaleKeys.address,
               ),

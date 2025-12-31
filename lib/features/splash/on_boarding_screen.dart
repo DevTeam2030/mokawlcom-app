@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -20,7 +21,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   void initState() {
     Timer(const Duration(seconds: 3), () {
       if (mounted) {
-        context.replaceRoute(const AuthRoute());
+        if (AppConstans.token.isEmpty) {
+          context.replaceRoute(const AuthRoute());
+        } else {
+          context.replaceRoute(const AuthenticatedRoute());
+        }
       }
     });
     super.initState();

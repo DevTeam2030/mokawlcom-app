@@ -57,8 +57,8 @@ class HomeHeader extends StatelessWidget {
           const SizedBox(width: 8),
           InkWell(
             onTap: () {
-             final tabsRouter = AutoTabsRouter.of(context);
-    tabsRouter.setActiveIndex(1); 
+              final tabsRouter = AutoTabsRouter.of(context);
+              tabsRouter.setActiveIndex(1);
             },
             child: const Icon(
               MyIcons.boldnotification,

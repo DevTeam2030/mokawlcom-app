@@ -153,12 +153,12 @@ class _SignupFormState extends State<SignupForm> {
                 );
               }
               if (state.userSignupState.isSuccess) {
-                context.pushRoute(VerificationRoute(email: _email));
                 showToast(
                   context: context,
                   message: state.message,
                   state: ToastStates.success,
                 );
+                 context.pushRoute(VerificationRoute(email: _email));
               }
             },
             builder: (context, state) {

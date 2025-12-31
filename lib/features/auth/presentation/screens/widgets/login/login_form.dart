@@ -27,7 +27,7 @@ class LoginForm extends StatelessWidget {
         CustomTextFormField(
           type: TextInputType.text,
           hintText: "example@gmai.com",
-          autofillHints: [AutofillHints.email],
+          autofillHints: const [AutofillHints.email],
           textInputAction: TextInputAction.next,
           fieldName: LocaleKeys.email,
         ),

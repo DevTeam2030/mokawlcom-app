@@ -43,7 +43,7 @@ class EditUserProfileScreen extends StatelessWidget {
               CustomTextFormField(
                 type: TextInputType.name,
                 hintText: "Abdullah Ahmed",
-                autofillHints: [AutofillHints.name],
+                autofillHints: const [AutofillHints.name],
                 textInputAction: TextInputAction.next,
                 fieldName: LocaleKeys.name,
               ),
@@ -59,7 +59,7 @@ class EditUserProfileScreen extends StatelessWidget {
               CustomTextFormField(
                 type: TextInputType.emailAddress,
                 hintText: "example@email.com",
-                autofillHints: [AutofillHints.email],
+                autofillHints: const [AutofillHints.email],
                 textInputAction: TextInputAction.next,
                 fieldName: LocaleKeys.email,
               ),
@@ -75,7 +75,7 @@ class EditUserProfileScreen extends StatelessWidget {
               CustomTextFormField(
                 type: TextInputType.phone,
                 hintText: "Enter your phone number",
-                autofillHints: [AutofillHints.telephoneNumber],
+                autofillHints: const [AutofillHints.telephoneNumber],
                 textInputAction: TextInputAction.next,
                 fieldName: LocaleKeys.phone,
               ),
@@ -91,7 +91,7 @@ class EditUserProfileScreen extends StatelessWidget {
               CustomTextFormField(
                 type: TextInputType.streetAddress,
                 hintText: "Enter your address",
-                autofillHints: [AutofillHints.fullStreetAddress],
+                autofillHints: const [AutofillHints.fullStreetAddress],
                 textInputAction: TextInputAction.done,
                 fieldName: LocaleKeys.address,
               ),

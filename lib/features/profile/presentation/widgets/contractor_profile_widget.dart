@@ -1,7 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/enums/user_type.dart';
+import 'package:mokawlcom_app/core/local/cache_helper.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/profile_item.dart';
+import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -16,7 +22,9 @@ class ContractorProfileWidget extends StatelessWidget {
           theme: theme,
           title: LocaleKeys.editMyProfile,
           icon: Icons.edit_outlined,
-          onTap: () {},
+          onTap: () {
+            context.pushRoute(const EditContractorProfileRoute());
+          },
         ),
         const SizedBox(height: 16.0),
         ProfileItem(
@@ -74,7 +82,12 @@ class ContractorProfileWidget extends StatelessWidget {
           theme: theme,
           title: LocaleKeys.logout,
           icon: MyIcons.exit,
-          onTap: () {},
+          onTap: () {
+            context.replaceRoute(const AuthRoute());
+            context.read<AppCubit>().changeUserType(userType: UserType.visitor);
+            AppConstans.token = "";
+            getIt<CacheHelper>().deleteAll();
+          },
           iconSize: 18.0,
         ),
       ],

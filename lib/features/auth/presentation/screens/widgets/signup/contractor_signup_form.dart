@@ -43,7 +43,7 @@ class ContractorSignupForm extends StatelessWidget {
         CustomTextFormField(
           type: TextInputType.emailAddress,
           hintText: "user@example.com",
-          autofillHints: [AutofillHints.email],
+          autofillHints: const [AutofillHints.email],
           textInputAction: TextInputAction.next,
           fieldName: LocaleKeys.email,
         ),

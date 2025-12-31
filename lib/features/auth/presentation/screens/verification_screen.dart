@@ -1,20 +1,33 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
+import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 import 'package:pinput/pinput.dart';
 
 @RoutePage()
-class VerificationScreen extends StatelessWidget {
+class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key, required this.email});
   final String email;
+
+  @override
+  State<VerificationScreen> createState() => _VerificationScreenState();
+}
+
+class _VerificationScreenState extends State<VerificationScreen> {
+  String verificationCode = "";
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -46,13 +59,12 @@ class VerificationScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 40),
-
             Align(
               alignment: AlignmentDirectional.center,
               child: Pinput(
-                length: 6,
+                length: 5,
+                onChanged: (value)=>verificationCode = value,
                 defaultPinTheme: PinTheme(
                   width: 48,
                   height: 48,
@@ -96,9 +108,6 @@ class VerificationScreen extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                onCompleted: (value) {
-                  // verify otp
-                },
               ),
             ),
           ],
@@ -108,11 +117,42 @@ class VerificationScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
-          child: PrimaryButton(
-            onPressed: () {
-              context.pushRoute(const UploadFilesRoute());
+          child: BlocConsumer<UserAuthCubit, UserAuthState>(
+            listenWhen: (previous, current) =>
+                previous.activateUserAccountState !=
+                current.activateUserAccountState,
+            buildWhen: (previous, current) =>
+                previous.activateUserAccountState !=
+                current.activateUserAccountState,
+            listener: (context, state) {
+              if (state.activateUserAccountState.isSuccess) {
+                showToast(
+                  context: context,
+                  message: state.activateAccountResponseModel.message,
+                  state: ToastStates.success,
+                );
+                context.replaceRoute(const AuthenticatedRoute());
+              }
+              if (state.activateUserAccountState.isError) {
+                showToast(
+                  context: context,
+                  message: state.errorMessage,
+                  state: ToastStates.error,
+                );
+              }
             },
-            text: LocaleKeys.verify,
+            builder: (context, state) {
+              return PrimaryButton(
+                isLoading: state.activateUserAccountState.isLoading,
+                onPressed: () {
+                  context.read<UserAuthCubit>().activateUserAccount(
+                        email: widget.email,
+                        verificationCode: verificationCode,
+                      );
+                },
+                text: LocaleKeys.verify,
+              );
+            },
           ),
         ),
       ),

@@ -4,4 +4,5 @@ class ApiConstants {
   
   // user auth
   static const String userSignup = "/auth/register-user";
+  static const String activateAccount = "/auth/activate-acount";
 }
