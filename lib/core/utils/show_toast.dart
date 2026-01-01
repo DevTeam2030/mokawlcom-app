@@ -57,13 +57,15 @@ Future<void> showToast({
               ),
             ],
           ),
-          child: Text(
-            message,
-            textAlign: TextAlign.right,
-            style: const TextStyle(
-              fontSize: 18,
-              color: Colors.white,
-              height: 1.4,
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              message,
+              style: const TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+                height: 1.4,
+              ),
             ),
           ),
         ),

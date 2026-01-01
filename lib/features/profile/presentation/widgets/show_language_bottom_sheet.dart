@@ -4,8 +4,8 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
-void showLanguageBottomSheet(BuildContext context) {
-  showModalBottomSheet(
+Future<void> showLanguageBottomSheet(BuildContext context)async {
+  await showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
     shape: const RoundedRectangleBorder(

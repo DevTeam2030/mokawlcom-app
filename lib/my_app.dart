@@ -7,6 +7,7 @@ import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/config/themes/theme_manager.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/features/shared/cubit/app_state.dart';
 
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
           return state.isArabic;
         },
         builder: (context, isArabic) {
+          AppConstans.language = isArabic ? 'ar' : 'en';
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             routerConfig: appRouter.config(

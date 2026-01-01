@@ -15,7 +15,7 @@ class DioHelper {
           connectTimeout: const Duration(seconds: 20),
           receiveTimeout: const Duration(seconds: 20),
           receiveDataWhenStatusError: true,
-          queryParameters: {"lang": AppConstans.language},
+          //queryParameters: {"lang": AppConstans.language},
         ),
       ) {
     _dio.interceptors.addAll([
@@ -59,7 +59,7 @@ class DioHelper {
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
   }) async {
-    _dio.options.headers = headers;
+    //_dio.options.headers = headers;
     return await _dio.put(
       url,
       data: data,

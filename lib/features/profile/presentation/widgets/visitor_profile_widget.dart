@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/profile_item.dart';
+import 'package:mokawlcom_app/features/profile/presentation/widgets/show_language_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -17,7 +18,7 @@ class VisitorProfileWidget extends StatelessWidget {
           title: LocaleKeys.login,
           icon: MyIcons.lockfill,
           onTap: () {
-            context.pushRoute(const AuthRoute());
+            context.replaceRoute(const AuthRoute());
           },
         ),
         const SizedBox(height: 16.0),
@@ -37,7 +38,9 @@ class VisitorProfileWidget extends StatelessWidget {
           title: LocaleKeys.language,
           isLanguage: true,
           icon: MyIcons.language,
-          onTap: () {},
+          onTap: () async {
+            await showLanguageBottomSheet(context);
+          },
         ),
       ],
     );

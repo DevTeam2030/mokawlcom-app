@@ -22,7 +22,6 @@ class AppCubit extends HydratedCubit<AppState> {
 
   changeLanguage({required bool isArabic}) {
     emit(state.copyWith(isArabic: isArabic));
-    AppConstans.language = isArabic ? "ar" : "en";
   }
 
   @override

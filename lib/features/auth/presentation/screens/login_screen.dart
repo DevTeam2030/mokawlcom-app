@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     context.read<AppCubit>().changeUserType(
                       userType: UserType.visitor,
                     );
-                    context.pushRoute(const AuthenticatedRoute());
+                    context.navigateTo(const AuthenticatedRoute());
                   },
                   child: Text(
                     LocaleKeys.signInAsVisitor,
