@@ -127,7 +127,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
             listener: (context, state) {
               if (state.activateUserAccountState.isSuccess) {
                 showToast(
-                  context: context,
                   message: state.activateAccountResponseModel.message,
                   state: ToastStates.success,
                 );
@@ -135,7 +134,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
               }
               if (state.activateUserAccountState.isError) {
                 showToast(
-                  context: context,
                   message: state.errorMessage,
                   state: ToastStates.error,
                 );

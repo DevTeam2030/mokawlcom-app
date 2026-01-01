@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
+import 'package:mokawlcom_app/features/shared/cubit/app_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -36,10 +39,13 @@ class ProfileItem extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(
-                icon,
-                color: ColorsManager.primaryColor,
-                size: iconSize ?? 24.0,
+              SizedBox(
+                width: 24,
+                child: Icon(
+                  icon,
+                  color: ColorsManager.primaryColor,
+                  size: iconSize ?? 24.0,
+                ),
               ),
               const SizedBox(width: 12.0),
               Text(
@@ -51,12 +57,19 @@ class ProfileItem extends StatelessWidget {
               ),
               const Spacer(),
               if (isLanguage)
-                Text(
-                  LocaleKeys.arabic,
-                  style: theme.textTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: ColorsManager.primaryColor,
-                  ),
+                BlocSelector<AppCubit, AppState, bool>(
+                  selector: (state) {
+                    return state.isArabic;
+                  },
+                  builder: (context, isArabic) {
+                    return Text(
+                      isArabic ? LocaleKeys.arabic : LocaleKeys.english,
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: ColorsManager.primaryColor,
+                      ),
+                    );
+                  },
                 ),
               const SizedBox(width: 10.0),
               const Icon(

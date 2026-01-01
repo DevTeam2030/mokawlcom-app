@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/state_box.dart';
 import 'package:mokawlcom_app/features/auth/data/shared/models/activate_account_response_model.dart';
+import 'package:mokawlcom_app/features/auth/data/user/models/user_login_response_model.dart';
 
 class UserAuthState extends Equatable {
   // user sign up
@@ -11,6 +12,9 @@ class UserAuthState extends Equatable {
   // activate user account
   final RequestStatus activateUserAccountState;
   final ActivateAccountResponseModel activateAccountResponseModel;
+  // user login
+  final RequestStatus userLoginState;
+  final UserLoginResponseModel userLoginResponseModel;
 
   const UserAuthState({
     this.userSignupState = RequestStatus.initial,
@@ -19,6 +23,8 @@ class UserAuthState extends Equatable {
     this.activateUserAccountState = RequestStatus.initial,
     this.activateAccountResponseModel =
         const ActivateAccountResponseModel.empty(),
+    this.userLoginState = RequestStatus.initial,
+    this.userLoginResponseModel = const UserLoginResponseModel.empty(),
   });
 
   UserAuthState copyWith({
@@ -27,6 +33,8 @@ class UserAuthState extends Equatable {
     String? errorMessage,
     RequestStatus? activateUserAccountState,
     ActivateAccountResponseModel? activateAccountResponseModel,
+    RequestStatus? userLoginState,
+    UserLoginResponseModel? userLoginResponseModel,
   }) {
     return UserAuthState(
       userSignupState: userSignupState ?? this.userSignupState,
@@ -36,6 +44,8 @@ class UserAuthState extends Equatable {
           activateUserAccountState ?? this.activateUserAccountState,
       activateAccountResponseModel:
           activateAccountResponseModel ?? this.activateAccountResponseModel,
+      userLoginState: userLoginState ?? this.userLoginState,
+      userLoginResponseModel: userLoginResponseModel ?? this.userLoginResponseModel,
     );
   }
 
@@ -46,5 +56,7 @@ class UserAuthState extends Equatable {
     errorMessage,
     activateUserAccountState,
     activateAccountResponseModel,
+    userLoginState,
+    userLoginResponseModel,
   ];
 }

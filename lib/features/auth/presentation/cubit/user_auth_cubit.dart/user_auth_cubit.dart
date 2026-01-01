@@ -78,4 +78,35 @@ class UserAuthCubit extends Cubit<UserAuthState> {
       },
     );
   }
+
+  Future<void> userLogin({
+    required String email,
+    required String password,
+  }) async {
+    emit(state.copyWith(userLoginState: RequestStatus.loading));
+    final result = await userAuthRepoImpl.userLogin(
+      email: email,
+      password: password,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          userLoginState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (userLoginResponseModel) async {
+       await cacheHelper.saveData(
+          key: AppConstans.tokenKey,
+          value: userLoginResponseModel.token,
+        );
+        emit(
+          state.copyWith(
+            userLoginState: RequestStatus.success,
+            userLoginResponseModel: userLoginResponseModel,
+          ),
+        );
+      },
+    );
+  }
 }

@@ -82,11 +82,11 @@ class ContractorProfileWidget extends StatelessWidget {
           theme: theme,
           title: LocaleKeys.logout,
           icon: MyIcons.exit,
-          onTap: () {
+          onTap: () async{
             context.replaceRoute(const AuthRoute());
             context.read<AppCubit>().changeUserType(userType: UserType.visitor);
             AppConstans.token = "";
-            getIt<CacheHelper>().deleteAll();
+            await getIt<CacheHelper>().deleteAll();
           },
           iconSize: 18.0,
         ),

@@ -128,5 +128,6 @@
   "confirmation_password_is_required":"تأكيد كلمة المرور مطلوب",
   "confirmation_password_is_too_short":"تأكيد كلمة المرور يجب أن تكون على الأقل 6 أحرف",
   "passwords_do_not_match":"كلمتان المرور غير متطابقتان",
-  "required":"مطلوب"
+  "required":"مطلوب",
+  "please_enter_your_address":"من فضلك أدخل عنوانك"
 }

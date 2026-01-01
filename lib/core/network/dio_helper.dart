@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/custom_interceptors.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioHelper {
@@ -14,7 +15,7 @@ class DioHelper {
           connectTimeout: const Duration(seconds: 20),
           receiveTimeout: const Duration(seconds: 20),
           receiveDataWhenStatusError: true,
-          queryParameters: {"lang": "ar"},
+          queryParameters: {"lang": AppConstans.language},
         ),
       ) {
     _dio.interceptors.addAll([

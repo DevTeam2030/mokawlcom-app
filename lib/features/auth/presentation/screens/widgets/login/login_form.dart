@@ -1,68 +1,139 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/password_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({super.key});
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key, required this.theme});
+  final ThemeData theme;
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  late final GlobalKey<FormState> _formKey;
+  late AutovalidateMode _autovalidateMode;
+  late String _email;
+  late String _password;
+  @override
+  void initState() {
+    super.initState();
+    _formKey = GlobalKey<FormState>();
+    _autovalidateMode = AutovalidateMode.disabled;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          LocaleKeys.email,
-          style: theme.textTheme.titleMedium!.copyWith(
-            fontWeight: FontWeight.w500,
-            color: ColorsManager.primaryColor,
+    return Form(
+      key: _formKey,
+      autovalidateMode: _autovalidateMode,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            LocaleKeys.email,
+            style: widget.theme.textTheme.titleMedium!.copyWith(
+              fontWeight: FontWeight.w500,
+              color: ColorsManager.primaryColor,
+            ),
           ),
-        ),
-        const SizedBox(height: 8.0),
-        CustomTextFormField(
-          type: TextInputType.text,
-          hintText: "example@gmai.com",
-          autofillHints: const [AutofillHints.email],
-          textInputAction: TextInputAction.next,
-          fieldName: LocaleKeys.email,
-        ),
-        const SizedBox(height: 8.0),
-        Text(
-          LocaleKeys.password,
-          style: theme.textTheme.titleMedium!.copyWith(
-            fontWeight: FontWeight.w500,
-            color: ColorsManager.primaryColor,
+          const SizedBox(height: 8.0),
+          CustomTextFormField(
+            type: TextInputType.text,
+            hintText: "example@gmai.com",
+            autofillHints: const [AutofillHints.email],
+            textInputAction: TextInputAction.next,
+            fieldName: LocaleKeys.email,
+            onSaved: (email) => _email = email!,
           ),
-        ),
-        const SizedBox(height: 8.0),
-        const PasswordField(
-          hintText: "********",
-          textInputAction: TextInputAction.done,
-        ),
-        const SizedBox(height: 16.0),
-        InkWell(
-          onTap: () {
-            context.pushRoute(const ForgetPasswordRoute());
-          },
-          child: Align(
-            alignment: AlignmentDirectional.center,
-            child: Text(
-              LocaleKeys.forgetPassword,
-              style: theme.textTheme.bodyMedium!.copyWith(
-                color: ColorsManager.primaryColor,
-                fontWeight: FontWeight.w500,
+          const SizedBox(height: 8.0),
+          Text(
+            LocaleKeys.password,
+            style: widget.theme.textTheme.titleMedium!.copyWith(
+              fontWeight: FontWeight.w500,
+              color: ColorsManager.primaryColor,
+            ),
+          ),
+          const SizedBox(height: 8.0),
+          PasswordField(
+            hintText: "********",
+            textInputAction: TextInputAction.done,
+            onSaved: (password) => _password = password!,
+            onSubmit: (_) async => await _submit(context),
+          ),
+          const SizedBox(height: 16.0),
+          InkWell(
+            onTap: () {
+              context.pushRoute(const ForgetPasswordRoute());
+            },
+            child: Align(
+              alignment: AlignmentDirectional.center,
+              child: Text(
+                LocaleKeys.forgetPassword,
+                style: widget.theme.textTheme.bodyMedium!.copyWith(
+                  color: ColorsManager.primaryColor,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(height: 16.0),
-        PrimaryButton(onPressed: () {}, text: LocaleKeys.login),
-      ],
+          const SizedBox(height: 16.0),
+          BlocConsumer<UserAuthCubit, UserAuthState>(
+            listenWhen: (previous, current) =>
+                previous.userLoginState != current.userLoginState,
+            buildWhen: (previous, current) =>
+                previous.userLoginState != current.userLoginState,
+
+            listener: (context, state) {
+              if (state.userLoginState.isSuccess) {
+                showToast(
+                  message: state.userLoginResponseModel.message,
+                  state: ToastStates.success,
+                );
+                context.pushRoute(const AuthenticatedRoute());
+              }
+              if (state.userLoginState.isError) {
+                showToast(
+                  message: state.errorMessage,
+                  state: ToastStates.error,
+                );
+              }
+            },
+            builder: (context, state) {
+              return PrimaryButton(
+                isLoading: state.userLoginState.isLoading,
+                onPressed: () async {
+                  await _submit(context);
+                },
+                text: LocaleKeys.login,
+              );
+            },
+          ),
+        ],
+      ),
     );
+  }
+
+  Future<void> _submit(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      await context.read<UserAuthCubit>().userLogin(
+        email: _email.replaceAll(" ", ""),
+        password: _password.replaceAll(" ", ""),
+      );  
+    } else {
+      setState(() {
+        _autovalidateMode = AutovalidateMode.always;
+      });
+    }
   }
 }

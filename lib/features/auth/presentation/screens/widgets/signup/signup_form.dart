@@ -147,14 +147,12 @@ class _SignupFormState extends State<SignupForm> {
             listener: (context, state) {
               if (state.userSignupState.isError) {
                 showToast(
-                  context: context,
                   message: state.errorMessage,
                   state: ToastStates.error,
                 );
               }
               if (state.userSignupState.isSuccess) {
                 showToast(
-                  context: context,
                   message: state.message,
                   state: ToastStates.success,
                 );

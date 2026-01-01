@@ -1,7 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/local/cache_helper.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/profile_item.dart';
+import 'package:mokawlcom_app/features/profile/presentation/widgets/show_language_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -27,7 +34,7 @@ class UserProfileWidget extends StatelessWidget {
           icon: MyIcons.solidnotifications,
           onTap: () {
             final tabsRouter = AutoTabsRouter.of(context);
-              tabsRouter.setActiveIndex(1);
+            tabsRouter.setActiveIndex(1);
           },
           iconSize: 22.0,
         ),
@@ -36,7 +43,9 @@ class UserProfileWidget extends StatelessWidget {
           theme: theme,
           title: LocaleKeys.presentedOffers,
           icon: MyIcons.list,
-          onTap: () {},
+          onTap: () {
+            context.pushRoute(const SubmittedPriceOffersRoute());
+          },
           iconSize: 16.0,
         ),
         const SizedBox(height: 16.0),
@@ -44,7 +53,9 @@ class UserProfileWidget extends StatelessWidget {
           theme: theme,
           title: LocaleKeys.changePassword,
           icon: MyIcons.eyesolid,
-          onTap: () {},
+          onTap: () {
+            context.pushRoute(const ChangePasswordRoute());
+          },
           iconSize: 16.0,
         ),
         const SizedBox(height: 16.0),
@@ -53,7 +64,9 @@ class UserProfileWidget extends StatelessWidget {
           title: LocaleKeys.language,
           icon: MyIcons.language,
           isLanguage: true,
-          onTap: () {},
+          onTap: () {
+            showLanguageBottomSheet(context);
+          },
           iconSize: 18.0,
         ),
         const SizedBox(height: 16.0),
@@ -61,7 +74,11 @@ class UserProfileWidget extends StatelessWidget {
           theme: theme,
           title: LocaleKeys.logout,
           icon: MyIcons.exit,
-          onTap: () {},
+          onTap: () async {
+            AppConstans.token = "";
+            getIt<CacheHelper>().deleteAll();
+            context.pushRoute(const AuthRoute());
+          },
           iconSize: 18.0,
         ),
       ],

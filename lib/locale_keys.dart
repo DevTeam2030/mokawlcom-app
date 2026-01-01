@@ -186,4 +186,5 @@ class LocaleKeys {
   static String get confirmationPasswordIsTooShort => 'confirmation_password_is_too_short'.tr();
   static String get passwordsDoNotMatch => 'passwords_do_not_match'.tr();
   static String get required => 'required'.tr();
+  static String get pleaseEnterYourAddress => 'please_enter_your_address'.tr();
 }

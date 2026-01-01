@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/services/google_sign_in_service.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
@@ -11,6 +13,7 @@ import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/shared/custom_auth_divider.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/shared/google_and_apple_sign_in_widgets.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/login/login_form.dart';
+import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
@@ -54,7 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 16.0),
-              const LoginForm(),
+               LoginForm(
+                theme: theme,
+               ),
               const SizedBox(height: 16.0),
               const CustomAuthDivider(),
               const SizedBox(height: 16.0),
@@ -92,6 +97,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: AlignmentDirectional.center,
                 child: TextButton(
                   onPressed: () {
+                    context.read<AppCubit>().changeUserType(
+                      userType: UserType.visitor,
+                    );
                     context.pushRoute(const AuthenticatedRoute());
                   },
                   child: Text(

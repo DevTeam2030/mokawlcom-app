@@ -8,4 +8,5 @@ class AppConstans {
 
   static  String token = "";
   static UserType userType = UserType.visitor;
+  static String language = "ar";
 }

@@ -7,6 +7,7 @@ import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/auth/data/shared/models/activate_account_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/user/data_source/user_auth_data_source.dart';
+import 'package:mokawlcom_app/features/auth/data/user/models/user_login_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/user/models/user_signup_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/user/repo/user_auth_repo.dart';
 
@@ -33,8 +34,8 @@ class UserAuthRepoImpl implements UserAuthRepo {
         verificationCode: verificationCode,
       ),
     );
-    result.fold((l) {}, (r) {
-      if (r.type == "normal") {
+    result.fold((l) {}, (activateAccountResponseModel) {
+      if (activateAccountResponseModel.type == "normal") {
         _userTypeController.add(UserType.user);
       } else {
         _userTypeController.add(UserType.contractor);
@@ -47,4 +48,22 @@ class UserAuthRepoImpl implements UserAuthRepo {
 
   @override
   Stream<UserType> get userTypeStream => _userTypeController.stream;
+
+  @override
+  Future<Either<Failure, UserLoginResponseModel>> userLogin({
+    required String email,
+    required String password,
+  }) async {
+    final result = await safeApiCall<UserLoginResponseModel>(
+      () => userAuthDataSource.userLogin(email: email, password: password),
+    );
+    result.fold((l) {}, (userLoginResponseModel) {
+      if (userLoginResponseModel.type == "normal") {
+        _userTypeController.add(UserType.user);
+      } else {
+        _userTypeController.add(UserType.contractor);
+      }
+    });
+    return result;
+  }
 }

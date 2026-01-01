@@ -43,6 +43,7 @@ class BottomNavBarScreen extends StatelessWidget {
               topEnd: Radius.circular(16),
             ),
             child: BottomNavigationBar(
+              key: ValueKey(Localizations.localeOf(context).languageCode),
               currentIndex: tabsRouter.activeIndex,
               onTap: (index) {
                 tabsRouter.setActiveIndex(index);

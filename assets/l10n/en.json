@@ -57,7 +57,7 @@
   "notifications": "Notifications",
   "profile": "Profile",
   "social_media": "Social Media",
-  "mokawlatcom": "Mokawlatcom",
+  "mokawlatcom": "Mokawlcom",
   "faster_acess_best_results": "Faster access.. best results",
   "search_for_word_or_department": "Search for word or department",
   "departments": "Departments",
@@ -128,5 +128,6 @@
   "confirmation_password_is_required":"Confirmation password is required",
   "confirmation_password_is_too_short":"Confirmation password must be at least 6 characters long",
   "passwords_do_not_match":"Passwords do not match",
-  "required":"Required"
+  "required":"Required",
+  "please_enter_your_address":"Please enter your address"
 }
