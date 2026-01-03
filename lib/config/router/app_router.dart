@@ -33,6 +33,7 @@ import 'package:mokawlcom_app/features/profile/presentation/my_current_package_s
 import 'package:mokawlcom_app/features/profile/presentation/my_services_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/send_offer_to_contractors_screen.dart';
+import 'package:mokawlcom_app/features/profile/presentation/saved_companies_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/submitted_price_offers_screen.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
 import 'package:mokawlcom_app/features/splash/splash_screen.dart';
@@ -120,6 +121,7 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: AvailableDealsRoute.page),
         _buildCustomRoute(page: SendOfferToContractorsRoute.page),
         _buildCustomRoute(page: SubmittedPriceOffersRoute.page),
+        _buildCustomRoute(page: SavedCompaniesRoute.page),
       ],
     ),
   ];

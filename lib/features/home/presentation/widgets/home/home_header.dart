@@ -48,7 +48,9 @@ class HomeHeader extends StatelessWidget {
           ),
           const Spacer(),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              context.pushRoute(const SavedCompaniesRoute());
+            },
             child: const Icon(
               MyIcons.bookmarks,
               color: ColorsManager.primaryColor,

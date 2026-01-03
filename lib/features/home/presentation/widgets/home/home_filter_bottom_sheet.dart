@@ -67,6 +67,7 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
             builder: (context, value, _) {
               return CustomDropdownField<String>(
                 value: value,
+                theme: theme,
                 hintText: LocaleKeys.chooseClassification,
                 items: classifications
                     .map(
@@ -99,6 +100,7 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
               return CustomDropdownField<String>(
                 value: value,
                 hintText: LocaleKeys.chooseServices,
+                theme: theme,
                 items: services
                     .map(
                       (item) => DropdownMenuItem<String>(

@@ -491,6 +491,22 @@ class PublicNotificationsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SavedCompaniesScreen]
+class SavedCompaniesRoute extends PageRouteInfo<void> {
+  const SavedCompaniesRoute({List<PageRouteInfo>? children})
+    : super(SavedCompaniesRoute.name, initialChildren: children);
+
+  static const String name = 'SavedCompaniesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SavedCompaniesScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [SelectServicesScreen]
 class SelectServicesRoute extends PageRouteInfo<void> {
   const SelectServicesRoute({List<PageRouteInfo>? children})

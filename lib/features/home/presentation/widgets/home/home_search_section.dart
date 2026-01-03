@@ -41,6 +41,7 @@ class HomeSearchSection extends StatelessWidget {
             onPressed: () async {
               await showModalBottomSheet(
                 backgroundColor: Colors.white,
+                isScrollControlled: true,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
                 ),

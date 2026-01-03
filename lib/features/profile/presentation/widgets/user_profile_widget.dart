@@ -8,6 +8,7 @@ import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/profile_item.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/show_language_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/profile/presentation/widgets/show_logout_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
@@ -51,6 +52,16 @@ class UserProfileWidget extends StatelessWidget {
         const SizedBox(height: 16.0),
         ProfileItem(
           theme: theme,
+          title: LocaleKeys.savedCompanies,
+          icon: MyIcons.bookmarks,
+          onTap: () {
+            context.pushRoute(const SavedCompaniesRoute());
+          },
+          iconSize: 16.0,
+        ),
+        const SizedBox(height: 16.0),
+        ProfileItem(
+          theme: theme,
           title: LocaleKeys.changePassword,
           icon: MyIcons.eyesolid,
           onTap: () {
@@ -75,9 +86,7 @@ class UserProfileWidget extends StatelessWidget {
           title: LocaleKeys.logout,
           icon: MyIcons.exit,
           onTap: () async {
-            AppConstans.token = "";
-            getIt<CacheHelper>().deleteAll();
-            context.pushRoute(const AuthRoute());
+            await showLogoutBottomSheet(context: context, theme: theme);
           },
           iconSize: 18.0,
         ),

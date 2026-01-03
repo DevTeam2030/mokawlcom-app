@@ -43,6 +43,7 @@ class EditContractorProfileScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               CustomDropdownField<String>(
                 hintText: LocaleKeys.chooseClassification,
+                theme: theme,
                 items: const [
                   DropdownMenuItem<String>(
                     value: 'classification1',
@@ -70,6 +71,7 @@ class EditContractorProfileScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               CustomDropdownField<String>(
                 hintText: LocaleKeys.chooseServices,
+                theme: theme,
                 items: const [
                   DropdownMenuItem<String>(
                     value: 'service1',
@@ -97,7 +99,7 @@ class EditContractorProfileScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               CustomTextFormField(
                 type: TextInputType.name,
-                hintText: "Enter contractor name",
+                hintText: LocaleKeys.pleaseEnterYourName,
                 autofillHints: const [AutofillHints.name],
                 textInputAction: TextInputAction.next,
                 fieldName: LocaleKeys.name,
@@ -114,7 +116,7 @@ class EditContractorProfileScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               CustomTextFormField(
                 type: TextInputType.phone,
-                hintText: "Enter phone number",
+                hintText: LocaleKeys.pleaseEnterYourPhone,
                 autofillHints: const [AutofillHints.telephoneNumber],
                 textInputAction: TextInputAction.next,
                 fieldName: LocaleKeys.phone,
@@ -131,7 +133,7 @@ class EditContractorProfileScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               CustomTextFormField(
                 type: TextInputType.phone,
-                hintText: "WhatsApp number",
+                hintText: "+966 123432123",
                 textInputAction: TextInputAction.next,
                 fieldName: LocaleKeys.whatsApp,
               ),
@@ -156,7 +158,7 @@ class EditContractorProfileScreen extends StatelessWidget {
                 LocaleKeys.socialMedia,
                 style: theme.textTheme.bodyLarge!.copyWith(
                   color: ColorsManager.primaryColor,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 8.0),
@@ -170,7 +172,7 @@ class EditContractorProfileScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               CustomTextFormField(
                 type: TextInputType.text,
-                hintText: "snap_user",
+                hintText: "@snap_user",
                 textInputAction: TextInputAction.next,
                 fieldName: LocaleKeys.snapchat,
               ),
@@ -200,7 +202,7 @@ class EditContractorProfileScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               CustomTextFormField(
                 type: TextInputType.text,
-                hintText: "Profile link",
+                hintText: "https://www.facebook.com/username",
                 textInputAction: TextInputAction.next,
                 fieldName: LocaleKeys.facebook,
               ),
@@ -215,7 +217,6 @@ class EditContractorProfileScreen extends StatelessWidget {
               const SizedBox(height: 8.0),
               CustomTextFormField(
                 type: TextInputType.multiline,
-                hintText: "Tell us about your company...",
                 maxLines: 10,
                 textInputAction: TextInputAction.done,
                 fieldName: LocaleKeys.hintAboutCompany,

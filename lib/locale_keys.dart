@@ -182,9 +182,15 @@ class LocaleKeys {
   static String get close => 'close'.tr();
   static String get passwordIsRequired => 'password_is_required'.tr();
   static String get passwordIsTooShort => 'password_is_too_short'.tr();
-  static String get confirmationPasswordIsRequired => 'confirmation_password_is_required'.tr();
-  static String get confirmationPasswordIsTooShort => 'confirmation_password_is_too_short'.tr();
+  static String get confirmationPasswordIsRequired =>
+      'confirmation_password_is_required'.tr();
+  static String get confirmationPasswordIsTooShort =>
+      'confirmation_password_is_too_short'.tr();
   static String get passwordsDoNotMatch => 'passwords_do_not_match'.tr();
   static String get required => 'required'.tr();
   static String get pleaseEnterYourAddress => 'please_enter_your_address'.tr();
+  static String get doYouWantToLogout => 'do_you_want_to_logout'.tr();
+  static String get cancel => 'cancel'.tr();
+  static String get exit => 'exit'.tr();
+  static String get savedCompanies => 'saved_companies'.tr();
 }
