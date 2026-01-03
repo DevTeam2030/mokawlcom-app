@@ -1,6 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/features/profile/presentation/widgets/show_logout_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
+import 'package:mokawlcom_app/features/shared/widgets/visitor_access_dialog.dart';
+import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -49,7 +55,14 @@ class HomeHeader extends StatelessWidget {
           const Spacer(),
           InkWell(
             onTap: () {
-              context.pushRoute(const SavedCompaniesRoute());
+              if (AppConstants.userType == UserType.visitor) {
+                showDialog(
+                  context: context,
+                  builder: (context) => const VisitorAccessDialog(),
+                );
+              } else {
+                context.pushRoute(const SavedCompaniesRoute());
+              }
             },
             child: const Icon(
               MyIcons.bookmarks,
@@ -59,8 +72,15 @@ class HomeHeader extends StatelessWidget {
           const SizedBox(width: 8),
           InkWell(
             onTap: () {
-              final tabsRouter = AutoTabsRouter.of(context);
-              tabsRouter.setActiveIndex(1);
+              if (AppConstants.userType == UserType.visitor) {
+                showDialog(
+                  context: context,
+                  builder: (context) => const VisitorAccessDialog(),
+                );
+              } else {
+                final tabsRouter = AutoTabsRouter.of(context);
+                tabsRouter.setActiveIndex(1);
+              }
             },
             child: const Icon(
               MyIcons.boldnotification,

@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
           return state.isArabic;
         },
         builder: (context, isArabic) {
-          AppConstans.language = isArabic ? 'ar' : 'en';
+          AppConstants.userType = context.read<AppCubit>().state.userType;
+          AppConstants.language = isArabic ? 'ar' : 'en';
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             routerConfig: appRouter.config(

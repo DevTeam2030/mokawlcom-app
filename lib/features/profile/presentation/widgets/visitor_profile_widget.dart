@@ -30,11 +30,8 @@ class VisitorProfileWidget extends StatelessWidget {
           title: LocaleKeys.registerAsContractor,
           icon: MyIcons.contractor,
           onTap: () {
-            // context.pushRoute(
-            //   const AuthRoute(children: [ClassificationRoute()]),
-            // );
-            context.read<AppCubit>().changeUserType(
-              userType: UserType.contractor,
+            context.pushRoute(
+              const AuthRoute(children: [ClassificationRoute()]),
             );
           },
         ),

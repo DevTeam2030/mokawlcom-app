@@ -7,7 +7,7 @@ class CustomInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     log('REQUEST[${options.method}] => PATH: ${options.path}');
-    options.queryParameters['lang'] = AppConstans.language;
+    options.queryParameters['lang'] = AppConstants.language;
     super.onRequest(options, handler);
   }
 

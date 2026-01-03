@@ -13,8 +13,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   ServiceLocator().init();
-  AppConstans.token =
-      await getIt<CacheHelper>().readData(key: AppConstans.tokenKey) ?? "";
+  AppConstants.token =
+      await getIt<CacheHelper>().readData(key: AppConstants.tokenKey) ?? "";
   Bloc.observer = MyBlocObserver();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory(

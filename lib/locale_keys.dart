@@ -193,4 +193,7 @@ class LocaleKeys {
   static String get cancel => 'cancel'.tr();
   static String get exit => 'exit'.tr();
   static String get savedCompanies => 'saved_companies'.tr();
+  static String get loginRequired => 'login_required'.tr();
+  static String get loginRequiredMessage => 'login_required_message'.tr();
+  static String get continueAsVisitor => 'continue_as_visitor'.tr();
 }

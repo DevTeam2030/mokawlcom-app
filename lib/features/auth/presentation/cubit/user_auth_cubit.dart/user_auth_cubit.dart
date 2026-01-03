@@ -66,7 +66,7 @@ class UserAuthCubit extends Cubit<UserAuthState> {
       ),
       (activateAccountResponseModel) {
         cacheHelper.saveData(
-          key: AppConstans.tokenKey,
+          key: AppConstants.tokenKey,
           value: activateAccountResponseModel.token,
         );
         emit(
@@ -96,8 +96,8 @@ class UserAuthCubit extends Cubit<UserAuthState> {
         ),
       ),
       (userLoginResponseModel) async {
-       await cacheHelper.saveData(
-          key: AppConstans.tokenKey,
+        await cacheHelper.saveData(
+          key: AppConstants.tokenKey,
           value: userLoginResponseModel.token,
         );
         emit(

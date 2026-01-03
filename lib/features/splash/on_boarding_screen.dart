@@ -19,9 +19,9 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   void initState() {
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 2), () {
       if (mounted) {
-        if (AppConstans.token.isEmpty) {
+        if (AppConstants.token.isEmpty) {
           context.replaceRoute(const AuthRoute());
         } else {
           context.replaceRoute(const AuthenticatedRoute());

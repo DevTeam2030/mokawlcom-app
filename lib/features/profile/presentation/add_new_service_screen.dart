@@ -72,7 +72,9 @@ class AddNewServiceScreen extends StatelessWidget {
                     child: Text('Classification 3'),
                   ),
                 ],
-                onChanged: (value) {},
+                onChanged: (value) {
+
+                },
               ),
               const SizedBox(height: 16),
               Text(

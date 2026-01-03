@@ -18,6 +18,7 @@ class AppCubit extends HydratedCubit<AppState> {
 
   changeUserType({required UserType userType}) {
     emit(state.copyWith(userType: userType));
+    AppConstants.userType = userType;
   }
 
   changeLanguage({required bool isArabic}) {

@@ -52,16 +52,6 @@ class UserProfileWidget extends StatelessWidget {
         const SizedBox(height: 16.0),
         ProfileItem(
           theme: theme,
-          title: LocaleKeys.savedCompanies,
-          icon: MyIcons.bookmarks,
-          onTap: () {
-            context.pushRoute(const SavedCompaniesRoute());
-          },
-          iconSize: 16.0,
-        ),
-        const SizedBox(height: 16.0),
-        ProfileItem(
-          theme: theme,
           title: LocaleKeys.changePassword,
           icon: MyIcons.eyesolid,
           onTap: () {

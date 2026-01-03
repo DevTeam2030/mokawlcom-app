@@ -133,5 +133,8 @@
   "do_you_want_to_logout": "Do you want to logout?",
   "cancel": "Cancel",
   "exit": "Exit",
-  "saved_companies": "Saved Companies"
+  "saved_companies": "Saved Companies",
+  "login_required": "Login Required",
+  "login_required_message": "You need to login to access this feature.",
+  "continue_as_visitor": "Continue as Visitor"
 }
