@@ -8,4 +8,5 @@ class ApiConstants {
   static const String userLogin = "/auth/login";
   // contractor auth
   static const String getSettings = "/settings";
+  static const String contractorSignup = "/auth/register-contractor";
 }

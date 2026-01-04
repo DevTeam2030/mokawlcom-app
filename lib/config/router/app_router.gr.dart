@@ -709,10 +709,11 @@ class VerificationRoute extends PageRouteInfo<VerificationRouteArgs> {
   VerificationRoute({
     Key? key,
     required String email,
+    bool isUser = false,
     List<PageRouteInfo>? children,
   }) : super(
          VerificationRoute.name,
-         args: VerificationRouteArgs(key: key, email: email),
+         args: VerificationRouteArgs(key: key, email: email, isUser: isUser),
          initialChildren: children,
        );
 
@@ -722,30 +723,40 @@ class VerificationRoute extends PageRouteInfo<VerificationRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<VerificationRouteArgs>();
-      return VerificationScreen(key: args.key, email: args.email);
+      return VerificationScreen(
+        key: args.key,
+        email: args.email,
+        isUser: args.isUser,
+      );
     },
   );
 }
 
 class VerificationRouteArgs {
-  const VerificationRouteArgs({this.key, required this.email});
+  const VerificationRouteArgs({
+    this.key,
+    required this.email,
+    this.isUser = false,
+  });
 
   final Key? key;
 
   final String email;
 
+  final bool isUser;
+
   @override
   String toString() {
-    return 'VerificationRouteArgs{key: $key, email: $email}';
+    return 'VerificationRouteArgs{key: $key, email: $email, isUser: $isUser}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! VerificationRouteArgs) return false;
-    return key == other.key && email == other.email;
+    return key == other.key && email == other.email && isUser == other.isUser;
   }
 
   @override
-  int get hashCode => key.hashCode ^ email.hashCode;
+  int get hashCode => key.hashCode ^ email.hashCode ^ isUser.hashCode;
 }

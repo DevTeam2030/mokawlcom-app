@@ -3,10 +3,11 @@ import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -47,17 +48,17 @@ class AuthCubit extends Cubit<AuthState> {
       (message) => emit(
         state.copyWith(
           userSignupState: RequestStatus.success,
-          message: message,
+          successMessage: message,
         ),
       ),
     );
   }
 
-  Future<void> activateUserAccount({
+  Future<void> activateAccount({
     required String email,
     required String verificationCode,
   }) async {
-    emit(state.copyWith(activateUserAccountState: RequestStatus.loading));
+    emit(state.copyWith(activateAccountState: RequestStatus.loading));
     final result = await userAuthRepoImpl.activateUserAccount(
       email: email,
       verificationCode: verificationCode,
@@ -65,7 +66,7 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (failure) => emit(
         state.copyWith(
-          activateUserAccountState: RequestStatus.error,
+          activateAccountState: RequestStatus.error,
           errorMessage: failure.errorMessage,
         ),
       ),
@@ -76,7 +77,7 @@ class AuthCubit extends Cubit<AuthState> {
         );
         emit(
           state.copyWith(
-            activateUserAccountState: RequestStatus.success,
+            activateAccountState: RequestStatus.success,
             activateAccountResponseModel: activateAccountResponseModel,
           ),
         );
@@ -116,10 +117,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> getSettings() async {
-    if (contractorAuthRepoImpl.classifications.isNotEmpty &&
-        contractorAuthRepoImpl.services.isNotEmpty) {
-      return;
-    }
     emit(
       state.copyWith(
         getSettingsState: RequestStatus.loading,
@@ -151,4 +148,40 @@ class AuthCubit extends Cubit<AuthState> {
   }) => emit(
     state.copyWith(classificiationId: classificiationId, services: services),
   );
+
+  Future<void> contractorSignUp({
+    required String name,
+    required String email,
+    required String password,
+    required String confirmPassword,
+    required String phone,
+  }) async {
+    emit(state.copyWith(contractorSignUpState: RequestStatus.loading));
+    final result = await contractorAuthRepoImpl.contractorSignUp(
+      contractorSignUpRequestModel: ContractorSignUpRequestModel(
+        name: name,
+        email: email,
+        password: password,
+        passwordConfirmation: confirmPassword,
+        phone: phone,
+        fcmToken: await FcmInitHelper.getFcmToken() ?? "",
+        classificationId: state.classificiationId,
+        services: state.services,
+      ),
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          contractorSignUpState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (message) => emit(
+        state.copyWith(
+          contractorSignUpState: RequestStatus.success,
+          successMessage: message,
+        ),
+      ),
+    );
+  }
 }

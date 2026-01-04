@@ -11,10 +11,12 @@ class SuccessDialog extends StatelessWidget {
     required this.onPressed,
     required this.theme,
     required this.text,
+    required this.message,
   });
   final void Function() onPressed;
   final ThemeData theme;
   final String text;
+  final String message;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -28,21 +30,21 @@ class SuccessDialog extends StatelessWidget {
             Lottie.asset(AssetsManager.successCheck, width: 150, height: 150),
             const SizedBox(height: 10),
             Text(
-              LocaleKeys.registerSuccess,
+              message,
               style: theme.textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.w400,
                 color: ColorsManager.successDark,
               ),
               textAlign: TextAlign.center,
             ),
-            Text(
-              LocaleKeys.yourAccountCreatedSuccessfully,
-              style: theme.textTheme.titleMedium!.copyWith(
-                color: ColorsManager.successLight,
-                fontWeight: FontWeight.w400,
-              ),
-              textAlign: TextAlign.center,
-            ),
+            // Text(
+            //   LocaleKeys.yourAccountCreatedSuccessfully,
+            //   style: theme.textTheme.titleMedium!.copyWith(
+            //     color: ColorsManager.successLight,
+            //     fontWeight: FontWeight.w400,
+            //   ),
+            //   textAlign: TextAlign.center,
+            // ),
             const SizedBox(height: 20),
             PrimaryButton(onPressed: onPressed, text: text),
           ],

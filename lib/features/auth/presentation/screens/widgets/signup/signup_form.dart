@@ -10,8 +10,8 @@ import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/password_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_cubit.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class SignupForm extends StatefulWidget {
@@ -152,8 +152,11 @@ class _SignupFormState extends State<SignupForm> {
                 );
               }
               if (state.userSignupState.isSuccess) {
-                showToast(message: state.message, state: ToastStates.success);
-                context.pushRoute(VerificationRoute(email: _email));
+                showToast(
+                  message: state.successMessage,
+                  state: ToastStates.success,
+                );
+                context.pushRoute(VerificationRoute(email: _email,isUser: true));
               }
             },
             builder: (context, state) {

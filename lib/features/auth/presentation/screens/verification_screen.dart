@@ -8,8 +8,8 @@ import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_cubit.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
@@ -19,8 +19,13 @@ import 'package:pinput/pinput.dart';
 
 @RoutePage()
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key, required this.email});
+  const VerificationScreen({
+    super.key,
+    required this.email,
+    this.isUser = false,
+  });
   final String email;
+  final bool isUser;
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -119,31 +124,41 @@ class _VerificationScreenState extends State<VerificationScreen> {
           padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
           child: BlocConsumer<AuthCubit, AuthState>(
             listenWhen: (previous, current) =>
-                previous.activateUserAccountState !=
-                current.activateUserAccountState,
+                previous.activateAccountState != current.activateAccountState,
             buildWhen: (previous, current) =>
-                previous.activateUserAccountState !=
-                current.activateUserAccountState,
+                previous.activateAccountState != current.activateAccountState,
             listener: (context, state) {
-              if (state.activateUserAccountState.isSuccess) {
-                showToast(
-                  message: state.activateAccountResponseModel.message,
-                  state: ToastStates.success,
+              if (state.activateAccountState.isSuccess) {
+                showDialog(
+                  context: context,
+                  builder: (context) => SuccessDialog(
+                    theme: theme,
+                    text: LocaleKeys.continueKey,
+                    message: state.activateAccountResponseModel.message,
+                    onPressed: () {
+                      if (widget.isUser) {
+                        context.replaceRoute(const AuthenticatedRoute());
+                      } else {
+                        context.replaceRoute(const UploadFilesRoute());
+                      }
+                      Navigator.pop(context);
+                    },
+                  ),
                 );
-                context.replaceRoute(const AuthenticatedRoute());
               }
-              if (state.activateUserAccountState.isError) {
-                showToast(
-                  message: state.errorMessage,
-                  state: ToastStates.error,
+              if (state.activateAccountState.isError) {
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      ErrorDialog(theme: theme, message: state.errorMessage),
                 );
               }
             },
             builder: (context, state) {
               return PrimaryButton(
-                isLoading: state.activateUserAccountState.isLoading,
+                isLoading: state.activateAccountState.isLoading,
                 onPressed: () {
-                  context.read<AuthCubit>().activateUserAccount(
+                  context.read<AuthCubit>().activateAccount(
                     email: widget.email,
                     verificationCode: verificationCode,
                   );

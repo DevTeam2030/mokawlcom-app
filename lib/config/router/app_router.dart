@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/classification_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/complete_data_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/contractor_signup_screen.dart';

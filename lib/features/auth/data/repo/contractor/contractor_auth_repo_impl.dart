@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/core/utils/safe_api_call.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/auth/data/data_source/contractor_auth_data_source.dart';
+import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/setting_result_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/settings_model.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
@@ -13,11 +14,7 @@ class ContractorAuthRepoImpl implements ContractorAuthRepo {
   List<SettingsModel> _classfications = [];
   List<SettingsModel> _services = [];
 
-  @override
-  List<SettingsModel> get classifications => _classfications;
 
-  @override
-  List<SettingsModel> get services => _services;
 
   @override
   Future<Either<Failure, SettingsResultModel>> getSettings() async {
@@ -40,5 +37,17 @@ class ContractorAuthRepoImpl implements ContractorAuthRepo {
         ),
       );
     });
+  }
+
+  @override
+  Future<Either<Failure, String>> contractorSignUp({
+    required ContractorSignUpRequestModel contractorSignUpRequestModel,
+  }) async {
+    final result = await safeApiCall<String>(
+      () => contractorAuthDataSource.contractorSignUp(
+        contractorSignUpRequestModel: contractorSignUpRequestModel,
+      ),
+    );
+    return result;
   }
 }

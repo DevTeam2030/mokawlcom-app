@@ -1,20 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
-import 'package:mokawlcom_app/core/utils/state_box.dart';
 import 'package:mokawlcom_app/features/auth/data/models/activate_account_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/setting_result_model.dart';
-import 'package:mokawlcom_app/features/auth/data/models/contractor/settings_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
 
 class AuthState extends Equatable {
-  // user sign up
+  //user
   final RequestStatus userSignupState;
-  final String message;
+  final String successMessage;
   final String errorMessage;
-  // activate user account
-  final RequestStatus activateUserAccountState;
+  final RequestStatus activateAccountState;
   final ActivateAccountResponseModel activateAccountResponseModel;
-  // user login
   final RequestStatus userLoginState;
   final UserLoginResponseModel userLoginResponseModel;
   // contractor sign up
@@ -22,13 +18,14 @@ class AuthState extends Equatable {
   final SettingsResultModel settingsResultModel;
   final int classificiationId;
   final List<int> services;
+  final RequestStatus contractorSignUpState;
   final bool isConnected;
 
   const AuthState({
     this.userSignupState = RequestStatus.initial,
-    this.message = "",
+    this.successMessage = "",
     this.errorMessage = "",
-    this.activateUserAccountState = RequestStatus.initial,
+    this.activateAccountState = RequestStatus.initial,
     this.activateAccountResponseModel =
         const ActivateAccountResponseModel.empty(),
     this.userLoginState = RequestStatus.initial,
@@ -37,14 +34,15 @@ class AuthState extends Equatable {
     this.settingsResultModel = const SettingsResultModel.empty(),
     this.classificiationId = 0,
     this.services = const [],
+    this.contractorSignUpState = RequestStatus.initial,
     this.isConnected = true,
   });
 
   AuthState copyWith({
     RequestStatus? userSignupState,
-    String? message,
+    String? successMessage,
     String? errorMessage,
-    RequestStatus? activateUserAccountState,
+    RequestStatus? activateAccountState,
     ActivateAccountResponseModel? activateAccountResponseModel,
     RequestStatus? userLoginState,
     UserLoginResponseModel? userLoginResponseModel,
@@ -52,14 +50,15 @@ class AuthState extends Equatable {
     SettingsResultModel? settingsResultModel,
     int? classificiationId,
     List<int>? services,
+    RequestStatus? contractorSignUpState,
     bool? isConnected,
   }) {
     return AuthState(
       userSignupState: userSignupState ?? this.userSignupState,
-      message: message ?? this.message,
+      successMessage: successMessage ?? this.successMessage,
       errorMessage: errorMessage ?? this.errorMessage,
-      activateUserAccountState:
-          activateUserAccountState ?? this.activateUserAccountState,
+      activateAccountState:
+          activateAccountState ?? this.activateAccountState,
       activateAccountResponseModel:
           activateAccountResponseModel ?? this.activateAccountResponseModel,
       userLoginState: userLoginState ?? this.userLoginState,
@@ -69,6 +68,9 @@ class AuthState extends Equatable {
       settingsResultModel: settingsResultModel ?? this.settingsResultModel,
       classificiationId: classificiationId ?? this.classificiationId,
       services: services ?? this.services,
+      contractorSignUpState:
+          contractorSignUpState ?? this.contractorSignUpState,
+
       isConnected: isConnected ?? this.isConnected,
     );
   }
@@ -76,9 +78,9 @@ class AuthState extends Equatable {
   @override
   List<Object> get props => [
     userSignupState,
-    message,
+    successMessage,
     errorMessage,
-    activateUserAccountState,
+    activateAccountState,
     activateAccountResponseModel,
     userLoginState,
     userLoginResponseModel,
@@ -86,6 +88,7 @@ class AuthState extends Equatable {
     settingsResultModel,
     classificiationId,
     services,
+    contractorSignUpState,
     isConnected,
   ];
 }
