@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
+import 'package:mokawlcom_app/features/auth/data/models/contractor/settings_model.dart';
 
 class ServicesListItem extends StatelessWidget {
   const ServicesListItem({
@@ -8,11 +10,13 @@ class ServicesListItem extends StatelessWidget {
     required this.theme,
     required this.isSelected,
     required this.onTap,
+    required this.service,
   });
 
   final ThemeData theme;
   final bool isSelected;
   final VoidCallback onTap;
+  final SettingsModel service;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -23,7 +27,7 @@ class ServicesListItem extends StatelessWidget {
         padding: const EdgeInsetsDirectional.symmetric(horizontal: 10.0),
         decoration: BoxDecoration(
           border: Border.all(
-            width: isSelected?2:1,
+            width: isSelected ? 2 : 1,
             color: isSelected
                 ? ColorsManager.primaryColor
                 : ColorsManager.secondaryColor,
@@ -32,14 +36,16 @@ class ServicesListItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const Image(
-              image: AssetImage(AssetsManager.mockawel),
+            CustomCachedNetworkImage(
+              imageUrl: service.image,
+              width: 38,
+              height: 38,
             ),
             const SizedBox(width: 16),
             Text(
-             "بناء",
+              service.name,
               style: theme.textTheme.bodyLarge!.copyWith(
-                color:  ColorsManager.primaryColor,
+                color: ColorsManager.primaryColor,
               ),
             ),
             const Spacer(),
@@ -58,4 +64,3 @@ class ServicesListItem extends StatelessWidget {
     );
   }
 }
-

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
+import 'package:mokawlcom_app/features/auth/data/models/contractor/settings_model.dart';
 
 class ClassificationListItem extends StatelessWidget {
   const ClassificationListItem({
@@ -8,11 +10,13 @@ class ClassificationListItem extends StatelessWidget {
     required this.theme,
     required this.isSelected,
     required this.onTap,
+    required this.settingsModel,
   });
 
   final ThemeData theme;
   final bool isSelected;
   final VoidCallback onTap;
+  final SettingsModel settingsModel;
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +37,19 @@ class ClassificationListItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const Image(image: AssetImage(AssetsManager.mockawel)),
+           CustomCachedNetworkImage(
+            imageUrl: settingsModel.image,
+            width: 38,
+            height: 38,
+           ),
             const SizedBox(width: 16),
-
             Text(
-              "مقاول",
+              settingsModel.name,
               style: theme.textTheme.bodyLarge!.copyWith(
                 color: isSelected ? ColorsManager.primaryColor : Colors.black,
               ),
             ),
-
             const Spacer(),
-
             Container(
               width: 20,
               height: 20,

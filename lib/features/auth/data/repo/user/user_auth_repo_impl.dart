@@ -5,11 +5,11 @@ import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/utils/safe_api_call.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
-import 'package:mokawlcom_app/features/auth/data/shared/models/activate_account_response_model.dart';
-import 'package:mokawlcom_app/features/auth/data/user/data_source/user_auth_data_source.dart';
-import 'package:mokawlcom_app/features/auth/data/user/models/user_login_response_model.dart';
-import 'package:mokawlcom_app/features/auth/data/user/models/user_signup_request_model.dart';
-import 'package:mokawlcom_app/features/auth/data/user/repo/user_auth_repo.dart';
+import 'package:mokawlcom_app/features/auth/data/models/activate_account_response_model.dart';
+import 'package:mokawlcom_app/features/auth/data/data_source/user_auth_data_source.dart';
+import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
+import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
+import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
 
 class UserAuthRepoImpl implements UserAuthRepo {
   final UserAuthDataSource userAuthDataSource;

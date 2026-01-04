@@ -3,16 +3,21 @@ import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
-import 'package:mokawlcom_app/features/auth/data/user/models/user_signup_request_model.dart';
-import 'package:mokawlcom_app/features/auth/data/user/repo/user_auth_repo.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_state.dart';
+import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
+import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
+import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_state.dart';
 import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
 
-class UserAuthCubit extends Cubit<UserAuthState> {
+class AuthCubit extends Cubit<AuthState> {
   final UserAuthRepo userAuthRepoImpl;
+  final ContractorAuthRepo contractorAuthRepoImpl;
   final CacheHelper cacheHelper;
-  UserAuthCubit({required this.userAuthRepoImpl, required this.cacheHelper})
-    : super(const UserAuthState());
+  AuthCubit({
+    required this.userAuthRepoImpl,
+    required this.cacheHelper,
+    required this.contractorAuthRepoImpl,
+  }) : super(const AuthState());
   Future<void> userSignup({
     required String name,
     required String email,
@@ -109,4 +114,41 @@ class UserAuthCubit extends Cubit<UserAuthState> {
       },
     );
   }
+
+  Future<void> getSettings() async {
+    if (contractorAuthRepoImpl.classifications.isNotEmpty &&
+        contractorAuthRepoImpl.services.isNotEmpty) {
+      return;
+    }
+    emit(
+      state.copyWith(
+        getSettingsState: RequestStatus.loading,
+        isConnected: true,
+      ),
+    );
+
+    final result = await contractorAuthRepoImpl.getSettings();
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          isConnected: failure.isConnected,
+          getSettingsState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (settingsResultModel) => emit(
+        state.copyWith(
+          getSettingsState: RequestStatus.success,
+          settingsResultModel: settingsResultModel,
+        ),
+      ),
+    );
+  }
+
+  void saveSettings({
+    required int classificiationId,
+    required List<int> services,
+  }) => emit(
+    state.copyWith(classificiationId: classificiationId, services: services),
+  );
 }

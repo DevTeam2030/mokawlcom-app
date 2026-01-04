@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
-import 'package:mokawlcom_app/features/auth/data/user/repo/user_auth_repo.dart';
+import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
 import 'package:mokawlcom_app/features/shared/cubit/app_state.dart';
 
 class AppCubit extends HydratedCubit<AppState> {

@@ -8,8 +8,8 @@ import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/password_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_cubit.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class LoginForm extends StatefulWidget {
@@ -87,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           const SizedBox(height: 16.0),
-          BlocConsumer<UserAuthCubit, UserAuthState>(
+          BlocConsumer<AuthCubit, AuthState>(
             listenWhen: (previous, current) =>
                 previous.userLoginState != current.userLoginState,
             buildWhen: (previous, current) =>
@@ -126,10 +126,10 @@ class _LoginFormState extends State<LoginForm> {
   Future<void> _submit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      await context.read<UserAuthCubit>().userLogin(
+      await context.read<AuthCubit>().userLogin(
         email: _email.replaceAll(" ", ""),
         password: _password.replaceAll(" ", ""),
-      );  
+      );
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;

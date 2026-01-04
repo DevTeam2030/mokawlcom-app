@@ -12,12 +12,12 @@ class HomeDepartmentsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16.0),
-      child: Column(
-        children: [
-          const SizedBox(height: 16),
-          Align(
+    return Column(
+      children: [
+        const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsetsDirectional.only(start: 16.0),
+          child: Align(
             alignment: AlignmentDirectional.centerStart,
             child: Text(
               LocaleKeys.departments,
@@ -27,21 +27,21 @@ class HomeDepartmentsSection extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16),
-          Wrap(
-            spacing: 30,
-            runSpacing: 24,
-            children: List.generate(
-              9,
-              (index) => WorkerItem(
-                onTap: () {
-                  context.pushRoute(const ServicesRoute());
-                },
-              ),
+        ),
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 30,
+          runSpacing: 24,
+          children: List.generate(
+            9,
+            (index) => WorkerItem(
+              onTap: () {
+                context.pushRoute(const ServicesRoute());
+              },
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

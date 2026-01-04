@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const Align(
                 alignment: AlignmentDirectional.center,
-                child: Image(image: AssetImage(AssetsManager.appLogo)),
+                child: Image(image: AssetImage(AssetsManager.appLogo,),width: 150,height: 150,),
               ),
               const SizedBox(height: 10.0),
               Align(

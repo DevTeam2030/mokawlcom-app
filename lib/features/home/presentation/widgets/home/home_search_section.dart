@@ -3,8 +3,21 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/home/presentation/widgets/home/home_filter_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
-class HomeSearchSection extends StatelessWidget {
+class HomeSearchSection extends StatefulWidget {
   const HomeSearchSection({super.key});
+
+  @override
+  State<HomeSearchSection> createState() => _HomeSearchSectionState();
+}
+
+class _HomeSearchSectionState extends State<HomeSearchSection> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +30,8 @@ class HomeSearchSection extends StatelessWidget {
             child: SizedBox(
               height: 54,
               child: TextField(
-                onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                focusNode: _focusNode,
+                onTapOutside: (_) => _focusNode.unfocus(),
                 decoration: InputDecoration(
                   suffixIcon: const Icon(
                     Icons.search,
@@ -39,6 +53,7 @@ class HomeSearchSection extends StatelessWidget {
           ),
           IconButton(
             onPressed: () async {
+              _focusNode.unfocus();
               await showModalBottomSheet(
                 backgroundColor: Colors.white,
                 isScrollControlled: true,

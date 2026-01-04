@@ -8,8 +8,8 @@ import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_cubit.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
@@ -64,7 +64,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               alignment: AlignmentDirectional.center,
               child: Pinput(
                 length: 5,
-                onChanged: (value)=>verificationCode = value,
+                onChanged: (value) => verificationCode = value,
                 defaultPinTheme: PinTheme(
                   width: 48,
                   height: 48,
@@ -117,7 +117,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
-          child: BlocConsumer<UserAuthCubit, UserAuthState>(
+          child: BlocConsumer<AuthCubit, AuthState>(
             listenWhen: (previous, current) =>
                 previous.activateUserAccountState !=
                 current.activateUserAccountState,
@@ -143,10 +143,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
               return PrimaryButton(
                 isLoading: state.activateUserAccountState.isLoading,
                 onPressed: () {
-                  context.read<UserAuthCubit>().activateUserAccount(
-                        email: widget.email,
-                        verificationCode: verificationCode,
-                      );
+                  context.read<AuthCubit>().activateUserAccount(
+                    email: widget.email,
+                    verificationCode: verificationCode,
+                  );
                 },
                 text: LocaleKeys.verify,
               );

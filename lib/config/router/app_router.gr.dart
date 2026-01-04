@@ -508,18 +508,55 @@ class SavedCompaniesRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [SelectServicesScreen]
-class SelectServicesRoute extends PageRouteInfo<void> {
-  const SelectServicesRoute({List<PageRouteInfo>? children})
-    : super(SelectServicesRoute.name, initialChildren: children);
+class SelectServicesRoute extends PageRouteInfo<SelectServicesRouteArgs> {
+  SelectServicesRoute({
+    Key? key,
+    required int classificationId,
+    List<PageRouteInfo>? children,
+  }) : super(
+         SelectServicesRoute.name,
+         args: SelectServicesRouteArgs(
+           key: key,
+           classificationId: classificationId,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'SelectServicesRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const SelectServicesScreen();
+      final args = data.argsAs<SelectServicesRouteArgs>();
+      return SelectServicesScreen(
+        key: args.key,
+        classificationId: args.classificationId,
+      );
     },
   );
+}
+
+class SelectServicesRouteArgs {
+  const SelectServicesRouteArgs({this.key, required this.classificationId});
+
+  final Key? key;
+
+  final int classificationId;
+
+  @override
+  String toString() {
+    return 'SelectServicesRouteArgs{key: $key, classificationId: $classificationId}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! SelectServicesRouteArgs) return false;
+    return key == other.key && classificationId == other.classificationId;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ classificationId.hashCode;
 }
 
 /// generated route for

@@ -9,9 +9,9 @@ import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/password_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/features/auth/data/user/models/user_signup_request_model.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_cubit.dart';
-import 'package:mokawlcom_app/features/auth/presentation/cubit/user_auth_cubit.dart/user_auth_state.dart';
+import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart/auth_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class SignupForm extends StatefulWidget {
@@ -139,7 +139,7 @@ class _SignupFormState extends State<SignupForm> {
             onSubmit: (_) => _onSubmit(context),
           ),
           const SizedBox(height: 16.0),
-          BlocConsumer<UserAuthCubit, UserAuthState>(
+          BlocConsumer<AuthCubit, AuthState>(
             listenWhen: (prev, curr) =>
                 prev.userSignupState != curr.userSignupState,
             buildWhen: (prev, curr) =>
@@ -152,11 +152,8 @@ class _SignupFormState extends State<SignupForm> {
                 );
               }
               if (state.userSignupState.isSuccess) {
-                showToast(
-                  message: state.message,
-                  state: ToastStates.success,
-                );
-                 context.pushRoute(VerificationRoute(email: _email));
+                showToast(message: state.message, state: ToastStates.success);
+                context.pushRoute(VerificationRoute(email: _email));
               }
             },
             builder: (context, state) {
@@ -177,7 +174,7 @@ class _SignupFormState extends State<SignupForm> {
   Future<void> _onSubmit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      await context.read<UserAuthCubit>().userSignup(
+      await context.read<AuthCubit>().userSignup(
         name: _name.trim(),
         email: _email.replaceAll(" ", ""),
         password: _password.replaceAll(" ", ""),
