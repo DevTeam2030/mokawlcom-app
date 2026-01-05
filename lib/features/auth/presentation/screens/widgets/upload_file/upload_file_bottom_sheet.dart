@@ -39,6 +39,7 @@ class _UploadFileBottomSheetState extends State<UploadFileBottomSheet> {
   late AutovalidateMode _autovalidateMode;
   String fileNumber = '';
   late final TextEditingController _expiryDateController;
+
   @override
   void initState() {
     super.initState();
@@ -107,12 +108,16 @@ class _UploadFileBottomSheetState extends State<UploadFileBottomSheet> {
                   firstDate: DateTime.now(),
                   lastDate: DateTime(DateTime.now().year + 100),
                 );
+
                 if (pickedDate != null) {
-                  debugPrint(
-                    '${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}',
-                  );
-                  _expiryDateController.text =
-                      '${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}';
+                  final day = pickedDate.day.toString().padLeft(2, '0');
+                  final month = pickedDate.month.toString().padLeft(2, '0');
+                  final year = pickedDate.year.toString();
+
+                  final formattedDate = '$year-$month-$day';
+
+                  debugPrint(formattedDate);
+                  _expiryDateController.text = formattedDate;
                 }
               },
               textInputAction: TextInputAction.done,
@@ -134,7 +139,8 @@ class _UploadFileBottomSheetState extends State<UploadFileBottomSheet> {
               buildWhen: (previous, current) =>
                   previous.uploadFileState != current.uploadFileState ||
                   previous.isFileLoading != current.isFileLoading ||
-                  previous.selectedFile != current.selectedFile,
+                  previous.selectedFile != current.selectedFile ||
+                  previous.progress != current.progress,
               listener: (context, state) {
                 if (state.uploadFileState.isSuccess) {
                   showToast(
@@ -214,37 +220,42 @@ class _UploadFileBottomSheetState extends State<UploadFileBottomSheet> {
                       ),
                     ),
                     const SizedBox(height: 98),
-                    if (state.uploadFileState.isLoading && state.progress > 0)
+                    if (state.uploadFileState.isLoading)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: LinearProgressIndicator(value: state.progress),
+                        child: LinearProgressIndicator(
+                          value: state.progress,
+                          color: ColorsManager.primaryColor,
+                        ),
                       ),
                     PrimaryButton(
                       isLoading: state.uploadFileState.isLoading,
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          if (state.selectedFile != null) {
-                            await context
-                                .read<FilesCubit>()
-                                .uploadCommercialRegistry(
-                                  contractorId: widget.userId,
-                                  fileNumber: fileNumber,
-                                  index: widget.index,
-                                  expiryDate: _expiryDateController.text,
-                                );
-                          } else {
-                            showToast(
-                              message: "Please select a file first",
-                              state: ToastStates.error,
-                            );
-                          }
-                        } else {
-                          setState(() {
-                            _autovalidateMode = AutovalidateMode.always;
-                          });
-                        }
-                      },
+                      onPressed: state.uploadFileState.isLoading
+                          ? () {}
+                          : () async {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                if (state.selectedFile != null) {
+                                  await context
+                                      .read<FilesCubit>()
+                                      .uploadCommercialRegistry(
+                                        contractorId: widget.userId,
+                                        fileNumber: fileNumber,
+                                        index: widget.index,
+                                        expiryDate: _expiryDateController.text,
+                                      );
+                                } else {
+                                  showToast(
+                                    message: "Please select a file first",
+                                    state: ToastStates.error,
+                                  );
+                                }
+                              } else {
+                                setState(() {
+                                  _autovalidateMode = AutovalidateMode.always;
+                                });
+                              }
+                            },
                       text: LocaleKeys.continueKey,
                     ),
                   ],

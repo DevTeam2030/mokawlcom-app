@@ -14,11 +14,9 @@ class FilesCubit extends Cubit<FilesState> {
   final ContractorAuthRepo contractorAuthRepoImpl;
   FilesCubit({required this.contractorAuthRepoImpl})
     : super(const FilesState());
-  void initUploadFile() => emit(state.copyWith(
-    // ignore: avoid_redundant_argument_values
-    selectedFile: null,
-    progress: 0,
-  ));
+
+  void clearOldFile() => emit(state.copyWith(clearSelectedFile: true));
+  
   Future<void> pickFile() async {
     emit(state.copyWith(isFileLoading: true));
     try {
@@ -41,6 +39,8 @@ class FilesCubit extends Cubit<FilesState> {
     required String fileNumber,
     required String expiryDate,
   }) async {
+    if (state.uploadFileState.isLoading) return;
+
     if (state.selectedFile == null) {
       emit(
         state.copyWith(
@@ -50,6 +50,7 @@ class FilesCubit extends Cubit<FilesState> {
       );
       return;
     }
+
     emit(state.copyWith(uploadFileState: RequestStatus.loading));
 
     UploadFileModel fileModel = UploadFileModel(
@@ -60,13 +61,16 @@ class FilesCubit extends Cubit<FilesState> {
     );
     final result = await contractorAuthRepoImpl.uploadCommercialRegistry(
       fileModel: fileModel,
-      onProgress: (progress) => emit(state.copyWith(progress: progress)),
+      onProgress: (progress) {
+        emit(state.copyWith(progress: progress));
+      },
     );
     result.fold(
       (failure) => emit(
         state.copyWith(
           uploadFileState: RequestStatus.error,
           errorMessage: failure.errorMessage,
+          progress: 0,
         ),
       ),
       (message) {
@@ -77,8 +81,6 @@ class FilesCubit extends Cubit<FilesState> {
             uploadFileState: RequestStatus.success,
             successMessage: message,
             completedFiles: completedFiles,
-            // ignore: avoid_redundant_argument_values
-            selectedFile: null,
             progress: 0,
           ),
         );

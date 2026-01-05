@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 
 class FilePickerService {
-  static const int maxFileSizeInMB = 5;
+  static const int maxFileSizeInMB = 10;
 
   static Future<File> pickFile() async {
     final result = await FilePicker.platform.pickFiles(

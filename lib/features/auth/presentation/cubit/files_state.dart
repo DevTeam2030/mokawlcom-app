@@ -30,6 +30,7 @@ class FilesState extends Equatable {
     Set<int>? completedFiles,
     File? selectedFile,
     bool? isFileLoading,
+    bool clearSelectedFile = false,
   }) {
     return FilesState(
       uploadFileState: uploadFileState ?? this.uploadFileState,
@@ -37,7 +38,7 @@ class FilesState extends Equatable {
       errorMessage: errorMessage ?? this.errorMessage,
       successMessage: successMessage ?? this.successMessage,
       completedFiles: completedFiles ?? this.completedFiles,
-      selectedFile: selectedFile ?? this.selectedFile,
+      selectedFile: clearSelectedFile ? null : (selectedFile ?? this.selectedFile),
       isFileLoading: isFileLoading ?? this.isFileLoading,
     );
   }

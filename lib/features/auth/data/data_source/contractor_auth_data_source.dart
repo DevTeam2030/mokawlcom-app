@@ -63,7 +63,6 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
     final response = await dioHelper.post(
       url: ApiConstants.uploadCommercialRegistry,
       headers: {
-        "Content-Type": "multipart/form-data",
         "Authorization": "Bearer ${AppConstants.token}",
       },
       data: formData,

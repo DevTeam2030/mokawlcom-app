@@ -11,6 +11,7 @@ import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/files_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/subscription_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/upload_file/upload_file_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -78,25 +79,18 @@ class UploadFileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        // Call when bottom sheet is opened
-        if (context.mounted) {
-          context.read<FilesCubit>().initUploadFile();
-        }
+        context.read<FilesCubit>().clearOldFile();
         await showModalBottomSheet(
           context: context,
           isScrollControlled: true,
           backgroundColor: Colors.white,
-          builder: (context) => UploadFileBottomSheet(
+          builder: (bottomSheetContext) => UploadFileBottomSheet(
             theme: theme,
             text: text,
             index: index,
             userId: userId,
           ),
         );
-        // Call when bottom sheet is closed
-        if (context.mounted) {
-          context.read<FilesCubit>().initUploadFile();
-        }
       },
       child: Container(
         margin: const EdgeInsetsDirectional.symmetric(
@@ -121,7 +115,16 @@ class UploadFileItem extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            const Icon(Icons.add, color: ColorsManager.primaryColor),
+            BlocSelector<FilesCubit, FilesState, bool>(
+              selector: (state) {
+                return state.completedFiles.contains(index);
+              },
+              builder: (context, state) {
+                return state
+                    ? const Icon(Icons.check, color: ColorsManager.primaryColor)
+                    : const Icon(Icons.add, color: ColorsManager.primaryColor);
+              },
+            ),
           ],
         ),
       ),
