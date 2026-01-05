@@ -9,4 +9,5 @@ class ApiConstants {
   // contractor auth
   static const String getSettings = "/settings";
   static const String contractorSignup = "/auth/register-contractor";
+  static const String uploadCommercialRegistry = "/auth/upload-commercial-registry";
 }

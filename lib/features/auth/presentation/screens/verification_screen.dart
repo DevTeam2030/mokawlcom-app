@@ -139,7 +139,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       if (widget.isUser) {
                         context.replaceRoute(const AuthenticatedRoute());
                       } else {
-                        context.replaceRoute(const UploadFilesRoute());
+                        context.replaceRoute(
+                          UploadFilesRoute(
+                            contractorId: state.activateAccountResponseModel.id,
+                          ),
+                        );
                       }
                       Navigator.pop(context);
                     },

@@ -673,18 +673,49 @@ class SubscriptionRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [UploadFilesScreen]
-class UploadFilesRoute extends PageRouteInfo<void> {
-  const UploadFilesRoute({List<PageRouteInfo>? children})
-    : super(UploadFilesRoute.name, initialChildren: children);
+class UploadFilesRoute extends PageRouteInfo<UploadFilesRouteArgs> {
+  UploadFilesRoute({
+    Key? key,
+    required int contractorId,
+    List<PageRouteInfo>? children,
+  }) : super(
+         UploadFilesRoute.name,
+         args: UploadFilesRouteArgs(key: key, contractorId: contractorId),
+         initialChildren: children,
+       );
 
   static const String name = 'UploadFilesRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const UploadFilesScreen();
+      final args = data.argsAs<UploadFilesRouteArgs>();
+      return UploadFilesScreen(key: args.key, contractorId: args.contractorId);
     },
   );
+}
+
+class UploadFilesRouteArgs {
+  const UploadFilesRouteArgs({this.key, required this.contractorId});
+
+  final Key? key;
+
+  final int contractorId;
+
+  @override
+  String toString() {
+    return 'UploadFilesRouteArgs{key: $key, contractorId: $contractorId}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! UploadFilesRouteArgs) return false;
+    return key == other.key && contractorId == other.contractorId;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ contractorId.hashCode;
 }
 
 /// generated route for

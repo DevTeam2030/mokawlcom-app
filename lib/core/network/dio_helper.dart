@@ -43,6 +43,7 @@ class DioHelper {
     dynamic data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
+    void Function(int, int)? onSendProgress,
   }) async {
     //_dio.options.headers = headers;
     return await _dio.post(
@@ -50,6 +51,7 @@ class DioHelper {
       data: data,
       queryParameters: query,
       options: Options(headers: headers),
+      onSendProgress: onSendProgress,
     );
   }
 

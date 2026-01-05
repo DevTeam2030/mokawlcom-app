@@ -1,18 +1,37 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/subscription_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/upload_file/upload_file_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 @RoutePage()
-class UploadFilesScreen extends StatelessWidget {
-  const UploadFilesScreen({super.key});
+class UploadFilesScreen extends StatefulWidget {
+  const UploadFilesScreen({super.key, required this.contractorId});
+  final int contractorId;
 
+  @override
+  State<UploadFilesScreen> createState() => _UploadFilesScreenState();
+}
+
+class _UploadFilesScreenState extends State<UploadFilesScreen> {
+  List<String> files = [
+    LocaleKeys.commercialRegister,
+    LocaleKeys.commercialLicense,
+    LocaleKeys.recordOfOrigin,
+    LocaleKeys.authorizedSignatoryCard,
+  ];
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -28,22 +47,13 @@ class UploadFilesScreen extends StatelessWidget {
       body: Column(
         children: [
           const SizedBox(height: 3),
-          UploadFileItem(theme: theme, text: LocaleKeys.commercialRegister),
-          UploadFileItem(theme: theme, text: LocaleKeys.commercialLicense),
-          UploadFileItem(theme: theme, text: LocaleKeys.recordOfOrigin),
-          UploadFileItem(
-            theme: theme,
-            text: LocaleKeys.authorizedSignatoryCard,
-          ),
-          const Spacer(),
-          PrimaryButton(
-            
-            onPressed: () {
-              context.pushRoute(const SubscriptionRoute());
-            },
-            text: "علشان تروح للإسكرين إللى بعدها بس",
-          ),
-          const Spacer(),
+          for (int i = 0; i < files.length; i++)
+            UploadFileItem(
+              theme: theme,
+              text: files[i],
+              index: i,
+              userId: widget.contractorId,
+            ),
         ],
       ),
     );
@@ -51,21 +61,42 @@ class UploadFilesScreen extends StatelessWidget {
 }
 
 class UploadFileItem extends StatelessWidget {
-  const UploadFileItem({super.key, required this.theme, required this.text});
+  const UploadFileItem({
+    super.key,
+    required this.theme,
+    required this.text,
+    required this.index,
+    required this.userId,
+  });
 
   final ThemeData theme;
   final String text;
+  final int index;
+  final int userId;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        showModalBottomSheet(
+      onTap: () async {
+        // Call when bottom sheet is opened
+        if (context.mounted) {
+          context.read<FilesCubit>().initUploadFile();
+        }
+        await showModalBottomSheet(
           context: context,
           isScrollControlled: true,
           backgroundColor: Colors.white,
-          builder: (context) => UploadFileBottomSheet(theme: theme, text: text),
+          builder: (context) => UploadFileBottomSheet(
+            theme: theme,
+            text: text,
+            index: index,
+            userId: userId,
+          ),
         );
+        // Call when bottom sheet is closed
+        if (context.mounted) {
+          context.read<FilesCubit>().initUploadFile();
+        }
       },
       child: Container(
         margin: const EdgeInsetsDirectional.symmetric(

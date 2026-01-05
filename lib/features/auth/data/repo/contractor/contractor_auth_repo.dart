@@ -2,10 +2,15 @@ import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/setting_result_model.dart';
+import 'package:mokawlcom_app/features/auth/data/models/contractor/upload_file_model.dart';
 
 abstract class ContractorAuthRepo {
   Future<Either<Failure, SettingsResultModel>> getSettings();
   Future<Either<Failure, String>> contractorSignUp({
     required ContractorSignUpRequestModel contractorSignUpRequestModel,
+  });
+  Future<Either<Failure, String>> uploadCommercialRegistry({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
   });
 }

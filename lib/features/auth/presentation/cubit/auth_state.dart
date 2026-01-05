@@ -19,6 +19,7 @@ class AuthState extends Equatable {
   final int classificiationId;
   final List<int> services;
   final RequestStatus contractorSignUpState;
+  
   final bool isConnected;
 
   const AuthState({
@@ -51,14 +52,15 @@ class AuthState extends Equatable {
     int? classificiationId,
     List<int>? services,
     RequestStatus? contractorSignUpState,
+    RequestStatus? uploadFileState,
+    double? progress,
     bool? isConnected,
   }) {
     return AuthState(
       userSignupState: userSignupState ?? this.userSignupState,
       successMessage: successMessage ?? this.successMessage,
       errorMessage: errorMessage ?? this.errorMessage,
-      activateAccountState:
-          activateAccountState ?? this.activateAccountState,
+      activateAccountState: activateAccountState ?? this.activateAccountState,
       activateAccountResponseModel:
           activateAccountResponseModel ?? this.activateAccountResponseModel,
       userLoginState: userLoginState ?? this.userLoginState,
@@ -70,7 +72,6 @@ class AuthState extends Equatable {
       services: services ?? this.services,
       contractorSignUpState:
           contractorSignUpState ?? this.contractorSignUpState,
-
       isConnected: isConnected ?? this.isConnected,
     );
   }

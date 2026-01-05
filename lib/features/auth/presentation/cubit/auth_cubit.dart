@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/local/cache_helper.dart';
+import 'package:mokawlcom_app/core/services/file_picker_service.dart';
 import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
+import 'package:mokawlcom_app/features/auth/data/models/contractor/upload_file_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
@@ -184,4 +188,6 @@ class AuthCubit extends Cubit<AuthState> {
       ),
     );
   }
+
+ 
 }

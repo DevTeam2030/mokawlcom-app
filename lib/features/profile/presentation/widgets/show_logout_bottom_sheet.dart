@@ -63,11 +63,11 @@ Future<void> showLogoutBottomSheet({required context, required theme}) async {
               backgroundColor: ColorsManager.errorLight,
               textColor: Colors.white,
               onPressed: () async {
-                Navigator.pop(context);
-                context.replaceRoute(const AuthRoute());
                 context.read<AppCubit>().changeUserType(
                   userType: UserType.visitor,
                 );
+                Navigator.pop(context);
+                context.replaceRoute(const AuthRoute());
                 AppConstants.token = "";
                 await getIt<CacheHelper>().deleteAll();
               },
