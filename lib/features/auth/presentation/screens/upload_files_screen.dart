@@ -14,6 +14,7 @@ import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart'
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/subscription_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/upload_file/upload_file_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/upload_file/upload_file_item.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -45,89 +46,47 @@ class _UploadFilesScreenState extends State<UploadFilesScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 3),
-          for (int i = 0; i < files.length; i++)
-            UploadFileItem(
-              theme: theme,
-              text: files[i],
-              index: i,
-              userId: widget.contractorId,
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class UploadFileItem extends StatelessWidget {
-  const UploadFileItem({
-    super.key,
-    required this.theme,
-    required this.text,
-    required this.index,
-    required this.userId,
-  });
-
-  final ThemeData theme;
-  final String text;
-  final int index;
-  final int userId;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        context.read<FilesCubit>().clearOldFile();
-        await showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          backgroundColor: Colors.white,
-          builder: (bottomSheetContext) => UploadFileBottomSheet(
-            theme: theme,
-            text: text,
-            index: index,
-            userId: userId,
+      body: BlocListener<FilesCubit, FilesState>(
+        listenWhen: (previous, current) =>
+            previous.uploadFileState != current.uploadFileState,
+        listener: (context, state) {
+          if (state.uploadFileState.isSuccess) {
+            showToast(
+              message: state.successMessage,
+              state: ToastStates.success,
+            );
+          }
+          if (state.uploadFileState.isError) {
+            showToast(message: state.errorMessage, state: ToastStates.error);
+          }
+        },
+        child: ListView.separated(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: 20,
+            vertical: 10,
           ),
-        );
-      },
-      child: Container(
-        margin: const EdgeInsetsDirectional.symmetric(
-          horizontal: 20,
-          vertical: 9,
-        ),
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-        height: 48,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: ColorsManager.secondaryColor),
-        ),
-        child: Row(
-          children: [
-            const Icon(MyIcons.file, color: ColorsManager.primaryColor),
-            const SizedBox(width: 14),
-            Text(
-              text,
-              style: theme.textTheme.bodyLarge!.copyWith(
-                color: ColorsManager.primaryColor,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            const Spacer(),
-            BlocSelector<FilesCubit, FilesState, bool>(
-              selector: (state) {
-                return state.completedFiles.contains(index);
-              },
-              builder: (context, state) {
-                return state
-                    ? const Icon(Icons.check, color: ColorsManager.primaryColor)
-                    : const Icon(Icons.add, color: ColorsManager.primaryColor);
-              },
-            ),
-          ],
+          itemCount: files.length,
+          separatorBuilder: (_, _) => const SizedBox(height: 18.0),
+          itemBuilder: (context, index) => UploadFileItem(
+            theme: theme,
+            text: files[index],
+            index: index,
+            userId: widget.contractorId,
+          ),
         ),
       ),
+      bottomNavigationBar:
+          context.select(
+            (FilesCubit cubit) => cubit.state.completedFiles.length == 4,
+          )
+          ? Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
+              child: PrimaryButton(
+                onPressed: () => context.pushRoute(const SubscriptionRoute()),
+                text: LocaleKeys.next,
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 }

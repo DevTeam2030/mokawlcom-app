@@ -13,4 +13,16 @@ abstract class ContractorAuthRepo {
     required UploadFileModel fileModel,
     required void Function(double progress) onProgress,
   });
+  Future<Either<Failure, String>> uploadTradeLicense({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  });
+  Future<Either<Failure, String>> uploadEstablishmentCertificate({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  });
+  Future<Either<Failure, String>> uploadAuthorizedSignature({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  });
 }

@@ -58,18 +58,19 @@ class SubscriptionScreen extends StatelessWidget {
             ),
             const Spacer(),
             PrimaryButton(
-              onPressed: ()  {
-                // await showDialog(
-                //   context: context,
-                //   builder: (context) => SuccessDialog(
-                //     onPressed: () {
-                //       Navigator.of(context).pop();
-                //     },
-                //     theme: theme,
-                //     text: LocaleKeys.completeData,
-                //   ),
-                // );
-                context.pushRoute(const CompleteDataRoute());
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  builder: (context) => SuccessDialog(
+                    onPressed: () {
+                      context.pushRoute(const CompleteDataRoute());
+                      Navigator.of(context).pop();
+                    },
+                    theme: theme,
+                    text: LocaleKeys.completeData,
+                    message: LocaleKeys.youHaveSuccessfullySubscribed,
+                  ),
+                );
               },
               text: LocaleKeys.tryNow,
             ),

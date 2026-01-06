@@ -136,5 +136,7 @@
   "saved_companies": "Saved Companies",
   "login_required": "Login Required",
   "login_required_message": "You need to login to access this feature.",
-  "continue_as_visitor": "Continue as Visitor"
+  "continue_as_visitor": "Continue as Visitor",
+  "please_select_at_least_one_service": "Please select at least one service",
+  "you_have_successfully_subscribed":"You have successfully subscribed"
 }

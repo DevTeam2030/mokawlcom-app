@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mokawlcom_app/core/enums/file_types.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
@@ -13,6 +14,7 @@ import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/upload_file/upload_file_section.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -39,6 +41,7 @@ class _UploadFileBottomSheetState extends State<UploadFileBottomSheet> {
   late AutovalidateMode _autovalidateMode;
   String fileNumber = '';
   late final TextEditingController _expiryDateController;
+  final Map<FileType, Future<void> Function()> uploadActions = {};
 
   @override
   void initState() {
@@ -46,12 +49,65 @@ class _UploadFileBottomSheetState extends State<UploadFileBottomSheet> {
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
     _expiryDateController = TextEditingController();
+    _uploadFileActions();
+  }
+
+  void _uploadFileActions() {
+    uploadActions.addAll({
+      FileType.commercialRegistry: () {
+        return context.read<FilesCubit>().uploadCommercialRegistry(
+          contractorId: widget.userId,
+          fileNumber: fileNumber,
+          index: widget.index,
+          expiryDate: _expiryDateController.text,
+        );
+      },
+      FileType.tradeLicense: () {
+        return context.read<FilesCubit>().uploadTradeLicense(
+          contractorId: widget.userId,
+          fileNumber: fileNumber,
+          index: widget.index,
+          expiryDate: _expiryDateController.text,
+        );
+      },
+      FileType.establishmentCertificate: () {
+        return context.read<FilesCubit>().uploadEstablishmentCertificate(
+          contractorId: widget.userId,
+          fileNumber: fileNumber,
+          index: widget.index,
+          expiryDate: _expiryDateController.text,
+        );
+      },
+      FileType.authorizedSignature: () {
+        return context.read<FilesCubit>().uploadAuthorizedSignature(
+          contractorId: widget.userId,
+          fileNumber: fileNumber,
+          index: widget.index,
+          expiryDate: _expiryDateController.text,
+        );
+      },
+    });
   }
 
   @override
   void dispose() {
     _expiryDateController.dispose();
     super.dispose();
+  }
+
+  FileType _getFileTypeFromIndex(int index) {
+    switch (index) {
+      case 0:
+        return FileType.commercialRegistry;
+      case 1:
+        return FileType.tradeLicense;
+      case 2:
+        return FileType.establishmentCertificate;
+      case 3:
+        return FileType.authorizedSignature;
+      default:
+        return FileType.commercialRegistry;
+    }
   }
 
   @override
@@ -108,14 +164,11 @@ class _UploadFileBottomSheetState extends State<UploadFileBottomSheet> {
                   firstDate: DateTime.now(),
                   lastDate: DateTime(DateTime.now().year + 100),
                 );
-
                 if (pickedDate != null) {
                   final day = pickedDate.day.toString().padLeft(2, '0');
                   final month = pickedDate.month.toString().padLeft(2, '0');
                   final year = pickedDate.year.toString();
-
                   final formattedDate = '$year-$month-$day';
-
                   debugPrint(formattedDate);
                   _expiryDateController.text = formattedDate;
                 }
@@ -133,132 +186,26 @@ class _UploadFileBottomSheetState extends State<UploadFileBottomSheet> {
               ),
             ),
             const SizedBox(height: 8),
-            BlocConsumer<FilesCubit, FilesState>(
-              listenWhen: (previous, current) =>
-                  previous.uploadFileState != current.uploadFileState,
+            UploadFileSection(theme: widget.theme),
+            const SizedBox(height: 10),
+            BlocBuilder<FilesCubit, FilesState>(
               buildWhen: (previous, current) =>
-                  previous.uploadFileState != current.uploadFileState ||
-                  previous.isFileLoading != current.isFileLoading ||
-                  previous.selectedFile != current.selectedFile ||
-                  previous.progress != current.progress,
-              listener: (context, state) {
-                if (state.uploadFileState.isSuccess) {
-                  showToast(
-                    message: state.successMessage,
-                    state: ToastStates.success,
-                  );
-                }
-                if (state.uploadFileState.isError) {
-                  showToast(
-                    message: state.errorMessage,
-                    state: ToastStates.error,
-                  );
-                }
-              },
+                  previous.uploadFileState != current.uploadFileState,
               builder: (context, state) {
-                return Column(
-                  children: [
-                    InkWell(
-                      onTap: () async {
-                        await context.read<FilesCubit>().pickFile();
-                      },
-                      child: Container(
-                        height: 135,
-                        width: double.infinity,
-                        padding: const EdgeInsetsDirectional.symmetric(
-                          vertical: 24,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: ColorsManager.secondaryColor,
-                          ),
-                        ),
-                        child: state.isFileLoading
-                            ? const Center(child: CircularProgressIndicator())
-                            : state.selectedFile != null
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    MyIcons.file,
-                                    size: 48,
-                                    color: ColorsManager.primaryColor,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    state.selectedFile!.path.split('/').last,
-                                    style: widget.theme.textTheme.bodyLarge!
-                                        .copyWith(
-                                          fontWeight: FontWeight.w400,
-                                          color: ColorsManager.primaryColor,
-                                        ),
-                                    textAlign: TextAlign.center,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              )
-                            : Column(
-                                children: [
-                                  const Icon(
-                                    MyIcons.uploadfile,
-                                    size: 48,
-                                    color: ColorsManager.secondaryColor,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    '${LocaleKeys.uploadFile} PDF/JPG',
-                                    style: widget.theme.textTheme.bodyLarge!
-                                        .copyWith(
-                                          fontWeight: FontWeight.w400,
-                                          color: ColorsManager.secondaryColor,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                      ),
-                    ),
-                    const SizedBox(height: 98),
-                    if (state.uploadFileState.isLoading)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: LinearProgressIndicator(
-                          value: state.progress,
-                          color: ColorsManager.primaryColor,
-                        ),
-                      ),
-                    PrimaryButton(
-                      isLoading: state.uploadFileState.isLoading,
-                      onPressed: state.uploadFileState.isLoading
-                          ? () {}
-                          : () async {
-                              if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save();
-                                if (state.selectedFile != null) {
-                                  await context
-                                      .read<FilesCubit>()
-                                      .uploadCommercialRegistry(
-                                        contractorId: widget.userId,
-                                        fileNumber: fileNumber,
-                                        index: widget.index,
-                                        expiryDate: _expiryDateController.text,
-                                      );
-                                } else {
-                                  showToast(
-                                    message: "Please select a file first",
-                                    state: ToastStates.error,
-                                  );
-                                }
-                              } else {
-                                setState(() {
-                                  _autovalidateMode = AutovalidateMode.always;
-                                });
-                              }
-                            },
-                      text: LocaleKeys.continueKey,
-                    ),
-                  ],
+                return PrimaryButton(
+                  isLoading: state.uploadFileState.isLoading,
+                  onPressed: () async {
+                    if (!_formKey.currentState!.validate()) {
+                      setState(() {
+                        _autovalidateMode = AutovalidateMode.always;
+                      });
+                      return;
+                    }
+                    _formKey.currentState!.save();
+                    final fileType = _getFileTypeFromIndex(widget.index);
+                    await uploadActions[fileType]!();
+                  },
+                  text: LocaleKeys.send,
                 );
               },
             ),

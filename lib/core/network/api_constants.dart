@@ -10,4 +10,7 @@ class ApiConstants {
   static const String getSettings = "/settings";
   static const String contractorSignup = "/auth/register-contractor";
   static const String uploadCommercialRegistry = "/auth/upload-commercial-registry";
+  static const String uploadTradeLicense = "/auth/upload-trade-license";
+  static const String uploadEstablishmentCertificate = "/auth/upload-establishment-certificate";
+  static const String uploadAuthorizedSignature = "/auth/upload-authorized-signature";
 }

@@ -196,4 +196,8 @@ class LocaleKeys {
   static String get loginRequired => 'login_required'.tr();
   static String get loginRequiredMessage => 'login_required_message'.tr();
   static String get continueAsVisitor => 'continue_as_visitor'.tr();
+  static String get pleaseSelectAtLeastOneService =>
+      'please_select_at_least_one_service'.tr();
+  static String get youHaveSuccessfullySubscribed =>
+      'you_have_successfully_subscribed'.tr();
 }

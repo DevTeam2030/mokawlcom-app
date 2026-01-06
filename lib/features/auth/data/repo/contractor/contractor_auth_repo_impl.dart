@@ -65,4 +65,46 @@ class ContractorAuthRepoImpl implements ContractorAuthRepo {
     );
     return result;
   }
+
+  @override
+  Future<Either<Failure, String>> uploadTradeLicense({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  }) async {
+    final result = await safeApiCall<String>(
+      () => contractorAuthDataSource.uploadTradeLicense(
+        fileModel: fileModel,
+        onProgress: onProgress,
+      ),
+    );
+    return result;
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadEstablishmentCertificate({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  }) async {
+    final result = await safeApiCall<String>(
+      () => contractorAuthDataSource.uploadEstablishmentCertificate(
+        fileModel: fileModel,
+        onProgress: onProgress,
+      ),
+    );
+    return result;
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadAuthorizedSignature({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  }) async {
+    final result = await safeApiCall<String>(
+      () => contractorAuthDataSource.uploadAuthorizedSignature(
+        fileModel: fileModel,
+        onProgress: onProgress,
+      ),
+    );
+    return result;
+  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/settings_model.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
@@ -24,7 +25,7 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
   @override
   void initState() {
     super.initState();
-    selectedIndices = ValueNotifier<Set<int>>(<int>{});
+    selectedIndices = ValueNotifier<Set<int>>(<int>{0});
   }
 
   @override
@@ -97,6 +98,13 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
                 const SizedBox(height: 10.0),
                 PrimaryButton(
                   onPressed: () {
+                    if (selectedIndices.value.isEmpty) {
+                      showToast(
+                        message: LocaleKeys.pleaseSelectAtLeastOneService,
+                        state: ToastStates.error,
+                      );
+                      return;
+                    }
                     context.read<AuthCubit>().saveSettings(
                       classificiationId: widget.classificationId,
                       services: selectedIndices.value

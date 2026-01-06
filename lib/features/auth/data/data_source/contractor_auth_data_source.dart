@@ -15,6 +15,18 @@ abstract class ContractorAuthDataSource {
     required UploadFileModel fileModel,
     required void Function(double progress) onProgress,
   });
+  Future<String> uploadTradeLicense({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  });
+  Future<String> uploadEstablishmentCertificate({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  });
+  Future<String> uploadAuthorizedSignature({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  });
 }
 
 class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
@@ -62,9 +74,100 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
 
     final response = await dioHelper.post(
       url: ApiConstants.uploadCommercialRegistry,
-      headers: {
-        "Authorization": "Bearer ${AppConstants.token}",
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      data: formData,
+      onSendProgress: (sent, total) {
+        if (total != 0) {
+          onProgress(sent / total);
+        }
       },
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response.data["message"] ?? "";
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
+
+  @override
+  Future<String> uploadTradeLicense({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  }) async {
+    final formData = FormData.fromMap({
+      'user_id': fileModel.userId,
+      'trade_license': fileModel.fileNumber,
+      'trade_license_file': await MultipartFile.fromFile(
+        fileModel.file.path,
+      ),
+      "trade_license_expiry_date": fileModel.expiryDate,
+    });
+
+    final response = await dioHelper.post(
+      url: ApiConstants.uploadTradeLicense,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      data: formData,
+      onSendProgress: (sent, total) {
+        if (total != 0) {
+          onProgress(sent / total);
+        }
+      },
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response.data["message"] ?? "";
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
+
+  @override
+  Future<String> uploadEstablishmentCertificate({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  }) async {
+    final formData = FormData.fromMap({
+      'user_id': fileModel.userId,
+      'establishment_certificate': fileModel.fileNumber,
+      'establishment_certificate_file': await MultipartFile.fromFile(
+        fileModel.file.path,
+      ),
+      "establishment_certificate_expiry_date": fileModel.expiryDate,
+    });
+
+    final response = await dioHelper.post(
+      url: ApiConstants.uploadEstablishmentCertificate,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      data: formData,
+      onSendProgress: (sent, total) {
+        if (total != 0) {
+          onProgress(sent / total);
+        }
+      },
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response.data["message"] ?? "";
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
+
+  @override
+  Future<String> uploadAuthorizedSignature({
+    required UploadFileModel fileModel,
+    required void Function(double progress) onProgress,
+  }) async {
+    final formData = FormData.fromMap({
+      'user_id': fileModel.userId,
+      'authorized_signature': fileModel.fileNumber,
+      'authorized_signature_file': await MultipartFile.fromFile(
+        fileModel.file.path,
+      ),
+      "authorized_signature_expiry_date": fileModel.expiryDate,
+    });
+
+    final response = await dioHelper.post(
+      url: ApiConstants.uploadAuthorizedSignature,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
       data: formData,
       onSendProgress: (sent, total) {
         if (total != 0) {
