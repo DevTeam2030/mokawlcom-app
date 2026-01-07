@@ -17,6 +17,10 @@ abstract class UserAuthDataSource {
   Future<UserLoginResponseModel> userLogin({
     required LoginRequestModel loginRequestModel,
   });
+
+  Future<String> forgetPassword({
+    required String email,
+  });
 }
 
 class UserAuthDataSourceImpl implements UserAuthDataSource {
@@ -64,6 +68,20 @@ class UserAuthDataSourceImpl implements UserAuthDataSource {
     );
     if (response.statusCode == 200) {
       return UserLoginResponseModel.fromJson(response.data);
+    } else {
+      throw ServerException(errorMessage: response.data["message"]);
+    }
+  }
+@override
+  Future<String> forgetPassword({
+    required String email,
+  }) async {
+    final response = await dioHelper.post(
+      url: ApiConstants.forgetPassword,
+      data: {"email": email},
+    );
+    if (response.statusCode == 200) {
+      return response.data["message"];
     } else {
       throw ServerException(errorMessage: response.data["message"]);
     }

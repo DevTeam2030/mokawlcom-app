@@ -66,4 +66,11 @@ class UserAuthRepoImpl implements UserAuthRepo {
     });
     return result;
   }
+
+  @override
+  Future<Either<Failure, String>> forgetPassword({
+    required String email,
+  }) async => safeApiCall<String>(
+    () => userAuthDataSource.forgetPassword(email: email),
+  );
 }

@@ -285,4 +285,25 @@ class AuthCubit extends Cubit<AuthState> {
       },
     );
   }
+
+  Future<void> forgetPassword({required String email}) async {
+    emit(state.copyWith(forgetPasswordState: RequestStatus.loading));
+    final result = await userAuthRepoImpl.forgetPassword(email: email);
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          forgetPasswordState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (message) {
+        emit(
+          state.copyWith(
+            forgetPasswordState: RequestStatus.success,
+            successMessage: message,
+          ),
+        );
+      },
+    );
+  }
 }

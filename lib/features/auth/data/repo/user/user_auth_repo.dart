@@ -17,6 +17,8 @@ abstract class UserAuthRepo {
   Future<Either<Failure, UserLoginResponseModel>> userLogin({
     required LoginRequestModel loginRequestModel,
   });
-
+  Future<Either<Failure, String>> forgetPassword({
+    required String email,
+  });
   Stream<UserType> get userTypeStream;
 }

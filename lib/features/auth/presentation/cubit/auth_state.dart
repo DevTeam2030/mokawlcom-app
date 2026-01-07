@@ -23,6 +23,7 @@ class AuthState extends Equatable {
   final RequestStatus contractorSignUpState;
   final RequestStatus completeContractorDataState;
   final RequestStatus subscibePlanState;
+  final RequestStatus forgetPasswordState;
   final File? logo;
   final String name;
   final String phone;
@@ -48,6 +49,7 @@ class AuthState extends Equatable {
     this.name = "",
     this.phone = "",
     this.subscibePlanState = RequestStatus.initial,
+    this.forgetPasswordState = RequestStatus.initial,
     this.isConnected = true,
   });
 
@@ -70,7 +72,7 @@ class AuthState extends Equatable {
     RequestStatus? completeContractorDataState,
     RequestStatus? subscibePlanState,
     bool clearSelectedLogo = false,
-
+    RequestStatus? forgetPasswordState,
     bool? isConnected,
   }) {
     return AuthState(
@@ -95,6 +97,7 @@ class AuthState extends Equatable {
           completeContractorDataState ?? this.completeContractorDataState,
       subscibePlanState: subscibePlanState ?? this.subscibePlanState,
       logo: clearSelectedLogo ? null : (logo ?? this.logo),
+      forgetPasswordState: forgetPasswordState ?? this.forgetPasswordState,
       isConnected: isConnected ?? this.isConnected,
     );
   }
@@ -118,6 +121,7 @@ class AuthState extends Equatable {
     phone,
     completeContractorDataState,
     subscibePlanState,
+    forgetPasswordState,
     isConnected,
   ];
 }
