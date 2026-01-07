@@ -4,10 +4,12 @@ import 'package:file_picker/file_picker.dart';
 class FilePickerService {
   static const int maxFileSizeInMB = 10;
 
-  static Future<File?> pickFile() async {
+  static Future<File?> pickFile({bool image = false}) async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
+      allowedExtensions: image
+          ? ['jpg', 'jpeg', 'png']
+          : ['pdf', 'jpg', 'jpeg', 'png'],
     );
 
     if (result == null || result.files.single.path == null) {

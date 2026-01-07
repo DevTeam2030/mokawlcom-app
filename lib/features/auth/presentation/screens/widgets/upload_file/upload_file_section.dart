@@ -100,16 +100,16 @@ class UploadFileSection extends StatelessWidget {
                   ),
                 ],
               );
-            } else if(progress == 1){
-             return const Row(
-              mainAxisAlignment: .center,
+            } else if (progress == 1) {
+              return const Row(
+                mainAxisAlignment: .center,
                 children: [
                   CircularProgressIndicator(strokeWidth: 2),
-                   SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Text("Processing file..."),
                 ],
               );
-            }else{
+            } else {
               return const SizedBox.shrink();
             }
           },

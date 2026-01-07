@@ -1,9 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
@@ -57,22 +62,41 @@ class SubscriptionScreen extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            PrimaryButton(
-              onPressed: () async {
-                await showDialog(
-                  context: context,
-                  builder: (context) => SuccessDialog(
-                    onPressed: () {
-                      context.pushRoute(const CompleteDataRoute());
-                      Navigator.of(context).pop();
-                    },
-                    theme: theme,
-                    text: LocaleKeys.completeData,
-                    message: LocaleKeys.youHaveSuccessfullySubscribed,
-                  ),
+            BlocConsumer<AuthCubit, AuthState>(
+              listenWhen: (prev, curr) =>
+                  prev.subscibePlanState != curr.subscibePlanState,
+              buildWhen: (prev, curr) =>
+                  prev.subscibePlanState != curr.subscibePlanState,
+              listener: (context, state) {
+                if (state.subscibePlanState.isSuccess) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => SuccessDialog(
+                      onPressed: () {
+                        context.pushRoute(const CompleteDataRoute());
+                        Navigator.of(context).pop();
+                      },
+                      theme: theme,
+                      text: LocaleKeys.completeData,
+                      message: state.successMessage,
+                    ),
+                  );
+                }
+                if (state.subscibePlanState.isError) {
+                  showDialog(
+                    context: context,
+                    builder: (context) =>
+                        ErrorDialog(theme: theme, message: state.errorMessage),
+                  );
+                }
+              },
+              builder: (context, state) {
+                return PrimaryButton(
+                  isLoading: state.subscibePlanState.isLoading,
+                  onPressed: () async {},
+                  text: LocaleKeys.tryNow,
                 );
               },
-              text: LocaleKeys.tryNow,
             ),
             const Spacer(),
           ],

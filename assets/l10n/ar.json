@@ -137,6 +137,5 @@
   "login_required": "يجب تسجيل الدخول",
   "login_required_message": "يجب تسجيل الدخول للوصول إلى هذه الميزة",
   "continue_as_visitor": "الاستمرار كزائر",
-  "please_select_at_least_one_service": "من فضلك اختر خدمة واحدة على الأقل",
-  "you_have_successfully_subscribed":"تم الإشتراك بنجاح"
+  "please_select_at_least_one_service": "من فضلك اختر خدمة واحدة على الأقل"
 }

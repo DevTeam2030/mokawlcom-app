@@ -32,9 +32,9 @@ class MyCurrentPackageScreen extends StatelessWidget {
           horizontal: 16,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: ColorsManager.secondaryColor, width: .7),
+          border: Border.all(color: ColorsManager.borderLightBlue,),
           borderRadius: BorderRadius.circular(8),
-          color: ColorsManager.fillColor,
+          color: ColorsManager.surfaceColor,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -56,14 +56,14 @@ class MyCurrentPackageScreen extends StatelessWidget {
             Text(
               "${LocaleKeys.subscriptionDate} : 12/12/2022",
               style: theme.textTheme.bodyMedium!.copyWith(
-                color: ColorsManager.secondaryColor,
+                color: ColorsManager.labelColor,
               ),
             ),
             const CustomDivider(),
             Text(
               "الباقة صالحة لمدة شهر",
               style: theme.textTheme.bodyMedium!.copyWith(
-                color: ColorsManager.secondaryColor,
+                color: ColorsManager.labelColor,
               ),
             ),
             const SizedBox(height: 20),

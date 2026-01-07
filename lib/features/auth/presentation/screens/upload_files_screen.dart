@@ -55,6 +55,7 @@ class _UploadFilesScreenState extends State<UploadFilesScreen> {
               message: state.successMessage,
               state: ToastStates.success,
             );
+            Navigator.pop(context);
           }
           if (state.uploadFileState.isError) {
             showToast(message: state.errorMessage, state: ToastStates.error);

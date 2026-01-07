@@ -33,7 +33,9 @@ class ServiceLocator {
       () => ContractorAuthDataSourceImpl(dioHelper: getIt<DioHelper>()),
     );
     getIt.registerLazySingleton<ContractorAuthRepo>(
-      () => ContractorAuthRepoImpl(contractorAuthDataSource: getIt<ContractorAuthDataSource>()),
+      () => ContractorAuthRepoImpl(
+        contractorAuthDataSource: getIt<ContractorAuthDataSource>(),
+      ),
     );
     getIt.registerFactory<AuthCubit>(
       () => AuthCubit(
@@ -45,7 +47,7 @@ class ServiceLocator {
     getIt.registerFactory<AppCubit>(
       () => AppCubit(userAuthRepo: getIt<UserAuthRepo>()),
     );
-     getIt.registerFactory<FilesCubit>(
+    getIt.registerFactory<FilesCubit>(
       () => FilesCubit(contractorAuthRepoImpl: getIt<ContractorAuthRepo>()),
     );
   }

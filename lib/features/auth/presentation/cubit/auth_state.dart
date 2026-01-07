@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/features/auth/data/models/activate_account_response_model.dart';
@@ -19,7 +21,12 @@ class AuthState extends Equatable {
   final int classificiationId;
   final List<int> services;
   final RequestStatus contractorSignUpState;
-  
+  final RequestStatus completeContractorDataState;
+  final RequestStatus subscibePlanState;
+  final File? logo;
+  final String name;
+  final String phone;
+
   final bool isConnected;
 
   const AuthState({
@@ -36,6 +43,11 @@ class AuthState extends Equatable {
     this.classificiationId = 0,
     this.services = const [],
     this.contractorSignUpState = RequestStatus.initial,
+    this.completeContractorDataState = RequestStatus.initial,
+    this.logo,
+    this.name = "",
+    this.phone = "",
+    this.subscibePlanState = RequestStatus.initial,
     this.isConnected = true,
   });
 
@@ -52,8 +64,13 @@ class AuthState extends Equatable {
     int? classificiationId,
     List<int>? services,
     RequestStatus? contractorSignUpState,
-    RequestStatus? uploadFileState,
-    double? progress,
+    File? logo,
+    String? name,
+    String? phone,
+    RequestStatus? completeContractorDataState,
+    RequestStatus? subscibePlanState,
+    bool clearSelectedLogo = false,
+
     bool? isConnected,
   }) {
     return AuthState(
@@ -72,12 +89,18 @@ class AuthState extends Equatable {
       services: services ?? this.services,
       contractorSignUpState:
           contractorSignUpState ?? this.contractorSignUpState,
+      name: name ?? this.name,
+      phone: phone ?? this.phone,
+      completeContractorDataState:
+          completeContractorDataState ?? this.completeContractorDataState,
+      subscibePlanState: subscibePlanState ?? this.subscibePlanState,
+      logo: clearSelectedLogo ? null : (logo ?? this.logo),
       isConnected: isConnected ?? this.isConnected,
     );
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
     userSignupState,
     successMessage,
     errorMessage,
@@ -90,6 +113,11 @@ class AuthState extends Equatable {
     classificiationId,
     services,
     contractorSignUpState,
+    logo,
+    name,
+    phone,
+    completeContractorDataState,
+    subscibePlanState,
     isConnected,
   ];
 }

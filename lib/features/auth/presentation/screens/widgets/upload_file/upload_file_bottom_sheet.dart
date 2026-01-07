@@ -193,7 +193,7 @@ class _UploadFileBottomSheetState extends State<UploadFileBottomSheet> {
                   previous.uploadFileState != current.uploadFileState,
               builder: (context, state) {
                 return PrimaryButton(
-                  isLoading: state.uploadFileState.isLoading,
+                 // isLoading: state.uploadFileState.isLoading,
                   onPressed: () async {
                     if (!_formKey.currentState!.validate()) {
                       setState(() {

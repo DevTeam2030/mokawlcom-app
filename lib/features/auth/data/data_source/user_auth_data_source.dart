@@ -2,6 +2,7 @@ import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/auth/data/models/activate_account_response_model.dart';
+import 'package:mokawlcom_app/features/auth/data/models/login_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
 
@@ -14,8 +15,7 @@ abstract class UserAuthDataSource {
   });
 
   Future<UserLoginResponseModel> userLogin({
-    required String email,
-    required String password,
+    required LoginRequestModel loginRequestModel,
   });
 }
 
@@ -56,12 +56,11 @@ class UserAuthDataSourceImpl implements UserAuthDataSource {
 
   @override
   Future<UserLoginResponseModel> userLogin({
-    required String email,
-    required String password,
+    required LoginRequestModel loginRequestModel,
   }) async {
     final response = await dioHelper.post(
       url: ApiConstants.userLogin,
-      data: {"email": email, "password": password},
+      data: loginRequestModel.toJson(),
     );
     if (response.statusCode == 200) {
       return UserLoginResponseModel.fromJson(response.data);

@@ -6,8 +6,10 @@ import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
 import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/features/auth/data/models/contractor/complete_contractor_data_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/upload_file_model.dart';
+import 'package:mokawlcom_app/features/auth/data/models/login_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
@@ -96,8 +98,11 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(state.copyWith(userLoginState: RequestStatus.loading));
     final result = await userAuthRepoImpl.userLogin(
-      email: email,
-      password: password,
+      loginRequestModel: LoginRequestModel(
+        email: email,
+        password: password,
+        fcmToken: await FcmInitHelper.getFcmToken() ?? "",
+      ),
     );
     result.fold(
       (failure) => emit(
@@ -186,6 +191,94 @@ class AuthCubit extends Cubit<AuthState> {
         emit(
           state.copyWith(
             contractorSignUpState: RequestStatus.success,
+            successMessage: message,
+            name: name,
+            phone: phone,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> pickFile() async {
+    try {
+      final File? file = await FilePickerService.pickFile(image: true);
+      emit(state.copyWith(logo: file));
+    } catch (e) {
+      emit(
+        state.copyWith(
+          errorMessage: e.toString(),
+          completeContractorDataState: RequestStatus.error,
+        ),
+      );
+    }
+  }
+
+  void clearOldIimage() => emit(state.copyWith(clearSelectedLogo: true));
+  Future<void> completeContractorData({
+    required String name,
+    required String phone,
+    required String hintAboutComany,
+    required String? whatsApp,
+    required String? facebook,
+    required String? twitter,
+    required String? snapChat,
+  }) async {
+    if (state.logo == null) {
+      emit(
+        state.copyWith(
+          completeContractorDataState: RequestStatus.error,
+          errorMessage: "Please select a logo",
+        ),
+      );
+      return;
+    }
+    emit(state.copyWith(completeContractorDataState: RequestStatus.loading));
+
+    final result = await contractorAuthRepoImpl.completeContractorData(
+      completeContractorDataRequestModel: CompleteContractorDataRequestModel(
+        logo: state.logo!,
+        name: name,
+        hintAboutComany: hintAboutComany,
+        phone: phone,
+        whatsApp: whatsApp ?? "",
+        facebook: facebook ?? "",
+        twitter: twitter ?? "",
+        snapChat: snapChat ?? "",
+      ),
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          completeContractorDataState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (message) {
+        emit(
+          state.copyWith(
+            completeContractorDataState: RequestStatus.success,
+            successMessage: message,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> subscibePlan() async {
+    emit(state.copyWith(subscibePlanState: RequestStatus.loading));
+    final result = await contractorAuthRepoImpl.subscibePlan();
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          subscibePlanState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (message) {
+        emit(
+          state.copyWith(
+            subscibePlanState: RequestStatus.success,
             successMessage: message,
           ),
         );

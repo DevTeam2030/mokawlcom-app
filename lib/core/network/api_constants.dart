@@ -13,4 +13,6 @@ class ApiConstants {
   static const String uploadTradeLicense = "/auth/upload-trade-license";
   static const String uploadEstablishmentCertificate = "/auth/upload-establishment-certificate";
   static const String uploadAuthorizedSignature = "/auth/upload-authorized-signature";
+  static const String completeContractorData = "/complete-contractor-data";
+  static const String subscibePlan = "/subscibe-plan";
 }

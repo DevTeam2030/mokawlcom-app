@@ -3,6 +3,7 @@ import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
+import 'package:mokawlcom_app/features/auth/data/models/contractor/complete_contractor_data_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/upload_file_model.dart';
 
@@ -27,6 +28,11 @@ abstract class ContractorAuthDataSource {
     required UploadFileModel fileModel,
     required void Function(double progress) onProgress,
   });
+  Future<String> completeContractorData({
+    required CompleteContractorDataRequestModel
+    completeContractorDataRequestModel,
+  });
+  Future<String> subscibePlan();
 }
 
 class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
@@ -97,9 +103,7 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
     final formData = FormData.fromMap({
       'user_id': fileModel.userId,
       'trade_license': fileModel.fileNumber,
-      'trade_license_file': await MultipartFile.fromFile(
-        fileModel.file.path,
-      ),
+      'trade_license_file': await MultipartFile.fromFile(fileModel.file.path),
       "trade_license_expiry_date": fileModel.expiryDate,
     });
 
@@ -174,6 +178,39 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
           onProgress(sent / total);
         }
       },
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response.data["message"] ?? "";
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
+
+  @override
+  Future<String> completeContractorData({
+    required CompleteContractorDataRequestModel
+    completeContractorDataRequestModel,
+  }) async {
+    final response = await dioHelper.post(
+      url: ApiConstants.completeContractorData,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      data: completeContractorDataRequestModel.toJson(),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response.data["message"] ?? "";
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
+
+  @override
+  Future<String> subscibePlan() async {
+    final response = await dioHelper.post(
+      url: ApiConstants.subscibePlan,
+      query: {
+        "plan_id":1,
+      },
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response.data["message"] ?? "";

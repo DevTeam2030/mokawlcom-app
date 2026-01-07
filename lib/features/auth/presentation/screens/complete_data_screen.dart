@@ -1,9 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/complete_contractor_data/complete_contractor_data_form.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/features/shared/widgets/profile_avatar_with_edit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
@@ -31,130 +38,13 @@ class CompleteDataScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 28.0),
-              const ProfileAvatarWithEdit(),
-              const SizedBox(height: 8.0),
-              Text(
-                LocaleKeys.name,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: ColorsManager.primaryColor,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 8.0),
-              CustomTextFormField(
-                type: TextInputType.name,
-                hintText: LocaleKeys.pleaseEnterYourName,
-                autofillHints: const [AutofillHints.name],
-                textInputAction: TextInputAction.next,
-                fieldName: LocaleKeys.name,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                LocaleKeys.phone,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: ColorsManager.primaryColor,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 8.0),
-              CustomTextFormField(
-                type: TextInputType.phone,
-                hintText: LocaleKeys.pleaseEnterYourPhone,
-                autofillHints: const [AutofillHints.telephoneNumber],
-                textInputAction: TextInputAction.next,
-                fieldName: LocaleKeys.phone,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                LocaleKeys.whatsApp,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: ColorsManager.primaryColor,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 8.0),
-              CustomTextFormField(
-                type: TextInputType.phone,
-                hintText: "966132627722+",
-                textInputAction: TextInputAction.next,
-                fieldName: LocaleKeys.whatsApp,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                LocaleKeys.socialMedia,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: ColorsManager.primaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                LocaleKeys.snapchat,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: ColorsManager.primaryColor,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 8.0),
-              CustomTextFormField(
-                type: TextInputType.text,
-                hintText: "@snap_user",
-                textInputAction: TextInputAction.next,
-                fieldName: LocaleKeys.snapchat,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                LocaleKeys.twitter,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: ColorsManager.primaryColor,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 8.0),
-              CustomTextFormField(
-                type: TextInputType.text,
-                hintText: "@username",
-                textInputAction: TextInputAction.next,
-                fieldName: LocaleKeys.twitter,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                LocaleKeys.facebook,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: ColorsManager.primaryColor,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 8.0),
-              CustomTextFormField(
-                type: TextInputType.text,
-                hintText: "Profile link",
-                textInputAction: TextInputAction.next,
-                fieldName: LocaleKeys.facebook,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                LocaleKeys.hintAboutCompany,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: ColorsManager.primaryColor,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 8.0),
-              CustomTextFormField(
-                type: TextInputType.text,
-                maxLines: 10,
-                textInputAction: TextInputAction.done,
-                fieldName: LocaleKeys.hintAboutCompany,
-              ),
-              const SizedBox(height: 40.0),
-              PrimaryButton(
-                onPressed: () {
-                  context.replaceRoute(const AuthenticatedRoute());
+              ProfileAvatarWithEdit(
+                onEditTap: () async {
+                  await context.read<AuthCubit>().pickFile();
                 },
-                text: LocaleKeys.save,
               ),
+              const SizedBox(height: 8.0),
+              CompleteContractorDataForm(theme: theme),
               const SizedBox(height: 40.0),
             ],
           ),

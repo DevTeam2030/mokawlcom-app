@@ -7,6 +7,7 @@ import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/auth/data/models/activate_account_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/data_source/user_auth_data_source.dart';
+import 'package:mokawlcom_app/features/auth/data/models/login_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
@@ -51,11 +52,10 @@ class UserAuthRepoImpl implements UserAuthRepo {
 
   @override
   Future<Either<Failure, UserLoginResponseModel>> userLogin({
-    required String email,
-    required String password,
+    required LoginRequestModel loginRequestModel,
   }) async {
     final result = await safeApiCall<UserLoginResponseModel>(
-      () => userAuthDataSource.userLogin(email: email, password: password),
+      () => userAuthDataSource.userLogin(loginRequestModel: loginRequestModel),
     );
     result.fold((l) {}, (userLoginResponseModel) {
       if (userLoginResponseModel.type == "normal") {

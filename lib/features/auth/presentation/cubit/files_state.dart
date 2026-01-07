@@ -38,7 +38,9 @@ class FilesState extends Equatable {
       errorMessage: errorMessage ?? this.errorMessage,
       successMessage: successMessage ?? this.successMessage,
       completedFiles: completedFiles ?? this.completedFiles,
-      selectedFile: clearSelectedFile ? null : (selectedFile ?? this.selectedFile),
+      selectedFile: clearSelectedFile
+          ? null
+          : (selectedFile ?? this.selectedFile),
       isFileLoading: isFileLoading ?? this.isFileLoading,
     );
   }

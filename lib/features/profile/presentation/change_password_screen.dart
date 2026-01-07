@@ -64,11 +64,13 @@ class ChangePasswordScreen extends StatelessWidget {
                 hintText: "********",
                 textInputAction: TextInputAction.done,
               ),
-              const SizedBox(height: 40.0),
-              PrimaryButton(onPressed: () {}, text: LocaleKeys.update),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
+        child: PrimaryButton(onPressed: () {}, text: LocaleKeys.update),
       ),
     );
   }

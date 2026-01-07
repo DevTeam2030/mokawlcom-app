@@ -95,12 +95,13 @@ class EditUserProfileScreen extends StatelessWidget {
                 textInputAction: TextInputAction.done,
                 fieldName: LocaleKeys.address,
               ),
-              const SizedBox(height: 40.0),
-              PrimaryButton(onPressed: () {}, text: LocaleKeys.save),
-              const SizedBox(height: 40.0),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar:  Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
+        child: PrimaryButton(onPressed: () {}, text: LocaleKeys.save),
       ),
     );
   }

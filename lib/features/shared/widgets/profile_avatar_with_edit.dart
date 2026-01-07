@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 
 class ProfileAvatarWithEdit extends StatelessWidget {
   final VoidCallback? onEditTap;
@@ -22,14 +25,21 @@ class ProfileAvatarWithEdit extends StatelessWidget {
             backgroundColor: isUserProfile
                 ? Colors.transparent
                 : ColorsManager.primaryColor,
-            child: CircleAvatar(
-              radius: 48,
-              backgroundColor: Colors.white,
-              backgroundImage: AssetImage(
-                isUserProfile
-                    ? AssetsManager.userImage
-                    : AssetsManager.logoImage,
-              ),
+            child: BlocBuilder<AuthCubit, AuthState>(
+              buildWhen: (previous, current) => previous.logo != current.logo,
+              builder: (context, state) {
+                return CircleAvatar(
+                  radius: 48,
+                  backgroundColor: Colors.white,
+                  backgroundImage: state.logo != null
+                      ? FileImage(state.logo!)
+                      : AssetImage(
+                          isUserProfile
+                              ? AssetsManager.userImage
+                              : AssetsManager.logoImage,
+                        ),
+                );
+              },
             ),
           ),
           Positioned(

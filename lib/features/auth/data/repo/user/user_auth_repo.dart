@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/features/auth/data/models/activate_account_response_model.dart';
+import 'package:mokawlcom_app/features/auth/data/models/login_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
 
@@ -14,8 +15,7 @@ abstract class UserAuthRepo {
     required String verificationCode,
   });
   Future<Either<Failure, UserLoginResponseModel>> userLogin({
-    required String email,
-    required String password,
+    required LoginRequestModel loginRequestModel,
   });
 
   Stream<UserType> get userTypeStream;
