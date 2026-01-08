@@ -8,6 +8,7 @@ import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/complete_contractor_data_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
+import 'package:mokawlcom_app/features/auth/data/models/contractor/setting_result_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/upload_file_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/login_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
@@ -78,10 +79,10 @@ class AuthCubit extends Cubit<AuthState> {
       ),
       (activateAccountResponseModel) {
         AppConstants.token = activateAccountResponseModel.token;
-        cacheHelper.saveData(
-          key: AppConstants.tokenKey,
-          value: activateAccountResponseModel.token,
-        );
+        // cacheHelper.saveData(
+        //   key: AppConstants.tokenKey,
+        //   value: activateAccountResponseModel.token,
+        // );
         emit(
           state.copyWith(
             activateAccountState: RequestStatus.success,

@@ -99,7 +99,18 @@ class _LoginFormState extends State<LoginForm> {
                   message: state.userLoginResponseModel.message,
                   state: ToastStates.success,
                 );
-                context.pushRoute(const AuthenticatedRoute());
+                if (!state.userLoginResponseModel.filesUploaded) {
+                  context.pushRoute(const ClassificationRoute());
+                  return;
+                } else if (!state.userLoginResponseModel.planCompleted) {
+                  context.pushRoute(const SubscriptionRoute());
+                  return;
+                } else if (!state.userLoginResponseModel.completeData) {
+                  context.pushRoute(const CompleteDataRoute());
+                  return;
+                } else {
+                  context.pushRoute(const AuthenticatedRoute());
+                }
               }
               if (state.userLoginState.isError) {
                 showToast(

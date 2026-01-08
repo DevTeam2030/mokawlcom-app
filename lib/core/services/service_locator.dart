@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/local/cache_helper.dart';
+import 'package:mokawlcom_app/core/local/shared_pref_helper.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
 import 'package:mokawlcom_app/features/auth/data/data_source/contractor_auth_data_source.dart';
@@ -20,7 +21,18 @@ class ServiceLocator {
   void init() {
     getIt.registerSingleton<AppRouter>(AppRouter());
     getIt.registerLazySingleton<DioHelper>(() => DioHelper());
-    getIt.registerLazySingleton<CacheHelper>(() => CacheHelper());
+
+    getIt.registerSingletonAsync<SharedPrefHelper>(
+      () async => await SharedPrefHelper.init(),
+    );
+
+    getIt.registerSingletonAsync<CacheHelper>(
+      () async {
+        final sharedPrefHelper = await getIt.getAsync<SharedPrefHelper>();
+        return CacheHelper(sharedPrefHelper: sharedPrefHelper);
+      },
+    );
+
     getIt.registerLazySingleton<FilePickerService>(() => FilePickerService());
 
     getIt.registerLazySingleton<UserAuthDataSource>(
@@ -37,6 +49,7 @@ class ServiceLocator {
         contractorAuthDataSource: getIt<ContractorAuthDataSource>(),
       ),
     );
+
     getIt.registerFactory<AuthCubit>(
       () => AuthCubit(
         userAuthRepoImpl: getIt<UserAuthRepo>(),

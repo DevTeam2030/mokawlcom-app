@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mokawlcom_app/bloc_observer.dart';
 import 'package:mokawlcom_app/core/local/cache_helper.dart';
+import 'package:mokawlcom_app/core/local/shared_pref_helper.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/my_app.dart';
@@ -13,6 +14,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   ServiceLocator().init();
+  await getIt.allReady();
   AppConstants.token =
       await getIt<CacheHelper>().readData(key: AppConstants.tokenKey) ?? "";
   Bloc.observer = MyBlocObserver();

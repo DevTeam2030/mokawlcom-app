@@ -15,6 +15,7 @@ class ContractorAuthRepoImpl implements ContractorAuthRepo {
   ContractorAuthRepoImpl({required this.contractorAuthDataSource});
   List<SettingsModel> _classfications = [];
   List<SettingsModel> _services = [];
+  List<String> _banners = [];
 
 
 
@@ -32,10 +33,15 @@ class ContractorAuthRepoImpl implements ContractorAuthRepo {
           .map((e) => SettingsModel.fromJson(e))
           .toList();
 
+      _banners = ((r["data"]?["banners"] as List?)??[])
+          .map((e) => e.toString())
+          .toList();
+
       return Right(
         SettingsResultModel(
           classifications: _classfications,
           services: _services,
+          banners: _banners,
         ),
       );
     });

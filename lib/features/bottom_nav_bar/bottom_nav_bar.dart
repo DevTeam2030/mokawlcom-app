@@ -16,18 +16,18 @@ class BottomNavBarScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: const [HomeRoute(), NotificationsRoute(), ProfileRoute()],
-      transitionBuilder: (context, child, animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: ScaleTransition(
-            scale: Tween<double>(begin: 0.98, end: 1).animate(
-              CurvedAnimation(parent: animation, curve: Curves.easeOut),
-            ),
-            child: child,
-          ),
-        );
-      },
 
+      // transitionBuilder: (context, child, animation) {
+      //   return FadeTransition(
+      //     opacity: animation,
+      //     child: ScaleTransition(
+      //       scale: Tween<double>(begin: 0.98, end: 1).animate(
+      //         CurvedAnimation(parent: animation, curve: Curves.easeOut),
+      //       ),
+      //       child: child,
+      //     ),
+      //   );
+      // },
       bottomNavigationBuilder: (context, tabsRouter) {
         return Container(
           height: 72,
@@ -49,12 +49,12 @@ class BottomNavBarScreen extends StatelessWidget {
               key: ValueKey(Localizations.localeOf(context).languageCode),
               currentIndex: tabsRouter.activeIndex,
               onTap: (index) {
-                if(index == 1 && AppConstants.userType == UserType.visitor){
+                if (index == 1 && AppConstants.userType == UserType.visitor) {
                   showDialog(
                     context: context,
                     builder: (context) => const VisitorAccessDialog(),
                   );
-                }else{
+                } else {
                   tabsRouter.setActiveIndex(index);
                 }
               },

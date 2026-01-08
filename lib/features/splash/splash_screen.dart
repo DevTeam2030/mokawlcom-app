@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/local/cache_helper.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -32,10 +35,8 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    Timer(const Duration(seconds: 2), () {
-      if (mounted) {
-        context.replaceRoute(const OnBoardingRoute());
-      }
+    Timer(const Duration(seconds: 2), () async {
+      await _navigate();
     });
   }
 
@@ -43,6 +44,23 @@ class _SplashScreenState extends State<SplashScreen>
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  Future<void> _navigate() async {
+    final cacheHelper = getIt<CacheHelper>();
+
+    final isOnBoardingSeen = cacheHelper.isOnBoardingSeen();
+    if (!isOnBoardingSeen) {
+      await cacheHelper.deleteAll();
+      if (mounted) context.replaceRoute(const OnBoardingRoute());
+      return;
+    }
+
+    if (AppConstants.token.isEmpty) {
+      if (mounted) context.replaceRoute(const AuthRoute());
+    } else {
+      if (mounted) context.replaceRoute(const AuthenticatedRoute());
+    }
   }
 
   @override

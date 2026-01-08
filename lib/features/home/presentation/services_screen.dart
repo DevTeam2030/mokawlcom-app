@@ -22,15 +22,15 @@ class ServicesScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 16.0),
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            children: [
-              const SizedBox(height: 18),
-              Align(
-                alignment: AlignmentDirectional.centerStart,
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
+            const SizedBox(height: 18),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(start: 16.0),
                 child: Text(
                   "مقاول",
                   style: theme.textTheme.bodyLarge!.copyWith(
@@ -39,21 +39,21 @@ class ServicesScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
-              Wrap(
-                spacing: 30,
-                runSpacing: 24,
-                children: List.generate(
-                  9,
-                  (index) => WorkerItem(
-                    onTap: () {
-                      context.pushRoute(const JobOffersRoute());
-                    },
-                  ),
+            ),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 30,
+              runSpacing: 24,
+              children: List.generate(
+                9,
+                (index) => WorkerItem(
+                  onTap: () {
+                    context.pushRoute(const JobOffersRoute());
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -43,13 +43,13 @@ part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AppRouter extends RootStackRouter {
-  @override
-  RouteType get defaultRouteType => const RouteType.material();
-
   AppRouter() : super(navigatorKey: rootNavigatorKey);
 
   static final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
+
+  @override
+  RouteType get defaultRouteType => const RouteType.adaptive();
 
   @override
   List<AutoRoute> get routes => [
@@ -58,89 +58,73 @@ class AppRouter extends RootStackRouter {
       page: SplashTabRoute.page,
       children: [
         AutoRoute(initial: true, page: SplashRoute.page),
-        _buildCustomRoute(page: OnBoardingRoute.page),
+        AutoRoute(page: OnBoardingRoute.page),
       ],
     ),
-    _buildCustomRoute(
+    AutoRoute(
       page: AuthRoute.page,
       children: [
-        _buildCustomRoute(initial: true, page: LoginRoute.page),
-        _buildCustomRoute(page: UserSignupRoute.page),
-        _buildCustomRoute(page: ContractorSignupRoute.page),
-        _buildCustomRoute(page: ClassificationRoute.page),
-        _buildCustomRoute(page: SelectServicesRoute.page),
-        _buildCustomRoute(page: ForgetPasswordRoute.page),
-        _buildCustomRoute(page: VerificationRoute.page),
-        _buildCustomRoute(page: UploadFilesRoute.page),
-        _buildCustomRoute(page: SubscriptionRoute.page),
-        _buildCustomRoute(page: CompleteDataRoute.page),
+        AutoRoute(initial: true, page: LoginRoute.page),
+        AutoRoute(page: UserSignupRoute.page),
+        AutoRoute(page: ContractorSignupRoute.page),
+        AutoRoute(page: ClassificationRoute.page),
+        AutoRoute(page: SelectServicesRoute.page),
+        AutoRoute(page: ForgetPasswordRoute.page),
+        AutoRoute(page: VerificationRoute.page),
+        AutoRoute(page: UploadFilesRoute.page),
+        AutoRoute(page: SubscriptionRoute.page),
+        AutoRoute(page: CompleteDataRoute.page),
       ],
     ),
-    _buildCustomRoute(
+    AutoRoute(
       page: AuthenticatedRoute.page,
       children: [
-        _buildCustomRoute(
+        AutoRoute(
           initial: true,
           page: BottomNavBarRoute.page,
           children: [
-            _buildCustomRoute(
+            AutoRoute(
               initial: true,
               page: HomeTabRoute.page,
               children: [
-                _buildCustomRoute(initial: true, page: HomeRoute.page),
-                _buildCustomRoute(page: ServicesRoute.page),
-                _buildCustomRoute(page: JobOffersRoute.page),
+                AutoRoute(initial: true, page: HomeRoute.page),
+                AutoRoute(page: ServicesRoute.page),
+                AutoRoute(page: JobOffersRoute.page),
               ],
             ),
-            _buildCustomRoute(
+            AutoRoute(
               page: NotificationsRoute.page,
               children: [
-                _buildCustomRoute(
-                  initial: true,
-                  page: PublicNotificationsRoute.page,
-                ),
-                _buildCustomRoute(page: PriceOffersRoute.page),
+                AutoRoute(initial: true, page: PublicNotificationsRoute.page),
+                AutoRoute(page: PriceOffersRoute.page),
               ],
             ),
-            _buildCustomRoute(page: ProfileRoute.page),
+            AutoRoute(page: ProfileRoute.page),
           ],
         ),
-        _buildCustomRoute(
+        AutoRoute(
           page: JobDetailsRoute.page,
           children: [
-            _buildCustomRoute(initial: true, page: CompanyDetailsRoute.page),
-            _buildCustomRoute(page: ServicesDetailsRoute.page),
+            AutoRoute(initial: true, page: CompanyDetailsRoute.page),
+            AutoRoute(page: ServicesDetailsRoute.page),
           ],
         ),
-        _buildCustomRoute(page: OfferDetailsRoute.page),
-        _buildCustomRoute(page: ChangePasswordRoute.page),
-        _buildCustomRoute(page: EditUserProfileRoute.page),
-        _buildCustomRoute(page: EditContractorProfileRoute.page),
-        _buildCustomRoute(page: MyServicesRoute.page),
-        _buildCustomRoute(page: AddNewServiceRoute.page),
-        _buildCustomRoute(page: MyCurrentPackageRoute.page),
-        _buildCustomRoute(page: AvailableDealsRoute.page),
-        _buildCustomRoute(page: SendOfferToContractorsRoute.page),
-        _buildCustomRoute(page: SubmittedPriceOffersRoute.page),
-        _buildCustomRoute(page: SavedCompaniesRoute.page),
+        AutoRoute(page: OfferDetailsRoute.page),
+        AutoRoute(page: ChangePasswordRoute.page),
+        AutoRoute(page: EditUserProfileRoute.page),
+        AutoRoute(page: EditContractorProfileRoute.page),
+        AutoRoute(page: MyServicesRoute.page),
+        AutoRoute(page: AddNewServiceRoute.page),
+        AutoRoute(page: MyCurrentPackageRoute.page),
+        AutoRoute(page: AvailableDealsRoute.page),
+        AutoRoute(page: SendOfferToContractorsRoute.page),
+        AutoRoute(page: SubmittedPriceOffersRoute.page),
+        AutoRoute(page: SavedCompaniesRoute.page),
       ],
     ),
   ];
-
-  CustomRoute _buildCustomRoute({
-    bool initial = false,
-    required PageInfo page,
-    List<AutoRoute>? children,
-  }) {
-    return CustomRoute(
-      initial: initial,
-      page: page,
-      transitionsBuilder: TransitionsBuilders.fadeIn,
-      duration: const Duration(milliseconds: 300),
-      children: children,
-    );
-  }
 }
+
 
 @RoutePage(name: 'SplashTabRoute')
 class Splash extends AutoRouter {

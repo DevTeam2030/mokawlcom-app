@@ -1,9 +1,13 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mokawlcom_app/core/local/shared_pref_helper.dart';
 
 class CacheHelper {
+  final SharedPrefHelper sharedPrefHelper;
   final FlutterSecureStorage _flutterSecureStorage;
 
-  CacheHelper()
+  CacheHelper({
+    required this.sharedPrefHelper,
+  })
     : _flutterSecureStorage = FlutterSecureStorage(
         aOptions: _getAndroidOptions(),
       );
@@ -25,5 +29,12 @@ class CacheHelper {
 
   Future<void> deleteAll() async {
     await _flutterSecureStorage.deleteAll();
+  }
+  Future<void> setOnBoardingSeen() async {
+    await sharedPrefHelper.setBool("on_boarding", true);
+  }
+
+  bool isOnBoardingSeen() {
+    return sharedPrefHelper.getBool("on_boarding") ?? false;
   }
 }
