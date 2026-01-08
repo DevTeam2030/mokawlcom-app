@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
 class CompleteContractorDataRequestModel extends Equatable {
@@ -22,16 +23,21 @@ class CompleteContractorDataRequestModel extends Equatable {
     required this.twitter,
     required this.snapChat,
   });
-  Map<String, dynamic> toJson() => {
-    "logo": logo,
-    "name": name,
-    "store_description": hintAboutComany,
-    "phone": phone,
-    "whatsapp": whatsApp,
-    "facebook": facebook,
-    "twitter": twitter,
-    "spanchat": snapChat,
-  };
+  Future<FormData> toFormData() async {
+    return FormData.fromMap({
+      "logo": await MultipartFile.fromFile(
+        logo.path,
+        filename: logo.path.split('/').last,
+      ),
+      "name": name,
+      "store_description": hintAboutComany,
+      "phone": phone,
+      "whatsapp": whatsApp ?? "",
+      "facebook": facebook ?? "",
+      "twitter": twitter ?? "",
+      "snapchat": snapChat ?? "",
+    });
+  }
 
   @override
   List<Object?> get props => [

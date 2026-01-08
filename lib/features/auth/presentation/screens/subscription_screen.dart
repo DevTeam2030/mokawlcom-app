@@ -93,7 +93,9 @@ class SubscriptionScreen extends StatelessWidget {
               builder: (context, state) {
                 return PrimaryButton(
                   isLoading: state.subscibePlanState.isLoading,
-                  onPressed: () async {},
+                  onPressed: () async {
+                   await context.read<AuthCubit>().subscibePlan();
+                  },
                   text: LocaleKeys.tryNow,
                 );
               },

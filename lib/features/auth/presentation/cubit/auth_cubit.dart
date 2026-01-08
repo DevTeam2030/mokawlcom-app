@@ -114,14 +114,19 @@ class AuthCubit extends Cubit<AuthState> {
       ),
       (userLoginResponseModel) async {
         AppConstants.token = userLoginResponseModel.token;
-        await cacheHelper.saveData(
-          key: AppConstants.tokenKey,
-          value: userLoginResponseModel.token,
-        );
+        if (userLoginResponseModel.completeData &&
+            userLoginResponseModel.filesUploaded &&
+            userLoginResponseModel.planCompleted) {
+          await cacheHelper.saveData(
+            key: AppConstants.tokenKey,
+            value: userLoginResponseModel.token,
+          );
+        }
         emit(
           state.copyWith(
             userLoginState: RequestStatus.success,
             userLoginResponseModel: userLoginResponseModel,
+            phone: userLoginResponseModel.phone,
           ),
         );
       },
@@ -193,7 +198,6 @@ class AuthCubit extends Cubit<AuthState> {
           state.copyWith(
             contractorSignUpState: RequestStatus.success,
             successMessage: message,
-            name: name,
             phone: phone,
           ),
         );

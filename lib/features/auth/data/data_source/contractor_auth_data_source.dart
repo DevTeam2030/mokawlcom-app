@@ -194,7 +194,7 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
     final response = await dioHelper.post(
       url: ApiConstants.completeContractorData,
       headers: {"Authorization": "Bearer ${AppConstants.token}"},
-      data: completeContractorDataRequestModel.toJson(),
+      data: await completeContractorDataRequestModel.toFormData(),
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response.data["message"] ?? "";
@@ -208,7 +208,7 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
     final response = await dioHelper.post(
       url: ApiConstants.subscibePlan,
       query: {
-        "plan_id":1,
+        "plan_id": 1,
       },
       headers: {"Authorization": "Bearer ${AppConstants.token}"},
     );

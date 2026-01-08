@@ -23,34 +23,29 @@ class CompleteContractorDataForm extends StatefulWidget {
 
 class _CompleteContractorDataFormState
     extends State<CompleteContractorDataForm> {
-      late final GlobalKey<FormState> _formKey;
+  late final GlobalKey<FormState> _formKey;
   late AutovalidateMode _autovalidateMode;
-  late final TextEditingController _nameController;
   late final TextEditingController _phoneController;
   String? whatsApp;
   String? facebook;
   String? twitter;
   String? snapChat;
   String hintAboutComany = "";
+  String name = "";
   @override
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _nameController = TextEditingController(
-        text: context.read<AuthCubit>().state.name,
-      );
-      _phoneController = TextEditingController(
-        text: context.read<AuthCubit>().state.phone,
-      );
-    });
+
+    _phoneController = TextEditingController(
+      text: context.read<AuthCubit>().state.phone,
+    );
   }
 
   @override
   void dispose() {
     super.dispose();
-    _nameController.dispose();
     _phoneController.dispose();
   }
 
@@ -61,6 +56,7 @@ class _CompleteContractorDataFormState
       key: _formKey,
       autovalidateMode: _autovalidateMode,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             LocaleKeys.name,
@@ -71,12 +67,12 @@ class _CompleteContractorDataFormState
           ),
           const SizedBox(height: 8.0),
           CustomTextFormField(
-            controller: _nameController,
             type: TextInputType.name,
             hintText: LocaleKeys.pleaseEnterYourName,
             autofillHints: const [AutofillHints.name],
             textInputAction: TextInputAction.next,
             fieldName: LocaleKeys.name,
+            onSaved: (value) => name = value!,
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -206,7 +202,7 @@ class _CompleteContractorDataFormState
                     text: LocaleKeys.next,
                     theme: theme,
                     onPressed: () {
-                      context.replaceRoute(const AuthenticatedRoute());
+                      context.navigateTo(const LoginRoute());
                       Navigator.pop(context);
                     },
                   ),
@@ -234,11 +230,12 @@ class _CompleteContractorDataFormState
       ),
     );
   }
+
   Future<void> _submit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       await context.read<AuthCubit>().completeContractorData(
-        name: _nameController.text,
+        name: name,
         phone: _phoneController.text,
         hintAboutComany: hintAboutComany,
         whatsApp: whatsApp,
