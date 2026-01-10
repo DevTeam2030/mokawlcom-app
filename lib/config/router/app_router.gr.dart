@@ -593,18 +593,49 @@ class ServicesDetailsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ServicesScreen]
-class ServicesRoute extends PageRouteInfo<void> {
-  const ServicesRoute({List<PageRouteInfo>? children})
-    : super(ServicesRoute.name, initialChildren: children);
+class ServicesRoute extends PageRouteInfo<ServicesRouteArgs> {
+  ServicesRoute({
+    Key? key,
+    required String title,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ServicesRoute.name,
+         args: ServicesRouteArgs(key: key, title: title),
+         initialChildren: children,
+       );
 
   static const String name = 'ServicesRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ServicesScreen();
+      final args = data.argsAs<ServicesRouteArgs>();
+      return ServicesScreen(key: args.key, title: args.title);
     },
   );
+}
+
+class ServicesRouteArgs {
+  const ServicesRouteArgs({this.key, required this.title});
+
+  final Key? key;
+
+  final String title;
+
+  @override
+  String toString() {
+    return 'ServicesRouteArgs{key: $key, title: $title}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ServicesRouteArgs) return false;
+    return key == other.key && title == other.title;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ title.hashCode;
 }
 
 /// generated route for

@@ -97,6 +97,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
         ),
         const SizedBox(height: 16),
         GridView.builder(
+          key: const PageStorageKey("Departments"),
           controller: _scrollController,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -105,7 +106,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
             crossAxisCount: 3,
             mainAxisSpacing: 24,
             crossAxisSpacing: 30,
-            childAspectRatio: 0.79,
+            childAspectRatio: 0.78,
           ),
           itemCount: classifications.length + (isLoadingMore ? 2 : 0),
           itemBuilder: (context, index) {
@@ -122,7 +123,9 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
               theme: widget.theme,
               classificationModel: classifications[index],
               onTap: () {
-                context.pushRoute(const ServicesRoute());
+                context.pushRoute(
+                  ServicesRoute(title: classifications[index].name),
+                );
               },
             );
           },
