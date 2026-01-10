@@ -7,7 +7,9 @@ class ApiConstants {
   static const String activateAccount = "/auth/activate-acount";
   static const String userLogin = "/auth/login";
   // contractor auth
-  static const String getSettings = "/settings";
+  static const String getClassifications = "/categories";
+  static const String getServices = "/sub-categories";
+  static const String getBanners = "/banners";
   static const String contractorSignup = "/auth/register-contractor";
   static const String uploadCommercialRegistry = "/auth/upload-commercial-registry";
   static const String uploadTradeLicense = "/auth/upload-trade-license";

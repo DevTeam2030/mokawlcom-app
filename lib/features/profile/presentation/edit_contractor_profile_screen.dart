@@ -4,7 +4,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_dropdown_field.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/features/shared/widgets/profile_avatar_with_edit.dart';
+import 'package:mokawlcom_app/features/shared/presentation/widgets/profile_avatar_with_edit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()

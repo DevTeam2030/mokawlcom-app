@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
-import 'package:mokawlcom_app/features/shared/widgets/offer_price_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/shared/presentation/widgets/offer_price_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 import 'package:vector_graphics/vector_graphics.dart';

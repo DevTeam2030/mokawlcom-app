@@ -6,9 +6,18 @@ import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/complete_contractor_data_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/upload_file_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classifications_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/services_model.dart';
 
 abstract class ContractorAuthDataSource {
-  Future<Map<String, dynamic>> getSettings();
+  Future<ClassificationsModel> getClassifications({
+    required int page,
+  });
+  Future<ServicesModel> getServices({
+    required int page,
+  });
   Future<String> contractorSignUp({
     required ContractorSignUpRequestModel contractorSignUpRequestModel,
   });
@@ -40,10 +49,34 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
 
   ContractorAuthDataSourceImpl({required this.dioHelper});
   @override
-  Future<Map<String, dynamic>> getSettings() async {
-    final response = await dioHelper.get(url: ApiConstants.getSettings);
+  Future<ClassificationsModel> getClassifications({
+    required int page,
+  }) async {
+    final response = await dioHelper.get(
+      url: ApiConstants.getClassifications,
+      queryParameters: {
+        "page": page,
+      },
+    );
     if (response.statusCode == 200) {
-      return response.data;
+      return ClassificationsModel.fromJson(response.data);
+    } else {
+      throw ServerException(errorMessage: response.data["message"]);
+    }
+  }
+
+  @override
+  Future<ServicesModel> getServices({
+    required int page,
+  }) async {
+    final response = await dioHelper.get(
+      url: ApiConstants.getServices,
+      queryParameters: {
+        "page": page,
+      },
+    );
+    if (response.statusCode == 200) {
+      return ServicesModel.fromJson(response.data);
     } else {
       throw ServerException(errorMessage: response.data["message"]);
     }
@@ -207,9 +240,7 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
   Future<String> subscibePlan() async {
     final response = await dioHelper.post(
       url: ApiConstants.subscibePlan,
-      query: {
-        "plan_id": 1,
-      },
+      query: {"plan_id": 1},
       headers: {"Authorization": "Bearer ${AppConstants.token}"},
     );
     if (response.statusCode == 200 || response.statusCode == 201) {

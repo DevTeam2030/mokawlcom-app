@@ -2,11 +2,19 @@ import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/complete_contractor_data_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
-import 'package:mokawlcom_app/features/auth/data/models/contractor/setting_result_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/upload_file_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classifications_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/services_model.dart';
 
 abstract class ContractorAuthRepo {
-  Future<Either<Failure, SettingsResultModel>> getSettings();
+  Future<Either<Failure, ClassificationsModel>> getClassifications({
+    required int page,
+  });
+  Future<Either<Failure, ServicesModel>> getServices({
+    required int page,
+  });
   Future<Either<Failure, String>> contractorSignUp({
     required ContractorSignUpRequestModel contractorSignUpRequestModel,
   });

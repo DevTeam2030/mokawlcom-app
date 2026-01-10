@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
-import 'package:mokawlcom_app/features/auth/data/models/contractor/settings_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ServicesListItem extends StatelessWidget {
   const ServicesListItem({
@@ -10,13 +11,13 @@ class ServicesListItem extends StatelessWidget {
     required this.theme,
     required this.isSelected,
     required this.onTap,
-    required this.service,
+    required this.serviceModel,
   });
 
   final ThemeData theme;
   final bool isSelected;
   final VoidCallback onTap;
-  final SettingsModel service;
+  final ServiceModel serviceModel;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -36,14 +37,24 @@ class ServicesListItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            CustomCachedNetworkImage(
-              imageUrl: service.image,
-              width: 38,
-              height: 38,
+            Skeleton.replace(
+              replacement: Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: ColorsManager.skeletonColor,
+                ),
+              ),
+              child: CustomCachedNetworkImage(
+                imageUrl: serviceModel.image,
+                width: 38,
+                height: 38,
+              ),
             ),
             const SizedBox(width: 16),
             Text(
-              service.name,
+              serviceModel.name,
               style: theme.textTheme.bodyLarge!.copyWith(
                 color: ColorsManager.primaryColor,
               ),

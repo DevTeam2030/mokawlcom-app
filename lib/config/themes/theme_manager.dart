@@ -10,6 +10,12 @@ class ThemeManager {
       scaffoldBackgroundColor: Colors.white,
       colorScheme: ColorScheme.fromSeed(seedColor: ColorsManager.primaryColor),
       useMaterial3: true,
+      pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         centerTitle: true,

@@ -2,7 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
-import 'package:mokawlcom_app/features/home/presentation/widgets/worker_item.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/widgets/classification_item.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
@@ -46,7 +47,14 @@ class ServicesScreen extends StatelessWidget {
               runSpacing: 24,
               children: List.generate(
                 9,
-                (index) => WorkerItem(
+                (index) => ClassificationItem(
+                  theme: theme,
+                  classificationModel: ClassificationModel(
+                    id: index,
+                    name: "name",
+                    image: "image",
+                    number: index
+                  ),
                   onTap: () {
                     context.pushRoute(const JobOffersRoute());
                   },

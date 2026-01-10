@@ -12,7 +12,11 @@ import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo_impl.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
-import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
+import 'package:mokawlcom_app/features/home/data/data_source/home_data_source.dart';
+import 'package:mokawlcom_app/features/home/data/repo/home_repo.dart';
+import 'package:mokawlcom_app/features/home/data/repo/home_repo_impl.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/cubit/home_cubit.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 
 // dependency injection
 final GetIt getIt = GetIt.instance;
@@ -26,12 +30,10 @@ class ServiceLocator {
       () async => await SharedPrefHelper.init(),
     );
 
-    getIt.registerSingletonAsync<CacheHelper>(
-      () async {
-        final sharedPrefHelper = await getIt.getAsync<SharedPrefHelper>();
-        return CacheHelper(sharedPrefHelper: sharedPrefHelper);
-      },
-    );
+    getIt.registerSingletonAsync<CacheHelper>(() async {
+      final sharedPrefHelper = await getIt.getAsync<SharedPrefHelper>();
+      return CacheHelper(sharedPrefHelper: sharedPrefHelper);
+    });
 
     getIt.registerLazySingleton<FilePickerService>(() => FilePickerService());
 
@@ -49,6 +51,12 @@ class ServiceLocator {
         contractorAuthDataSource: getIt<ContractorAuthDataSource>(),
       ),
     );
+    getIt.registerLazySingleton<HomeDataSource>(
+      () => HomeDataSourceImpl(dioHelper: getIt<DioHelper>()),
+    );
+    getIt.registerLazySingleton<HomeRepo>(
+      () => HomeRepoImpl(homeDataSource: getIt<HomeDataSource>()),
+    );
 
     getIt.registerFactory<AuthCubit>(
       () => AuthCubit(
@@ -62,6 +70,12 @@ class ServiceLocator {
     );
     getIt.registerFactory<FilesCubit>(
       () => FilesCubit(contractorAuthRepoImpl: getIt<ContractorAuthRepo>()),
+    );
+    getIt.registerFactory<HomeCubit>(
+      () => HomeCubit(
+        contractorAuthRepoImpl: getIt<ContractorAuthRepo>(),
+        homeRepoImpl: getIt<HomeRepo>(),
+      ),
     );
   }
 }

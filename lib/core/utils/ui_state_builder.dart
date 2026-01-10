@@ -10,10 +10,8 @@ class UiStateBuilder extends StatelessWidget {
   final Widget onLoading;
   final Widget onSuccess;
   final Widget? onError;
-  final bool isConnected;
   final String errorMessage;
   final ThemeData theme;
-  final void Function() onPressed;
 
   const UiStateBuilder({
     super.key,
@@ -22,10 +20,8 @@ class UiStateBuilder extends StatelessWidget {
     required this.onLoading,
     required this.onSuccess,
     this.onError,
-    required this.isConnected,
     required this.errorMessage,
     required this.theme,
-    required this.onPressed,
   });
 
   @override
@@ -45,41 +41,12 @@ class UiStateBuilder extends StatelessWidget {
           return onError!;
         }
 
-        return isConnected
-            ? Center(
-                child: Text(
-                  errorMessage,
-                  style: theme.textTheme.bodyLarge!.copyWith(
-                    color: Colors.black,
-                  ),
-                ),
-              )
-            : Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.wifi_off,
-                        size: 200,
-                        color: ColorsManager.primaryColor,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        errorMessage,
-                        style: theme.textTheme.bodyLarge!.copyWith(
-                          color: ColorsManager.primaryColor,
-                        ),
-                      ),
-                      const SizedBox(height: 40),
-                      PrimaryButton(
-                        onPressed: onPressed,
-                        text: LocaleKeys.tryAgain,
-                      ),
-                    ],
-                  ),
-                ),
-              );
+        return Center(
+          child: Text(
+            errorMessage,
+            style: theme.textTheme.bodyLarge!.copyWith(color: Colors.black),
+          ),
+        );
     }
   }
 }

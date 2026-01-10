@@ -3,8 +3,11 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/features/auth/data/models/activate_account_response_model.dart';
-import 'package:mokawlcom_app/features/auth/data/models/contractor/setting_result_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classifications_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/services_model.dart';
 
 class AuthState extends Equatable {
   //user
@@ -16,17 +19,22 @@ class AuthState extends Equatable {
   final RequestStatus userLoginState;
   final UserLoginResponseModel userLoginResponseModel;
   // contractor sign up
-  final RequestStatus getSettingsState;
-  final SettingsResultModel settingsResultModel;
+  final RequestStatus getClassificationsState;
+  final ClassificationsModel classificationsModel;
+  final RequestStatus getServicesState;
+  final ServicesModel servicesModel;
   final int classificiationId;
-  final List<int> services;
+  final List<int> servicesIds;
   final RequestStatus contractorSignUpState;
   final RequestStatus completeContractorDataState;
   final RequestStatus subscibePlanState;
   final RequestStatus forgetPasswordState;
   final File? logo;
   final String phone;
-
+  final int classficicationsTotalPages;
+  final int servicesTotalPages;
+  final int classficicationsCurrentPage;
+  final int servicesCurrentPage;
   final bool isConnected;
 
   const AuthState({
@@ -38,10 +46,12 @@ class AuthState extends Equatable {
         const ActivateAccountResponseModel.empty(),
     this.userLoginState = RequestStatus.initial,
     this.userLoginResponseModel = const UserLoginResponseModel.empty(),
-    this.getSettingsState = RequestStatus.initial,
-    this.settingsResultModel = const SettingsResultModel.empty(),
     this.classificiationId = 0,
-    this.services = const [],
+    this.servicesIds = const [],
+    this.classificationsModel = const ClassificationsModel.empty(),
+    this.servicesModel = const ServicesModel.empty(),
+    this.getServicesState = RequestStatus.loading,
+    this.getClassificationsState = RequestStatus.loading,
     this.contractorSignUpState = RequestStatus.initial,
     this.completeContractorDataState = RequestStatus.initial,
     this.logo,
@@ -49,6 +59,10 @@ class AuthState extends Equatable {
     this.subscibePlanState = RequestStatus.initial,
     this.forgetPasswordState = RequestStatus.initial,
     this.isConnected = true,
+    this.classficicationsTotalPages = 1,
+    this.servicesTotalPages = 1,
+    this.classficicationsCurrentPage = 1,
+    this.servicesCurrentPage = 1,
   });
 
   AuthState copyWith({
@@ -59,10 +73,12 @@ class AuthState extends Equatable {
     ActivateAccountResponseModel? activateAccountResponseModel,
     RequestStatus? userLoginState,
     UserLoginResponseModel? userLoginResponseModel,
-    RequestStatus? getSettingsState,
-    SettingsResultModel? settingsResultModel,
+    ServicesModel? servicesModel,
+    ClassificationsModel? classificationsModel,
+    RequestStatus? getServicesState,
+    RequestStatus? getClassificationsState,
     int? classificiationId,
-    List<int>? services,
+    List<int>? servicesIds,
     RequestStatus? contractorSignUpState,
     File? logo,
     String? phone,
@@ -71,6 +87,10 @@ class AuthState extends Equatable {
     bool clearSelectedLogo = false,
     RequestStatus? forgetPasswordState,
     bool? isConnected,
+    int? classficicationsCurrentPage,
+    int? servicesCurrentPage,
+    int? classficicationsTotalPages,
+    int? servicesTotalPages,
   }) {
     return AuthState(
       userSignupState: userSignupState ?? this.userSignupState,
@@ -82,10 +102,14 @@ class AuthState extends Equatable {
       userLoginState: userLoginState ?? this.userLoginState,
       userLoginResponseModel:
           userLoginResponseModel ?? this.userLoginResponseModel,
-      getSettingsState: getSettingsState ?? this.getSettingsState,
-      settingsResultModel: settingsResultModel ?? this.settingsResultModel,
+      classificationsModel: classificationsModel ?? this.classificationsModel,
+      servicesModel: servicesModel ?? this.servicesModel,
+      getServicesState: getServicesState ?? this.getServicesState,
+      getClassificationsState:
+          getClassificationsState ?? this.getClassificationsState,
+
       classificiationId: classificiationId ?? this.classificiationId,
-      services: services ?? this.services,
+      servicesIds: servicesIds ?? this.servicesIds,
       contractorSignUpState:
           contractorSignUpState ?? this.contractorSignUpState,
       phone: phone ?? this.phone,
@@ -95,6 +119,12 @@ class AuthState extends Equatable {
       logo: clearSelectedLogo ? null : (logo ?? this.logo),
       forgetPasswordState: forgetPasswordState ?? this.forgetPasswordState,
       isConnected: isConnected ?? this.isConnected,
+      classficicationsCurrentPage:
+          classficicationsCurrentPage ?? this.classficicationsCurrentPage,
+      servicesCurrentPage: servicesCurrentPage ?? this.servicesCurrentPage,
+      classficicationsTotalPages:
+          classficicationsTotalPages ?? this.classficicationsTotalPages,
+      servicesTotalPages: servicesTotalPages ?? this.servicesTotalPages,
     );
   }
 
@@ -107,10 +137,12 @@ class AuthState extends Equatable {
     activateAccountResponseModel,
     userLoginState,
     userLoginResponseModel,
-    getSettingsState,
-    settingsResultModel,
+    classificationsModel,
+    servicesModel,
+    getServicesState,
+    getClassificationsState,
     classificiationId,
-    services,
+    servicesIds,
     contractorSignUpState,
     logo,
     phone,
@@ -118,5 +150,9 @@ class AuthState extends Equatable {
     subscibePlanState,
     forgetPasswordState,
     isConnected,
+    classficicationsCurrentPage,
+    servicesCurrentPage,
+    classficicationsTotalPages,
+    servicesTotalPages,
   ];
 }

@@ -7,8 +7,8 @@ import 'package:mokawlcom_app/features/profile/presentation/widgets/contractor_p
 import 'package:mokawlcom_app/features/profile/presentation/widgets/profile_item.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/user_profile_widget.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/visitor_profile_widget.dart';
-import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
-import 'package:mokawlcom_app/features/shared/cubit/app_state.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 

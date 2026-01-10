@@ -1,11 +1,18 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
+import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/cubit/home_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/cubit/home_state.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeBannerSection extends StatefulWidget {
-  const HomeBannerSection({super.key});
+  const HomeBannerSection({super.key, required this.theme});
+  final ThemeData theme;
 
   @override
   State<HomeBannerSection> createState() => _HomeBannerSectionState();
@@ -13,12 +20,6 @@ class HomeBannerSection extends StatefulWidget {
 
 class _HomeBannerSectionState extends State<HomeBannerSection> {
   final ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
-
-  final List<String> _images = const [
-    AssetsManager.homeBanner,
-    AssetsManager.homeBanner,
-    AssetsManager.homeBanner,
-  ];
 
   @override
   void dispose() {
@@ -28,17 +29,40 @@ class _HomeBannerSectionState extends State<HomeBannerSection> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen: (previous, current) =>
+          previous.getBannersState != current.getBannersState,
+      builder: (context, state) => UiStateBuilder(
+        state: state.getBannersState,
+        onLoading: Skeletonizer(
+          child: _buildHomeBanners(banners: ["", "", ""]),
+        ),
+        onSuccess: _buildHomeBanners(banners: state.banners),
+        errorMessage: state.bannersErrorMessage,
+        theme: widget.theme,
+      ),
+    );
+  }
+
+  Column _buildHomeBanners({required List<String> banners}) {
     return Column(
       children: [
         const SizedBox(height: 16),
         CarouselSlider.builder(
-          itemCount: _images.length,
+          itemCount: banners.length,
           itemBuilder: (context, index, _) {
-            return Image.asset(
-              _images[index],
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: 190,
+            return Skeleton.replace(
+              replacement: Container(
+                width: double.infinity,
+                height: 190,
+                color: ColorsManager.skeletonColor,
+              ),
+              child: CustomCachedNetworkImage(
+                imageUrl: banners[index],
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 190,
+              ),
             );
           },
           options: CarouselOptions(
@@ -59,7 +83,7 @@ class _HomeBannerSectionState extends State<HomeBannerSection> {
           builder: (context, index, _) {
             return AnimatedSmoothIndicator(
               activeIndex: index,
-              count: _images.length,
+              count: banners.length,
               effect: const WormEffect(
                 dotHeight: 13,
                 dotWidth: 13,

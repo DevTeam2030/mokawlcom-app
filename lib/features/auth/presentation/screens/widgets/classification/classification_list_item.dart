@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
-import 'package:mokawlcom_app/features/auth/data/models/contractor/settings_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ClassificationListItem extends StatelessWidget {
   const ClassificationListItem({
@@ -10,13 +10,13 @@ class ClassificationListItem extends StatelessWidget {
     required this.theme,
     required this.isSelected,
     required this.onTap,
-    required this.settingsModel,
+    required this.classificationModel,
   });
 
   final ThemeData theme;
   final bool isSelected;
   final VoidCallback onTap;
-  final SettingsModel settingsModel;
+  final ClassificationModel classificationModel;
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +37,29 @@ class ClassificationListItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-           CustomCachedNetworkImage(
-            imageUrl: settingsModel.image,
-            width: 38,
-            height: 38,
-           ),
+            Skeleton.replace(
+              replacement: Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: ColorsManager.skeletonColor,
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: CustomCachedNetworkImage(
+                  imageUrl: classificationModel.image,
+                  width: 38,
+                  height: 38,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+
             const SizedBox(width: 16),
             Text(
-              settingsModel.name,
+              classificationModel.name,
               style: theme.textTheme.bodyLarge!.copyWith(
                 color: isSelected ? ColorsManager.primaryColor : Colors.black,
               ),

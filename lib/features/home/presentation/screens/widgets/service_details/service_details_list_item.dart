@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
-import 'package:mokawlcom_app/features/home/presentation/widgets/service_details/expandable_text_widget.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/widgets/service_details/expandable_text_widget.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class ServiceDetailsListItem extends StatelessWidget {

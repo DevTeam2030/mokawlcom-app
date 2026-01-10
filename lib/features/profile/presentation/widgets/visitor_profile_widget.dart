@@ -5,7 +5,7 @@ import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/profile_item.dart';
 import 'package:mokawlcom_app/features/profile/presentation/widgets/show_language_bottom_sheet.dart';
-import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 

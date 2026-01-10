@@ -6,6 +6,7 @@ class ColorsManager {
   static const Color secondaryColor = Color(0xFFA7ACD7);
   static const Color fillColor = Color(0xFFF5F8FA);
   static const Color textColor = Color(0xFF494949);
+  static Color skeletonColor = Colors.grey.shade300;
 
   // Surface & Background Colors
   static const Color surfaceColor = Color(0xFFFBFCFE);

@@ -276,7 +276,7 @@ class HomeTabRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const HomeTab();
+      return WrappedRoute(child: const HomeTab());
     },
   );
 }

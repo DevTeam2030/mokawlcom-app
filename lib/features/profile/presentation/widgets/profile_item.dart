@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
-import 'package:mokawlcom_app/features/shared/cubit/app_cubit.dart';
-import 'package:mokawlcom_app/features/shared/cubit/app_state.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 

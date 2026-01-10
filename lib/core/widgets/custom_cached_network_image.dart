@@ -17,13 +17,25 @@ class CustomCachedNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dpr = MediaQuery.of(context).devicePixelRatio;
+
+    final int? cacheWidth =
+        width != null && width != double.infinity
+            ? (width! * dpr).round()
+            : null;
+
+    final int? cacheHeight =
+        height != null
+            ? (height! * dpr).round()
+            : null;
+
     return CachedNetworkImage(
       imageUrl: imageUrl,
-      width: width ?? double.infinity,
+      width: width,
       height: height,
       fit: fit,
-      memCacheWidth: 200,
-      memCacheHeight: 200,
+      memCacheWidth: cacheWidth,
+      memCacheHeight: cacheHeight,
       errorWidget: (context, url, error) =>
           const Icon(Icons.error_outline, size: 50),
     );

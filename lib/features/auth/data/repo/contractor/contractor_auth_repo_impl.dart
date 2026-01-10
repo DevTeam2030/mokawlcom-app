@@ -4,47 +4,35 @@ import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/auth/data/data_source/contractor_auth_data_source.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/complete_contractor_data_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
-import 'package:mokawlcom_app/features/auth/data/models/contractor/setting_result_model.dart';
-import 'package:mokawlcom_app/features/auth/data/models/contractor/settings_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/upload_file_model.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classifications_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/services_model.dart';
 
 class ContractorAuthRepoImpl implements ContractorAuthRepo {
   final ContractorAuthDataSource contractorAuthDataSource;
 
   ContractorAuthRepoImpl({required this.contractorAuthDataSource});
-  List<SettingsModel> _classfications = [];
-  List<SettingsModel> _services = [];
-  List<String> _banners = [];
-
-
 
   @override
-  Future<Either<Failure, SettingsResultModel>> getSettings() async {
-    final result = await safeApiCall<Map<String, dynamic>>(
-      () => contractorAuthDataSource.getSettings(),
+  Future<Either<Failure, ClassificationsModel>>
+  getClassifications({
+    required int page,
+  }) async {
+    return await safeApiCall<ClassificationsModel>(
+      () => contractorAuthDataSource.getClassifications(page: page),
     );
-    return result.fold((failure) => Left(failure), (r) {
-      _classfications = ((r["data"]?["categories"] as List?)??[])
-          .map((e) => SettingsModel.fromJson(e))
-          .toList();
+  }
 
-      _services = ((r["data"]?["subCategories"] as List?)??[])
-          .map((e) => SettingsModel.fromJson(e))
-          .toList();
-
-      _banners = ((r["data"]?["banners"] as List?)??[])
-          .map((e) => e.toString())
-          .toList();
-
-      return Right(
-        SettingsResultModel(
-          classifications: _classfications,
-          services: _services,
-          banners: _banners,
-        ),
-      );
-    });
+  @override
+  Future<Either<Failure, ServicesModel>> getServices({
+    required int page,
+  }) async {
+    return await safeApiCall<ServicesModel>(
+      () => contractorAuthDataSource.getServices(page: page),
+    );
   }
 
   @override
@@ -76,7 +64,7 @@ class ContractorAuthRepoImpl implements ContractorAuthRepo {
     required UploadFileModel fileModel,
     required void Function(double progress) onProgress,
   }) async {
-    return   await safeApiCall<String>(
+    return await safeApiCall<String>(
       () => contractorAuthDataSource.uploadTradeLicense(
         fileModel: fileModel,
         onProgress: onProgress,
@@ -112,9 +100,10 @@ class ContractorAuthRepoImpl implements ContractorAuthRepo {
 
   @override
   Future<Either<Failure, String>> completeContractorData({
-    required CompleteContractorDataRequestModel completeContractorDataRequestModel,
+    required CompleteContractorDataRequestModel
+    completeContractorDataRequestModel,
   }) async {
-   return await safeApiCall<String>(
+    return await safeApiCall<String>(
       () => contractorAuthDataSource.completeContractorData(
         completeContractorDataRequestModel: completeContractorDataRequestModel,
       ),

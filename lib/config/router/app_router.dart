@@ -15,12 +15,13 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/upload_files_sc
 import 'package:mokawlcom_app/features/auth/presentation/screens/user_signup_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/verification_screen.dart';
 import 'package:mokawlcom_app/features/bottom_nav_bar/bottom_nav_bar.dart';
-import 'package:mokawlcom_app/features/home/presentation/company_details_screen.dart';
-import 'package:mokawlcom_app/features/home/presentation/home_screen.dart';
-import 'package:mokawlcom_app/features/home/presentation/job_details_screen.dart';
-import 'package:mokawlcom_app/features/home/presentation/job_offers_screen.dart';
-import 'package:mokawlcom_app/features/home/presentation/services_details_screen.dart';
-import 'package:mokawlcom_app/features/home/presentation/services_screen.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/cubit/home_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/company_details_screen.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/home_screen.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/job_details_screen.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/job_offers_screen.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/services_details_screen.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/services_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/notifications_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/offer_details_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/price_offers_screen.dart';
@@ -125,7 +126,6 @@ class AppRouter extends RootStackRouter {
   ];
 }
 
-
 @RoutePage(name: 'SplashTabRoute')
 class Splash extends AutoRouter {
   const Splash({super.key});
@@ -146,8 +146,16 @@ class Auth extends AutoRouter implements AutoRouteWrapper {
 }
 
 @RoutePage(name: 'HomeTabRoute')
-class HomeTab extends AutoRouter {
+class HomeTab extends AutoRouter implements AutoRouteWrapper {
   const HomeTab({super.key});
+
+  @override
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create: (context) => getIt<HomeCubit>()
+      ..getBanners()
+      ..getClassifications(),
+    child: this,
+  );
 }
 
 @RoutePage(name: 'AuthenticatedRoute')
