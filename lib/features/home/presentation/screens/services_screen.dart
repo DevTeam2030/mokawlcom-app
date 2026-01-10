@@ -135,10 +135,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
     return GridView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       key: const PageStorageKey("Services"),
+      controller: _scrollController,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
-        mainAxisSpacing: 24,
-        crossAxisSpacing: 30,
+        mainAxisSpacing: 14,
+        crossAxisSpacing: 20,
         childAspectRatio: 0.78,
       ),
       itemCount: services.length,
@@ -147,7 +148,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
           theme: theme,
           serviceModel: services[index],
           onTap: () {
-            context.pushRoute(const JobOffersRoute());
+            context.pushRoute( JobOffersRoute(
+              classification: widget.title,
+              service: services[index].name,
+            ));
           },
         );
       },

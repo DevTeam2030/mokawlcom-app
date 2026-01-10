@@ -9,14 +9,15 @@ import 'package:mokawlcom_app/my_icons.dart';
 
 @RoutePage()
 class JobOffersScreen extends StatelessWidget {
-  const JobOffersScreen({super.key});
-
+  const JobOffersScreen({super.key, required this.classification, required this.service});
+final String classification;
+final String service;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'مقاول - بناء',
+          '$classification - $service',
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             fontWeight: FontWeight.bold,
             color: ColorsManager.primaryColor,

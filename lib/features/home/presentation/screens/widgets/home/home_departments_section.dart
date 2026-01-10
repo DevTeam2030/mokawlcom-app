@@ -97,15 +97,14 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
         ),
         const SizedBox(height: 16),
         GridView.builder(
-          key: const PageStorageKey("Departments"),
           controller: _scrollController,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 16),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
-            mainAxisSpacing: 24,
-            crossAxisSpacing: 30,
+            mainAxisSpacing: 14,
+            crossAxisSpacing: 20,
             childAspectRatio: 0.78,
           ),
           itemCount: classifications.length + (isLoadingMore ? 2 : 0),
