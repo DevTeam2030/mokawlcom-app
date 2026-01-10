@@ -27,6 +27,16 @@ class ServicesModel extends Equatable {
     services: const [],
   );
 
+  ServicesModel copyWith({
+    List<ServiceModel>? services,
+  }) {
+    return ServicesModel(
+      totalPages: totalPages ,
+      currentPage: currentPage ,
+      services: services ?? this.services,
+    );
+  }
+
   @override
   List<Object> get props => [totalPages, currentPage, services];
 }

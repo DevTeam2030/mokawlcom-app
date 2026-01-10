@@ -35,6 +35,10 @@ class _HomeBannerSectionState extends State<HomeBannerSection> {
       builder: (context, state) => UiStateBuilder(
         state: state.getBannersState,
         onLoading: Skeletonizer(
+          effect: ShimmerEffect(
+            baseColor: ColorsManager.skeletonColor,
+            highlightColor: ColorsManager.skeletonColor.withValues(alpha: .6),
+          ),
           child: _buildHomeBanners(banners: ["", "", ""]),
         ),
         onSuccess: _buildHomeBanners(banners: state.banners),

@@ -20,27 +20,29 @@ class ClassificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        InkWell(
-          onTap: onTap,
-          child: Container(
-            width: 100,
-            height: 100,
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: ColorsManager.lightGrayBg,
-              shape: BoxShape.circle,
-              border: Border.all(color: ColorsManager.borderGray, width: 2),
-            ),
-            child: Skeleton.replace(
-              replacement: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: ColorsManager.skeletonColor,
-                ),
+        Flexible(
+          child: InkWell(
+            onTap: onTap,
+            child: Container(
+              width: 100,
+              height: 100,
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: ColorsManager.lightGrayBg,
+                shape: BoxShape.circle,
+                border: Border.all(color: ColorsManager.borderGray, width: 2),
               ),
-              child: CustomCachedNetworkImage(imageUrl: classificationModel.image),
+              child: Skeleton.replace(
+                replacement: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: ColorsManager.skeletonColor,
+                  ),
+                ),
+                child: CustomCachedNetworkImage(imageUrl: classificationModel.image),
+              ),
             ),
           ),
         ),

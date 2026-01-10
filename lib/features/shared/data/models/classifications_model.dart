@@ -28,6 +28,16 @@ class ClassificationsModel extends Equatable {
     classifications: const [],
   );
 
+  ClassificationsModel copyWith({
+    List<ClassificationModel>? classifications,
+  }) {
+    return ClassificationsModel(
+      totalPages: totalPages,
+      currentPage: currentPage,
+      classifications: classifications ?? this.classifications,
+    );
+  }
+
   @override
   List<Object> get props => [totalPages, currentPage, classifications];
 }

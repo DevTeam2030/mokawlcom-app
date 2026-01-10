@@ -13,6 +13,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(
       state.copyWith(getBannersState: RequestStatus.loading, isConnected: true),
     );
+  
     final result = await homeRepoImpl.getBanners();
     result.fold(
       (failure) => emit(
@@ -31,14 +32,18 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future<void> getClassifications() async {
+  Future<void> getClassifications({
+    int page = 1,
+  }) async {
     emit(
       state.copyWith(
         getClassificationsState: RequestStatus.loading,
         isConnected: true,
       ),
     );
-    final result = await contractorAuthRepoImpl.getClassifications(page: 1);
+    final result = await contractorAuthRepoImpl.getClassifications(
+      page: page,
+    );
     result.fold(
       (failure) => emit(
         state.copyWith(
@@ -50,9 +55,58 @@ class HomeCubit extends Cubit<HomeState> {
       (classificationsModel) => emit(
         state.copyWith(
           getClassificationsState: RequestStatus.success,
-          classifications: classificationsModel.classifications,
+          classificationsModel: classificationsModel,
+          classificationsPage: state.classificationsPage,
+          classificationsTotalPages: classificationsModel.totalPages,
         ),
       ),
     );
+  }
+
+  Future<void> loadMoreClassifications() async {
+    if (state.classificationsPage >= state.classificationsTotalPages ||
+        state.getClassificationsState.isLoading) {
+      return;
+    }
+    await getClassifications(page: state.classificationsPage + 1);
+  }
+
+  Future<void> getServices({
+    int page = 1,
+  }) async {
+    emit(
+      state.copyWith(
+        getServicesState: RequestStatus.loading,
+        isConnected: true,
+      ),
+    );
+    final result = await contractorAuthRepoImpl.getServices(
+      page: page,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          getServicesState: RequestStatus.error,
+          servicesErrorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (servicesModel) => emit(
+        state.copyWith(
+          getServicesState: RequestStatus.success,
+          servicesModel: servicesModel,
+          servicesPage: state.servicesPage,
+          servicesTotalPages: servicesModel.totalPages,
+        ),
+      ),
+    );
+  }
+
+  Future<void> loadMoreServices() async {
+    if (state.servicesPage >= state.servicesTotalPages ||
+        state.getServicesState.isLoading) {
+      return;
+    }
+    await getServices(page: state.servicesPage + 1);
   }
 }
