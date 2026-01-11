@@ -1,0 +1,220 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/show_toast.dart';
+import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
+import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_model.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_state.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor/contractor_item.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
+import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
+@RoutePage()
+class ContractorsScreen extends StatefulWidget {
+  const ContractorsScreen({
+    super.key,
+    required this.classificationModel,
+    required this.serviceModel,
+  });
+
+  final ClassificationModel classificationModel;
+  final ServiceModel serviceModel;
+
+  @override
+  State<ContractorsScreen> createState() => _ContractorsScreenState();
+}
+
+class _ContractorsScreenState extends State<ContractorsScreen> {
+  late final ScrollController _scrollController;
+  bool _isLoadingMore = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController = ScrollController()..addListener(_onScroll);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<SearchBloc>().add(
+        GetContractorsEvent(
+          classificationId: widget.classificationModel.id,
+          serviceId: widget.serviceModel.id,
+        ),
+      );
+    });
+  }
+
+  void _onScroll() {
+    if (_isLoadingMore || !_scrollController.hasClients) return;
+
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      _isLoadingMore = true;
+
+      context.read<SearchBloc>().add(
+        LoadMoreContractorsEvent(
+          classificationId: widget.classificationModel.id,
+          serviceId: widget.serviceModel.id,
+        ),
+      );
+    }
+  }
+
+  void _resetLoading(RequestStatus status) {
+    if (_isLoadingMore &&
+        (status == RequestStatus.success || status == RequestStatus.error)) {
+      _isLoadingMore = false;
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          '${widget.classificationModel.name} - ${widget.serviceModel.name}',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.headlineSmall!.copyWith(
+            fontWeight: FontWeight.bold,
+            color: ColorsManager.primaryColor,
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: 16,
+          vertical: 13,
+        ),
+        child: BlocConsumer<SearchBloc, SearchState>(
+          listenWhen: (p, c) => p.getContractorsState != c.getContractorsState,
+          buildWhen: (p, c) => p.getContractorsState != c.getContractorsState,
+          listener: (context, state) {
+            if (state.getContractorsState.isError) {
+              showToast(message: state.errorMessage, state: ToastStates.error);
+            }
+          },
+          builder: (context, state) {
+            return state.isConnected
+                ? UiStateBuilder(
+                    state: state.getContractorsState,
+                    theme: theme,
+                    errorMessage: state.errorMessage,
+                    onLoading: Skeletonizer(
+                      child: _buildContractorsList(
+                        contractors: List.generate(
+                          4,
+                          (i) => ContractorModel(
+                            id: i,
+                            name: 'Contractor $i',
+                            image: '',
+                            address: 'Address $i',
+                            rating: 5,
+                            description: 'Description $i',
+                            phone: '',
+                            whatsApp: '',
+                            category: '---',
+                          ),
+                        ),
+                        theme: theme,
+                        status: state.getContractorsState,
+                      ),
+                    ),
+                    onSuccess: state.contractorsModel.contractors.isNotEmpty
+                        ? _buildContractorsList(
+                            contractors: state.contractorsModel.contractors,
+                            theme: theme,
+                            status: state.getContractorsState,
+                          )
+                        : Center(
+                          child: Text(
+                              LocaleKeys.noResultsFound,
+                              style: theme.textTheme.bodyLarge!.copyWith(
+                                color: ColorsManager.primaryColor,
+                              ),
+                            ),
+                        ),
+                    onError: state.contractorsModel.contractors.isNotEmpty
+                        ? _buildContractorsList(
+                            contractors: state.contractorsModel.contractors,
+                            theme: theme,
+                            status: state.getContractorsState,
+                          )
+                        : Center(
+                          child: Text(
+                              LocaleKeys.noResultsFound,
+                              style: theme.textTheme.bodyLarge!.copyWith(
+                                color: ColorsManager.primaryColor,
+                              ),
+                            ),
+                        ),
+                  )
+                : NoInternetWidget(
+                    errorMessage: state.errorMessage,
+                    theme: theme,
+                    onPressed: () {
+                      context.read<SearchBloc>().add(
+                        GetContractorsEvent(
+                          classificationId: widget.classificationModel.id,
+                          serviceId: widget.serviceModel.id,
+                        ),
+                      );
+                    },
+                  );
+          },
+        ),
+      ),
+    );
+  }
+
+  ListView _buildContractorsList({
+    required List<ContractorModel> contractors,
+    required ThemeData theme,
+    required RequestStatus status,
+  }) {
+    _resetLoading(status);
+
+    return ListView.separated(
+      controller: _scrollController,
+      cacheExtent: 200,
+      itemBuilder: (context, index) {
+        if (index == contractors.length) {
+          if (status == RequestStatus.loading) {
+            return const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Center(
+                child: SizedBox(
+                  height: 28,
+                  width: 28,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              ),
+            );
+          }
+          return const SizedBox.shrink();
+        }
+
+        return ContractorItem(
+          contractorModel: contractors[index],
+          theme: theme,
+        );
+      },
+      separatorBuilder: (_, __) => const SizedBox(height: 13),
+      itemCount: contractors.length + 1,
+    );
+  }
+}

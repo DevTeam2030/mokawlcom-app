@@ -15,11 +15,12 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/upload_files_sc
 import 'package:mokawlcom_app/features/auth/presentation/screens/user_signup_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/verification_screen.dart';
 import 'package:mokawlcom_app/features/bottom_nav_bar/bottom_nav_bar.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/cubit/home_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/company_details_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/home_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/job_details_screen.dart';
-import 'package:mokawlcom_app/features/home/presentation/screens/job_offers_screen.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/contractors_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/services_details_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/services_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/notifications_screen.dart';
@@ -37,6 +38,8 @@ import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart'
 import 'package:mokawlcom_app/features/profile/presentation/send_offer_to_contractors_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/saved_companies_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/submitted_price_offers_screen.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
 import 'package:mokawlcom_app/features/splash/splash_screen.dart';
 
@@ -90,7 +93,7 @@ class AppRouter extends RootStackRouter {
               children: [
                 AutoRoute(initial: true, page: HomeRoute.page),
                 AutoRoute(page: ServicesRoute.page),
-                AutoRoute(page: JobOffersRoute.page),
+                AutoRoute(page: ContractorsRoute.page),
               ],
             ),
             AutoRoute(
@@ -150,10 +153,16 @@ class HomeTab extends AutoRouter implements AutoRouteWrapper {
   const HomeTab({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(
-    create: (context) => getIt<HomeCubit>()
-      ..getBanners()
-      ..getClassifications(),
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => getIt<HomeCubit>()
+          ..getBanners()
+          ..getClassifications()
+          ..getServices(),
+      ),
+      BlocProvider(create: (context) => getIt<SearchBloc>()),
+    ],
     child: this,
   );
 }

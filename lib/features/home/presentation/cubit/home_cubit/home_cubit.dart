@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
 import 'package:mokawlcom_app/features/home/data/repo/home_repo.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/cubit/home_state.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final ContractorAuthRepo contractorAuthRepoImpl;

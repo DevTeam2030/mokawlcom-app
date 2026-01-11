@@ -5,8 +5,8 @@ import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/cubit/home_cubit.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/cubit/home_state.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/classification_item.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -123,7 +123,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
               classificationModel: classifications[index],
               onTap: () {
                 context.pushRoute(
-                  ServicesRoute(title: classifications[index].name),
+                  ServicesRoute(classificationModel: classifications[index]),
                 );
               },
             );

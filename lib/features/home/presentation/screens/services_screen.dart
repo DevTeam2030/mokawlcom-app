@@ -6,8 +6,9 @@ import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/cubit/home_cubit.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/cubit/home_state.dart';
+import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/service_grid_item.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/classification_item.dart';
@@ -17,8 +18,8 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
 class ServicesScreen extends StatefulWidget {
-  const ServicesScreen({super.key, required this.title});
-  final String title;
+  const ServicesScreen({super.key, required this.classificationModel});
+  final ClassificationModel classificationModel;
   @override
   State<ServicesScreen> createState() => _ServicesScreenState();
 }
@@ -31,9 +32,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await context.read<HomeCubit>().getServices();
-    });
   }
 
   void _onScroll() {
@@ -62,68 +60,73 @@ class _ServicesScreenState extends State<ServicesScreen> {
           ),
         ),
       ),
-      body: SizedBox(
-        width: double.infinity,
-        child: Column(
-          children: [
-            const SizedBox(height: 18),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 16.0),
-                child: Text(
-                  widget.title,
-                  style: theme.textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: ColorsManager.grayText,
-                  ),
+      body: Column(
+        children: [
+          const SizedBox(height: 18),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(start: 16.0),
+              child: Text(
+                widget.classificationModel.name,
+                style: theme.textTheme.bodyLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: ColorsManager.grayText,
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-            BlocConsumer<HomeCubit, HomeState>(
-              listenWhen: (previous, current) =>
-                  previous.getServicesState != current.getServicesState,
-              buildWhen: (previous, current) =>
-                  previous.getServicesState != current.getServicesState,
-              listener: (context, state) {
-                if (state.getServicesState.isError) {
-                  showToast(
-                    message: state.servicesErrorMessage,
-                    state: ToastStates.error,
-                  );
-                }
-              },
-              builder: (context, state) => UiStateBuilder(
-                theme: theme,
-                state: state.getServicesState,
-                errorMessage: state.servicesErrorMessage,
-                onLoading: Expanded(
-                  child: Skeletonizer(
-                    child: _buildServices(
-                      theme: theme,
-                      services: List.generate(
-                        6,
-                        (index) => ServiceModel(
-                          id: index,
-                          name: '******',
-                          image: '',
-                          number: index,
+          ),
+          const SizedBox(height: 16),
+          BlocConsumer<HomeCubit, HomeState>(
+            listenWhen: (previous, current) =>
+                previous.getServicesState != current.getServicesState,
+            buildWhen: (previous, current) =>
+                previous.getServicesState != current.getServicesState,
+            listener: (context, state) {
+              if (state.getServicesState.isError) {
+                showToast(
+                  message: state.servicesErrorMessage,
+                  state: ToastStates.error,
+                );
+              }
+            },
+            builder: (context, state) => state.isConnected
+                ? UiStateBuilder(
+                    theme: theme,
+                    state: state.getServicesState,
+                    errorMessage: state.servicesErrorMessage,
+                    onLoading: Expanded(
+                      child: Skeletonizer(
+                        child: _buildServices(
+                          theme: theme,
+                          services: List.generate(
+                            6,
+                            (index) => ServiceModel(
+                              id: index,
+                              name: '******',
+                              image: '',
+                              number: index,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                onSuccess: Expanded(
-                  child: _buildServices(
+                    onSuccess: Expanded(
+                      child: _buildServices(
+                        theme: theme,
+                        services: state.servicesModel.services,
+                      ),
+                    ),
+                  )
+                : NoInternetWidget(
+                    errorMessage: state.servicesErrorMessage,
                     theme: theme,
-                    services: state.servicesModel.services,
+                    onPressed: () async{
+                      await context.read<HomeCubit>().getServices();
+                    },
                   ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -148,10 +151,12 @@ class _ServicesScreenState extends State<ServicesScreen> {
           theme: theme,
           serviceModel: services[index],
           onTap: () {
-            context.pushRoute( JobOffersRoute(
-              classification: widget.title,
-              service: services[index].name,
-            ));
+            context.pushRoute(
+              ContractorsRoute(
+                classificationModel: widget.classificationModel,
+                serviceModel: services[index],
+              ),
+            );
           },
         );
       },

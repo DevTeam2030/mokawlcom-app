@@ -66,6 +66,8 @@ dependencies:
   cached_network_image: ^3.4.1
   file_picker: ^10.3.8
   shared_preferences: ^2.5.4
+  rxdart: ^0.28.0
+  bloc_concurrency: ^0.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

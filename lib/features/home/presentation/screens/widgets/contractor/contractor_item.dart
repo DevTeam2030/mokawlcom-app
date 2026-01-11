@@ -4,15 +4,21 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_model.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
-class JobOfferItem extends StatelessWidget {
-  const JobOfferItem({super.key});
-
+class ContractorItem extends StatelessWidget {
+  const ContractorItem({
+    super.key,
+    required this.contractorModel,
+    required this.theme,
+  });
+  final ContractorModel contractorModel;
+  final ThemeData theme;
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -35,31 +41,36 @@ class JobOfferItem extends StatelessWidget {
                   onTap: () {
                     context.pushRoute(JobDetailsRoute());
                   },
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     radius: 26,
                     backgroundColor: ColorsManager.secondaryColor,
                     child: CircleAvatar(
                       radius: 25,
-                      backgroundImage: AssetImage(AssetsManager.logoImage),
+                      child: CustomCachedNetworkImage(
+                        imageUrl: contractorModel.image,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 14),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
                       onTap: () {
                         context.pushRoute(JobDetailsRoute());
                       },
                       child: Text(
-                        'شركة المقاولات العامة',
+                        contractorModel.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.bodySmall!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Row(
+                   contractorModel.address.isNotEmpty ? Row(
                       children: [
                         const Icon(
                           Icons.location_on_outlined,
@@ -67,7 +78,9 @@ class JobOfferItem extends StatelessWidget {
                           color: Colors.green,
                         ),
                         Text(
-                          'الخليج الغربي - الدوحة',
+                          contractorModel.address,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.labelSmall!.copyWith(
                             fontWeight: FontWeight.w400,
                             fontSize: 10,
@@ -75,10 +88,10 @@ class JobOfferItem extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ),
+                    ) : const SizedBox(),
                     const SizedBox(height: 4),
                     RatingBar.builder(
-                      initialRating: 4,
+                      initialRating: contractorModel.rating,
                       allowHalfRating: true,
                       ignoreGestures: true,
                       itemSize: 18,
@@ -105,10 +118,14 @@ class JobOfferItem extends StatelessWidget {
                       width: 1.2,
                     ),
                   ),
-                  child: Text(
-                    "مقاول",
-                    style: theme.textTheme.bodySmall!.copyWith(
-                      color: ColorsManager.labelColor,
+                  child: FittedBox(
+                    child: Text(
+                      contractorModel.category,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodySmall!.copyWith(
+                        color: ColorsManager.labelColor,
+                      ),
                     ),
                   ),
                 ),
@@ -133,7 +150,7 @@ class JobOfferItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 17.0, end: 25.0),
             child: Text(
-              "شركة المقاولات العامة هي شركة رائدة في مجال البناء والتشييد، تقدم خدمات عالية الجودة وتلتزم بالمواعيد المحددة. نحن نسعى لتلبية احتياجات عملائنا من خلال تقديم حلول مبتكرة ومستدامة.",
+              contractorModel.description,
               style: theme.textTheme.bodySmall,
             ),
           ),
@@ -175,7 +192,7 @@ class JobOfferItem extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                OutlinedButton(
+              contractorModel.whatsApp.isNotEmpty ?  OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     backgroundColor: Colors.white,
                     padding: const EdgeInsetsDirectional.all(10),
@@ -191,9 +208,9 @@ class JobOfferItem extends StatelessWidget {
                     color: Colors.green,
                     size: 20,
                   ),
-                ),
+                ):const SizedBox.shrink(),
                 const SizedBox(width: 3),
-                OutlinedButton(
+                contractorModel.phone.isNotEmpty ?  OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     backgroundColor: Colors.white,
                     padding: const EdgeInsetsDirectional.all(10),
@@ -209,7 +226,7 @@ class JobOfferItem extends StatelessWidget {
                     color: ColorsManager.primaryColor,
                     size: 20,
                   ),
-                ),
+                ):const SizedBox.shrink(),
               ],
             ),
           ),

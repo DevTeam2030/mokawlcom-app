@@ -198,5 +198,6 @@ class LocaleKeys {
   static String get continueAsVisitor => 'continue_as_visitor'.tr();
   static String get pleaseSelectAtLeastOneService =>
       'please_select_at_least_one_service'.tr();
+  static String get noResultsFound => 'no_results_found'.tr();
  
 }

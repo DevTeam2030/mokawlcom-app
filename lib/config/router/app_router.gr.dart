@@ -202,6 +202,71 @@ class ContractorSignupRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ContractorsScreen]
+class ContractorsRoute extends PageRouteInfo<ContractorsRouteArgs> {
+  ContractorsRoute({
+    Key? key,
+    required ClassificationModel classificationModel,
+    required ServiceModel serviceModel,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ContractorsRoute.name,
+         args: ContractorsRouteArgs(
+           key: key,
+           classificationModel: classificationModel,
+           serviceModel: serviceModel,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'ContractorsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ContractorsRouteArgs>();
+      return ContractorsScreen(
+        key: args.key,
+        classificationModel: args.classificationModel,
+        serviceModel: args.serviceModel,
+      );
+    },
+  );
+}
+
+class ContractorsRouteArgs {
+  const ContractorsRouteArgs({
+    this.key,
+    required this.classificationModel,
+    required this.serviceModel,
+  });
+
+  final Key? key;
+
+  final ClassificationModel classificationModel;
+
+  final ServiceModel serviceModel;
+
+  @override
+  String toString() {
+    return 'ContractorsRouteArgs{key: $key, classificationModel: $classificationModel, serviceModel: $serviceModel}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ContractorsRouteArgs) return false;
+    return key == other.key &&
+        classificationModel == other.classificationModel &&
+        serviceModel == other.serviceModel;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^ classificationModel.hashCode ^ serviceModel.hashCode;
+}
+
+/// generated route for
 /// [EditContractorProfileScreen]
 class EditContractorProfileRoute extends PageRouteInfo<void> {
   const EditContractorProfileRoute({List<PageRouteInfo>? children})
@@ -328,70 +393,6 @@ class JobDetailsRouteArgs {
 
   @override
   int get hashCode => key.hashCode ^ isOfferrice.hashCode;
-}
-
-/// generated route for
-/// [JobOffersScreen]
-class JobOffersRoute extends PageRouteInfo<JobOffersRouteArgs> {
-  JobOffersRoute({
-    Key? key,
-    required String classification,
-    required String service,
-    List<PageRouteInfo>? children,
-  }) : super(
-         JobOffersRoute.name,
-         args: JobOffersRouteArgs(
-           key: key,
-           classification: classification,
-           service: service,
-         ),
-         initialChildren: children,
-       );
-
-  static const String name = 'JobOffersRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      final args = data.argsAs<JobOffersRouteArgs>();
-      return JobOffersScreen(
-        key: args.key,
-        classification: args.classification,
-        service: args.service,
-      );
-    },
-  );
-}
-
-class JobOffersRouteArgs {
-  const JobOffersRouteArgs({
-    this.key,
-    required this.classification,
-    required this.service,
-  });
-
-  final Key? key;
-
-  final String classification;
-
-  final String service;
-
-  @override
-  String toString() {
-    return 'JobOffersRouteArgs{key: $key, classification: $classification, service: $service}';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other is! JobOffersRouteArgs) return false;
-    return key == other.key &&
-        classification == other.classification &&
-        service == other.service;
-  }
-
-  @override
-  int get hashCode => key.hashCode ^ classification.hashCode ^ service.hashCode;
 }
 
 /// generated route for
@@ -644,11 +645,14 @@ class ServicesDetailsRoute extends PageRouteInfo<void> {
 class ServicesRoute extends PageRouteInfo<ServicesRouteArgs> {
   ServicesRoute({
     Key? key,
-    required String title,
+    required ClassificationModel classificationModel,
     List<PageRouteInfo>? children,
   }) : super(
          ServicesRoute.name,
-         args: ServicesRouteArgs(key: key, title: title),
+         args: ServicesRouteArgs(
+           key: key,
+           classificationModel: classificationModel,
+         ),
          initialChildren: children,
        );
 
@@ -658,32 +662,35 @@ class ServicesRoute extends PageRouteInfo<ServicesRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ServicesRouteArgs>();
-      return ServicesScreen(key: args.key, title: args.title);
+      return ServicesScreen(
+        key: args.key,
+        classificationModel: args.classificationModel,
+      );
     },
   );
 }
 
 class ServicesRouteArgs {
-  const ServicesRouteArgs({this.key, required this.title});
+  const ServicesRouteArgs({this.key, required this.classificationModel});
 
   final Key? key;
 
-  final String title;
+  final ClassificationModel classificationModel;
 
   @override
   String toString() {
-    return 'ServicesRouteArgs{key: $key, title: $title}';
+    return 'ServicesRouteArgs{key: $key, classificationModel: $classificationModel}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! ServicesRouteArgs) return false;
-    return key == other.key && title == other.title;
+    return key == other.key && classificationModel == other.classificationModel;
   }
 
   @override
-  int get hashCode => key.hashCode ^ title.hashCode;
+  int get hashCode => key.hashCode ^ classificationModel.hashCode;
 }
 
 /// generated route for

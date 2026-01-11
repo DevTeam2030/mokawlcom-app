@@ -18,4 +18,5 @@ class ApiConstants {
   static const String completeContractorData = "/complete-contractor-data";
   static const String subscibePlan = "/subscribe-plan";
   static const String forgetPassword = "/auth/password-reset-email";
+  static const String getContractors = "/get-contractors";
 }
