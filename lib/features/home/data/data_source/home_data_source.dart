@@ -1,6 +1,7 @@
 import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractors_model.dart';
 
 abstract class HomeDataSource {
@@ -10,6 +11,9 @@ abstract class HomeDataSource {
     int? classification,
     int? service,
     String? search,
+  });
+  Future<ContractorDetailsModel> getContractorDetails({
+    required int contractorId,
   });
 }
 
@@ -52,6 +56,20 @@ class HomeDataSourceImpl implements HomeDataSource {
     );
     if (result.statusCode == 200) {
       return ContractorsModel.fromJson(result.data["data"]??{});
+    } else {
+      throw ServerException(errorMessage: result.data["message"] ?? "");
+    }
+  }
+  @override
+  Future<ContractorDetailsModel> getContractorDetails({
+    required int contractorId,
+  }) async {
+    final result = await dioHelper.get(
+      url: ApiConstants.getContractorInfo,
+      queryParameters: {"contractor_id": contractorId},
+    );
+    if (result.statusCode == 200) {
+      return ContractorDetailsModel.fromJson(result.data["data"]??{});
     } else {
       throw ServerException(errorMessage: result.data["message"] ?? "");
     }

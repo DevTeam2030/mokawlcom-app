@@ -19,7 +19,7 @@ import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_c
 import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/company_details_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/home_screen.dart';
-import 'package:mokawlcom_app/features/home/presentation/screens/job_details_screen.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/contractor_details_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/contractors_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/services_details_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/services_screen.dart';

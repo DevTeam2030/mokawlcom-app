@@ -48,6 +48,8 @@ class ContractorItem extends StatelessWidget {
                       radius: 25,
                       child: CustomCachedNetworkImage(
                         imageUrl: contractorModel.image,
+                        width: 50,
+                        height: 50,
                       ),
                     ),
                   ),

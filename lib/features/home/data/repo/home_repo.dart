@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/error/failures.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractors_model.dart';
 
 abstract class HomeRepo {
@@ -9,5 +10,8 @@ abstract class HomeRepo {
     int? classification,
     int? service,
     String? search,
+  });
+  Future<Either<Failure, ContractorDetailsModel>> getContractorDetails({
+    required int contractorId,
   });
 } 

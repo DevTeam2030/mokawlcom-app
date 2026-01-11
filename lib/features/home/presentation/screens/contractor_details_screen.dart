@@ -12,15 +12,21 @@ import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 @RoutePage()
-class JobDetailsScreen extends StatefulWidget {
-  const JobDetailsScreen({super.key, this.isOfferrice = false});
+class ContractorDetailsScreen extends StatefulWidget {
+  const ContractorDetailsScreen({
+    super.key,
+    this.isOfferrice = false,
+    required this.contractorId,
+  });
   final bool isOfferrice;
+  final int contractorId;
 
   @override
-  State<JobDetailsScreen> createState() => _JobDetailsScreenState();
+  State<ContractorDetailsScreen> createState() =>
+      _ContractorDetailsScreenState();
 }
 
-class _JobDetailsScreenState extends State<JobDetailsScreen> {
+class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
   @override
   void initState() {
     super.initState();
@@ -53,13 +59,11 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
           slivers: [
             const SliverToBoxAdapter(child: JobDetailsTopSection()),
             const SliverToBoxAdapter(child: SizedBox(height: 10)),
-
             SliverFillRemaining(
               child: AutoTabsRouter.tabBar(
                 routes: const [CompanyDetailsRoute(), ServicesDetailsRoute()],
                 builder: (context, child, controller) {
                   final tabsRouter = AutoTabsRouter.of(context);
-
                   return Column(
                     children: [
                       TabBar(
@@ -82,7 +86,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             .copyWith(fontWeight: FontWeight.bold),
                         onTap: tabsRouter.setActiveIndex,
                         tabs: [
-                          Tab(text: LocaleKeys.companyDetails,),
+                          Tab(text: LocaleKeys.companyDetails),
                           Tab(text: LocaleKeys.services),
                         ],
                       ),

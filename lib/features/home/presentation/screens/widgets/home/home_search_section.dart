@@ -52,7 +52,7 @@ class _HomeSearchSectionState extends State<HomeSearchSection> {
                 BlocListener<SearchBloc, SearchState>(
                   listenWhen: (previous, current) =>
                       previous.searchContractorsState !=
-                      current.searchContractorsState,
+                      current.searchContractorsState,  
                   listener: (context, state) {
                     if (state.searchContractorsState.isLoading) {
                       context.pushRoute(ContractorsRoute(fromSearch: true));

@@ -186,6 +186,71 @@ class CompleteDataRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ContractorDetailsScreen]
+class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
+  ContractorDetailsRoute({
+    Key? key,
+    bool isOfferrice = false,
+    required int contractorId,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ContractorDetailsRoute.name,
+         args: ContractorDetailsRouteArgs(
+           key: key,
+           isOfferrice: isOfferrice,
+           contractorId: contractorId,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'ContractorDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ContractorDetailsRouteArgs>();
+      return ContractorDetailsScreen(
+        key: args.key,
+        isOfferrice: args.isOfferrice,
+        contractorId: args.contractorId,
+      );
+    },
+  );
+}
+
+class ContractorDetailsRouteArgs {
+  const ContractorDetailsRouteArgs({
+    this.key,
+    this.isOfferrice = false,
+    required this.contractorId,
+  });
+
+  final Key? key;
+
+  final bool isOfferrice;
+
+  final int contractorId;
+
+  @override
+  String toString() {
+    return 'ContractorDetailsRouteArgs{key: $key, isOfferrice: $isOfferrice, contractorId: $contractorId}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ContractorDetailsRouteArgs) return false;
+    return key == other.key &&
+        isOfferrice == other.isOfferrice &&
+        contractorId == other.contractorId;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^ isOfferrice.hashCode ^ contractorId.hashCode;
+}
+
+/// generated route for
 /// [ContractorSignupScreen]
 class ContractorSignupRoute extends PageRouteInfo<void> {
   const ContractorSignupRoute({List<PageRouteInfo>? children})
@@ -356,55 +421,6 @@ class HomeTabRoute extends PageRouteInfo<void> {
       return WrappedRoute(child: const HomeTab());
     },
   );
-}
-
-/// generated route for
-/// [JobDetailsScreen]
-class JobDetailsRoute extends PageRouteInfo<JobDetailsRouteArgs> {
-  JobDetailsRoute({
-    Key? key,
-    bool isOfferrice = false,
-    List<PageRouteInfo>? children,
-  }) : super(
-         JobDetailsRoute.name,
-         args: JobDetailsRouteArgs(key: key, isOfferrice: isOfferrice),
-         initialChildren: children,
-       );
-
-  static const String name = 'JobDetailsRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      final args = data.argsAs<JobDetailsRouteArgs>(
-        orElse: () => const JobDetailsRouteArgs(),
-      );
-      return JobDetailsScreen(key: args.key, isOfferrice: args.isOfferrice);
-    },
-  );
-}
-
-class JobDetailsRouteArgs {
-  const JobDetailsRouteArgs({this.key, this.isOfferrice = false});
-
-  final Key? key;
-
-  final bool isOfferrice;
-
-  @override
-  String toString() {
-    return 'JobDetailsRouteArgs{key: $key, isOfferrice: $isOfferrice}';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other is! JobDetailsRouteArgs) return false;
-    return key == other.key && isOfferrice == other.isOfferrice;
-  }
-
-  @override
-  int get hashCode => key.hashCode ^ isOfferrice.hashCode;
 }
 
 /// generated route for
