@@ -54,9 +54,10 @@ class ContractorDetailsModel extends Equatable {
         instagram: json['instagram'] ?? '',
         twitter: json['twitter'] ?? '',
         spanchat: json['spanchat'] ?? '',
-        classifications: List<String>.from(
-          json['sub_categories'] as List<dynamic>? ?? [],
-        ).map((x) => x).toList(),
+        classifications: (json['sub_categories'] as List<dynamic>? ?? [])
+            .map((e) => e['name'] as String? ?? '')
+            .toList(),
+
         services: List<ContractorServiceModel>.from(
           (json['services'] as List<dynamic>? ?? []).map(
             (x) => ContractorServiceModel.fromJson(x),

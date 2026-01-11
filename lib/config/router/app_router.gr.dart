@@ -209,10 +209,12 @@ class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ContractorDetailsRouteArgs>();
-      return ContractorDetailsScreen(
-        key: args.key,
-        isOfferrice: args.isOfferrice,
-        contractorId: args.contractorId,
+      return WrappedRoute(
+        child: ContractorDetailsScreen(
+          key: args.key,
+          isOfferrice: args.isOfferrice,
+          contractorId: args.contractorId,
+        ),
       );
     },
   );

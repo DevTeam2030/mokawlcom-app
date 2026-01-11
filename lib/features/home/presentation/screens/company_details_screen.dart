@@ -1,7 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/widgets/service_details/expandable_text_widget.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -12,131 +16,177 @@ class CompanyDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 10),
-          Text(
-            LocaleKeys.hintAboutCompany,
-            style: theme.textTheme.bodySmall!.copyWith(
-              fontWeight: FontWeight.w700,
-              color: ColorsManager.primaryColor,
-            ),
-          ),
-          const CustomDivider(),
-          Text(
-            'شركة المقاولات العامة هي شركة رائدة في مجال البناء والتشييد، تأسست منذ أكثر من 20 عامًا وتتمتع بسجل حافل من المشاريع الناجحة في مختلف القطاعات. نحن ملتزمون بتقديم أعلى مستويات الجودة والخدمة لعملائنا، مع التركيز على الابتكار والاستدامة في جميع جوانب عملنا. فريقنا من المهندسين والفنيين ذوي الخبرة يعملون بلا كلل لضمان تحقيق رؤى عملائنا وتحويلها إلى واقع ملموس.',
-            style: theme.textTheme.bodySmall!.copyWith(
-              height: 1.5,
-              color: ColorsManager.accentTextColor,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            LocaleKeys.commuincationsData,
-            style: theme.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.bold,
-              color: ColorsManager.primaryColor,
-            ),
-          ),
-          const CustomDivider(),
-          Text(
-            LocaleKeys.email,
-            style: theme.textTheme.labelSmall!.copyWith(
-              fontWeight: FontWeight.w400,
-              fontSize: 10,
-              color: ColorsManager.textColor,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            "hr@example.net",
-            style: theme.textTheme.bodyMedium!.copyWith(
-              decoration: TextDecoration.underline,
-              decorationColor: Colors.blueAccent,
-              color: Colors.blueAccent,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            LocaleKeys.address,
-            style: theme.textTheme.labelSmall!.copyWith(
-              fontWeight: FontWeight.w400,
-              fontSize: 10,
-              color: ColorsManager.textColor,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'الخليج الغربي - الدوحة',
-            style: theme.textTheme.bodySmall!.copyWith(
-              color: ColorsManager.primaryColor,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            LocaleKeys.phoneNumber,
-            style: theme.textTheme.labelSmall!.copyWith(
-              fontWeight: FontWeight.w400,
-              fontSize: 10,
-              color: ColorsManager.textColor,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '+974 4455 6677',
-            style: theme.textTheme.bodyMedium!.copyWith(
-              color: ColorsManager.primaryColor,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            LocaleKeys.whatsNumber,
-            style: theme.textTheme.labelSmall!.copyWith(
-              fontWeight: FontWeight.w400,
-              fontSize: 10,
-              color: ColorsManager.textColor,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '+974 4455 6677',
-            style: theme.textTheme.bodyMedium!.copyWith(
-              color: ColorsManager.primaryColor,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            spacing: 16,
+    return BlocSelector<ContractorInfoCubit, ContractorInfoState, ContractorDetailsModel>(
+      selector: (state) {
+        return state.contractorDetails;
+      },
+      builder: (context, contractorDetails) {
+        return SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: ColorsManager.primaryColor,
-                child: Icon(MyIcons.facebook, color: Colors.white, size: 20),
+              const SizedBox(height: 10),
+              Text(
+                LocaleKeys.hintAboutCompany,
+                style: theme.textTheme.bodySmall!.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: ColorsManager.primaryColor,
+                ),
               ),
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: ColorsManager.primaryColor,
-                child: Icon(MyIcons.twitter, color: Colors.white, size: 20),
+              const CustomDivider(),
+              ExpandableTextWidget(
+                text: contractorDetails.description,
+                color: ColorsManager.accentTextColor,
               ),
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: ColorsManager.primaryColor,
-                child: Icon(MyIcons.instagram, color: Colors.white, size: 20),
+              const SizedBox(height: 10),
+              Text(
+                LocaleKeys.commuincationsData,
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: ColorsManager.primaryColor,
+                ),
               ),
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: ColorsManager.primaryColor,
-                child: Icon(MyIcons.snapchat, color: Colors.white, size: 20),
+              const CustomDivider(),
+              Text(
+                LocaleKeys.email,
+                style: theme.textTheme.labelSmall!.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 10,
+                  color: ColorsManager.textColor,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                contractorDetails.email,
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  decoration: TextDecoration.underline,
+                  decorationColor: Colors.blueAccent,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                LocaleKeys.address,
+                style: theme.textTheme.labelSmall!.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 10,
+                  color: ColorsManager.textColor,
+                ),
+              ),
+              const SizedBox(height: 8),
+              contractorDetails.address.isNotEmpty
+                  ? Text(
+                      contractorDetails.address,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodySmall!.copyWith(
+                        color: ColorsManager.primaryColor,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              const SizedBox(height: 16),
+              Text(
+                LocaleKeys.phoneNumber,
+                style: theme.textTheme.labelSmall!.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 10,
+                  color: ColorsManager.textColor,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                contractorDetails.phone,
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  color: ColorsManager.primaryColor,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                LocaleKeys.whatsNumber,
+                style: theme.textTheme.labelSmall!.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 10,
+                  color: ColorsManager.textColor,
+                ),
+              ),
+              const SizedBox(height: 8),
+              contractorDetails.whatsapp.isNotEmpty
+                  ? Text(
+                      contractorDetails.whatsapp,
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        color: ColorsManager.primaryColor,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 16,
+                children: [
+                  contractorDetails.facebook.isNotEmpty
+                      ? InkWell(
+                          onTap: () {},
+                          child: const CircleAvatar(
+                            radius: 20,
+                            backgroundColor: ColorsManager.primaryColor,
+                            child: Icon(
+                              MyIcons.facebook,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  contractorDetails.twitter.isNotEmpty
+                      ? InkWell(
+                          onTap: () {},
+                          child: const CircleAvatar(
+                            radius: 20,
+                            backgroundColor: ColorsManager.primaryColor,
+                            child: Icon(
+                              MyIcons.twitter,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  contractorDetails.instagram.isNotEmpty
+                      ? InkWell(
+                          onTap: () {},
+                          child: const CircleAvatar(
+                            radius: 20,
+                            backgroundColor: ColorsManager.primaryColor,
+                            child: Icon(
+                              MyIcons.instagram,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  contractorDetails.spanchat.isNotEmpty
+                      ? InkWell(
+                          onTap: () {},
+                          child: const CircleAvatar(
+                            radius: 20,
+                            backgroundColor: ColorsManager.primaryColor,
+                            child: Icon(
+                              MyIcons.snapchat,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

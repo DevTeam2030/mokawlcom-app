@@ -200,5 +200,6 @@ class LocaleKeys {
       'please_select_at_least_one_service'.tr();
   static String get noResultsFound => 'no_results_found'.tr();
   static String get searchResults => 'search_results'.tr();
+  static String get sar => 'sar'.tr();
  
 }

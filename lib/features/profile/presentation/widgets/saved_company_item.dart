@@ -12,7 +12,9 @@ class SavedCompanyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: ()=>context.pushRoute(JobDetailsRoute()),
+      // onTap: ()=>context.pushRoute(ContractorDetailsRoute(
+      //   contractorId: 1,
+      // )),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(

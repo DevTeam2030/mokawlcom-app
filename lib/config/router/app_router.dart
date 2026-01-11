@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
@@ -15,6 +16,8 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/upload_files_sc
 import 'package:mokawlcom_app/features/auth/presentation/screens/user_signup_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/verification_screen.dart';
 import 'package:mokawlcom_app/features/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/company_details_screen.dart';
@@ -107,7 +110,7 @@ class AppRouter extends RootStackRouter {
           ],
         ),
         AutoRoute(
-          page: JobDetailsRoute.page,
+          page: ContractorDetailsRoute.page,
           children: [
             AutoRoute(initial: true, page: CompanyDetailsRoute.page),
             AutoRoute(page: ServicesDetailsRoute.page),

@@ -113,11 +113,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         state.currentPage >= state.contractorsModel.totalPages) {
       return;
     }
-    emit(
-      state.copyWith(
-        getContractorsState: RequestStatus.loadingMore,
-      ),
-  );
+    emit(state.copyWith(getContractorsState: RequestStatus.loadingMore));
 
     final result = await homeRepoImpl.getContractors(
       page: state.currentPage + 1,
@@ -156,11 +152,26 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   EventTransformer<T> debounceRestartable<T>(
-    Duration Function(T event) durationMapper,
-  ) {
-    return (events, mapper) => restartable<T>().call(
-      events.debounce((event) => TimerStream(true, durationMapper(event))),
+  Duration Function(T event) durationMapper,
+) {
+  return (events, mapper) {
+    final debouncedEvents = events
+        .where((event) => durationMapper(event) != Duration.zero)
+        .debounceTime(
+          const Duration(milliseconds: 500),
+        );
+
+    final immediateEvents = events
+        .where((event) => durationMapper(event) == Duration.zero);
+
+    return restartable<T>()(
+      MergeStream<T>([
+        debouncedEvents,
+        immediateEvents,
+      ]),
       mapper,
     );
-  }
+  };
+}
+
 }

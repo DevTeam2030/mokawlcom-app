@@ -5,11 +5,13 @@ import 'package:mokawlcom_app/locale_keys.dart';
 class ExpandableTextWidget extends StatefulWidget {
   final String text;
   final int trimLines;
+  final Color color;
 
   const ExpandableTextWidget({
     super.key,
     required this.text,
     this.trimLines = 3,
+    this.color = ColorsManager.primaryColor,
   });
 
   @override
@@ -29,7 +31,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
         Text(
           widget.text,
           style: theme.textTheme.bodySmall!.copyWith(
-            color: ColorsManager.primaryColor,
+            color: widget.color,
             height: 1.5,
           ),
           maxLines: isExpanded ? null : widget.trimLines,

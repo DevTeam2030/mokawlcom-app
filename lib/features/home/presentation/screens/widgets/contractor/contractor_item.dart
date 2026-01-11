@@ -39,7 +39,9 @@ class ContractorItem extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    context.pushRoute(JobDetailsRoute());
+                    context.pushRoute(ContractorDetailsRoute(
+                      contractorId: contractorModel.id,
+                    ));
                   },
                   child: CircleAvatar(
                     radius: 26,
@@ -60,7 +62,9 @@ class ContractorItem extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        context.pushRoute(JobDetailsRoute());
+                        context.pushRoute(ContractorDetailsRoute(
+                          contractorId: contractorModel.id,
+                        ));
                       },
                       child: Text(
                         contractorModel.name,
@@ -138,7 +142,9 @@ class ContractorItem extends StatelessWidget {
             padding: const EdgeInsetsDirectional.only(start: 17.0),
             child: InkWell(
               onTap: () {
-                context.pushRoute(JobDetailsRoute());
+                context.pushRoute(ContractorDetailsRoute(
+                  contractorId: contractorModel.id,
+                ));
               },
               child: Text(
                 LocaleKeys.hintAboutCompany,
@@ -184,7 +190,10 @@ class ContractorItem extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    context.pushRoute(JobDetailsRoute(isOfferrice: true));
+                    context.pushRoute(ContractorDetailsRoute(
+                      contractorId: contractorModel.id,
+                      isOfferrice: true,
+                    ));
                   },
                   child: Text(
                     LocaleKeys.showPrice,

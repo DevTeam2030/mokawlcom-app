@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/service_details/expandable_text_widget.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class ServiceDetailsListItem extends StatelessWidget {
-  const ServiceDetailsListItem({super.key, required this.theme});
+  const ServiceDetailsListItem({
+    super.key,
+    required this.theme,
+    required this.contractorServiceModel,
+  });
 
   final ThemeData theme;
+  final ContractorServiceModel contractorServiceModel;
 
   @override
   Widget build(BuildContext context) {
-    final images = List.generate(4, (_) => AssetsManager.homeBanner);
-
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: ColoredBox(
@@ -21,27 +26,27 @@ class ServiceDetailsListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 5),
-
-            /// Images slider
             SizedBox(
               height: 168,
               child: ListView.separated(
                 padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
                 scrollDirection: Axis.horizontal,
-                itemCount: images.length,
+                itemCount: contractorServiceModel.images.length,
                 separatorBuilder: (_, __) => const SizedBox(width: 10),
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (_) =>
-                          ImageLightBox(images: images, initialIndex: index),
+                      builder: (_) => ImageLightBox(
+                        images: contractorServiceModel.images,
+                        initialIndex: index,
+                      ),
                     );
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      images[index],
+                    child: CustomCachedNetworkImage(
+                      imageUrl: contractorServiceModel.images[index],
                       height: 166,
                       width: 250,
                       fit: BoxFit.cover,
@@ -67,16 +72,15 @@ class ServiceDetailsListItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    "متوسط السعر : 100 ريال",
+                    "متوسط السعر : ${contractorServiceModel.price} ${LocaleKeys.sar}",
                     style: theme.textTheme.labelSmall!.copyWith(
                       fontSize: 10,
                       color: ColorsManager.purpleAccent,
                     ),
                   ),
                   const SizedBox(height: 10),
-                  const ExpandableTextWidget(
-                    text:
-                        "وصف الخدمة: هذه الخدمة تشمل جميع الأعمال المتعلقة بتركيب وصيانة الأنظمة الكهربائية في المباني السكنية والتجارية. نحن نقدم حلولاً مخصصة لتلبية احتياجات عملائنا مع ضمان أعلى معايير الجودة والسلامة.",
+                  ExpandableTextWidget(
+                    text: contractorServiceModel.description,
                   ),
                 ],
               ),

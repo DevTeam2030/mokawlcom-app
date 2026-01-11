@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/job_details/service_item.dart';
 
 class JobDetailsTopSection extends StatelessWidget {
-  const JobDetailsTopSection({super.key});
+  const JobDetailsTopSection({super.key, required this.contractorDetailsModel, required this.theme});
+  final ContractorDetailsModel contractorDetailsModel;
+  final ThemeData theme;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Container(
       width: double.infinity,
       padding: const EdgeInsetsDirectional.symmetric(
@@ -32,24 +35,29 @@ class JobDetailsTopSection extends StatelessWidget {
                 width: .5,
               ),
               borderRadius: BorderRadius.circular(8.0),
-              image: const DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(AssetsManager.logoImage),
-              ),
+            
+            ),
+            child: CustomCachedNetworkImage(
+              imageUrl: contractorDetailsModel.logo,
+              width: 48,
+              height: 48,
+              fit: BoxFit.cover,
             ),
           ),
           const SizedBox(height: 12),
           Column(
             children: [
               Text(
-                'شركة المقاولات العامة',
+                contractorDetailsModel.companyName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodySmall!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: ColorsManager.primaryColor,
                 ),
               ),
               const SizedBox(height: 5),
-              Row(
+            contractorDetailsModel.address.isNotEmpty?  Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(
@@ -58,7 +66,9 @@ class JobDetailsTopSection extends StatelessWidget {
                     color: Colors.green,
                   ),
                   Text(
-                    'الخليج الغربي - الدوحة',
+                    contractorDetailsModel.address,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.labelSmall!.copyWith(
                       fontWeight: FontWeight.w400,
                       fontSize: 10,
@@ -66,7 +76,7 @@ class JobDetailsTopSection extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
+              ):const SizedBox.shrink(),
             ],
           ),
           const CustomDivider(thickness: 0.5),
@@ -84,7 +94,9 @@ class JobDetailsTopSection extends StatelessWidget {
                 ),
               ),
               child: Text(
-                "مقاول",
+                contractorDetailsModel.category,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodySmall!.copyWith(
                   color: ColorsManager.labelColor,
                 ),
@@ -96,9 +108,9 @@ class JobDetailsTopSection extends StatelessWidget {
             height: 46,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => const ServiceItem(),
+              itemBuilder: (context, index) => ServiceItem(service: contractorDetailsModel.classifications[index], theme: theme),
               separatorBuilder: (_, _) => const SizedBox(width: 13),
-              itemCount: 6,
+              itemCount: contractorDetailsModel.classifications.length,
             ),
           ),
         ],
