@@ -4,6 +4,7 @@ import 'package:mokawlcom_app/features/home/data/models/contractors_model.dart';
 
 class SearchState extends Equatable {
   final RequestStatus getContractorsState;
+  final RequestStatus searchContractorsState;
   final ContractorsModel contractorsModel;
   final String errorMessage;
   final int currentPage;
@@ -11,6 +12,7 @@ class SearchState extends Equatable {
 
   const SearchState({
     this.getContractorsState = RequestStatus.initial,
+    this.searchContractorsState = RequestStatus.initial,
     this.contractorsModel = const ContractorsModel.empty(),
     this.errorMessage = '',
     this.currentPage = 1,
@@ -19,6 +21,7 @@ class SearchState extends Equatable {
 
   SearchState copyWith({
     RequestStatus? getContractorsState,
+    RequestStatus? searchContractorsState,
     ContractorsModel? contractorsModel,
     String? errorMessage,
     int? currentPage,
@@ -26,6 +29,7 @@ class SearchState extends Equatable {
   }) {
     return SearchState(
       getContractorsState: getContractorsState ?? this.getContractorsState,
+      searchContractorsState: searchContractorsState ?? this.searchContractorsState,
       contractorsModel: contractorsModel ?? this.contractorsModel,
       errorMessage: errorMessage ?? this.errorMessage,
       currentPage: currentPage ?? this.currentPage,
@@ -36,6 +40,7 @@ class SearchState extends Equatable {
   @override
   List<Object> get props => [
     getContractorsState,
+    searchContractorsState,
     contractorsModel,
     errorMessage,
     currentPage,

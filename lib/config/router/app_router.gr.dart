@@ -206,8 +206,9 @@ class ContractorSignupRoute extends PageRouteInfo<void> {
 class ContractorsRoute extends PageRouteInfo<ContractorsRouteArgs> {
   ContractorsRoute({
     Key? key,
-    required ClassificationModel classificationModel,
-    required ServiceModel serviceModel,
+    ClassificationModel? classificationModel,
+    ServiceModel? serviceModel,
+    bool fromSearch = false,
     List<PageRouteInfo>? children,
   }) : super(
          ContractorsRoute.name,
@@ -215,6 +216,7 @@ class ContractorsRoute extends PageRouteInfo<ContractorsRouteArgs> {
            key: key,
            classificationModel: classificationModel,
            serviceModel: serviceModel,
+           fromSearch: fromSearch,
          ),
          initialChildren: children,
        );
@@ -224,11 +226,14 @@ class ContractorsRoute extends PageRouteInfo<ContractorsRouteArgs> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ContractorsRouteArgs>();
+      final args = data.argsAs<ContractorsRouteArgs>(
+        orElse: () => const ContractorsRouteArgs(),
+      );
       return ContractorsScreen(
         key: args.key,
         classificationModel: args.classificationModel,
         serviceModel: args.serviceModel,
+        fromSearch: args.fromSearch,
       );
     },
   );
@@ -237,19 +242,22 @@ class ContractorsRoute extends PageRouteInfo<ContractorsRouteArgs> {
 class ContractorsRouteArgs {
   const ContractorsRouteArgs({
     this.key,
-    required this.classificationModel,
-    required this.serviceModel,
+    this.classificationModel,
+    this.serviceModel,
+    this.fromSearch = false,
   });
 
   final Key? key;
 
-  final ClassificationModel classificationModel;
+  final ClassificationModel? classificationModel;
 
-  final ServiceModel serviceModel;
+  final ServiceModel? serviceModel;
+
+  final bool fromSearch;
 
   @override
   String toString() {
-    return 'ContractorsRouteArgs{key: $key, classificationModel: $classificationModel, serviceModel: $serviceModel}';
+    return 'ContractorsRouteArgs{key: $key, classificationModel: $classificationModel, serviceModel: $serviceModel, fromSearch: $fromSearch}';
   }
 
   @override
@@ -258,12 +266,16 @@ class ContractorsRouteArgs {
     if (other is! ContractorsRouteArgs) return false;
     return key == other.key &&
         classificationModel == other.classificationModel &&
-        serviceModel == other.serviceModel;
+        serviceModel == other.serviceModel &&
+        fromSearch == other.fromSearch;
   }
 
   @override
   int get hashCode =>
-      key.hashCode ^ classificationModel.hashCode ^ serviceModel.hashCode;
+      key.hashCode ^
+      classificationModel.hashCode ^
+      serviceModel.hashCode ^
+      fromSearch.hashCode;
 }
 
 /// generated route for

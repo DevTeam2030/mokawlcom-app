@@ -138,5 +138,6 @@
   "login_required_message": "You need to login to access this feature.",
   "continue_as_visitor": "Continue as Visitor",
   "please_select_at_least_one_service": "Please select at least one service",
-  "no_results_found":"No results found"
+  "no_results_found":"No results found",
+  "search_results":"Search Results"
 }

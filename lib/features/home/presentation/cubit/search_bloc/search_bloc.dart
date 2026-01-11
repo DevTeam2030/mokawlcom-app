@@ -20,12 +20,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     on<SearchContractorsEvent>(
       _searchContractorsEvent,
       transformer: debounceRestartable<SearchContractorsEvent>(
-        const Duration(milliseconds: 500),
+        (event) => (event.ignoreDebounce ?? false)
+            ? Duration.zero
+            : const Duration(milliseconds: 500),
       ),
     );
-    on<GetContractorsEvent>(
-      _getContractorsEvent,
-    );
+    on<GetContractorsEvent>(_getContractorsEvent);
     on<LoadMoreContractorsEvent>(_loadMoreContractorsEvent);
   }
 
@@ -56,7 +56,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           isConnected: failure.isConnected,
         ),
       ),
-       (contractorsModel) => emit(
+      (contractorsModel) => emit(
         state.copyWith(
           getContractorsState: RequestStatus.success,
           contractorsModel: contractorsModel,
@@ -71,6 +71,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   ) async {
     emit(
       state.copyWith(
+        searchContractorsState: RequestStatus.loading,
         getContractorsState: RequestStatus.loading,
         isConnected: true,
         currentPage: 1,
@@ -89,6 +90,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       (failure) => emit(
         state.copyWith(
           getContractorsState: RequestStatus.error,
+          searchContractorsState: RequestStatus.error,
           errorMessage: failure.errorMessage,
           isConnected: failure.isConnected,
         ),
@@ -96,6 +98,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       (contractorsModel) => emit(
         state.copyWith(
           getContractorsState: RequestStatus.success,
+          searchContractorsState: RequestStatus.success,
           contractorsModel: contractorsModel,
         ),
       ),
@@ -152,8 +155,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
   }
 
-  EventTransformer<T> debounceRestartable<T>(Duration duration) {
-    return (events, mapper) =>
-        restartable<T>().call(events.debounceTime(duration), mapper);
+  EventTransformer<T> debounceRestartable<T>(
+    Duration Function(T event) durationMapper,
+  ) {
+    return (events, mapper) => restartable<T>().call(
+      events.debounce((event) => TimerStream(true, durationMapper(event))),
+      mapper,
+    );
   }
 }

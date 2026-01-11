@@ -138,5 +138,6 @@
   "login_required_message": "يجب تسجيل الدخول للوصول إلى هذه الميزة",
   "continue_as_visitor": "الاستمرار كزائر",
   "please_select_at_least_one_service": "من فضلك اختر خدمة واحدة على الأقل",
-  "no_results_found": "لا يوجد نتائج"
+  "no_results_found": "لا يوجد نتائج",
+  "search_results":"نتائج البحث"
 }

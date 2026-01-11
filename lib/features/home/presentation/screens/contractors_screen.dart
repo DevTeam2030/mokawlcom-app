@@ -20,12 +20,14 @@ import 'package:skeletonizer/skeletonizer.dart';
 class ContractorsScreen extends StatefulWidget {
   const ContractorsScreen({
     super.key,
-    required this.classificationModel,
-    required this.serviceModel,
+     this.classificationModel,
+     this.serviceModel,
+    this.fromSearch = false,
   });
 
-  final ClassificationModel classificationModel;
-  final ServiceModel serviceModel;
+  final ClassificationModel? classificationModel;
+  final ServiceModel? serviceModel;
+  final bool fromSearch;
 
   @override
   State<ContractorsScreen> createState() => _ContractorsScreenState();
@@ -42,10 +44,11 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
     _scrollController = ScrollController()..addListener(_onScroll);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.fromSearch) return;
       context.read<SearchBloc>().add(
         GetContractorsEvent(
-          classificationId: widget.classificationModel.id,
-          serviceId: widget.serviceModel.id,
+          classificationId: widget.classificationModel?.id,
+          serviceId: widget.serviceModel?.id,
         ),
       );
     });
@@ -60,8 +63,8 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
 
       context.read<SearchBloc>().add(
         LoadMoreContractorsEvent(
-          classificationId: widget.classificationModel.id,
-          serviceId: widget.serviceModel.id,
+          classificationId: widget.classificationModel?.id,
+          serviceId: widget.serviceModel?.id,
         ),
       );
     }
@@ -87,7 +90,9 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${widget.classificationModel.name} - ${widget.serviceModel.name}',
+         widget.classificationModel != null && widget.serviceModel != null
+             ? '${widget.classificationModel!.name} - ${widget.serviceModel!.name}'
+             : LocaleKeys.searchResults,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: theme.textTheme.headlineSmall!.copyWith(
@@ -108,10 +113,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
               previous.getContractorsState != current.getContractorsState,
           listener: (context, state) {
             if (state.getContractorsState.isError) {
-              showToast(
-                message: state.errorMessage,
-                state: ToastStates.error,
-              );
+              showToast(message: state.errorMessage, state: ToastStates.error);
             }
           },
           builder: (context, state) {
@@ -123,22 +125,20 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
                 onPressed: () {
                   context.read<SearchBloc>().add(
                     GetContractorsEvent(
-                      classificationId: widget.classificationModel.id,
-                      serviceId: widget.serviceModel.id,
+                      classificationId: widget.classificationModel?.id,
+                      serviceId: widget.serviceModel?.id,
                     ),
                   );
                 },
               );
             }
-                
+
             return UiStateBuilder(
               state: state.getContractorsState,
               theme: theme,
               errorMessage: state.errorMessage,
               onLoading: Skeletonizer(
-                enabled:
-                    state.getContractorsState == RequestStatus.loading &&
-                   !hasData,
+                enabled: state.getContractorsState.isLoading && !hasData,
                 child: _buildContractorsList(
                   contractors: !hasData
                       ? List.generate(
