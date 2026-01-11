@@ -112,9 +112,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     }
     emit(
       state.copyWith(
-        getContractorsState: RequestStatus.loading,
+        getContractorsState: RequestStatus.loadingMore,
       ),
-    );
+  );
 
     final result = await homeRepoImpl.getContractors(
       page: state.currentPage + 1,

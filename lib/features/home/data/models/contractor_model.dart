@@ -9,7 +9,7 @@ class ContractorModel extends Equatable {
   final String phone;
   final String whatsApp;
   final String category;
-  final double rating;
+  final num rating;
 
   const ContractorModel({
     required this.id,
@@ -33,7 +33,7 @@ class ContractorModel extends Equatable {
         phone: json['phone'] ?? '',
         whatsApp: json['whatsapp'] ?? '',
         category: json['category'] ?? '',
-        rating: (json['rate'] as double?) ?? 0,
+        rating: (json['rate'] as num?)?.toDouble() ?? 0,
       );
 
   @override

@@ -6,6 +6,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
+import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_state.dart';
@@ -101,80 +102,93 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
           vertical: 13,
         ),
         child: BlocConsumer<SearchBloc, SearchState>(
-          listenWhen: (p, c) => p.getContractorsState != c.getContractorsState,
-          buildWhen: (p, c) => p.getContractorsState != c.getContractorsState,
+          listenWhen: (previous, current) =>
+              previous.getContractorsState != current.getContractorsState,
+          buildWhen: (previous, current) =>
+              previous.getContractorsState != current.getContractorsState,
           listener: (context, state) {
             if (state.getContractorsState.isError) {
-              showToast(message: state.errorMessage, state: ToastStates.error);
+              showToast(
+                message: state.errorMessage,
+                state: ToastStates.error,
+              );
             }
           },
           builder: (context, state) {
-            return state.isConnected
-                ? UiStateBuilder(
-                    state: state.getContractorsState,
-                    theme: theme,
-                    errorMessage: state.errorMessage,
-                    onLoading: Skeletonizer(
-                      child: _buildContractorsList(
-                        contractors: List.generate(
+            final bool hasData = state.contractorsModel.contractors.isNotEmpty;
+            if (!state.isConnected && !hasData) {
+              return NoInternetWidget(
+                errorMessage: state.errorMessage,
+                theme: theme,
+                onPressed: () {
+                  context.read<SearchBloc>().add(
+                    GetContractorsEvent(
+                      classificationId: widget.classificationModel.id,
+                      serviceId: widget.serviceModel.id,
+                    ),
+                  );
+                },
+              );
+            }
+                
+            return UiStateBuilder(
+              state: state.getContractorsState,
+              theme: theme,
+              errorMessage: state.errorMessage,
+              onLoading: Skeletonizer(
+                enabled:
+                    state.getContractorsState == RequestStatus.loading &&
+                   !hasData,
+                child: _buildContractorsList(
+                  contractors: !hasData
+                      ? List.generate(
                           4,
-                          (i) => ContractorModel(
-                            id: i,
-                            name: 'Contractor $i',
+                          (_) => const ContractorModel(
+                            id: 0,
+                            name: 'Contractor',
                             image: '',
-                            address: 'Address $i',
+                            address: 'Address',
                             rating: 5,
-                            description: 'Description $i',
+                            description: 'Description',
                             phone: '',
                             whatsApp: '',
                             category: '---',
                           ),
+                        )
+                      : state.contractorsModel.contractors,
+                  theme: theme,
+                  status: state.getContractorsState,
+                ),
+              ),
+              onSuccess: hasData
+                  ? _buildContractorsList(
+                      contractors: state.contractorsModel.contractors,
+                      theme: theme,
+                      status: state.getContractorsState,
+                    )
+                  : Center(
+                      child: Text(
+                        LocaleKeys.noResultsFound,
+                        style: theme.textTheme.bodyLarge!.copyWith(
+                          color: ColorsManager.primaryColor,
                         ),
-                        theme: theme,
-                        status: state.getContractorsState,
                       ),
                     ),
-                    onSuccess: state.contractorsModel.contractors.isNotEmpty
-                        ? _buildContractorsList(
-                            contractors: state.contractorsModel.contractors,
-                            theme: theme,
-                            status: state.getContractorsState,
-                          )
-                        : Center(
-                          child: Text(
-                              LocaleKeys.noResultsFound,
-                              style: theme.textTheme.bodyLarge!.copyWith(
-                                color: ColorsManager.primaryColor,
-                              ),
-                            ),
+              onError: hasData
+                  ? _buildContractorsList(
+                      contractors: state.contractorsModel.contractors,
+                      theme: theme,
+                      status: state.getContractorsState,
+                    )
+                  : Center(
+                      child: Text(
+                        LocaleKeys.noResultsFound,
+                        style: theme.textTheme.bodyLarge!.copyWith(
+                          color: ColorsManager.primaryColor,
                         ),
-                    onError: state.contractorsModel.contractors.isNotEmpty
-                        ? _buildContractorsList(
-                            contractors: state.contractorsModel.contractors,
-                            theme: theme,
-                            status: state.getContractorsState,
-                          )
-                        : Center(
-                          child: Text(
-                              LocaleKeys.noResultsFound,
-                              style: theme.textTheme.bodyLarge!.copyWith(
-                                color: ColorsManager.primaryColor,
-                              ),
-                            ),
-                        ),
-                  )
-                : NoInternetWidget(
-                    errorMessage: state.errorMessage,
-                    theme: theme,
-                    onPressed: () {
-                      context.read<SearchBloc>().add(
-                        GetContractorsEvent(
-                          classificationId: widget.classificationModel.id,
-                          serviceId: widget.serviceModel.id,
-                        ),
-                      );
-                    },
-                  );
+                      ),
+                    ),
+            );
           },
         ),
       ),
@@ -190,17 +204,20 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
 
     return ListView.separated(
       controller: _scrollController,
+      key: const PageStorageKey("ContractorsList"),
       cacheExtent: 200,
       itemBuilder: (context, index) {
         if (index == contractors.length) {
-          if (status == RequestStatus.loading) {
+          if (status == RequestStatus.loadingMore) {
             return const Padding(
               padding: EdgeInsets.symmetric(vertical: 20),
               child: Center(
                 child: SizedBox(
                   height: 28,
                   width: 28,
-                  child: CircularProgressIndicator(strokeWidth: 2),
+                  child: CircularProgressIndicator(
+                    color: ColorsManager.primaryColor,
+                  ),
                 ),
               ),
             );

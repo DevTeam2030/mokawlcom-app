@@ -91,7 +91,7 @@ class ContractorItem extends StatelessWidget {
                     ) : const SizedBox(),
                     const SizedBox(height: 4),
                     RatingBar.builder(
-                      initialRating: contractorModel.rating,
+                      initialRating: contractorModel.rating.toDouble(),
                       allowHalfRating: true,
                       ignoreGestures: true,
                       itemSize: 18,

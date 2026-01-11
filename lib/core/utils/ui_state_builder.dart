@@ -33,6 +33,9 @@ class UiStateBuilder extends StatelessWidget {
       case RequestStatus.loading:
         return onLoading;
 
+      case RequestStatus.loadingMore:
+        return onSuccess;
+
       case RequestStatus.success:
         return onSuccess;
 
@@ -44,7 +47,9 @@ class UiStateBuilder extends StatelessWidget {
         return Center(
           child: Text(
             errorMessage,
-            style: theme.textTheme.bodyLarge!.copyWith(color: Colors.black),
+            style: theme.textTheme.bodyLarge!.copyWith(
+              color: ColorsManager.primaryColor,
+            ),
           ),
         );
     }

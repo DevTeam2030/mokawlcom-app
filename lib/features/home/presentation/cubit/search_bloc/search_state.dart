@@ -38,6 +38,7 @@ class SearchState extends Equatable {
     getContractorsState,
     contractorsModel,
     errorMessage,
+    currentPage,
     isConnected,
   ];
 }
