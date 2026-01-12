@@ -25,11 +25,10 @@ class ContractorDetailsScreen extends StatefulWidget
   const ContractorDetailsScreen({
     super.key,
     this.isOfferrice = false,
-    required this.contractorId, required this.serviceId,
+    required this.contractorId, 
   });
   final bool isOfferrice;
   final int contractorId;
-  final int serviceId;
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider(
     create: (context) =>

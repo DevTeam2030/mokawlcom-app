@@ -20,24 +20,36 @@ import 'package:skeletonizer/skeletonizer.dart';
 class ServicesScreen extends StatefulWidget {
   const ServicesScreen({super.key, required this.classificationModel});
   final ClassificationModel classificationModel;
+
   @override
   State<ServicesScreen> createState() => _ServicesScreenState();
 }
 
 class _ServicesScreenState extends State<ServicesScreen> {
   late final ScrollController _scrollController;
+  bool _isLoadingMore = false;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
-    _scrollController.addListener(_onScroll);
+    _scrollController = ScrollController()..addListener(_onScroll);
   }
 
   void _onScroll() {
+    if (_isLoadingMore || !_scrollController.hasClients) return;
+
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent * 0.7) {
+      _isLoadingMore = true;
       context.read<HomeCubit>().loadMoreServices();
+    }
+  }
+
+  void _resetLoading(RequestStatus status) {
+    if (_isLoadingMore &&
+        (status == RequestStatus.success ||
+            status == RequestStatus.error)) {
+      _isLoadingMore = false;
     }
   }
 
@@ -50,6 +62,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -63,10 +76,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
       body: Column(
         children: [
           const SizedBox(height: 18),
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: Padding(
-              padding: const EdgeInsetsDirectional.only(start: 16.0),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 16),
+            child: Align(
+              alignment: AlignmentDirectional.centerStart,
               child: Text(
                 widget.classificationModel.name,
                 style: theme.textTheme.bodyLarge!.copyWith(
@@ -78,10 +91,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
           ),
           const SizedBox(height: 16),
           BlocConsumer<HomeCubit, HomeState>(
-            listenWhen: (previous, current) =>
-                previous.getServicesState != current.getServicesState,
-            buildWhen: (previous, current) =>
-                previous.getServicesState != current.getServicesState,
+            listenWhen: (p, c) =>
+                p.getServicesState != c.getServicesState,
+            buildWhen: (p, c) =>
+                p.getServicesState != c.getServicesState,
             listener: (context, state) {
               if (state.getServicesState.isError) {
                 showToast(
@@ -90,41 +103,60 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 );
               }
             },
-            builder: (context, state) => state.isConnected
-                ? UiStateBuilder(
-                    theme: theme,
-                    state: state.getServicesState,
-                    errorMessage: state.servicesErrorMessage,
-                    onLoading: Expanded(
-                      child: Skeletonizer(
-                        child: _buildServices(
-                          theme: theme,
-                          services: List.generate(
-                            6,
-                            (index) => ServiceModel(
-                              id: index,
-                              name: '******',
-                              image: '',
-                              number: index,
+            builder: (context, state) {
+              final hasData =
+                  state.servicesModel.services.isNotEmpty;
+
+              if (!state.isConnected && !hasData) {
+                return NoInternetWidget(
+                  errorMessage: state.servicesErrorMessage,
+                  theme: theme,
+                  onPressed: () {
+                    context.read<HomeCubit>().getServices();
+                  },
+                );
+              }
+
+              return Expanded(
+                child: UiStateBuilder(
+                  theme: theme,
+                  state: state.getServicesState,
+                  errorMessage: state.servicesErrorMessage,
+                  onLoading: Skeletonizer(
+                    enabled:
+                        state.getServicesState.isLoading && !hasData,
+                    child: _buildServices(
+                      theme: theme,
+                      services: hasData
+                          ? state.servicesModel.services
+                          : List.generate(
+                              6,
+                              (i) => ServiceModel(
+                                id: i,
+                                name: '******',
+                                image: '',
+                                number: i,
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
+                      status: state.getServicesState,
                     ),
-                    onSuccess: Expanded(
-                      child: _buildServices(
-                        theme: theme,
-                        services: state.servicesModel.services,
-                      ),
-                    ),
-                  )
-                : NoInternetWidget(
-                    errorMessage: state.servicesErrorMessage,
-                    theme: theme,
-                    onPressed: () async{
-                      await context.read<HomeCubit>().getServices();
-                    },
                   ),
+                  onSuccess: _buildServices(
+                    theme: theme,
+                    services: state.servicesModel.services,
+                    status: state.getServicesState,
+                  ),
+                  onError: hasData
+                      ? _buildServices(
+                          theme: theme,
+                          services:
+                              state.servicesModel.services,
+                          status: state.getServicesState,
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -134,19 +166,31 @@ class _ServicesScreenState extends State<ServicesScreen> {
   GridView _buildServices({
     required ThemeData theme,
     required List<ServiceModel> services,
+    required RequestStatus status,
   }) {
+    _resetLoading(status);
+
     return GridView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
       key: const PageStorageKey("Services"),
       controller: _scrollController,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         mainAxisSpacing: 14,
         crossAxisSpacing: 20,
         childAspectRatio: 0.78,
       ),
-      itemCount: services.length,
+      itemCount: services.length + (status.isLoadingMore ? 3 : 0),
       itemBuilder: (context, index) {
+        if (index >= services.length && status.isLoadingMore) {
+          return Container(
+            decoration: BoxDecoration(
+              color: ColorsManager.skeletonColor,
+              borderRadius: BorderRadius.circular(12),
+            ),
+          );
+        }
+
         return ServiceGridItem(
           theme: theme,
           serviceModel: services[index],

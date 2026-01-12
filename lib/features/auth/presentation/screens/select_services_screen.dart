@@ -19,6 +19,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 class SelectServicesScreen extends StatefulWidget {
   const SelectServicesScreen({super.key, required this.classificationId});
   final int classificationId;
+
   @override
   State<SelectServicesScreen> createState() => _SelectServicesScreenState();
 }
@@ -26,25 +27,34 @@ class SelectServicesScreen extends StatefulWidget {
 class _SelectServicesScreenState extends State<SelectServicesScreen> {
   late final ValueNotifier<Set<int>> selectedIndices;
   late final ScrollController _scrollController;
+  bool _isLoadingMore = false;
 
   @override
   void initState() {
     super.initState();
-    selectedIndices = ValueNotifier<Set<int>>(<int>{0});
-    _scrollController = ScrollController();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await context.read<AuthCubit>().getServices();
-    });
+    selectedIndices = ValueNotifier({0});
+    _scrollController = ScrollController()..addListener(_onScroll);
 
-    _scrollController.addListener(() {
-      final cubit = context.read<AuthCubit>();
-      final maxScroll = _scrollController.position.maxScrollExtent;
-      final currentScroll = _scrollController.position.pixels;
-
-      if (maxScroll > 0 && currentScroll / maxScroll >= 0.7) {
-        cubit.loadMoreServices();
-      }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AuthCubit>().getServices();
     });
+  }
+
+  void _onScroll() {
+    if (_isLoadingMore || !_scrollController.hasClients) return;
+
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      _isLoadingMore = true;
+      context.read<AuthCubit>().loadMoreServices();
+    }
+  }
+
+  void _resetLoading(RequestStatus status) {
+    if (_isLoadingMore &&
+        (status == RequestStatus.success || status == RequestStatus.error)) {
+      _isLoadingMore = false;
+    }
   }
 
   @override
@@ -54,143 +64,148 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
     super.dispose();
   }
 
-  void _toggleSelection(int index) {
-    final current = Set<int>.from(selectedIndices.value);
-
-    if (current.contains(index)) {
-      current.remove(index);
-    } else {
-      current.add(index);
-    }
-
-    selectedIndices.value = current;
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           LocaleKeys.registerNewContractor,
           style: theme.textTheme.headlineSmall!.copyWith(
-            fontWeight: FontWeight.w700,
             color: ColorsManager.primaryColor,
+            fontWeight: .bold,
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.all(20.0),
-        child: BlocConsumer<AuthCubit, AuthState>(
-          listenWhen: (previous, current) =>
-              previous.getServicesState != current.getServicesState,
-          listener: (context, state) {
-            if (state.getServicesState.isError) {
-              showToast(message: state.errorMessage, state: ToastStates.error);
-            }
-          },
-          buildWhen: (previous, current) =>
-              previous.getServicesState != current.getServicesState,
-          builder: (context, state) => state.isConnected
-              ? UiStateBuilder(
-                  state: state.getServicesState,
-                  theme: theme,
-                  errorMessage: state.errorMessage,
-                  onLoading: Skeletonizer(
-                    child: _buildServices(
-                      theme: theme,
-                      services: List.generate(
+      body: BlocConsumer<AuthCubit, AuthState>(
+        listenWhen: (p, c) => p.getServicesState != c.getServicesState,
+        listener: (context, state) {
+          if (state.getServicesState.isError) {
+            showToast(message: state.errorMessage, state: ToastStates.error);
+          }
+        },
+        builder: (context, state) {
+          final hasData = state.servicesModel.services.isNotEmpty;
+
+          if (!state.isConnected && !hasData) {
+            return NoInternetWidget(
+              errorMessage: state.errorMessage,
+              theme: theme,
+              onPressed: () => context.read<AuthCubit>().getServices(),
+            );
+          }
+
+          return UiStateBuilder(
+            state: state.getServicesState,
+            theme: theme,
+            errorMessage: state.errorMessage,
+            onLoading: Skeletonizer(
+              enabled: state.getServicesState.isLoading && !hasData,
+              child: _buildServices(
+                theme,
+                hasData
+                    ? state.servicesModel.services
+                    : List.generate(
                         6,
-                        (index) => ServiceModel(
-                          id: index,
-                          name: 'name',
-                          image: 'image',
-                          number: index,
+                        (i) => ServiceModel(
+                          id: i,
+                          name: 'Loading',
+                          image: '',
+                          number: i,
                         ),
                       ),
-                      context: context,
-                    ),
-                  ),
-                  onSuccess: _buildServices(
-                    theme: theme,
-                    services: state.servicesModel.services,
-                    context: context,
-                  ),
-                  onError: _buildServices(
-                    theme: theme,
-                    services: state.servicesModel.services,
-                    context: context,
-                  ),
-                )
-              : NoInternetWidget(
-                  errorMessage: state.errorMessage,
-                  theme: theme,
-                  onPressed: () async {
-                    await context.read<AuthCubit>().getServices();
-                  },
-                ),
-        ),
+                state.getServicesState,
+              ),
+            ),
+            onSuccess: _buildServices(
+              theme,
+              state.servicesModel.services,
+              state.getServicesState,
+            ),
+            onError: _buildServices(
+              theme,
+              state.servicesModel.services,
+              state.getServicesState,
+            ),
+          );
+        },
       ),
     );
   }
 
-  Column _buildServices({
-    required ThemeData theme,
-    required List<ServiceModel> services,
-    required BuildContext context,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          LocaleKeys.chooseServices,
-          style: theme.textTheme.bodyLarge!.copyWith(
-            fontWeight: FontWeight.w400,
-            color: Colors.black,
+  Widget _buildServices(
+    ThemeData theme,
+    List<ServiceModel> services,
+    RequestStatus status,
+  ) {
+    _resetLoading(status);
+
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Expanded(
+            child: ValueListenableBuilder<Set<int>>(
+              valueListenable: selectedIndices,
+              builder: (_, value, __) {
+                return ListView.separated(
+                  controller: _scrollController,
+                  itemCount: services.length + 1,
+                  separatorBuilder: (_, __) => const SizedBox(height: 16),
+                  itemBuilder: (context, index) {
+                    if (index == services.length) {
+                      if (status == RequestStatus.loadingMore) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: ColorsManager.primaryColor,
+                            ),
+                          ),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    }
+
+                    return ServicesListItem(
+                      theme: theme,
+                      serviceModel: services[index],
+                      isSelected: value.contains(index),
+                      onTap: () {
+                        final set = {...value};
+                        set.contains(index)
+                            ? set.remove(index)
+                            : set.add(index);
+                        selectedIndices.value = set;
+                      },
+                    );
+                  },
+                );
+              },
+            ),
           ),
-        ),
-        const SizedBox(height: 20.0),
-        ValueListenableBuilder<Set<int>>(
-          valueListenable: selectedIndices,
-          builder: (context, value, _) {
-            return Expanded(
-              child: ListView.separated(
-                key: const PageStorageKey("services"),
-                controller: _scrollController,
-                itemCount: services.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 16.0),
-                itemBuilder: (context, index) => ServicesListItem(
-                  theme: theme,
-                  isSelected: value.contains(index),
-                  serviceModel: services[index],
-                  onTap: () => _toggleSelection(index),
-                ),
-              ),
-            );
-          },
-        ),
-        const SizedBox(height: 10.0),
-        PrimaryButton(
-          onPressed: () {
-            if (selectedIndices.value.isEmpty) {
-              showToast(
-                message: LocaleKeys.pleaseSelectAtLeastOneService,
-                state: ToastStates.error,
+          PrimaryButton(
+            onPressed: () {
+              if (selectedIndices.value.isEmpty) {
+                showToast(
+                  message: LocaleKeys.pleaseSelectAtLeastOneService,
+                  state: ToastStates.error,
+                );
+                return;
+              }
+              context.read<AuthCubit>().saveSettings(
+                classificiationId: widget.classificationId,
+                servicesIds: selectedIndices.value
+                    .map((e) => services[e].id)
+                    .toList(),
               );
-              return;
-            }
-            context.read<AuthCubit>().saveSettings(
-              classificiationId: widget.classificationId,
-              servicesIds: selectedIndices.value
-                  .map((e) => services[e].id)
-                  .toList(),
-            );
-            context.pushRoute(const ContractorSignupRoute());
-          },
-          text: LocaleKeys.next,
-        ),
-        const SizedBox(height: 40.0),
-      ],
+              context.pushRoute(const ContractorSignupRoute());
+            },
+            text: LocaleKeys.next,
+          ),
+        ],
+      ),
     );
   }
 }

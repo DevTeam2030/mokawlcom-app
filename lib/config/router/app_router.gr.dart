@@ -192,7 +192,6 @@ class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
     Key? key,
     bool isOfferrice = false,
     required int contractorId,
-    required int serviceId,
     List<PageRouteInfo>? children,
   }) : super(
          ContractorDetailsRoute.name,
@@ -200,7 +199,6 @@ class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
            key: key,
            isOfferrice: isOfferrice,
            contractorId: contractorId,
-           serviceId: serviceId,
          ),
          initialChildren: children,
        );
@@ -216,7 +214,6 @@ class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
           key: args.key,
           isOfferrice: args.isOfferrice,
           contractorId: args.contractorId,
-          serviceId: args.serviceId,
         ),
       );
     },
@@ -228,7 +225,6 @@ class ContractorDetailsRouteArgs {
     this.key,
     this.isOfferrice = false,
     required this.contractorId,
-    required this.serviceId,
   });
 
   final Key? key;
@@ -237,11 +233,9 @@ class ContractorDetailsRouteArgs {
 
   final int contractorId;
 
-  final int serviceId;
-
   @override
   String toString() {
-    return 'ContractorDetailsRouteArgs{key: $key, isOfferrice: $isOfferrice, contractorId: $contractorId, serviceId: $serviceId}';
+    return 'ContractorDetailsRouteArgs{key: $key, isOfferrice: $isOfferrice, contractorId: $contractorId}';
   }
 
   @override
@@ -250,16 +244,12 @@ class ContractorDetailsRouteArgs {
     if (other is! ContractorDetailsRouteArgs) return false;
     return key == other.key &&
         isOfferrice == other.isOfferrice &&
-        contractorId == other.contractorId &&
-        serviceId == other.serviceId;
+        contractorId == other.contractorId;
   }
 
   @override
   int get hashCode =>
-      key.hashCode ^
-      isOfferrice.hashCode ^
-      contractorId.hashCode ^
-      serviceId.hashCode;
+      key.hashCode ^ isOfferrice.hashCode ^ contractorId.hashCode;
 }
 
 /// generated route for

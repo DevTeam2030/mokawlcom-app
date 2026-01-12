@@ -35,6 +35,20 @@ class OfferPriceBottomSheet extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
+            LocaleKeys.offerAddress,
+            style: theme.textTheme.bodyLarge!.copyWith(
+              fontWeight: FontWeight.w400,
+              color: ColorsManager.primaryColor,
+            ),
+          ),
+          const SizedBox(height: 8),
+          CustomTextFormField(
+            textInputAction: TextInputAction.next,
+            type: TextInputType.text,
+            fieldName: LocaleKeys.offerAddress,
+          ),
+          const SizedBox(height: 16),
+          Text(
             LocaleKeys.price,
             style: theme.textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.w400,

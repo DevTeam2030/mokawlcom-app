@@ -55,14 +55,12 @@ class HomeHeader extends StatelessWidget {
           const Spacer(),
           InkWell(
             onTap: () {
-              if (AppConstants.userType == UserType.visitor) {
-                showDialog(
-                  context: context,
-                  builder: (context) => const VisitorAccessDialog(),
-                );
-              } else {
-                context.pushRoute(const SavedCompaniesRoute());
-              }
+              context.read<AppCubit>().handleProtectedNavigation(
+                context: context,
+                onAllowed: () {
+                  context.pushRoute(const SavedCompaniesRoute());
+                },
+              );
             },
             child: const Icon(
               MyIcons.bookmarks,
@@ -72,15 +70,13 @@ class HomeHeader extends StatelessWidget {
           const SizedBox(width: 8),
           InkWell(
             onTap: () {
-              if (AppConstants.userType == UserType.visitor) {
-                showDialog(
-                  context: context,
-                  builder: (context) => const VisitorAccessDialog(),
-                );
-              } else {
-                final tabsRouter = AutoTabsRouter.of(context);
-                tabsRouter.setActiveIndex(1);
-              }
+              context.read<AppCubit>().handleProtectedNavigation(
+                context: context,
+                onAllowed: () {
+                  final tabsRouter = AutoTabsRouter.of(context);
+                  tabsRouter.setActiveIndex(1);
+                },
+              );
             },
             child: const Icon(
               MyIcons.boldnotification,

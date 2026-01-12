@@ -46,7 +46,6 @@ class ContractorItem extends StatelessWidget {
                   onTap: () {
                     context.pushRoute(
                       ContractorDetailsRoute(contractorId: contractorModel.id,
-                      serviceId: serviceId,
                       ),
                     );
                   },
@@ -72,7 +71,6 @@ class ContractorItem extends StatelessWidget {
                         context.pushRoute(
                           ContractorDetailsRoute(
                             contractorId: contractorModel.id,
-                            serviceId: serviceId,
                           ),
                         );
                       },
@@ -156,7 +154,6 @@ class ContractorItem extends StatelessWidget {
               onTap: () {
                 context.pushRoute(
                   ContractorDetailsRoute(contractorId: contractorModel.id,
-                  serviceId: serviceId
                   ),
                 );
               },
@@ -182,7 +179,7 @@ class ContractorItem extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     context.pushRoute(
-                      ContractorDetailsRoute(contractorId: contractorModel.id,serviceId: serviceId),
+                      ContractorDetailsRoute(contractorId: contractorModel.id, ),
                     );
                   },
                   child: Text(
@@ -231,7 +228,7 @@ class ContractorItem extends StatelessWidget {
                           ContractorDetailsRoute(
                             contractorId: contractorModel.id,
                             isOfferrice: true,
-                            serviceId: serviceId
+        
                           ),
                         );
                       },

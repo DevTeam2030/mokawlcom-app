@@ -27,25 +27,34 @@ class ClassificationScreen extends StatefulWidget {
 class _ClassificationScreenState extends State<ClassificationScreen> {
   late final ValueNotifier<int> activeIndex;
   late final ScrollController _scrollController;
+  bool _isLoadingMore = false;
 
   @override
   void initState() {
     super.initState();
     activeIndex = ValueNotifier<int>(0);
-    _scrollController = ScrollController();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await context.read<AuthCubit>().getClassifications();
-    });
+    _scrollController = ScrollController()..addListener(_onScroll);
 
-    _scrollController.addListener(() {
-      final cubit = context.read<AuthCubit>();
-      final maxScroll = _scrollController.position.maxScrollExtent;
-      final currentScroll = _scrollController.position.pixels;
-
-      if (maxScroll > 0 && currentScroll / maxScroll >= 0.7) {
-        cubit.loadMoreClassifications();
-      }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AuthCubit>().getClassifications();
     });
+  }
+
+  void _onScroll() {
+    if (_isLoadingMore || !_scrollController.hasClients) return;
+
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      _isLoadingMore = true;
+      context.read<AuthCubit>().loadMoreClassifications();
+    }
+  }
+
+  void _resetLoading(RequestStatus status) {
+    if (_isLoadingMore &&
+        (status == RequestStatus.success || status == RequestStatus.error)) {
+      _isLoadingMore = false;
+    }
   }
 
   @override
@@ -70,99 +79,111 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
         ),
       ),
       body: BlocConsumer<AuthCubit, AuthState>(
-        listenWhen: (previous, current) =>
-            previous.getClassificationsState != current.getClassificationsState,
+        listenWhen: (p, c) =>
+            p.getClassificationsState != c.getClassificationsState,
         listener: (context, state) {
           if (state.getClassificationsState.isError) {
             showToast(message: state.errorMessage, state: ToastStates.error);
           }
         },
-        buildWhen: (previous, current) =>
-            previous.getClassificationsState != current.getClassificationsState,
-        builder: (context, state) => state.isConnected
-            ? UiStateBuilder(
-                state: state.getClassificationsState,
-                theme: theme,
-                errorMessage: state.errorMessage,
-                onLoading: Skeletonizer(
-                  child: _buildClassifications(
-                    theme: theme,
-                    classifications: List.generate(
-                      6,
-                      (index) => ClassificationModel(
-                        id: index,
-                        name: 'Loading...',
-                        image: '',
-                        number: index,
+        builder: (context, state) {
+          final hasData = state.classificationsModel.classifications.isNotEmpty;
+
+          if (!state.isConnected && !hasData) {
+            return NoInternetWidget(
+              errorMessage: state.errorMessage,
+              theme: theme,
+              onPressed: () => context.read<AuthCubit>().getClassifications(),
+            );
+          }
+
+          return UiStateBuilder(
+            state: state.getClassificationsState,
+            theme: theme,
+            errorMessage: state.errorMessage,
+            onLoading: Skeletonizer(
+              enabled: state.getClassificationsState.isLoading && !hasData,
+              child: _buildList(
+                theme,
+                hasData
+                    ? state.classificationsModel.classifications
+                    : List.generate(
+                        6,
+                        (i) => ClassificationModel(
+                          id: i,
+                          name: 'Loading',
+                          image: '',
+                          number: i,
+                        ),
                       ),
-                    ),
-                    context: context,
-                  ),
-                ),
-                onSuccess: _buildClassifications(
-                  theme: theme,
-                  classifications: state.classificationsModel.classifications,
-                  context: context,
-                ),
-                onError: _buildClassifications(
-                  theme: theme,
-                  classifications: state.classificationsModel.classifications,
-                  context: context,
-                ),
-              )
-            : NoInternetWidget(
-                errorMessage: state.errorMessage,
-                theme: theme,
-                onPressed: () async {
-                  await context.read<AuthCubit>().getClassifications();
-                },
+                state.getClassificationsState,
               ),
+            ),
+            onSuccess: _buildList(
+              theme,
+              state.classificationsModel.classifications,
+              state.getClassificationsState,
+            ),
+            onError: _buildList(
+              theme,
+              state.classificationsModel.classifications,
+              state.getClassificationsState,
+            ),
+          );
+        },
       ),
     );
   }
 
-  Padding _buildClassifications({
-    required ThemeData theme,
-    required List<ClassificationModel> classifications,
-    required BuildContext context,
-  }) {
+  Widget _buildList(
+    ThemeData theme,
+    List<ClassificationModel> classifications,
+    RequestStatus status,
+  ) {
+    _resetLoading(status);
+
     return Padding(
-      padding: const EdgeInsetsDirectional.all(20.0),
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            LocaleKeys.chooseClassification,
-            style: theme.textTheme.bodyLarge!.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
+          Text(LocaleKeys.chooseClassification),
           const SizedBox(height: 20),
           ValueListenableBuilder<int>(
             valueListenable: activeIndex,
-            builder: (context, value, _) {
+            builder: (_, value, __) {
               return Expanded(
                 child: ListView.separated(
-                  key: const PageStorageKey("classifications"),
                   controller: _scrollController,
-                  itemCount: classifications.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 16.0),
+                  itemCount: classifications.length + 1,
+                  separatorBuilder: (_, __) => const SizedBox(height: 16),
                   itemBuilder: (context, index) {
+                    if (index == classifications.length) {
+                      if (status == RequestStatus.loadingMore) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: ColorsManager.primaryColor,
+                            ),
+                          ),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    }
+
                     return ClassificationListItem(
                       theme: theme,
                       classificationModel: classifications[index],
                       isSelected: index == value,
-                      onTap: () {
-                        activeIndex.value = index;
-                      },
+                      onTap: () => activeIndex.value = index,
                     );
                   },
                 ),
               );
             },
           ),
-          const SizedBox(height: 10.0),
+          const SizedBox(height: 10),
           PrimaryButton(
             onPressed: () {
               context.pushRoute(
@@ -173,7 +194,6 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
             },
             text: LocaleKeys.next,
           ),
-          const SizedBox(height: 40.0),
         ],
       ),
     );

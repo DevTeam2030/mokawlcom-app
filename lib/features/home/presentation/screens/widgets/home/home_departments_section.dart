@@ -22,18 +22,29 @@ class HomeDepartmentsSection extends StatefulWidget {
 
 class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
   late final ScrollController _scrollController;
+  bool _isLoadingMore = false;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
-    _scrollController.addListener(_onScroll);
+    _scrollController = ScrollController()..addListener(_onScroll);
   }
 
   void _onScroll() {
+    if (_isLoadingMore || !_scrollController.hasClients) return;
+
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent * 0.7) {
+      _isLoadingMore = true;
       context.read<HomeCubit>().loadMoreClassifications();
+    }
+  }
+
+  void _resetLoading(RequestStatus status) {
+    if (_isLoadingMore &&
+        (status == RequestStatus.success ||
+            status == RequestStatus.error)) {
+      _isLoadingMore = false;
     }
   }
 
@@ -46,41 +57,59 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
-      buildWhen: (previous, current) =>
-          previous.getClassificationsState != current.getClassificationsState,
-      builder: (context, state) => UiStateBuilder(
-        theme: widget.theme,
-        state: state.getClassificationsState,
-        errorMessage: state.classificationsErrorMessage,
-        onLoading: Skeletonizer(
-          child: _buildGrid(
-            context,
-            List.generate(
-              6,
-              (i) => ClassificationModel(
-                id: i,
-                name: '******',
-                image: '',
-                number: i,
-              ),
+      buildWhen: (p, c) =>
+          p.getClassificationsState != c.getClassificationsState,
+      builder: (context, state) {
+        final hasData =
+            state.classificationsModel.classifications.isNotEmpty;
+
+        return UiStateBuilder(
+          theme: widget.theme,
+          state: state.getClassificationsState,
+          errorMessage: state.classificationsErrorMessage,
+          onLoading: Skeletonizer(
+            enabled: state.getClassificationsState.isLoading && !hasData,
+            child: _buildGrid(
+              context,
+              classifications: hasData
+                  ? state.classificationsModel.classifications
+                  : List.generate(
+                      6,
+                      (i) => ClassificationModel(
+                        id: i,
+                        name: '******',
+                        image: '',
+                        number: i,
+                      ),
+                    ),
+              status: state.getClassificationsState,
             ),
-            isLoadingMore: true,
           ),
-        ),
-        onSuccess: _buildGrid(
-          context,
-          state.classificationsModel.classifications,
-          isLoadingMore: state.getClassificationsState.isLoading,
-        ),
-      ),
+          onSuccess: _buildGrid(
+            context,
+            classifications: state.classificationsModel.classifications,
+            status: state.getClassificationsState,
+          ),
+          onError: hasData
+              ? _buildGrid(
+                  context,
+                  classifications:
+                      state.classificationsModel.classifications,
+                  status: state.getClassificationsState,
+                )
+              : const SizedBox.shrink(),
+        );
+      },
     );
   }
 
   Widget _buildGrid(
-    BuildContext context,
-    List<ClassificationModel> classifications, {
-    required bool isLoadingMore,
+    BuildContext context, {
+    required List<ClassificationModel> classifications,
+    required RequestStatus status,
   }) {
+    _resetLoading(status);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -107,9 +136,10 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
             crossAxisSpacing: 20,
             childAspectRatio: 0.78,
           ),
-          itemCount: classifications.length + (isLoadingMore ? 2 : 0),
+          itemCount:
+              classifications.length + (status.isLoadingMore ? 2 : 0),
           itemBuilder: (context, index) {
-            if (index >= classifications.length) {
+            if (index >= classifications.length && status.isLoadingMore) {
               return Container(
                 decoration: BoxDecoration(
                   color: ColorsManager.skeletonColor,
@@ -123,7 +153,9 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
               classificationModel: classifications[index],
               onTap: () {
                 context.pushRoute(
-                  ServicesRoute(classificationModel: classifications[index]),
+                  ServicesRoute(
+                    classificationModel: classifications[index],
+                  ),
                 );
               },
             );

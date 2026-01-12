@@ -8,6 +8,7 @@ import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_model.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor/contractor_item.dart';
@@ -20,8 +21,8 @@ import 'package:skeletonizer/skeletonizer.dart';
 class ContractorsScreen extends StatefulWidget {
   const ContractorsScreen({
     super.key,
-     this.classificationModel,
-     this.serviceModel,
+    this.classificationModel,
+    this.serviceModel,
     this.fromSearch = false,
   });
 
@@ -90,9 +91,9 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-         widget.classificationModel != null && widget.serviceModel != null
-             ? '${widget.classificationModel!.name} - ${widget.serviceModel!.name}'
-             : LocaleKeys.searchResults,
+          widget.classificationModel != null && widget.serviceModel != null
+              ? '${widget.classificationModel!.name} - ${widget.serviceModel!.name}'
+              : LocaleKeys.searchResults,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: theme.textTheme.headlineSmall!.copyWith(
@@ -227,7 +228,8 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
 
         return ContractorItem(
           contractorModel: contractors[index],
-          serviceId: widget.serviceModel.id,
+          serviceId:0,
+
           theme: theme,
         );
       },
