@@ -3,6 +3,9 @@ import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
 import 'package:mokawlcom_app/features/home/data/repo/home_repo.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/widgets/classification_item.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final ContractorAuthRepo contractorAuthRepoImpl;
@@ -13,7 +16,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(
       state.copyWith(getBannersState: RequestStatus.loading, isConnected: true),
     );
-  
+
     final result = await homeRepoImpl.getBanners();
     result.fold(
       (failure) => emit(
@@ -32,9 +35,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future<void> getClassifications({
-    int page = 1,
-  }) async {
+  Future<void> getClassifications() async {
     emit(
       state.copyWith(
         getClassificationsState: RequestStatus.loading,
@@ -42,7 +43,7 @@ class HomeCubit extends Cubit<HomeState> {
       ),
     );
     final result = await contractorAuthRepoImpl.getClassifications(
-      page: page,
+      page: state.classificationsPage,
     );
     result.fold(
       (failure) => emit(
@@ -56,7 +57,7 @@ class HomeCubit extends Cubit<HomeState> {
         state.copyWith(
           getClassificationsState: RequestStatus.success,
           classificationsModel: classificationsModel,
-          classificationsPage: state.classificationsPage,
+          classificationsPage: classificationsModel.currentPage,
           classificationsTotalPages: classificationsModel.totalPages,
         ),
       ),
@@ -68,12 +69,43 @@ class HomeCubit extends Cubit<HomeState> {
         state.getClassificationsState.isLoading) {
       return;
     }
-    await getClassifications(page: state.classificationsPage + 1);
+    emit(
+      state.copyWith(
+        getClassificationsState: RequestStatus.loadingMore,
+        isConnected: true,
+      ),
+    );
+    final result = await contractorAuthRepoImpl.getClassifications(
+      page: state.classificationsPage + 1,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          getClassificationsState: RequestStatus.error,
+          classificationsErrorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (classificationsModel) {
+        final List<ClassificationModel> updatedClassifications = [
+          ...state.classificationsModel.classifications,
+          ...classificationsModel.classifications,
+        ];
+        emit(
+          state.copyWith(
+            getClassificationsState: RequestStatus.success,
+            classificationsModel: classificationsModel.copyWith(
+              classifications: updatedClassifications,
+            ),
+            classificationsPage: classificationsModel.currentPage,
+            classificationsTotalPages: classificationsModel.totalPages,
+          ),
+        );
+      },
+    );
   }
 
-  Future<void> getServices({
-    int page = 1,
-  }) async {
+  Future<void> getServices() async {
     emit(
       state.copyWith(
         getServicesState: RequestStatus.loading,
@@ -81,7 +113,7 @@ class HomeCubit extends Cubit<HomeState> {
       ),
     );
     final result = await contractorAuthRepoImpl.getServices(
-      page: page,
+      page: state.servicesPage,
     );
     result.fold(
       (failure) => emit(
@@ -95,7 +127,7 @@ class HomeCubit extends Cubit<HomeState> {
         state.copyWith(
           getServicesState: RequestStatus.success,
           servicesModel: servicesModel,
-          servicesPage: state.servicesPage,
+          servicesPage: servicesModel.currentPage,
           servicesTotalPages: servicesModel.totalPages,
         ),
       ),
@@ -107,6 +139,37 @@ class HomeCubit extends Cubit<HomeState> {
         state.getServicesState.isLoading) {
       return;
     }
-    await getServices(page: state.servicesPage + 1);
+    emit(
+      state.copyWith(
+        getServicesState: RequestStatus.loadingMore,
+        isConnected: true,
+      ),
+    );
+    final result = await contractorAuthRepoImpl.getServices(
+      page: state.servicesPage + 1,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          getServicesState: RequestStatus.error,
+          servicesErrorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (servicesModel) {
+        final List<ServiceModel> updatedServices = [
+          ...state.servicesModel.services,
+          ...servicesModel.services,
+        ];
+        emit(
+          state.copyWith(
+            getServicesState: RequestStatus.success,
+            servicesModel: servicesModel.copyWith(services: updatedServices),
+            servicesPage: servicesModel.currentPage,
+            servicesTotalPages: servicesModel.totalPages,
+          ),
+        );
+      },
+    );
   }
 }

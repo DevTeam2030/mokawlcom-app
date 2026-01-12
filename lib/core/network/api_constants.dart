@@ -20,4 +20,5 @@ class ApiConstants {
   static const String forgetPassword = "/auth/password-reset-email";
   static const String getContractors = "/get-contractors";
   static const String getContractorInfo = "/get-contractor-info";
+  static const String rateContractor = "/rate";
 }

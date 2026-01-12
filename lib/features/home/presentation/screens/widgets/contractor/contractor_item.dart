@@ -1,11 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
+import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_model.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -13,8 +17,9 @@ class ContractorItem extends StatelessWidget {
   const ContractorItem({
     super.key,
     required this.contractorModel,
-    required this.theme,
+    required this.theme, required this.serviceId,
   });
+  final int serviceId;
   final ContractorModel contractorModel;
   final ThemeData theme;
   @override
@@ -39,9 +44,11 @@ class ContractorItem extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    context.pushRoute(ContractorDetailsRoute(
-                      contractorId: contractorModel.id,
-                    ));
+                    context.pushRoute(
+                      ContractorDetailsRoute(contractorId: contractorModel.id,
+                      serviceId: serviceId,
+                      ),
+                    );
                   },
                   child: CircleAvatar(
                     radius: 26,
@@ -62,9 +69,12 @@ class ContractorItem extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        context.pushRoute(ContractorDetailsRoute(
-                          contractorId: contractorModel.id,
-                        ));
+                        context.pushRoute(
+                          ContractorDetailsRoute(
+                            contractorId: contractorModel.id,
+                            serviceId: serviceId,
+                          ),
+                        );
                       },
                       child: Text(
                         contractorModel.name,
@@ -76,25 +86,27 @@ class ContractorItem extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                   contractorModel.address.isNotEmpty ? Row(
-                      children: [
-                        const Icon(
-                          Icons.location_on_outlined,
-                          size: 18,
-                          color: Colors.green,
-                        ),
-                        Text(
-                          contractorModel.address,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.labelSmall!.copyWith(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 10,
-                            color: ColorsManager.textColor,
-                          ),
-                        ),
-                      ],
-                    ) : const SizedBox(),
+                    contractorModel.address.isNotEmpty
+                        ? Row(
+                            children: [
+                              const Icon(
+                                Icons.location_on_outlined,
+                                size: 18,
+                                color: Colors.green,
+                              ),
+                              Text(
+                                contractorModel.address,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: theme.textTheme.labelSmall!.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 10,
+                                  color: ColorsManager.textColor,
+                                ),
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
                     const SizedBox(height: 4),
                     RatingBar.builder(
                       initialRating: contractorModel.rating.toDouble(),
@@ -105,7 +117,7 @@ class ContractorItem extends StatelessWidget {
                         return const Icon(MyIcons.star, color: Colors.amber);
                       },
                       unratedColor: ColorsManager.secondaryColor,
-                      onRatingUpdate: (_) {},
+                      onRatingUpdate: (rating) {},
                     ),
                   ],
                 ),
@@ -142,9 +154,11 @@ class ContractorItem extends StatelessWidget {
             padding: const EdgeInsetsDirectional.only(start: 17.0),
             child: InkWell(
               onTap: () {
-                context.pushRoute(ContractorDetailsRoute(
-                  contractorId: contractorModel.id,
-                ));
+                context.pushRoute(
+                  ContractorDetailsRoute(contractorId: contractorModel.id,
+                  serviceId: serviceId
+                  ),
+                );
               },
               child: Text(
                 LocaleKeys.hintAboutCompany,
@@ -157,9 +171,29 @@ class ContractorItem extends StatelessWidget {
           const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 17.0, end: 25.0),
-            child: Text(
-              contractorModel.description,
-              style: theme.textTheme.bodySmall,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  contractorModel.description,
+                  style: theme.textTheme.bodySmall,
+                ),
+                const SizedBox(height: 4),
+                GestureDetector(
+                  onTap: () {
+                    context.pushRoute(
+                      ContractorDetailsRoute(contractorId: contractorModel.id,serviceId: serviceId),
+                    );
+                  },
+                  child: Text(
+                    LocaleKeys.showMore,
+                    style: theme.textTheme.bodySmall!.copyWith(
+                      color: Colors.orange,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 14),
@@ -190,10 +224,18 @@ class ContractorItem extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    context.pushRoute(ContractorDetailsRoute(
-                      contractorId: contractorModel.id,
-                      isOfferrice: true,
-                    ));
+                    context.read<AppCubit>().handleProtectedNavigation(
+                      context: context,
+                      onAllowed: () {
+                        context.pushRoute(
+                          ContractorDetailsRoute(
+                            contractorId: contractorModel.id,
+                            isOfferrice: true,
+                            serviceId: serviceId
+                          ),
+                        );
+                      },
+                    );
                   },
                   child: Text(
                     LocaleKeys.showPrice,
@@ -203,41 +245,65 @@ class ContractorItem extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-              contractorModel.whatsApp.isNotEmpty ?  OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    padding: const EdgeInsetsDirectional.all(10),
-                    minimumSize: const Size(32, 32),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Icon(
-                    MyIcons.whats,
-                    color: Colors.green,
-                    size: 20,
-                  ),
-                ):const SizedBox.shrink(),
+                contractorModel.whatsApp.isNotEmpty
+                    ? OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          padding: const EdgeInsetsDirectional.all(10),
+                          minimumSize: const Size(32, 32),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        onPressed: () async {
+                          await LaunchUtils.open(
+                            url: contractorModel.whatsApp,
+                            onError: (msg) {
+                              showToast(
+                                message: msg,
+                                state: ToastStates.warning,
+                              );
+                            },
+                          );
+                        },
+                        child: const Icon(
+                          MyIcons.whats,
+                          color: Colors.green,
+                          size: 20,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
                 const SizedBox(width: 3),
-                contractorModel.phone.isNotEmpty ?  OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    padding: const EdgeInsetsDirectional.all(10),
-                    minimumSize: const Size(32, 32),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Icon(
-                    MyIcons.call,
-                    color: ColorsManager.primaryColor,
-                    size: 20,
-                  ),
-                ):const SizedBox.shrink(),
+                contractorModel.phone.isNotEmpty
+                    ? OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          padding: const EdgeInsetsDirectional.all(10),
+                          minimumSize: const Size(32, 32),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        onPressed: () async {
+                          await LaunchUtils.open(
+                            url: contractorModel.phone,
+                            onError: (msg) {
+                              showToast(
+                                message: msg,
+                                state: ToastStates.warning,
+                              );
+                            },
+                          );
+                        },
+                        child: const Icon(
+                          MyIcons.call,
+                          color: ColorsManager.primaryColor,
+                          size: 20,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
           ),

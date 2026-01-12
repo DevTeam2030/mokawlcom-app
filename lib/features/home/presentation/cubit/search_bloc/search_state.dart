@@ -25,6 +25,7 @@ class SearchState extends Equatable {
     ContractorsModel? contractorsModel,
     String? errorMessage,
     int? currentPage,
+    Map<int, num>? oldRatings,
     bool? isConnected,
   }) {
     return SearchState(

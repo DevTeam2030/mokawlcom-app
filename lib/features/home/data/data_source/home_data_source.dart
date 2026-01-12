@@ -15,6 +15,10 @@ abstract class HomeDataSource {
   Future<ContractorDetailsModel> getContractorDetails({
     required int contractorId,
   });
+  Future<void> rateContractor({
+    required String contractorId,
+    required String rating,
+  });
 }
 
 class HomeDataSourceImpl implements HomeDataSource {
@@ -70,6 +74,21 @@ class HomeDataSourceImpl implements HomeDataSource {
     );
     if (result.statusCode == 200) {
       return ContractorDetailsModel.fromJson(result.data["data"]??{});
+    } else {
+      throw ServerException(errorMessage: result.data["message"] ?? "");
+    }
+  }
+  @override
+  Future<void> rateContractor({required String contractorId, required String rating}) async {
+    final result = await dioHelper.post(
+      url: ApiConstants.rateContractor,
+      query: {
+        "contractor_id": contractorId,
+        "rating": rating,
+      },
+    );
+    if (result.statusCode == 200) {
+      return;
     } else {
       throw ServerException(errorMessage: result.data["message"] ?? "");
     }

@@ -34,7 +34,7 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
     activeIndex = ValueNotifier<int>(0);
     _scrollController = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await context.read<AuthCubit>().getClassesifications();
+      await context.read<AuthCubit>().getClassifications();
     });
 
     _scrollController.addListener(() {
@@ -43,7 +43,7 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
       final currentScroll = _scrollController.position.pixels;
 
       if (maxScroll > 0 && currentScroll / maxScroll >= 0.7) {
-        cubit.loadMoreClassesifications();
+        cubit.loadMoreClassifications();
       }
     });
   }
@@ -114,7 +114,7 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
                 errorMessage: state.errorMessage,
                 theme: theme,
                 onPressed: () async {
-                  await context.read<AuthCubit>().getClassesifications();
+                  await context.read<AuthCubit>().getClassifications();
                 },
               ),
       ),

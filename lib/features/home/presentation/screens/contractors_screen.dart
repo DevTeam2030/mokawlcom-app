@@ -227,6 +227,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
 
         return ContractorItem(
           contractorModel: contractors[index],
+          serviceId: widget.serviceModel.id,
           theme: theme,
         );
       },

@@ -152,10 +152,16 @@ class Auth extends AutoRouter implements AutoRouteWrapper {
 }
 
 @RoutePage(name: 'HomeTabRoute')
-class HomeTab extends AutoRouter implements AutoRouteWrapper {
+class HomeTab extends AutoRouter  {
   const HomeTab({super.key});
 
-  @override
+
+}
+
+@RoutePage(name: 'AuthenticatedRoute')
+class Authenticated extends AutoRouter implements AutoRouteWrapper {
+  const Authenticated({super.key});
+    @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
     providers: [
       BlocProvider(
@@ -168,9 +174,4 @@ class HomeTab extends AutoRouter implements AutoRouteWrapper {
     ],
     child: this,
   );
-}
-
-@RoutePage(name: 'AuthenticatedRoute')
-class Authenticated extends AutoRouter {
-  const Authenticated({super.key});
 }

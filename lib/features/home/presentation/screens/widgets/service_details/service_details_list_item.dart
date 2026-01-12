@@ -118,7 +118,10 @@ class ImageLightBox extends StatelessWidget {
             itemCount: images.length,
             itemBuilder: (context, index) {
               return InteractiveViewer(
-                child: Image.asset(images[index], fit: BoxFit.cover),
+                child: CustomCachedNetworkImage(
+                  imageUrl: images[index],
+                  fit: BoxFit.cover,
+                ),
               );
             },
           ),

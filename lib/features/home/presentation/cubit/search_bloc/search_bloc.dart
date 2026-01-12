@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
@@ -27,6 +28,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
     on<GetContractorsEvent>(_getContractorsEvent);
     on<LoadMoreContractorsEvent>(_loadMoreContractorsEvent);
+    //on<RateContractorEvent>(_rateContractorEvent);
   }
 
   FutureOr<void> _getContractorsEvent(
@@ -152,26 +154,23 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   EventTransformer<T> debounceRestartable<T>(
-  Duration Function(T event) durationMapper,
-) {
-  return (events, mapper) {
-    final debouncedEvents = events
-        .where((event) => durationMapper(event) != Duration.zero)
-        .debounceTime(
-          const Duration(milliseconds: 500),
-        );
+    Duration Function(T event) durationMapper,
+  ) {
+    return (events, mapper) {
+      final debouncedEvents = events
+          .where((event) => durationMapper(event) != Duration.zero)
+          .debounceTime(const Duration(milliseconds: 500));
 
-    final immediateEvents = events
-        .where((event) => durationMapper(event) == Duration.zero);
+      final immediateEvents = events.where(
+        (event) => durationMapper(event) == Duration.zero,
+      );
 
-    return restartable<T>()(
-      MergeStream<T>([
-        debouncedEvents,
-        immediateEvents,
-      ]),
-      mapper,
-    );
-  };
-}
+      return restartable<T>()(
+        MergeStream<T>([debouncedEvents, immediateEvents]),
+        mapper,
+      );
+    };
+  }
 
+  
 }

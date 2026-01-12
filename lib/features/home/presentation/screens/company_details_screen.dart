@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
+import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
@@ -16,7 +18,11 @@ class CompanyDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BlocSelector<ContractorInfoCubit, ContractorInfoState, ContractorDetailsModel>(
+    return BlocSelector<
+      ContractorInfoCubit,
+      ContractorInfoState,
+      ContractorDetailsModel
+    >(
       selector: (state) {
         return state.contractorDetails;
       },
@@ -67,34 +73,47 @@ class CompanyDetailsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text(
-                LocaleKeys.address,
-                style: theme.textTheme.labelSmall!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 10,
-                  color: ColorsManager.textColor,
-                ),
-              ),
-              const SizedBox(height: 8),
               contractorDetails.address.isNotEmpty
+                  ? Column(
+                      children: [
+                        Text(
+                          LocaleKeys.address,
+                          style: theme.textTheme.labelSmall!.copyWith(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10,
+                            color: ColorsManager.textColor,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+
+              contractorDetails.address.isNotEmpty
+                  ? Column(
+                      children: [
+                        Text(
+                          contractorDetails.address,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodySmall!.copyWith(
+                            color: ColorsManager.primaryColor,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+              contractorDetails.phone.isNotEmpty
                   ? Text(
-                      contractorDetails.address,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall!.copyWith(
-                        color: ColorsManager.primaryColor,
+                      LocaleKeys.phoneNumber,
+                      style: theme.textTheme.labelSmall!.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 10,
+                        color: ColorsManager.textColor,
                       ),
                     )
                   : const SizedBox.shrink(),
-              const SizedBox(height: 16),
-              Text(
-                LocaleKeys.phoneNumber,
-                style: theme.textTheme.labelSmall!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 10,
-                  color: ColorsManager.textColor,
-                ),
-              ),
               const SizedBox(height: 8),
               Text(
                 contractorDetails.phone,
@@ -127,7 +146,17 @@ class CompanyDetailsScreen extends StatelessWidget {
                 children: [
                   contractorDetails.facebook.isNotEmpty
                       ? InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            LaunchUtils.open(
+                              url: contractorDetails.facebook,
+                              onError: (msg) {
+                                showToast(
+                                  message: msg,
+                                  state: ToastStates.warning,
+                                );
+                              },
+                            );
+                          },
                           child: const CircleAvatar(
                             radius: 20,
                             backgroundColor: ColorsManager.primaryColor,
@@ -141,7 +170,17 @@ class CompanyDetailsScreen extends StatelessWidget {
                       : const SizedBox.shrink(),
                   contractorDetails.twitter.isNotEmpty
                       ? InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            LaunchUtils.open(
+                              url: contractorDetails.twitter,
+                              onError: (msg) {
+                                showToast(
+                                  message: msg,
+                                  state: ToastStates.warning,
+                                );
+                              },
+                            );
+                          },
                           child: const CircleAvatar(
                             radius: 20,
                             backgroundColor: ColorsManager.primaryColor,
@@ -155,7 +194,17 @@ class CompanyDetailsScreen extends StatelessWidget {
                       : const SizedBox.shrink(),
                   contractorDetails.instagram.isNotEmpty
                       ? InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            LaunchUtils.open(
+                              url: contractorDetails.instagram,
+                              onError: (msg) {
+                                showToast(
+                                  message: msg,
+                                  state: ToastStates.warning,
+                                );
+                              },
+                            );
+                          },
                           child: const CircleAvatar(
                             radius: 20,
                             backgroundColor: ColorsManager.primaryColor,
@@ -169,7 +218,17 @@ class CompanyDetailsScreen extends StatelessWidget {
                       : const SizedBox.shrink(),
                   contractorDetails.spanchat.isNotEmpty
                       ? InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            LaunchUtils.open(
+                              url: contractorDetails.spanchat,
+                              onError: (msg) {
+                                showToast(
+                                  message: msg,
+                                  state: ToastStates.warning,
+                                );
+                              },
+                            );
+                          },
                           child: const CircleAvatar(
                             radius: 20,
                             backgroundColor: ColorsManager.primaryColor,

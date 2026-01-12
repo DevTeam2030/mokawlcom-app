@@ -69,6 +69,7 @@ dependencies:
   rxdart: ^0.28.0
   bloc_concurrency: ^0.3.0
   collection: ^1.19.1
+  url_launcher: ^6.3.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

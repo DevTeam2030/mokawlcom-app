@@ -36,4 +36,14 @@ class HomeRepoImpl implements HomeRepo {
       contractorId: contractorId,
     ),
   );
+  @override
+  Future<Either<Failure, void>> rateContractor({
+    required String contractorId,
+    required String rating,
+  }) async => await safeApiCall<void>(
+    () async => await homeDataSource.rateContractor(
+      contractorId: contractorId,
+      rating: rating,
+    ),
+  );
 }

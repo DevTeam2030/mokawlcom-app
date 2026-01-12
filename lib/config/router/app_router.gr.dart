@@ -84,7 +84,7 @@ class AuthenticatedRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const Authenticated();
+      return WrappedRoute(child: const Authenticated());
     },
   );
 }
@@ -192,6 +192,7 @@ class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
     Key? key,
     bool isOfferrice = false,
     required int contractorId,
+    required int serviceId,
     List<PageRouteInfo>? children,
   }) : super(
          ContractorDetailsRoute.name,
@@ -199,6 +200,7 @@ class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
            key: key,
            isOfferrice: isOfferrice,
            contractorId: contractorId,
+           serviceId: serviceId,
          ),
          initialChildren: children,
        );
@@ -214,6 +216,7 @@ class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
           key: args.key,
           isOfferrice: args.isOfferrice,
           contractorId: args.contractorId,
+          serviceId: args.serviceId,
         ),
       );
     },
@@ -225,6 +228,7 @@ class ContractorDetailsRouteArgs {
     this.key,
     this.isOfferrice = false,
     required this.contractorId,
+    required this.serviceId,
   });
 
   final Key? key;
@@ -233,9 +237,11 @@ class ContractorDetailsRouteArgs {
 
   final int contractorId;
 
+  final int serviceId;
+
   @override
   String toString() {
-    return 'ContractorDetailsRouteArgs{key: $key, isOfferrice: $isOfferrice, contractorId: $contractorId}';
+    return 'ContractorDetailsRouteArgs{key: $key, isOfferrice: $isOfferrice, contractorId: $contractorId, serviceId: $serviceId}';
   }
 
   @override
@@ -244,12 +250,16 @@ class ContractorDetailsRouteArgs {
     if (other is! ContractorDetailsRouteArgs) return false;
     return key == other.key &&
         isOfferrice == other.isOfferrice &&
-        contractorId == other.contractorId;
+        contractorId == other.contractorId &&
+        serviceId == other.serviceId;
   }
 
   @override
   int get hashCode =>
-      key.hashCode ^ isOfferrice.hashCode ^ contractorId.hashCode;
+      key.hashCode ^
+      isOfferrice.hashCode ^
+      contractorId.hashCode ^
+      serviceId.hashCode;
 }
 
 /// generated route for
@@ -420,7 +430,7 @@ class HomeTabRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return WrappedRoute(child: const HomeTab());
+      return const HomeTab();
     },
   );
 }

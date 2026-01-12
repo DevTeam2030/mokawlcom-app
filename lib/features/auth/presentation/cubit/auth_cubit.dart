@@ -14,6 +14,8 @@ import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
+import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
+import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
 import 'package:mokawlcom_app/features/shared/data/models/services_model.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 
@@ -134,31 +136,66 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> getClassesifications({int page = 1}) async {
+   Future<void> getClassifications() async {
     emit(
       state.copyWith(
         getClassificationsState: RequestStatus.loading,
         isConnected: true,
       ),
     );
-
-    final result = await contractorAuthRepoImpl.getClassifications(page: page);
+    final result = await contractorAuthRepoImpl.getClassifications(
+      page: state.classficicationsCurrentPage,
+    );
     result.fold(
       (failure) => emit(
         state.copyWith(
-          isConnected: failure.isConnected,
           getClassificationsState: RequestStatus.error,
           errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (classificationsModel) => emit(
+        state.copyWith(
+          getClassificationsState: RequestStatus.success,
+          classificationsModel: classificationsModel,
+          classficicationsCurrentPage: classificationsModel.currentPage,
+          classficicationsTotalPages: classificationsModel.totalPages,
+        ),
+      ),
+    );
+  }
+
+  Future<void> loadMoreClassifications() async {
+    if (state.classficicationsCurrentPage >= state.classficicationsTotalPages ||
+        state.getClassificationsState.isLoading) {
+      return;
+    }
+    emit(
+      state.copyWith(
+        getClassificationsState: RequestStatus.loadingMore,
+        isConnected: true,
+      ),
+    );
+    final result = await contractorAuthRepoImpl.getClassifications(
+      page: state.classficicationsCurrentPage + 1,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          getClassificationsState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
         ),
       ),
       (classificationsModel) {
-        final updatedClassifications = List.of(
-          state.classificationsModel.classifications,
-        )..addAll(classificationsModel.classifications);
+        final List<ClassificationModel> updatedClassifications = [
+          ...state.classificationsModel.classifications,
+          ...classificationsModel.classifications,
+        ];
         emit(
           state.copyWith(
             getClassificationsState: RequestStatus.success,
-            classificationsModel: state.classificationsModel.copyWith(
+            classificationsModel: classificationsModel.copyWith(
               classifications: updatedClassifications,
             ),
             classficicationsCurrentPage: classificationsModel.currentPage,
@@ -169,46 +206,32 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> loadMoreClassesifications() async {
-    if (state.classficicationsCurrentPage >= state.classficicationsTotalPages ||
-        state.getClassificationsState.isLoading) {
-      return;
-    }
-    await getClassesifications(page: state.classficicationsCurrentPage + 1);
-  }
-
-  Future<void> getServices({int page = 1}) async {
+  Future<void> getServices() async {
     emit(
       state.copyWith(
         getServicesState: RequestStatus.loading,
         isConnected: true,
       ),
     );
-
-    final result = await contractorAuthRepoImpl.getServices(page: page);
+    final result = await contractorAuthRepoImpl.getServices(
+      page: state.servicesCurrentPage,
+    );
     result.fold(
       (failure) => emit(
         state.copyWith(
-          isConnected: failure.isConnected,
           getServicesState: RequestStatus.error,
           errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
         ),
       ),
-      (servicesModel) {
-        final updatedServices = List.of(
-          state.servicesModel.services,
-        )..addAll(servicesModel.services);
-        emit(
-          state.copyWith(
-            getServicesState: RequestStatus.success,
-            servicesModel: state.servicesModel.copyWith(
-              services: updatedServices,
-            ),
-            servicesTotalPages: servicesModel.totalPages,
-            servicesCurrentPage: servicesModel.currentPage,
-          ),
-        );
-      },
+      (servicesModel) => emit(
+        state.copyWith(
+          getServicesState: RequestStatus.success,
+          servicesModel: servicesModel,
+          servicesCurrentPage: servicesModel.currentPage,
+          servicesTotalPages: servicesModel.totalPages,
+        ),
+      ),
     );
   }
 
@@ -217,10 +240,39 @@ class AuthCubit extends Cubit<AuthState> {
         state.getServicesState.isLoading) {
       return;
     }
-
-    await getServices(page: state.servicesCurrentPage + 1);
+    emit(
+      state.copyWith(
+        getServicesState: RequestStatus.loadingMore,
+        isConnected: true,
+      ),
+    );
+    final result = await contractorAuthRepoImpl.getServices(
+      page: state.servicesCurrentPage + 1,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          getServicesState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (servicesModel) {
+        final List<ServiceModel> updatedServices = [
+          ...state.servicesModel.services,
+          ...servicesModel.services,
+        ];
+        emit(
+          state.copyWith(
+            getServicesState: RequestStatus.success,
+            servicesModel: servicesModel.copyWith(services: updatedServices),
+            servicesCurrentPage: servicesModel.currentPage,
+            servicesTotalPages: servicesModel.totalPages,
+          ),
+        );
+      },
+    );
   }
-
   void saveSettings({
     required int classificiationId,
     required List<int> servicesIds,

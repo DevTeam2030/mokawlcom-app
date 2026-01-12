@@ -5,9 +5,14 @@ import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/job_details/service_item.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class JobDetailsTopSection extends StatelessWidget {
-  const JobDetailsTopSection({super.key, required this.contractorDetailsModel, required this.theme});
+  const JobDetailsTopSection({
+    super.key,
+    required this.contractorDetailsModel,
+    required this.theme,
+  });
   final ContractorDetailsModel contractorDetailsModel;
   final ThemeData theme;
 
@@ -26,22 +31,31 @@ class JobDetailsTopSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: ColorsManager.secondaryColor,
-                width: .5,
-              ),
-              borderRadius: BorderRadius.circular(8.0),
-            
-            ),
-            child: CustomCachedNetworkImage(
-              imageUrl: contractorDetailsModel.logo,
+          Skeleton.replace(
+            replacement: Container(
               width: 48,
               height: 48,
-              fit: BoxFit.cover,
+              decoration: BoxDecoration(
+                color: ColorsManager.skeletonColor,
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            child: Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: ColorsManager.secondaryColor,
+                  width: .5,
+                ),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: CustomCachedNetworkImage(
+                imageUrl: contractorDetailsModel.logo,
+                width: 48,
+                height: 48,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           const SizedBox(height: 12),
@@ -57,48 +71,61 @@ class JobDetailsTopSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5),
-            contractorDetailsModel.address.isNotEmpty?  Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.location_on_outlined,
-                    size: 18,
-                    color: Colors.green,
-                  ),
-                  Text(
-                    contractorDetailsModel.address,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.labelSmall!.copyWith(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 10,
-                      color: ColorsManager.textColor,
-                    ),
-                  ),
-                ],
-              ):const SizedBox.shrink(),
+              contractorDetailsModel.address.isNotEmpty
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.location_on_outlined,
+                          size: 18,
+                          color: Colors.green,
+                        ),
+                        Text(
+                          contractorDetailsModel.address,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.labelSmall!.copyWith(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10,
+                            color: ColorsManager.textColor,
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
             ],
           ),
           const CustomDivider(thickness: 0.5),
-          FittedBox(
-            child: Container(
+          Skeleton.replace(
+            replacement: Container(
               alignment: AlignmentDirectional.center,
-              padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+              width: 50,
               height: 38,
               decoration: BoxDecoration(
-                color: ColorsManager.lightBlueBg,
+                color: ColorsManager.skeletonColor,
                 borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(
-                  color: ColorsManager.borderLightBlue,
-                  width: 1.2,
-                ),
               ),
-              child: Text(
-                contractorDetailsModel.category,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodySmall!.copyWith(
-                  color: ColorsManager.labelColor,
+            ),
+            child: FittedBox(
+              child: Container(
+                alignment: AlignmentDirectional.center,
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+                height: 38,
+                decoration: BoxDecoration(
+                  color: ColorsManager.lightBlueBg,
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(
+                    color: ColorsManager.borderLightBlue,
+                    width: 1.2,
+                  ),
+                ),
+                child: Text(
+                  contractorDetailsModel.category,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodySmall!.copyWith(
+                    color: ColorsManager.labelColor,
+                  ),
                 ),
               ),
             ),
@@ -107,8 +134,12 @@ class JobDetailsTopSection extends StatelessWidget {
           SizedBox(
             height: 46,
             child: ListView.separated(
+              shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => ServiceItem(service: contractorDetailsModel.classifications[index], theme: theme),
+              itemBuilder: (context, index) => ServiceItem(
+                service: contractorDetailsModel.classifications[index],
+                theme: theme,
+              ),
               separatorBuilder: (_, _) => const SizedBox(width: 13),
               itemCount: contractorDetailsModel.classifications.length,
             ),

@@ -14,4 +14,8 @@ abstract class HomeRepo {
   Future<Either<Failure, ContractorDetailsModel>> getContractorDetails({
     required int contractorId,
   });
+  Future<Either<Failure, void>> rateContractor({
+    required String contractorId,
+    required String rating,
+  });
 } 

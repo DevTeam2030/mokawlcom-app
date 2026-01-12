@@ -35,6 +35,19 @@ class ContractorModel extends Equatable {
         category: json['category'] ?? '',
         rating: (json['rate'] as num?)?.toDouble() ?? 0,
       );
+  ContractorModel copyWith({num? rating}) {
+    return ContractorModel(
+      id: id,
+      name: name,
+      image: image,
+      address: address,
+      description: description,
+      phone: phone,
+      whatsApp: whatsApp,
+      category: category,
+      rating: rating ?? this.rating,
+    );
+  }
 
   @override
   List<Object> get props => [
