@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/service_item.dart';
+import 'package:mokawlcom_app/my_icons.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ContractorDetailsTopSection extends StatelessWidget {
@@ -143,6 +145,18 @@ class ContractorDetailsTopSection extends StatelessWidget {
               separatorBuilder: (_, _) => const SizedBox(width: 13),
               itemCount: contractorDetailsModel.classifications.length,
             ),
+          ),
+          const SizedBox(height: 10),
+          RatingBar.builder(
+            initialRating: 3,
+            allowHalfRating: true,
+            ignoreGestures: true,
+            itemSize: 24,
+            itemBuilder: (context, index) {
+              return const Icon(MyIcons.star, color: Colors.amber);
+            },
+            unratedColor: ColorsManager.secondaryColor,
+            onRatingUpdate: (rating) {},
           ),
         ],
       ),

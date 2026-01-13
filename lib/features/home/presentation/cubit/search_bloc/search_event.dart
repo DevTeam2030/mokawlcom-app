@@ -54,17 +54,3 @@ class LoadMoreContractorsEvent extends SearchEvent {
   @override
   List<Object?> get props => [classificationId, serviceId, page, query];
 }
-
-class RateContractorEvent extends SearchEvent {
-  final String contractorId;
-  final String rating;
-  final int index;
-  RateContractorEvent({
-    required this.contractorId,
-    required this.rating,
-    required this.index,
-  });
-
-  @override
-  List<Object?> get props => [contractorId, rating, index];
-}

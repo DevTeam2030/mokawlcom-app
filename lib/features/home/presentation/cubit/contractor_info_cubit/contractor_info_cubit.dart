@@ -36,6 +36,7 @@ class ContractorInfoCubit extends Cubit<ContractorInfoState> {
           state.copyWith(
             getContractorDetailsState: RequestStatus.success,
             contractorDetails: contractorDetails,
+            rating: contractorDetails.rating.toDouble(),
             isSaved: contractorDetails.isSaved,
           ),
         );

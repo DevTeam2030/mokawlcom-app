@@ -17,6 +17,7 @@ class ContractorDetailsModel extends Equatable {
   final String twitter;
   final String spanchat;
   final bool isSaved;
+  final num rating;
   final List<String> classifications;
   final List<ContractorServiceModel> services;
 
@@ -36,6 +37,7 @@ class ContractorDetailsModel extends Equatable {
     required this.twitter,
     required this.spanchat,
     required this.isSaved,
+    required this.rating,
     required this.classifications,
     required this.services,
   });
@@ -56,6 +58,7 @@ class ContractorDetailsModel extends Equatable {
         instagram: json['instagram'] ?? '',
         twitter: json['twitter'] ?? '',
         isSaved: json['is_saved'] ?? false,
+        rating: json['rate'] ?? 0,
         spanchat: json['spanchat'] ?? '',
         classifications: (json['sub_categories'] as List<dynamic>? ?? [])
             .map((e) => e['name'] as String? ?? '')
@@ -84,6 +87,7 @@ class ContractorDetailsModel extends Equatable {
         twitter: '',
         spanchat: '',
         isSaved: false,
+        rating: 0,
         classifications: const [],
         services: const [],
       );
@@ -104,6 +108,7 @@ class ContractorDetailsModel extends Equatable {
     twitter,
     spanchat,
     isSaved,
+    rating,
     classifications,
     services,
   ];

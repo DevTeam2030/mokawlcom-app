@@ -78,6 +78,9 @@ class HomeDataSourceImpl implements HomeDataSource {
   }) async {
     final result = await dioHelper.get(
       url: ApiConstants.getContractorInfo,
+      headers: {
+        "Authorization": "Bearer ${AppConstants.token}",
+      },
       queryParameters: {"contractor_id": contractorId},
     );
     if (result.statusCode == 200) {

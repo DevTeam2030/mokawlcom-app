@@ -5,6 +5,7 @@ class ContractorInfoState extends Equatable {
   final ContractorDetailsModel contractorDetails;
   final String errorMessage;
   final bool isSaved;
+  final double rating;
   final bool isConnected;
 
   const ContractorInfoState({
@@ -12,6 +13,7 @@ class ContractorInfoState extends Equatable {
     this.contractorDetails = const ContractorDetailsModel.empty(),
     this.errorMessage = "",
     this.isSaved = false,
+    this.rating = 0,
     this.isConnected = true,
   });
 
@@ -20,6 +22,7 @@ class ContractorInfoState extends Equatable {
     ContractorDetailsModel? contractorDetails,
     String? errorMessage,
     bool? isSaved,
+    double? rating,
     bool? isConnected,
   }) {
     return ContractorInfoState(
@@ -28,6 +31,7 @@ class ContractorInfoState extends Equatable {
       contractorDetails: contractorDetails ?? this.contractorDetails,
       errorMessage: errorMessage ?? this.errorMessage,
       isSaved: isSaved ?? this.isSaved,
+      rating: rating ?? this.rating,
       isConnected: isConnected ?? this.isConnected,
     );
   }
@@ -38,6 +42,7 @@ class ContractorInfoState extends Equatable {
     contractorDetails,
     errorMessage,
     isSaved,
+    rating,
     isConnected,
   ];
 }
