@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/features/favorite/data/models/favorite_model.dart';
+import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_cubit.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 class SavedCompanyItem extends StatelessWidget {
@@ -37,10 +40,11 @@ class SavedCompanyItem extends StatelessWidget {
                   color: ColorsManager.primaryColor.withValues(alpha: .2),
                 ),
                 borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                  image: AssetImage(AssetsManager.appLogo),
-                  fit: BoxFit.contain,
-                ),
+              ),
+              child: CustomCachedNetworkImage(
+                imageUrl: favoriteModel.logo,
+                height: 60,
+                width: 60,
               ),
             ),
             const SizedBox(width: 16),
@@ -49,7 +53,9 @@ class SavedCompanyItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "شركة المقاولات العامة",
+                    favoriteModel.companyName,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: theme.textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: ColorsManager.primaryColor,
@@ -57,7 +63,9 @@ class SavedCompanyItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "الرياض - حي الملز",
+                    favoriteModel.address,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: theme.textTheme.bodySmall!.copyWith(
                       color: ColorsManager.secondaryColor,
                     ),
@@ -68,7 +76,7 @@ class SavedCompanyItem extends StatelessWidget {
                       const Icon(MyIcons.star, color: Colors.amber, size: 14),
                       const SizedBox(width: 4),
                       Text(
-                        "4.5",
+                        favoriteModel.rate.toString(),
                         style: theme.textTheme.bodySmall!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -78,13 +86,17 @@ class SavedCompanyItem extends StatelessWidget {
                 ],
               ),
             ),
-            // IconButton(
-            //   onPressed: () {},
-            //   icon: const Icon(
-            //     Icons.bookmark_remove,
-            //     color: ColorsManager.primaryColor,
-            //   ),
-            // ),
+            IconButton(
+              onPressed: () {
+                context.read<FavoriteCubit>().removeFavorite(
+                 contractorId: favoriteModel.contractorId,
+                );
+              },
+              icon: const Icon(
+                Icons.bookmark_remove,
+                color: ColorsManager.primaryColor,
+              ),
+            ),
           ],
         ),
       ),

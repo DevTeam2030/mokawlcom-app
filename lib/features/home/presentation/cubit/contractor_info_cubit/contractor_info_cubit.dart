@@ -12,7 +12,12 @@ class ContractorInfoCubit extends Cubit<ContractorInfoState> {
     : super(const ContractorInfoState());
 
   Future<void> getContractorDetails({required int contractorId}) async {
-    emit(state.copyWith(getContractorDetailsState: RequestStatus.loading,isConnected: true));
+    emit(
+      state.copyWith(
+        getContractorDetailsState: RequestStatus.loading,
+        isConnected: true,
+      ),
+    );
     final result = await homeRepo.getContractorDetails(
       contractorId: contractorId,
     );
@@ -31,9 +36,12 @@ class ContractorInfoCubit extends Cubit<ContractorInfoState> {
           state.copyWith(
             getContractorDetailsState: RequestStatus.success,
             contractorDetails: contractorDetails,
+            isSaved: contractorDetails.isSaved,
           ),
         );
       },
     );
   }
+
+  void toggleFavorite() => emit(state.copyWith(isSaved: !state.isSaved));
 }

@@ -29,6 +29,9 @@ class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FavoriteCubit>().getFavorites();
+    });
   }
 
   void _onScroll() {
@@ -72,12 +75,16 @@ class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
       ),
       body: BlocConsumer<FavoriteCubit, FavoriteState>(
         listenWhen: (prev, curr) =>
-            prev.getFavoritesState != curr.getFavoritesState,
+            prev.getFavoritesState != curr.getFavoritesState ||
+            prev.removeFavoriteState != curr.removeFavoriteState,
         buildWhen: (prev, curr) =>
             prev.getFavoritesState != curr.getFavoritesState ||
             prev.favorites != curr.favorites,
         listener: (context, state) {
           if (state.getFavoritesState.isError) {
+            showToast(message: state.errorMessage, state: ToastStates.error);
+          }
+          if (state.removeFavoriteState.isError) {
             showToast(message: state.errorMessage, state: ToastStates.error);
           }
         },

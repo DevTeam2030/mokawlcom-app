@@ -10,7 +10,11 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_cubit.dart';
+import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/contractor_details_top_section.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/offer_price_bottom_sheet.dart';
@@ -58,14 +62,36 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: () {
-              context.read<AppCubit>().handleProtectedNavigation(
-                context: context,
-                onAllowed: () {},
+          BlocSelector<ContractorInfoCubit, ContractorInfoState, bool>(
+            selector: (state) {
+              return state.isSaved;
+            },
+            builder: (context, isSaved) {
+              return IconButton(
+                onPressed: () {
+                  context.read<AppCubit>().handleProtectedNavigation(
+                    context: context,
+                    onAllowed: () {
+                      if (isSaved) {
+                        context.read<FavoriteCubit>().removeFavorite(
+                          contractorId: widget.contractorId,
+                        );
+                      } else {
+                        context.read<FavoriteCubit>().addFavorite(
+                          contractorId: widget.contractorId,
+                        );
+                      }
+                      context.read<ContractorInfoCubit>().toggleFavorite();
+                    },
+                  );
+                },
+                icon: Icon(
+                  isSaved
+                      ? Icons.bookmark_outlined
+                      : Icons.bookmark_add_outlined,
+                ),
               );
             },
-            icon: const Icon(Icons.bookmark_add_outlined),
           ),
         ],
       ),
@@ -173,27 +199,25 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
   }
 
   Future<void> _showBottomSheet({
-  required BuildContext context,
-  required int contractorId,
-}) async {
-  if (!context.mounted) return;
+    required BuildContext context,
+    required int contractorId,
+  }) async {
+    if (!context.mounted) return;
 
-  await showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
-    backgroundColor: Colors.white,
-    builder: (_) {
-      return FractionallySizedBox(
-        heightFactor: 1,
-        child: OfferPriceBottomSheet(
-          address: LocaleKeys.offerPrice,
-          contractorId: contractorId,
-        ),
-      );
-    },
-  );
-}
-
-
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.white,
+      builder: (_) {
+        return FractionallySizedBox(
+          heightFactor: 1,
+          child: OfferPriceBottomSheet(
+            address: LocaleKeys.offerPrice,
+            contractorId: contractorId,
+          ),
+        );
+      },
+    );
+  }
 }

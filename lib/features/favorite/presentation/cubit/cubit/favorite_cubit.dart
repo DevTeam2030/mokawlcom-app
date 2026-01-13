@@ -80,10 +80,63 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     );
   }
 
+  Future<void> addFavorite({required int contractorId}) async {
+    emit(state.copyWith(addFavoriteState: RequestStatus.loading));
+    final result = await favoriteRepo.addFavorite(contractorId: contractorId);
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          addFavoriteState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (message) {
+        emit(
+          state.copyWith(
+            addFavoriteState: RequestStatus.success,
+            successMessage: message,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> removeFavorite({required int contractorId}) async {
+    final oldState = state;
+    final updatedFavorites = Map<int, FavoriteModel>.from(state.favorites);
+    updatedFavorites.remove(contractorId);
+    emit(
+      state.copyWith(
+        removeFavoriteState: RequestStatus.loading,
+        isConnected: true,
+        favorites: updatedFavorites,
+      ),
+    );
+    final result = await favoriteRepo.removeFavorite(
+      contractorId: contractorId,
+    );
+    result.fold(
+      (failure) => emit(
+        oldState.copyWith(
+          removeFavoriteState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (message) => emit(
+        state.copyWith(
+          removeFavoriteState: RequestStatus.success,
+          successMessage: message,
+        ),
+      ),
+    );
+  }
+
   Map<int, FavoriteModel> _generateFavoritesMap(FavoritesModel favoritesModel) {
     final Map<int, FavoriteModel> favoritesMap = {};
     for (var favorite in favoritesModel.favorites) {
-      favoritesMap[favorite.id] = favorite;
+      favoritesMap[favorite.contractorId] = favorite;
     }
     return favoritesMap;
   }
