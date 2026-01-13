@@ -3,18 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/features/favorite/data/models/favorite_model.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 class SavedCompanyItem extends StatelessWidget {
-  const SavedCompanyItem({super.key, required this.theme});
+  const SavedCompanyItem({
+    super.key,
+    required this.theme,
+    required this.favoriteModel,
+  });
   final ThemeData theme;
+  final FavoriteModel favoriteModel;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: ()=>context.pushRoute(ContractorDetailsRoute(
-      //   contractorId: 1,
-      // )),
+      onTap: () => context.pushRoute(
+        ContractorDetailsRoute(contractorId: favoriteModel.contractorId),
+      ),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(

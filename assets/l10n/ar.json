@@ -141,5 +141,6 @@
   "no_results_found": "لا يوجد نتائج",
   "search_results": "نتائج البحث",
   "sar": "ريال",
-  "processing_file": "جار معالجة الملف..."
+  "processing_file": "جار معالجة الملف...",
+  "no_saved_companies": "لا يوجد شركات محفوظة"
 }

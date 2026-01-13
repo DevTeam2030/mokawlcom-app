@@ -12,6 +12,10 @@ import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo_impl.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
+import 'package:mokawlcom_app/features/favorite/data/data_source/favorite_data_source.dart';
+import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_cubit.dart';
+import 'package:mokawlcom_app/features/favorite/repo/favorite_repo.dart';
+import 'package:mokawlcom_app/features/favorite/repo/favorite_repo_impl.dart';
 import 'package:mokawlcom_app/features/home/data/data_source/home_data_source.dart';
 import 'package:mokawlcom_app/features/home/data/repo/home_repo.dart';
 import 'package:mokawlcom_app/features/home/data/repo/home_repo_impl.dart';
@@ -67,6 +71,12 @@ class ServiceLocator {
         contractorAuthRepoImpl: getIt<ContractorAuthRepo>(),
       ),
     );
+    getIt.registerLazySingleton<FavoriteDataSource>(
+      () => FavoriteDataSourceImpl(dioHelper: getIt<DioHelper>()),
+    );
+    getIt.registerLazySingleton<FavoriteRepo>(
+      () => FavoriteRepoImpl(favoriteDataSource: getIt<FavoriteDataSource>()),
+    );
     getIt.registerFactory<AppCubit>(
       () => AppCubit(userAuthRepo: getIt<UserAuthRepo>()),
     );
@@ -84,6 +94,9 @@ class ServiceLocator {
     );
     getIt.registerFactory(
       () => ContractorInfoCubit(homeRepo: getIt<HomeRepo>()),
+    );
+    getIt.registerFactory<FavoriteCubit>(
+      () => FavoriteCubit(favoriteRepo: getIt<FavoriteRepo>()),
     );
   }
 }

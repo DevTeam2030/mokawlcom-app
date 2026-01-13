@@ -16,6 +16,7 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/upload_files_sc
 import 'package:mokawlcom_app/features/auth/presentation/screens/user_signup_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/verification_screen.dart';
 import 'package:mokawlcom_app/features/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_cubit.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
@@ -39,7 +40,7 @@ import 'package:mokawlcom_app/features/profile/presentation/my_current_package_s
 import 'package:mokawlcom_app/features/profile/presentation/my_services_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/send_offer_to_contractors_screen.dart';
-import 'package:mokawlcom_app/features/profile/presentation/saved_companies_screen.dart';
+import 'package:mokawlcom_app/features/favorite/presentation/screens/saved_companies_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/submitted_price_offers_screen.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
@@ -146,22 +147,21 @@ class Auth extends AutoRouter implements AutoRouteWrapper {
     providers: [
       BlocProvider(create: (context) => getIt<AuthCubit>()),
       BlocProvider(create: (context) => getIt<FilesCubit>()),
+      
     ],
     child: this,
   );
 }
 
 @RoutePage(name: 'HomeTabRoute')
-class HomeTab extends AutoRouter  {
+class HomeTab extends AutoRouter {
   const HomeTab({super.key});
-
-
 }
 
 @RoutePage(name: 'AuthenticatedRoute')
 class Authenticated extends AutoRouter implements AutoRouteWrapper {
   const Authenticated({super.key});
-    @override
+  @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
     providers: [
       BlocProvider(
@@ -171,6 +171,7 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
           ..getServices(),
       ),
       BlocProvider(create: (context) => getIt<SearchBloc>()),
+      BlocProvider(create: (context) => getIt<FavoriteCubit>()..getFavorites()),
     ],
     child: this,
   );

@@ -141,5 +141,6 @@
   "no_results_found":"No results found",
   "search_results":"Search Results",
   "sar": "SAR",
-  "processing_file":"Processing file..."
+  "processing_file":"Processing file...",
+  "no_saved_companies":"No saved companies"
 }
