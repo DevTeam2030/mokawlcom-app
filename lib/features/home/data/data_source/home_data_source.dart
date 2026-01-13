@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
+import 'package:mokawlcom_app/features/home/data/models/add_offer_price_request_model.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractors_model.dart';
 
@@ -18,6 +21,10 @@ abstract class HomeDataSource {
   Future<void> rateContractor({
     required String contractorId,
     required String rating,
+  });
+  Future<String> addOfferPrice({
+    required AddOfferPriceRequestModel addOfferPriceRequestModel,
+    required void Function(double progress) onProgress,
   });
 }
 
@@ -59,11 +66,12 @@ class HomeDataSourceImpl implements HomeDataSource {
       queryParameters: queryParameters,
     );
     if (result.statusCode == 200) {
-      return ContractorsModel.fromJson(result.data["data"]??{});
+      return ContractorsModel.fromJson(result.data["data"] ?? {});
     } else {
       throw ServerException(errorMessage: result.data["message"] ?? "");
     }
   }
+
   @override
   Future<ContractorDetailsModel> getContractorDetails({
     required int contractorId,
@@ -73,19 +81,20 @@ class HomeDataSourceImpl implements HomeDataSource {
       queryParameters: {"contractor_id": contractorId},
     );
     if (result.statusCode == 200) {
-      return ContractorDetailsModel.fromJson(result.data["data"]??{});
+      return ContractorDetailsModel.fromJson(result.data["data"] ?? {});
     } else {
       throw ServerException(errorMessage: result.data["message"] ?? "");
     }
   }
+
   @override
-  Future<void> rateContractor({required String contractorId, required String rating}) async {
+  Future<void> rateContractor({
+    required String contractorId,
+    required String rating,
+  }) async {
     final result = await dioHelper.post(
       url: ApiConstants.rateContractor,
-      query: {
-        "contractor_id": contractorId,
-        "rating": rating,
-      },
+      query: {"contractor_id": contractorId, "rating": rating},
     );
     if (result.statusCode == 200) {
       return;
@@ -93,4 +102,47 @@ class HomeDataSourceImpl implements HomeDataSource {
       throw ServerException(errorMessage: result.data["message"] ?? "");
     }
   }
+
+  @override
+Future<String> addOfferPrice({
+  required AddOfferPriceRequestModel addOfferPriceRequestModel,
+  required void Function(double progress) onProgress,
+}) async {
+  final formData = FormData.fromMap(
+    addOfferPriceRequestModel.toJson(),
+  );
+
+  if (addOfferPriceRequestModel.file != null) {
+    formData.files.add(
+      MapEntry(
+        'file',
+        await MultipartFile.fromFile(
+          addOfferPriceRequestModel.file!.path,
+          filename: addOfferPriceRequestModel.file!.path.split('/').last,
+        ),
+      ),
+    );
+  }
+
+  final result = await dioHelper.post(
+    url: ApiConstants.addOfferPrice,
+    headers: {
+      "Authorization": "Bearer ${AppConstants.token}",
+      "Accept": "application/json",
+    },
+    data: formData,
+    onSendProgress: (sent, total) {
+      if (total != 0) onProgress(sent / total);
+    },
+  );
+
+  if (result.statusCode == 200 || result.statusCode == 201) {
+    return result.data["message"] ?? "";
+  } else {
+    throw ServerException(
+      errorMessage: result.data["message"] ?? "",
+    );
+  }
+}
+
 }

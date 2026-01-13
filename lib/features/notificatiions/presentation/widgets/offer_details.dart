@@ -104,14 +104,14 @@ class OfferDetails extends StatelessWidget {
                       const Spacer(),
                       TextButton(
                         onPressed: () async {
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.white,
-                            context: context,
-                            builder: (context) => OfferPriceBottomSheet(
-                              address: LocaleKeys.replyToThePriceOffer,
-                            ),
-                          );
+                          // await showModalBottomSheet(
+                          //   isScrollControlled: true,
+                          //   backgroundColor: Colors.white,
+                          //   context: context,
+                          //   builder: (context) => OfferPriceBottomSheet(
+                          //     address: LocaleKeys.replyToThePriceOffer,
+                          //   ),
+                          // );
                         },
                         child: Text(
                           LocaleKeys.addReply,

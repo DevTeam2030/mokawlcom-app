@@ -11,10 +11,10 @@ import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
-import 'package:mokawlcom_app/features/home/presentation/screens/widgets/job_details/job_details_top_section.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/contractor_details_top_section.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/offer_price_bottom_sheet.dart';
-import 'package:mokawlcom_app/features/home/presentation/screens/widgets/job_details/service_item.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/service_item.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -25,7 +25,7 @@ class ContractorDetailsScreen extends StatefulWidget
   const ContractorDetailsScreen({
     super.key,
     this.isOfferrice = false,
-    required this.contractorId, 
+    required this.contractorId,
   });
   final bool isOfferrice;
   final int contractorId;
@@ -47,7 +47,7 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
     super.initState();
     if (widget.isOfferrice) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showBottomSheet(context);
+        _showBottomSheet(context: context, contractorId: widget.contractorId);
       });
     }
   }
@@ -108,7 +108,7 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: JobDetailsTopSection(
+          child: ContractorDetailsTopSection(
             contractorDetailsModel: state.contractorDetails,
             theme: theme,
           ),
@@ -151,13 +151,15 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
                   const SizedBox(height: 1),
                   PrimaryButton(
                     onPressed: () {
-                      // context.read<AppCubit>().handleProtectedNavigation(
-                      //   context: context,
-                      //   onAllowed: () async{
-                      //     await _showBottomSheet(context);
-                      //   },
-                      // );
-                      _showBottomSheet(context);
+                      context.read<AppCubit>().handleProtectedNavigation(
+                        context: context,
+                        onAllowed: () async {
+                          await _showBottomSheet(
+                            context: context,
+                            contractorId: widget.contractorId,
+                          );
+                        },
+                      );
                     },
                     text: LocaleKeys.offerPrice,
                   ),
@@ -170,14 +172,28 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
     );
   }
 
-  Future<void> _showBottomSheet(BuildContext context) async {
-    if (!mounted) return;
-    await showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor: Colors.white,
-      context: context,
-      builder: (context) =>
-          OfferPriceBottomSheet(address: LocaleKeys.offerPrice),
-    );
-  }
+  Future<void> _showBottomSheet({
+  required BuildContext context,
+  required int contractorId,
+}) async {
+  if (!context.mounted) return;
+
+  await showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    backgroundColor: Colors.white,
+    builder: (_) {
+      return FractionallySizedBox(
+        heightFactor: 1,
+        child: OfferPriceBottomSheet(
+          address: LocaleKeys.offerPrice,
+          contractorId: contractorId,
+        ),
+      );
+    },
+  );
+}
+
+
 }

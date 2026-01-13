@@ -4,11 +4,11 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
-import 'package:mokawlcom_app/features/home/presentation/screens/widgets/job_details/service_item.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/service_item.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class JobDetailsTopSection extends StatelessWidget {
-  const JobDetailsTopSection({
+class ContractorDetailsTopSection extends StatelessWidget {
+  const ContractorDetailsTopSection({
     super.key,
     required this.contractorDetailsModel,
     required this.theme,

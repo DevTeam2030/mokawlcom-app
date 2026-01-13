@@ -201,5 +201,6 @@ class LocaleKeys {
   static String get noResultsFound => 'no_results_found'.tr();
   static String get searchResults => 'search_results'.tr();
   static String get sar => 'sar'.tr();
+  static String get processingFile => 'processing_file'.tr();
  
 }

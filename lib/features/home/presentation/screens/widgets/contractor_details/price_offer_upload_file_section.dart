@@ -4,11 +4,13 @@ import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_state.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
-class UploadFileSection extends StatelessWidget {
-  const UploadFileSection({super.key, required this.theme});
+class PriceOfferUploadFileSection extends StatelessWidget {
+  const PriceOfferUploadFileSection({super.key, required this.theme});
   final ThemeData theme;
 
   @override
@@ -17,12 +19,12 @@ class UploadFileSection extends StatelessWidget {
       children: [
         InkWell(
           onTap: () async {
-            await context.read<FilesCubit>().pickFile();
+            await context.read<HomeCubit>().pickFile();
           },
-          child: BlocBuilder<FilesCubit, FilesState>(
+          child: BlocBuilder<HomeCubit, HomeState>(
             buildWhen: (previous, current) =>
                 previous.isFileLoading != current.isFileLoading ||
-                previous.selectedFile != current.selectedFile,
+                previous.file != current.file,
             builder: (context, state) {
               return Container(
                 height: 135,
@@ -34,7 +36,7 @@ class UploadFileSection extends StatelessWidget {
                 ),
                 child: state.isFileLoading
                     ? const Center(child: CircularProgressIndicator())
-                    : state.selectedFile != null
+                    : state.file != null
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -45,7 +47,7 @@ class UploadFileSection extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            state.selectedFile!.path.split('/').last,
+                            state.file!.path.split('/').last,
                             style: theme.textTheme.bodyLarge!.copyWith(
                               fontWeight: FontWeight.w400,
                               color: ColorsManager.primaryColor,
@@ -78,7 +80,7 @@ class UploadFileSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 80),
-        BlocSelector<FilesCubit, FilesState, double>(
+        BlocSelector<HomeCubit, HomeState, double>(
           selector: (state) => state.progress,
           builder: (context, progress) {
             if (progress > 0 && progress < 1) {

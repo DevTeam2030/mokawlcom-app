@@ -21,4 +21,5 @@ class ApiConstants {
   static const String getContractors = "/get-contractors";
   static const String getContractorInfo = "/get-contractor-info";
   static const String rateContractor = "/rate";
+  static const String addOfferPrice = "/add-offer-price";
 }

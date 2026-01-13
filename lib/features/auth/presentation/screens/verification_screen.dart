@@ -137,7 +137,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     message: state.activateAccountResponseModel.message,
                     onPressed: () {
                       if (widget.isUser) {
-                        context.replaceRoute(const AuthenticatedRoute());
+                        context.navigateTo(const LoginRoute());
                       } else {
                         context.replaceRoute(
                           UploadFilesRoute(
