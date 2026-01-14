@@ -7,57 +7,70 @@ import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/visitor_access_dialog.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AppCubit extends HydratedCubit<AppState> {
   final UserAuthRepo userAuthRepo;
 
   AppCubit({required this.userAuthRepo}) : super(const AppState()) {
-    _userTypeSubscription = userAuthRepo.userTypeStream.listen(
-      (userType) {
-        changeUserType(userType: userType);
-      },
-    );
+    _userTypeSubscription = userAuthRepo.userTypeStream.listen((userType) {
+      changeUserType(userType: userType);
+    });
   }
 
   late final StreamSubscription<UserType> _userTypeSubscription;
-
-
-  bool get isVisitor => state.userType == UserType.visitor;
-  bool get isUser => state.userType == UserType.user;
-  bool get isContractor => state.userType == UserType.contractor;
 
   void changeUserType({required UserType userType}) {
     AppConstants.userType = userType;
     emit(state.copyWith(userType: userType));
   }
 
-
   void changeLanguage({required bool isArabic}) {
     emit(state.copyWith(isArabic: isArabic));
   }
-
 
   void handleProtectedNavigation({
     required BuildContext context,
     required VoidCallback onAllowed,
   }) {
-    if (isVisitor) {
-      showDialog(
-        context: context,
-        builder: (_) => const VisitorAccessDialog(),
-      );
+    if (state.userType == UserType.visitor) {
+      showDialog(context: context, builder: (_) => const VisitorAccessDialog());
       return;
     }
 
     onAllowed();
   }
 
+  void toggleTabs({required int tabIndex}) {
+    emit(state.copyWith(tabIndex: tabIndex));
+  }
+
+  Future<void> checkNotificationPermission() async {
+    var status = await Permission.notification.status;
+
+    if (status.isDenied) {
+      status = await Permission.notification.request();
+    }
+
+    if (status.isPermanentlyDenied) {
+      // debugPrint("Notification permission permanently denied.");
+      // openAppSettings();
+      emit(state.copyWith(areNotificationsEnabled: false));
+      return;
+    }
+
+    bool granted = status.isGranted;
+    debugPrint("Permission granted: $granted");
+    emit(state.copyWith(areNotificationsEnabled: granted));
+  }
 
   @override
   AppState? fromJson(Map<String, dynamic> json) {
     return AppState(
       userType: _userTypeFromString(json['user_type'] as String?),
       isArabic: json['is_arabic'] as bool? ?? true,
+      areNotificationsEnabled:
+          json['are_notifications_enabled'] as bool? ?? false,
     );
   }
 
@@ -66,6 +79,7 @@ class AppCubit extends HydratedCubit<AppState> {
     return {
       'user_type': _userTypeToString(state.userType),
       'is_arabic': state.isArabic,
+      'are_notifications_enabled': state.areNotificationsEnabled,
     };
   }
 
@@ -82,7 +96,6 @@ class AppCubit extends HydratedCubit<AppState> {
         return UserType.visitor;
     }
   }
-
 
   @override
   Future<void> close() {

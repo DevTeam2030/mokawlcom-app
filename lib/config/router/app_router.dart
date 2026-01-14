@@ -27,10 +27,11 @@ import 'package:mokawlcom_app/features/home/presentation/screens/contractor_deta
 import 'package:mokawlcom_app/features/home/presentation/screens/contractors_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/services_details_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/services_screen.dart';
-import 'package:mokawlcom_app/features/notificatiions/presentation/notifications_screen.dart';
-import 'package:mokawlcom_app/features/notificatiions/presentation/offer_details_screen.dart';
-import 'package:mokawlcom_app/features/notificatiions/presentation/price_offers_screen.dart';
-import 'package:mokawlcom_app/features/notificatiions/presentation/public_notifications_screen.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/screens/notifications_screen.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/screens/offer_details_screen.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/screens/price_offers_screen.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/screens/public_notifications_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/add_new_service_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/available_deals_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/change_password_screen.dart';
@@ -172,6 +173,7 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
       ),
       BlocProvider(create: (context) => getIt<SearchBloc>()),
       BlocProvider(create: (context) => getIt<FavoriteCubit>()),
+      BlocProvider(create: (context) => getIt<NotificationsCubit>()),
     ],
     child: this,
   );

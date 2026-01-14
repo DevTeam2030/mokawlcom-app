@@ -22,6 +22,10 @@ import 'package:mokawlcom_app/features/home/data/repo/home_repo_impl.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/data_source/notifications_data_source.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/repo/notifications_repo.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/repo/notificatons_repo_impl.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 
 // dependency injection
@@ -63,6 +67,13 @@ class ServiceLocator {
     getIt.registerLazySingleton<HomeRepo>(
       () => HomeRepoImpl(homeDataSource: getIt<HomeDataSource>()),
     );
+    getIt.registerLazySingleton<NotificationsDataSource>(
+      () => NotificationsDataSourceImpl(dioHelper: getIt<DioHelper>()),
+    );
+    
+    getIt.registerLazySingleton<NotificationsRepo>(
+      () => NotificationsRepoImpl(notificationsDataSource: getIt<NotificationsDataSource>()),
+    );
 
     getIt.registerFactory<AuthCubit>(
       () => AuthCubit(
@@ -98,5 +109,9 @@ class ServiceLocator {
     getIt.registerFactory<FavoriteCubit>(
       () => FavoriteCubit(favoriteRepo: getIt<FavoriteRepo>()),
     );
+    getIt.registerFactory<NotificationsCubit>(
+      () => NotificationsCubit(notificationsRepo: getIt<NotificationsRepo>()),
+    );
   }
+  
 }

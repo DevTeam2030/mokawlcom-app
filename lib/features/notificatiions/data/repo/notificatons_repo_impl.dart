@@ -1,0 +1,18 @@
+import 'package:dartz/dartz.dart';
+import 'package:mokawlcom_app/core/utils/safe_api_call.dart';
+import 'package:mokawlcom_app/error/failures.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/data_source/notifications_data_source.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/repo/notifications_repo.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/public_notifications_model.dart';
+
+class NotificationsRepoImpl implements NotificationsRepo {
+  final NotificationsDataSource notificationsDataSource;
+
+  NotificationsRepoImpl({required this.notificationsDataSource});
+
+  @override
+  Future<Either<Failure, PublicNotificationsModel>>
+  getPublicNotifications({required int page}) async => await safeApiCall(
+    () async => await notificationsDataSource.getPublicNotifications(page: page),
+  );
+}

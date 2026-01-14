@@ -10,12 +10,28 @@ import 'package:mokawlcom_app/features/home/presentation/screens/widgets/home/ho
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/home/home_departments_section.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/home/home_header.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/home/home_search_section.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 @RoutePage()
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _checkNotificationPermission();
+  }
+
+  Future<void> _checkNotificationPermission() async {
+    if (mounted) await context.read<AppCubit>().checkNotificationPermission();
+  }
 
   @override
   Widget build(BuildContext context) {

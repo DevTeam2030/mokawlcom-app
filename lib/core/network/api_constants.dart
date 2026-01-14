@@ -25,5 +25,6 @@ class ApiConstants {
   static const String getFavorites = "/favorite-list";
   static const String addFavorite = "/favorite";
   static const String removeFavorite = "/un-favorite";
+  static const String getPublicNotifications = "/public-notifications";
   
 }

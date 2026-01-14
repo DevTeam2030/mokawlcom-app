@@ -1,11 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/public_notificarion_model.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class PublicNotificationItem extends StatelessWidget {
-  const PublicNotificationItem({super.key, required this.theme});
+  const PublicNotificationItem({
+    super.key,
+    required this.theme,
+    required this.notification,
+  });
   final ThemeData theme;
+  final PublicNotificationModel notification;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +19,7 @@ class PublicNotificationItem extends StatelessWidget {
       onTap: () {
         showGeneralDialog(
           context: context,
-          barrierLabel: "Notification",
+          barrierLabel: notification.title,
           barrierDismissible: true,
           barrierColor: Colors.black12,
           transitionDuration: const Duration(milliseconds: 300),
@@ -42,7 +48,7 @@ class PublicNotificationItem extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            "أهلا بكم في تطبيق مقاولاتكم",
+                            notification.title,
                             style: theme.textTheme.labelMedium!.copyWith(
                               fontWeight: FontWeight.bold,
                               color: ColorsManager.primaryColor,
@@ -50,7 +56,7 @@ class PublicNotificationItem extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            "02 Jan 2023 09:43 AM",
+                            notification.date,
                             style: theme.textTheme.labelSmall!.copyWith(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
@@ -59,7 +65,7 @@ class PublicNotificationItem extends StatelessWidget {
                           ),
                           const SizedBox(height: 15),
                           Text(
-                            "هذا نص تجريبي لاختبار شكل و حجم النصوص و طريقة عرضها في هذا المكان. يمكن أن يكون النص طويلاً جدًا لذا استخدم Scroll عند الحاجة.",
+                            notification.body,
                             style: theme.textTheme.labelSmall!.copyWith(
                               height: 1.5,
                             ),
@@ -110,7 +116,7 @@ class PublicNotificationItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "أهلا بكم في تطبيق مقاولاتكم",
+                notification.title,
                 style: theme.textTheme.labelMedium!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: ColorsManager.primaryColor,
@@ -118,7 +124,7 @@ class PublicNotificationItem extends StatelessWidget {
               ),
               const SizedBox(height: 13),
               Text(
-                "02 Jan 2023 09:43 AM",
+                "${notification.date} ${notification.time}",
                 style: theme.textTheme.labelSmall!.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 10,
@@ -127,7 +133,7 @@ class PublicNotificationItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                "هذا نص تجريبي لاختبار شكل و حجم النصوص و طريقة عرضها في هذا المكان",
+                notification.body,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.labelSmall!.copyWith(height: 1.5),

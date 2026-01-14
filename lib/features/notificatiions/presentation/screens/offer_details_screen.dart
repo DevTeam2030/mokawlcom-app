@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
-import 'package:mokawlcom_app/features/notificatiions/presentation/widgets/offer_details.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/offer_details.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()

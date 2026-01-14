@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 
+    <!-- App Basic Info -->
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
 
@@ -11,6 +13,27 @@
 
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
+
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+
+    <key>CFBundleName</key>
+    <string>Mokawlcom</string>
+
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+
+    <key>CFBundleShortVersionString</key>
+    <string>$(FLUTTER_BUILD_NAME)</string>
+
+    <key>CFBundleVersion</key>
+    <string>$(FLUTTER_BUILD_NUMBER)</string>
+
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
 
     <!-- Google Sign In -->
     <key>GIDClientID</key>
@@ -31,30 +54,7 @@
         </dict>
     </array>
 
-    <key>CFBundleIdentifier</key>
-    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-
-    <key>CFBundleInfoDictionaryVersion</key>
-    <string>6.0</string>
-
-    <key>CFBundleName</key>
-    <string>Mokawlcom</string>
-
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-
-    <key>CFBundleShortVersionString</key>
-    <string>$(FLUTTER_BUILD_NAME)</string>
-
-    <key>CFBundleSignature</key>
-    <string>????</string>
-
-    <key>CFBundleVersion</key>
-    <string>$(FLUTTER_BUILD_NUMBER)</string>
-
-    <key>LSRequiresIPhoneOS</key>
-    <true/>
-
+    <!-- Launch / UI -->
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
 
@@ -78,19 +78,39 @@
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
 
-    <!-- Required for canLaunchUrl (url_launcher) -->
+    <!-- ===============================
+         url_launcher permissions
+         (canLaunchUrl safety – App Store approved)
+         =============================== -->
     <key>LSApplicationQueriesSchemes</key>
     <array>
+
+        <!-- Phone & SMS -->
         <string>tel</string>
         <string>sms</string>
-        <string>whatsapp</string>
+
+        <!-- Email -->
         <string>mailto</string>
+
+        <!-- WhatsApp -->
+        <string>whatsapp</string>
+
+        <!-- Facebook -->
+        <string>fb</string>
+
+        <!-- Instagram -->
         <string>instagram</string>
+
+        <!-- Twitter / X -->
         <string>twitter</string>
         <string>twitterauth</string>
+
+        <!-- Snapchat -->
         <string>snapchat</string>
+
     </array>
 
+    <!-- Performance -->
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
 

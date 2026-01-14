@@ -203,5 +203,6 @@ class LocaleKeys {
   static String get sar => 'sar'.tr();
   static String get processingFile => 'processing_file'.tr();
   static String get noSavedCompanies => 'no_saved_companies'.tr();
+  static String get noNotificationsExist => 'no_notifications_exist'.tr();
  
 }

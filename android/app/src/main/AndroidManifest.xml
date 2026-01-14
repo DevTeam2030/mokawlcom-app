@@ -1,18 +1,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- ========= Package visibility (Android 11+) ========= -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <queries>
 
-        <!-- Process text (Flutter default) -->
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
         </intent>
 
-        <!-- Phone -->
+        <!-- Phone Dialer -->
         <intent>
             <action android:name="android.intent.action.VIEW"/>
             <data android:scheme="tel"/>
+        </intent>
+        <!-- Facebook (App + Web) -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="fb"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
+            <data android:host="www.facebook.com"/>
         </intent>
 
         <!-- SMS -->
@@ -82,11 +91,13 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
 
         <meta-data
             android:name="flutterEmbedding"
             android:value="2"/>
+
     </application>
 
 </manifest>

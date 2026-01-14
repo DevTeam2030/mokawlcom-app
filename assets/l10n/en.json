@@ -142,5 +142,6 @@
   "search_results":"Search Results",
   "sar": "SAR",
   "processing_file":"Processing file...",
-  "no_saved_companies":"No saved companies"
+  "no_saved_companies":"No saved companies",
+  "no_notifications_exist":"No notifications exist"
 }
