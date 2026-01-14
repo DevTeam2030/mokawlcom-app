@@ -9,6 +9,7 @@ import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
+import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_cubit.dart';
 import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_state.dart';
@@ -31,8 +32,10 @@ class ContractorDetailsScreen extends StatefulWidget
     this.isOfferrice = false,
     required this.contractorId,
   });
+
   final bool isOfferrice;
   final int contractorId;
+
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider(
     create: (context) =>
@@ -40,6 +43,7 @@ class ContractorDetailsScreen extends StatefulWidget
           ..getContractorDetails(contractorId: contractorId),
     child: this,
   );
+
   @override
   State<ContractorDetailsScreen> createState() =>
       _ContractorDetailsScreenState();
@@ -59,71 +63,92 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          BlocSelector<ContractorInfoCubit, ContractorInfoState, bool>(
-            selector: (state) {
-              return state.isSaved;
-            },
-            builder: (context, isSaved) {
-              return IconButton(
-                onPressed: () {
-                  context.read<AppCubit>().handleProtectedNavigation(
-                    context: context,
-                    onAllowed: () {
-                      if (isSaved) {
-                        context.read<FavoriteCubit>().removeFavorite(
-                          contractorId: widget.contractorId,
+
+    return BlocConsumer<ContractorInfoCubit, ContractorInfoState>(
+      listenWhen: (prev, curr) =>
+          prev.getContractorDetailsState != curr.getContractorDetailsState,
+      listener: (context, state) {
+        if (state.getContractorDetailsState.isError) {
+          showToast(message: state.errorMessage, state: ToastStates.error);
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: state.isConnected
+              ? AppBar(
+                  actions: [
+                    BlocSelector<
+                      ContractorInfoCubit,
+                      ContractorInfoState,
+                      bool
+                    >(
+                      selector: (state) => state.isSaved,
+                      builder: (context, isSaved) {
+                        return state.getContractorDetailsState.isLoading
+                            ? const SizedBox.shrink()
+                            : IconButton(
+                          onPressed: () {
+                            context.read<AppCubit>().handleProtectedNavigation(
+                              context: context,
+                              onAllowed: () {
+                                if (isSaved) {
+                                  context.read<FavoriteCubit>().removeFavorite(
+                                    contractorId: widget.contractorId,
+                                  );
+                                } else {
+                                  context.read<FavoriteCubit>().addFavorite(
+                                    contractorId: widget.contractorId,
+                                  );
+                                }
+                                context
+                                    .read<ContractorInfoCubit>()
+                                    .toggleFavorite();
+                              },
+                            );
+                          },
+                          icon: Icon(
+                            isSaved
+                                ? Icons.bookmark_outlined
+                                : Icons.bookmark_add_outlined,
+                          ),
                         );
-                      } else {
-                        context.read<FavoriteCubit>().addFavorite(
-                          contractorId: widget.contractorId,
-                        );
-                      }
-                      context.read<ContractorInfoCubit>().toggleFavorite();
-                    },
-                  );
-                },
-                icon: Icon(
-                  isSaved
-                      ? Icons.bookmark_outlined
-                      : Icons.bookmark_add_outlined,
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.only(
-          start: 16.0,
-          end: 16.0,
-          bottom: 20.0,
-        ),
-        child: BlocConsumer<ContractorInfoCubit, ContractorInfoState>(
-          listenWhen: (previous, current) =>
-              previous.getContractorDetailsState !=
-              current.getContractorDetailsState,
-          buildWhen: (previous, current) =>
-              previous.getContractorDetailsState !=
-              current.getContractorDetailsState,
-          listener: (context, state) {
-            if (state.getContractorDetailsState.isError) {
-              showToast(message: state.errorMessage, state: ToastStates.error);
-            }
-          },
-          builder: (context, state) => UiStateBuilder(
-            state: state.getContractorDetailsState,
-            onLoading: Skeletonizer(
-              child: _buildContractorDetails(state, theme),
+                      },
+                    ),
+                  ],
+                )
+              : null,
+          body: Padding(
+            padding: const EdgeInsetsDirectional.only(
+              start: 16,
+              end: 16,
+              bottom: 20,
             ),
-            onSuccess: _buildContractorDetails(state, theme),
-            errorMessage: state.errorMessage,
-            theme: theme,
+            child: _buildBody(state, theme),
           ),
-        ),
-      ),
+        );
+      },
+    );
+  }
+
+  Widget _buildBody(ContractorInfoState state, ThemeData theme) {
+    if (!state.isConnected) {
+      return NoInternetWidget(
+        errorMessage: state.errorMessage,
+        theme: theme,
+        onPressed: () {
+          context.read<ContractorInfoCubit>().getContractorDetails(
+            contractorId: widget.contractorId,
+          );
+        },
+      );
+    }
+
+    return UiStateBuilder(
+      state: state.getContractorDetailsState,
+      onLoading: Skeletonizer(child: _buildContractorDetails(state, theme)),
+      onSuccess: _buildContractorDetails(state, theme),
+      errorMessage: state.errorMessage,
+      theme: theme,
     );
   }
 
@@ -145,14 +170,12 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
             routes: const [CompanyDetailsRoute(), ServicesDetailsRoute()],
             builder: (context, child, controller) {
               final tabsRouter = AutoTabsRouter.of(context);
+
               return Column(
                 children: [
                   TabBar(
                     controller: controller,
                     indicatorSize: TabBarIndicatorSize.tab,
-                    // dividerColor: ColorsManager.primaryColor.withValues(
-                    //   alpha: .2,
-                    // ),
                     dividerHeight: 2,
                     indicator: const UnderlineTabIndicator(
                       borderSide: BorderSide(
@@ -174,8 +197,9 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
                   ),
                   const SizedBox(height: 10),
                   Expanded(child: child),
-                  const SizedBox(height: 1),
+                  const SizedBox(height: 8),
                   PrimaryButton(
+                    text: LocaleKeys.offerPrice,
                     onPressed: () {
                       context.read<AppCubit>().handleProtectedNavigation(
                         context: context,
@@ -187,7 +211,6 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
                         },
                       );
                     },
-                    text: LocaleKeys.offerPrice,
                   ),
                 ],
               );

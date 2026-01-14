@@ -2,6 +2,7 @@ part of 'contractor_info_cubit.dart';
 
 class ContractorInfoState extends Equatable {
   final RequestStatus getContractorDetailsState;
+  final RequestStatus rateContractorState;
   final ContractorDetailsModel contractorDetails;
   final String errorMessage;
   final bool isSaved;
@@ -10,6 +11,7 @@ class ContractorInfoState extends Equatable {
 
   const ContractorInfoState({
     this.getContractorDetailsState = RequestStatus.initial,
+    this.rateContractorState = RequestStatus.initial,
     this.contractorDetails = const ContractorDetailsModel.empty(),
     this.errorMessage = "",
     this.isSaved = false,
@@ -19,6 +21,7 @@ class ContractorInfoState extends Equatable {
 
   ContractorInfoState copyWith({
     RequestStatus? getContractorDetailsState,
+    RequestStatus? rateContractorState,
     ContractorDetailsModel? contractorDetails,
     String? errorMessage,
     bool? isSaved,
@@ -28,6 +31,7 @@ class ContractorInfoState extends Equatable {
     return ContractorInfoState(
       getContractorDetailsState:
           getContractorDetailsState ?? this.getContractorDetailsState,
+      rateContractorState: rateContractorState ?? this.rateContractorState,
       contractorDetails: contractorDetails ?? this.contractorDetails,
       errorMessage: errorMessage ?? this.errorMessage,
       isSaved: isSaved ?? this.isSaved,
@@ -39,6 +43,7 @@ class ContractorInfoState extends Equatable {
   @override
   List<Object> get props => [
     getContractorDetailsState,
+    rateContractorState,
     contractorDetails,
     errorMessage,
     isSaved,

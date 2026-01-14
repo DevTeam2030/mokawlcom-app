@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/service_item.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -146,17 +151,53 @@ class ContractorDetailsTopSection extends StatelessWidget {
               itemCount: contractorDetailsModel.classifications.length,
             ),
           ),
-          const SizedBox(height: 10),
-          RatingBar.builder(
-            initialRating: 3,
-            allowHalfRating: true,
-            ignoreGestures: true,
-            itemSize: 24,
-            itemBuilder: (context, index) {
-              return const Icon(MyIcons.star, color: Colors.amber);
+          const SizedBox(height: 16),
+          BlocConsumer<ContractorInfoCubit, ContractorInfoState>(
+            listenWhen: (prev, curr) =>
+                prev.rateContractorState != curr.rateContractorState,
+            buildWhen: (previous, current) =>
+                previous.rateContractorState != current.rateContractorState ||
+                previous.rating != current.rating,
+            listener: (context, state) {
+              if (state.rateContractorState.isError) {
+                showToast(
+                  message: state.errorMessage,
+                  state: ToastStates.error,
+                );
+              }
             },
-            unratedColor: ColorsManager.secondaryColor,
-            onRatingUpdate: (rating) {},
+            builder: (context, state) {
+              return Skeleton.replace(
+                replacement: Row(
+                  mainAxisAlignment: .center,
+                  children: List.generate(
+                    5,
+                    (index) =>
+                        Icon(MyIcons.star, color: ColorsManager.skeletonColor),
+                  ),
+                ),
+                child: RatingBar.builder(
+                  initialRating: state.rating,
+                  allowHalfRating: true,
+                  itemSize: 24,
+                  itemBuilder: (context, index) {
+                    return const Icon(MyIcons.star, color: Colors.amber);
+                  },
+                  unratedColor: ColorsManager.secondaryColor,
+                  onRatingUpdate: (rating) {
+                    context.read<AppCubit>().handleProtectedNavigation(
+                      context: context,
+                      onAllowed: () {
+                        context.read<ContractorInfoCubit>().rateContractor(
+                          contractorId: contractorDetailsModel.id,
+                          rating: rating,
+                        );
+                      },
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),

@@ -44,5 +44,33 @@ class ContractorInfoCubit extends Cubit<ContractorInfoState> {
     );
   }
 
+  Future<void> rateContractor({
+    required int contractorId,
+    required double rating,
+  }) async {
+    final oldRating = state.rating;
+    emit(
+      state.copyWith(
+        rateContractorState: RequestStatus.loading,
+        isConnected: true,
+        rating: rating,
+      ),
+    );
+    final result = await homeRepo.rateContractor(
+      contractorId: contractorId.toString(),
+      rating: rating.toString(),
+    );
+    result.fold((failure) {
+      emit(
+        state.copyWith(
+          rateContractorState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+          rating: oldRating,
+        ),
+      );
+    }, (_) {});
+  }
+
   void toggleFavorite() => emit(state.copyWith(isSaved: !state.isSaved));
 }
