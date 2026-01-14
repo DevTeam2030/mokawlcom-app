@@ -158,7 +158,6 @@ class _PublicNotificationsScreenState extends State<PublicNotificationsScreen> {
                 height: 26,
                 child: CircularProgressIndicator(
                   color: ColorsManager.primaryColor,
-                  strokeWidth: 2,
                 ),
               ),
             ),

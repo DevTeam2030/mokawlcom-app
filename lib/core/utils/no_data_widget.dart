@@ -8,15 +8,22 @@ class NoDataWidget extends StatelessWidget {
   final ThemeData theme;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Image(image: AssetImage(AssetsManager.noDataImage)),
-        Text(
-          text,
-          style: theme.textTheme.bodyLarge!.copyWith(color: ColorsManager.primaryColor),
+    return Center(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Image(image: AssetImage(AssetsManager.noDataImage)),
+            const SizedBox(height: 40),
+            Text(
+              text,
+              style: theme.textTheme.bodyLarge!.copyWith(
+                color: ColorsManager.primaryColor,
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

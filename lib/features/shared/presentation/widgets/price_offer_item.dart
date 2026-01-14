@@ -3,12 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class PriceOfferItem extends StatelessWidget {
-  const PriceOfferItem({super.key, required this.theme, this.isUser = false});
+  const PriceOfferItem({
+    super.key,
+    required this.theme,
+    this.isUser = false,
+    required this.offerNotificationModel,
+  });
   final ThemeData theme;
   final bool isUser;
+  final OfferNotificationModel offerNotificationModel;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -22,17 +31,35 @@ class PriceOfferItem extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Container(
-                height: 48,
-                width: 48,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: ColorsManager.primaryColor,
-                    width: 2,
+              Skeleton.replace(
+                replacement: Container(
+                  height: 48,
+                  width: 48,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: ColorsManager.primaryColor,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                   
                   ),
-                  borderRadius: BorderRadius.circular(8),
-                  image: const DecorationImage(
-                    image: AssetImage(AssetsManager.appLogo),
+                ),
+                child: Container(
+                  height: 48,
+                  width: 48,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: ColorsManager.primaryColor,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                   
+                  ),
+                  child: CustomCachedNetworkImage(
+                    imageUrl: offerNotificationModel.link,
+                    height: 48,
+                    width: 48,
+                    
                   ),
                 ),
               ),
@@ -50,7 +77,7 @@ class PriceOfferItem extends StatelessWidget {
                   const SizedBox(height: 5),
 
                   Text(
-                    "2-12-2025 16:00",
+                    "${offerNotificationModel.time} - ${offerNotificationModel.date}",
                     style: theme.textTheme.labelSmall!.copyWith(
                       fontWeight: FontWeight.w400,
                       fontSize: 10,

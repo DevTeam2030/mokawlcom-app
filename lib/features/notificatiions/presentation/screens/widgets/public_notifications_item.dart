@@ -24,69 +24,74 @@ class PublicNotificationItem extends StatelessWidget {
           barrierColor: Colors.black12,
           transitionDuration: const Duration(milliseconds: 300),
           pageBuilder: (_, __, ___) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Material(
-                  color: Colors.transparent,
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: .2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            notification.title,
-                            style: theme.textTheme.labelMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: ColorsManager.primaryColor,
-                            ),
+            return FractionallySizedBox(
+              heightFactor: .5,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: .2),
+                            blurRadius: 10,
+                            offset: const Offset(0, 5),
                           ),
-                          const SizedBox(height: 10),
-                          Text(
-                            notification.date,
-                            style: theme.textTheme.labelSmall!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                              color: ColorsManager.secondaryColor,
+                        ],
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              notification.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: theme.textTheme.labelMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: ColorsManager.primaryColor,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 15),
-                          Text(
-                            notification.body,
-                            style: theme.textTheme.labelSmall!.copyWith(
-                              height: 1.5,
+                            const SizedBox(height: 10),
+                            Text(
+                             "${notification.date} - ${notification.time}",
+                              style: theme.textTheme.labelSmall!.copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10,
+                                color: ColorsManager.secondaryColor,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 20),
-                          Align(
-                            alignment: AlignmentDirectional.centerStart,
-                            child: TextButton(
-                              onPressed: () => Navigator.of(
-                                context,
-                                rootNavigator: true,
-                              ).pop(),
-                              child: Text(
-                                LocaleKeys.close,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                            const SizedBox(height: 15),
+                            Text(
+                              notification.body,
+                              style: theme.textTheme.labelSmall!.copyWith(
+                                height: 1.5,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Align(
+                              alignment: AlignmentDirectional.centerStart,
+                              child: TextButton(
+                                onPressed: () => Navigator.of(
+                                  context,
+                                  rootNavigator: true,
+                                ).pop(),
+                                child: Text(
+                                  LocaleKeys.close,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -117,6 +122,8 @@ class PublicNotificationItem extends StatelessWidget {
             children: [
               Text(
                 notification.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.labelMedium!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: ColorsManager.primaryColor,
@@ -124,7 +131,7 @@ class PublicNotificationItem extends StatelessWidget {
               ),
               const SizedBox(height: 13),
               Text(
-                "${notification.date} ${notification.time}",
+                "${notification.date} - ${notification.time}",
                 style: theme.textTheme.labelSmall!.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 10,

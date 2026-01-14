@@ -27,8 +27,8 @@ class SubmittedPriceOffersScreen extends StatelessWidget {
         itemCount: 5,
         separatorBuilder: (context, index) =>
             const CustomDivider(thickness: 0.8, height: 1),
-        itemBuilder: (context, index) =>
-            PriceOfferItem(theme: theme, isUser: true),
+        itemBuilder: (context, index) => const SizedBox.shrink()
+            //PriceOfferItem(theme: theme, isUser: true),
       ),
     );
   }

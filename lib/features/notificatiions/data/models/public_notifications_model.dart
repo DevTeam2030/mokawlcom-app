@@ -17,7 +17,7 @@ class PublicNotificationsModel extends Equatable {
         currentPage: json["current_page"] ?? 0,
         totalPages: json["total_pages"] ?? 0,
         notifications: List<PublicNotificationModel>.from(
-          (json["contractors"] as List? ?? []).map(
+          (json["notifications"] as List? ?? []).map(
             (x) => PublicNotificationModel.fromJson(x),
           ),
         ),
