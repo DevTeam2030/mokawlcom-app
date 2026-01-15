@@ -18,9 +18,11 @@ class OfferPriceBottomSheet extends StatefulWidget {
     super.key,
     required this.address,
     required this.contractorId,
+    required this.contractorInfoCubit,
   });
   final String address;
   final int contractorId;
+  final ContractorInfoCubit contractorInfoCubit;
 
   @override
   State<OfferPriceBottomSheet> createState() => _OfferPriceBottomSheetState();
@@ -43,128 +45,131 @@ class _OfferPriceBottomSheetState extends State<OfferPriceBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsetsDirectional.only(
-        start: 20,
-        end: 20,
-        bottom: 32,
-        top: 10,
-      ),
-      child: Form(
-        key: _formKey,
-        autovalidateMode: _autovalidateMode,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              Align(
-                alignment: AlignmentDirectional.center,
-                child: Text(
-                  widget.address,
-                  style: theme.textTheme.headlineSmall!.copyWith(
-                    fontWeight: FontWeight.bold,
+    return BlocProvider.value(
+      value: widget.contractorInfoCubit,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.only(
+          start: 20,
+          end: 20,
+          bottom: 32,
+          top: 10,
+        ),
+        child: Form(
+          key: _formKey,
+          autovalidateMode: _autovalidateMode,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+                Align(
+                  alignment: AlignmentDirectional.center,
+                  child: Text(
+                    widget.address,
+                    style: theme.textTheme.headlineSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: ColorsManager.primaryColor,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  LocaleKeys.offerAddress,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w400,
                     color: ColorsManager.primaryColor,
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                LocaleKeys.offerAddress,
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: ColorsManager.primaryColor,
+                const SizedBox(height: 8),
+                CustomTextFormField(
+                  textInputAction: TextInputAction.next,
+                  type: TextInputType.text,
+                  fieldName: LocaleKeys.offerAddress,
+                  onSaved: (value) => _title = value!,
                 ),
-              ),
-              const SizedBox(height: 8),
-              CustomTextFormField(
-                textInputAction: TextInputAction.next,
-                type: TextInputType.text,
-                fieldName: LocaleKeys.offerAddress,
-                onSaved: (value) => _title = value!,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                LocaleKeys.price,
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: ColorsManager.primaryColor,
+                const SizedBox(height: 16),
+                Text(
+                  LocaleKeys.price,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: ColorsManager.primaryColor,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              CustomTextFormField(
-                textInputAction: TextInputAction.next,
-                type: TextInputType.number,
-                fieldName: LocaleKeys.price,
-                onSaved: (value) => _price = value!,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                LocaleKeys.message,
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: ColorsManager.primaryColor,
+                const SizedBox(height: 8),
+                CustomTextFormField(
+                  textInputAction: TextInputAction.next,
+                  type: TextInputType.number,
+                  fieldName: LocaleKeys.price,
+                  onSaved: (value) => _price = value!,
                 ),
-              ),
-              const SizedBox(height: 8),
-              CustomTextFormField(
-                textInputAction: TextInputAction.done,
-                type: TextInputType.text,
-                maxLines: 5,
-                fieldName: LocaleKeys.message,
-                onSaved: (value) => _message = value!,
-                onSubmit: (_) => _submit(context),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                LocaleKeys.attachAFile,
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: ColorsManager.primaryColor,
+                const SizedBox(height: 16),
+                Text(
+                  LocaleKeys.message,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: ColorsManager.primaryColor,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              PriceOfferUploadFileSection(theme: theme),
-              const SizedBox(height: 24),
-              BlocConsumer<ContractorInfoCubit, ContractorInfoState>(
-                listenWhen: (previous, current) =>
-                    previous.addOfferPriceState != current.addOfferPriceState,
-                buildWhen: (previous, current) =>
-                    previous.addOfferPriceState != current.addOfferPriceState,
-                listener: (context, state) {
-                  if (state.addOfferPriceState.isError) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => ErrorDialog(
-                        theme: theme,
-                        message: state.addOfferPriceMessage,
-                      ),
+                const SizedBox(height: 8),
+                CustomTextFormField(
+                  textInputAction: TextInputAction.done,
+                  type: TextInputType.text,
+                  maxLines: 5,
+                  fieldName: LocaleKeys.message,
+                  onSaved: (value) => _message = value!,
+                  onSubmit: (_) => _submit(context),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  LocaleKeys.attachAFile,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: ColorsManager.primaryColor,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                PriceOfferUploadFileSection(theme: theme),
+                const SizedBox(height: 24),
+                BlocConsumer<ContractorInfoCubit, ContractorInfoState>(
+                  listenWhen: (previous, current) =>
+                      previous.addOfferPriceState != current.addOfferPriceState,
+                  buildWhen: (previous, current) =>
+                      previous.addOfferPriceState != current.addOfferPriceState,
+                  listener: (context, state) {
+                    if (state.addOfferPriceState.isError) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorDialog(
+                          theme: theme,
+                          message: state.addOfferPriceMessage,
+                        ),
+                      );
+                    }
+                    if (state.addOfferPriceState.isSuccess) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => SuccessDialog(
+                          onPressed: () => Navigator.pop(context),
+                          text: LocaleKeys.close,
+                          theme: theme,
+                          message: state.addOfferPriceMessage,
+                        ),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    return PrimaryButton(
+                      isLoading: state.addOfferPriceState.isLoading,
+                      onPressed: () async {
+                        await _submit(context);
+                      },
+                      text: LocaleKeys.send,
                     );
-                  }
-                  if (state.addOfferPriceState.isSuccess) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => SuccessDialog(
-                        onPressed: () => Navigator.pop(context),
-                        text: LocaleKeys.close,
-                        theme: theme,
-                        message: state.addOfferPriceMessage,
-                      ),
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return PrimaryButton(
-                    isLoading: state.addOfferPriceState.isLoading,
-                    onPressed: () async {
-                      await _submit(context);
-                    },
-                    text: LocaleKeys.send,
-                  );
-                },
-              ),
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

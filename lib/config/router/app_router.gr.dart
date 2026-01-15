@@ -212,7 +212,7 @@ class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
       return WrappedRoute(
         child: ContractorDetailsScreen(
           key: args.key,
-          isOfferrice: args.isOfferrice,
+          isOfferPrice: args.isOfferrice,
           contractorId: args.contractorId,
         ),
       );

@@ -29,11 +29,11 @@ class ContractorDetailsScreen extends StatefulWidget
     implements AutoRouteWrapper {
   const ContractorDetailsScreen({
     super.key,
-    this.isOfferrice = false,
+    this.isOfferPrice = false,
     required this.contractorId,
   });
 
-  final bool isOfferrice;
+  final bool isOfferPrice;
   final int contractorId;
 
   @override
@@ -53,7 +53,7 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.isOfferrice) {
+    if (widget.isOfferPrice) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _showBottomSheet(context: context, contractorId: widget.contractorId);
       });
@@ -87,31 +87,39 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
                         return state.getContractorDetailsState.isLoading
                             ? const SizedBox.shrink()
                             : IconButton(
-                          onPressed: () {
-                            context.read<AppCubit>().handleProtectedNavigation(
-                              context: context,
-                              onAllowed: () {
-                                if (isSaved) {
-                                  context.read<FavoriteCubit>().removeFavorite(
-                                    contractorId: widget.contractorId,
-                                  );
-                                } else {
-                                  context.read<FavoriteCubit>().addFavorite(
-                                    contractorId: widget.contractorId,
-                                  );
-                                }
-                                context
-                                    .read<ContractorInfoCubit>()
-                                    .toggleFavorite();
-                              },
-                            );
-                          },
-                          icon: Icon(
-                            isSaved
-                                ? Icons.bookmark_outlined
-                                : Icons.bookmark_add_outlined,
-                          ),
-                        );
+                                onPressed: () {
+                                  context
+                                      .read<AppCubit>()
+                                      .handleProtectedNavigation(
+                                        context: context,
+                                        onAllowed: () {
+                                          if (isSaved) {
+                                            context
+                                                .read<FavoriteCubit>()
+                                                .removeFavorite(
+                                                  contractorId:
+                                                      widget.contractorId,
+                                                );
+                                          } else {
+                                            context
+                                                .read<FavoriteCubit>()
+                                                .addFavorite(
+                                                  contractorId:
+                                                      widget.contractorId,
+                                                );
+                                          }
+                                          context
+                                              .read<ContractorInfoCubit>()
+                                              .toggleFavorite();
+                                        },
+                                      );
+                                },
+                                icon: Icon(
+                                  isSaved
+                                      ? Icons.bookmark_outlined
+                                      : Icons.bookmark_add_outlined,
+                                ),
+                              );
                       },
                     ),
                   ],
@@ -240,6 +248,7 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
         return FractionallySizedBox(
           heightFactor: 1,
           child: OfferPriceBottomSheet(
+            contractorInfoCubit: context.read<ContractorInfoCubit>(),
             address: LocaleKeys.offerPrice,
             contractorId: contractorId,
           ),
