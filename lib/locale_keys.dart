@@ -204,5 +204,5 @@ class LocaleKeys {
   static String get processingFile => 'processing_file'.tr();
   static String get noSavedCompanies => 'no_saved_companies'.tr();
   static String get noNotificationsExist => 'no_notifications_exist'.tr();
- 
+  static String get pleaseSelectAnImage => 'please_select_an_image'.tr();
 }

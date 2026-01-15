@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
-import 'package:mokawlcom_app/features/profile/presentation/widgets/show_logout_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/show_logout_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/visitor_access_dialog.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';

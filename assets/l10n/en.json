@@ -143,5 +143,6 @@
   "sar": "SAR",
   "processing_file":"Processing file...",
   "no_saved_companies":"No saved companies",
-  "no_notifications_exist":"No notifications exist"
+  "no_notifications_exist":"No notifications exist",
+  "please_select_an_image":"Please select an image"
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/no_data_widget.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
@@ -140,6 +141,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
               errorMessage: state.errorMessage,
               onLoading: Skeletonizer(
                 enabled: state.getContractorsState.isLoading && !hasData,
+                containersColor: ColorsManager.skeletonColor,
                 child: _buildContractorsList(
                   contractors: !hasData
                       ? List.generate(
@@ -167,28 +169,14 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
                       theme: theme,
                       status: state.getContractorsState,
                     )
-                  : Center(
-                      child: Text(
-                        LocaleKeys.noResultsFound,
-                        style: theme.textTheme.bodyLarge!.copyWith(
-                          color: ColorsManager.primaryColor,
-                        ),
-                      ),
-                    ),
+                  : NoDataWidget(text: LocaleKeys.noResultsFound, theme: theme),
               onError: hasData
                   ? _buildContractorsList(
                       contractors: state.contractorsModel.contractors,
                       theme: theme,
                       status: state.getContractorsState,
                     )
-                  : Center(
-                      child: Text(
-                        LocaleKeys.noResultsFound,
-                        style: theme.textTheme.bodyLarge!.copyWith(
-                          color: ColorsManager.primaryColor,
-                        ),
-                      ),
-                    ),
+                  : NoDataWidget(text: LocaleKeys.noResultsFound, theme: theme),
             );
           },
         ),
@@ -228,7 +216,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
 
         return ContractorItem(
           contractorModel: contractors[index],
-          serviceId:0,
+          serviceId: 0,
 
           theme: theme,
         );

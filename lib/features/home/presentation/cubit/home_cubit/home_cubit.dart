@@ -177,57 +177,5 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-   Future<void> pickFile() async {
-    emit(state.copyWith(addOfferPriceState: RequestStatus.initial,isFileLoading: true));
-    try {
-      final File? file = await FilePickerService.pickFile();
-      emit(state.copyWith(file: file,isFileLoading: false));
-    } catch (e) {
-      emit(
-        state.copyWith(
-          addOfferPriceMessage: e.toString(),
-          addOfferPriceState: RequestStatus.error,
-          isFileLoading: false,
-        ),
-      );
-    }
-  }
-
-  Future<void> addOfferPrice({
-    required int contractorId,
-    required String price,
-    required String title,
-    required String message,
-  }) async {
-    emit(state.copyWith(addOfferPriceState: RequestStatus.loading));
-    final result = await homeRepoImpl.addOfferPrice(
-      addOfferPriceRequestModel: AddOfferPriceRequestModel(
-        file: state.file,
-        contractorId: contractorId,
-        price: price,
-        title: title,
-        message: message,
-      ),
-      onProgress: (progress) {
-        emit(state.copyWith(progress: progress));
-      },
-    );
-    result.fold(
-      (failure) => emit(
-        state.copyWith(
-          addOfferPriceState: RequestStatus.error,
-          addOfferPriceMessage: failure.errorMessage,
-          isConnected: failure.isConnected,
-          progress: 0,
-        ),
-      ),
-      (message) => emit(
-        state.copyWith(
-          addOfferPriceState: RequestStatus.success,
-          addOfferPriceMessage: message,
-          progress: 0,
-        ),
-      ),
-    );
-  }
+   
 }

@@ -11,7 +11,7 @@ import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/complete_contractor_data/complete_contractor_data_form.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
-import 'package:mokawlcom_app/features/shared/presentation/widgets/profile_avatar_with_edit.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/complete_contractor_data/auth_user_image.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
@@ -38,7 +38,7 @@ class CompleteDataScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 28.0),
-              ProfileAvatarWithEdit(
+              AuthUserImage(
                 onEditTap: () async {
                   await context.read<AuthCubit>().pickFile();
                 },

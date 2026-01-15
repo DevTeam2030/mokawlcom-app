@@ -18,7 +18,7 @@ import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_c
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/contractor_details_top_section.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
-import 'package:mokawlcom_app/features/shared/presentation/widgets/offer_price_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/offer_price_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/service_item.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
@@ -145,7 +145,11 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
 
     return UiStateBuilder(
       state: state.getContractorDetailsState,
-      onLoading: Skeletonizer(child: _buildContractorDetails(state, theme)),
+      onLoading: Skeletonizer(
+        containersColor: ColorsManager.skeletonColor,
+        enabled: state.getContractorDetailsState.isLoading,
+        child: _buildContractorDetails(state, theme),
+      ),
       onSuccess: _buildContractorDetails(state, theme),
       errorMessage: state.errorMessage,
       theme: theme,

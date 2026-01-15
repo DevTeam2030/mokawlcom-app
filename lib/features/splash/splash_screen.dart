@@ -31,12 +31,15 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(milliseconds: 1200),
     );
 
-    _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+    _fadeAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.fastOutSlowIn,
+    );
 
     _controller.forward();
 
-    Timer(const Duration(seconds: 2), () async {
-      await _navigate();
+    Timer(const Duration(seconds: 2), () {
+      _navigate();
     });
   }
 
@@ -46,12 +49,12 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-  Future<void> _navigate() async {
+  void _navigate() {
     final cacheHelper = getIt<CacheHelper>();
 
     final isOnBoardingSeen = cacheHelper.isOnBoardingSeen();
     if (!isOnBoardingSeen) {
-      await cacheHelper.deleteAll();
+      cacheHelper.deleteAll();
       if (mounted) context.replaceRoute(const OnBoardingRoute());
       return;
     }

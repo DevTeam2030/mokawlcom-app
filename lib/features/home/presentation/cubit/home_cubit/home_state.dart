@@ -8,9 +8,6 @@ import 'package:mokawlcom_app/features/shared/data/models/services_model.dart';
 
 class HomeState extends Equatable {
   final RequestStatus getBannersState;
-  final RequestStatus addOfferPriceState;
-  final File? file;
-  final String addOfferPriceMessage;
   final List<String> banners;
   final String bannersErrorMessage;
   final RequestStatus getClassificationsState;
@@ -23,8 +20,7 @@ class HomeState extends Equatable {
   final String servicesErrorMessage;
   final int servicesPage;
   final int servicesTotalPages;
-  final bool isFileLoading;
-  final double progress;
+ 
   final bool isConnected;
 
   const HomeState({
@@ -41,11 +37,6 @@ class HomeState extends Equatable {
     this.servicesErrorMessage = '',
     this.servicesPage = 1,
     this.servicesTotalPages = 1,
-    this.file,
-    this.addOfferPriceState = RequestStatus.initial,
-    this.addOfferPriceMessage = '',
-    this.isFileLoading = false,
-    this.progress = 0,
     this.isConnected = true,
   });
 
@@ -63,11 +54,6 @@ class HomeState extends Equatable {
     String? servicesErrorMessage,
     int? servicesPage,
     int? servicesTotalPages,
-    File? file,
-    RequestStatus? addOfferPriceState,
-    String? addOfferPriceMessage,
-    bool? isFileLoading,
-    double? progress,
     bool? isConnected,
   }) {
     return HomeState(
@@ -85,17 +71,12 @@ class HomeState extends Equatable {
       servicesErrorMessage: servicesErrorMessage ?? this.servicesErrorMessage,
       servicesPage: servicesPage ?? this.servicesPage,
       servicesTotalPages: servicesTotalPages ?? this.servicesTotalPages,
-      file: file ?? this.file,
-      addOfferPriceState: addOfferPriceState ?? this.addOfferPriceState,
-      addOfferPriceMessage: addOfferPriceMessage ?? this.addOfferPriceMessage,
-      isFileLoading: isFileLoading ?? this.isFileLoading,
-      progress: progress ?? this.progress,
       isConnected: isConnected ?? this.isConnected,
     );
   }
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
     getBannersState,
     getClassificationsState,
     classificationsModel,
@@ -109,11 +90,6 @@ class HomeState extends Equatable {
     servicesErrorMessage,
     servicesPage,
     servicesTotalPages,
-    file,
-    addOfferPriceState,
-    addOfferPriceMessage,
-    isFileLoading,
-    progress,
     isConnected,
   ];
 }

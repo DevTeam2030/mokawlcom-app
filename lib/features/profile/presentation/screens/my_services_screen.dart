@@ -2,13 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
-import 'package:mokawlcom_app/features/profile/presentation/widgets/available_deals/available_deals_item.dart';
-import 'package:mokawlcom_app/features/profile/presentation/widgets/my_services/my_service_item.dart';
+import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
+import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/my_services/my_service_item.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/my_icons.dart';
 
 @RoutePage()
-class AvailableDealsScreen extends StatelessWidget {
-  const AvailableDealsScreen({super.key});
+class MyServicesScreen extends StatelessWidget {
+  const MyServicesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +17,10 @@ class AvailableDealsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          LocaleKeys.availableDeals,
+          LocaleKeys.myServices,
           style: theme.textTheme.headlineSmall!.copyWith(
             color: ColorsManager.primaryColor,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
@@ -30,11 +31,10 @@ class AvailableDealsScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             TextButton(
-              onPressed: () {
-                context.router.push(const SendOfferToContractorsRoute());
-              },
+              onPressed: () =>
+                  context.pushRoute(AddNewServiceRoute(theme: theme)),
               child: Text(
-                LocaleKeys.addNewOffer,
+                LocaleKeys.addNewService,
                 style: theme.textTheme.bodyLarge!.copyWith(
                   color: ColorsManager.primaryColor,
                 ),
@@ -43,8 +43,7 @@ class AvailableDealsScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
               child: ListView.separated(
-                itemBuilder: (context, index) =>
-                    AvailableDealsItem(theme: theme),
+                itemBuilder: (context, index) => MyServiceItem(theme: theme),
                 separatorBuilder: (_, _) => const SizedBox(height: 20),
                 itemCount: 5,
               ),

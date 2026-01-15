@@ -13,7 +13,9 @@ class CustomIntlPhoneField extends StatefulWidget {
     this.borderRadius,
     this.fillColor,
     this.prefixIcon,
-    this.enabled = true, this.onSubmitted,
+    this.enabled = true,
+    this.onSubmitted,
+    this.textInputAction,
   });
 
   final TextEditingController? controller;
@@ -24,7 +26,8 @@ class CustomIntlPhoneField extends StatefulWidget {
   final Color? fillColor;
   final Widget? prefixIcon;
   final bool enabled;
-  final   void Function(String)? onSubmitted;
+  final void Function(String)? onSubmitted;
+  final TextInputAction? textInputAction;
 
   @override
   State<CustomIntlPhoneField> createState() => _CustomIntlPhoneFieldState();
@@ -32,7 +35,7 @@ class CustomIntlPhoneField extends StatefulWidget {
 
 class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
   late TextEditingController _phoneController;
-  
+
   @override
   void initState() {
     super.initState();
@@ -61,7 +64,7 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
             IntlPhoneField(
               controller: _phoneController,
               onSubmitted: widget.onSubmitted,
-              textInputAction: TextInputAction.done,
+              textInputAction: widget.textInputAction ?? TextInputAction.done,
               enabled: widget.enabled,
               initialCountryCode: widget.initialCountryCode,
               decoration: InputDecoration(
@@ -73,23 +76,28 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
                 contentPadding: const EdgeInsets.all(20),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
-                  borderSide:
-                      const BorderSide(color: ColorsManager.secondaryColor),
+                  borderSide: const BorderSide(
+                    color: ColorsManager.secondaryColor,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
                   borderSide: const BorderSide(
-                      color: ColorsManager.primaryColor, width: 2),
+                    color: ColorsManager.primaryColor,
+                    width: 2,
+                  ),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
-                  borderSide:
-                      BorderSide(color: Theme.of(context).colorScheme.error),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
-                  borderSide:
-                      const BorderSide(color: ColorsManager.secondaryColor),
+                  borderSide: const BorderSide(
+                    color: ColorsManager.secondaryColor,
+                  ),
                 ),
               ),
               validator: (phone) {
@@ -99,7 +107,7 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
                 return null;
               },
               onChanged: (phone) {
-                fieldState.didChange(phone.completeNumber); 
+                fieldState.didChange(phone.completeNumber);
                 if (widget.onChanged != null) {
                   widget.onChanged!(phone.completeNumber, phone.countryCode);
                 }

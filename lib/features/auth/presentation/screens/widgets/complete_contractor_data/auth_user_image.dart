@@ -5,15 +5,10 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 
-class ProfileAvatarWithEdit extends StatelessWidget {
+class AuthUserImage extends StatelessWidget {
   final VoidCallback? onEditTap;
 
-  const ProfileAvatarWithEdit({
-    super.key,
-    this.onEditTap,
-    this.isUserProfile = false,
-  });
-  final bool isUserProfile;
+  const AuthUserImage({super.key, this.onEditTap});
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -22,9 +17,7 @@ class ProfileAvatarWithEdit extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 50,
-            backgroundColor: isUserProfile
-                ? Colors.transparent
-                : ColorsManager.primaryColor,
+            backgroundColor: ColorsManager.primaryColor,
             child: BlocBuilder<AuthCubit, AuthState>(
               buildWhen: (previous, current) => previous.logo != current.logo,
               builder: (context, state) {
@@ -33,17 +26,13 @@ class ProfileAvatarWithEdit extends StatelessWidget {
                   backgroundColor: Colors.white,
                   backgroundImage: state.logo != null
                       ? FileImage(state.logo!)
-                      : AssetImage(
-                          isUserProfile
-                              ? AssetsManager.userImage
-                              : AssetsManager.logoImage,
-                        ),
+                      : const AssetImage(AssetsManager.userImage),
                 );
               },
             ),
           ),
           Positioned(
-            bottom: isUserProfile ? -2 : -4,
+            bottom: -2,
             right: -4,
             child: InkWell(
               onTap: onEditTap ?? () {},

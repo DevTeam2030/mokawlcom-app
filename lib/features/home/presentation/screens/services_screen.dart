@@ -123,6 +123,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   state: state.getServicesState,
                   errorMessage: state.servicesErrorMessage,
                   onLoading: Skeletonizer(
+                    containersColor: ColorsManager.skeletonColor,
                     enabled:
                         state.getServicesState.isLoading && !hasData,
                     child: _buildServices(

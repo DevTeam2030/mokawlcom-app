@@ -4,6 +4,7 @@ import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_state.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -19,9 +20,9 @@ class PriceOfferUploadFileSection extends StatelessWidget {
       children: [
         InkWell(
           onTap: () async {
-            await context.read<HomeCubit>().pickFile();
+            await context.read<ContractorInfoCubit>().pickFile();
           },
-          child: BlocBuilder<HomeCubit, HomeState>(
+          child: BlocBuilder<ContractorInfoCubit, ContractorInfoState>(
             buildWhen: (previous, current) =>
                 previous.isFileLoading != current.isFileLoading ||
                 previous.file != current.file,
@@ -80,7 +81,7 @@ class PriceOfferUploadFileSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 80),
-        BlocSelector<HomeCubit, HomeState, double>(
+        BlocSelector<ContractorInfoCubit, ContractorInfoState, double>(
           selector: (state) => state.progress,
           builder: (context, progress) {
             if (progress > 0 && progress < 1) {

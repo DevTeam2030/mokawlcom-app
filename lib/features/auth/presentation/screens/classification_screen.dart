@@ -102,6 +102,7 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
             theme: theme,
             errorMessage: state.errorMessage,
             onLoading: Skeletonizer(
+              containersColor: ColorsManager.skeletonColor,
               enabled: state.getClassificationsState.isLoading && !hasData,
               child: _buildList(
                 theme,

@@ -42,8 +42,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
 
   void _resetLoading(RequestStatus status) {
     if (_isLoadingMore &&
-        (status == RequestStatus.success ||
-            status == RequestStatus.error)) {
+        (status == RequestStatus.success || status == RequestStatus.error)) {
       _isLoadingMore = false;
     }
   }
@@ -60,14 +59,14 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
       buildWhen: (p, c) =>
           p.getClassificationsState != c.getClassificationsState,
       builder: (context, state) {
-        final hasData =
-            state.classificationsModel.classifications.isNotEmpty;
+        final hasData = state.classificationsModel.classifications.isNotEmpty;
 
         return UiStateBuilder(
           theme: widget.theme,
           state: state.getClassificationsState,
           errorMessage: state.classificationsErrorMessage,
           onLoading: Skeletonizer(
+            containersColor: ColorsManager.skeletonColor,
             enabled: state.getClassificationsState.isLoading && !hasData,
             child: _buildGrid(
               context,
@@ -93,8 +92,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
           onError: hasData
               ? _buildGrid(
                   context,
-                  classifications:
-                      state.classificationsModel.classifications,
+                  classifications: state.classificationsModel.classifications,
                   status: state.getClassificationsState,
                 )
               : const SizedBox.shrink(),
@@ -136,8 +134,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
             crossAxisSpacing: 20,
             childAspectRatio: 0.78,
           ),
-          itemCount:
-              classifications.length + (status.isLoadingMore ? 2 : 0),
+          itemCount: classifications.length + (status.isLoadingMore ? 2 : 0),
           itemBuilder: (context, index) {
             if (index >= classifications.length && status.isLoadingMore) {
               return Container(
@@ -153,9 +150,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
               classificationModel: classifications[index],
               onTap: () {
                 context.pushRoute(
-                  ServicesRoute(
-                    classificationModel: classifications[index],
-                  ),
+                  ServicesRoute(classificationModel: classifications[index]),
                 );
               },
             );

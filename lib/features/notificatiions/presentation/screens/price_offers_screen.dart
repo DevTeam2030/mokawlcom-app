@@ -98,20 +98,21 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
           state: state.getOfferNotificationsState,
           errorMessage: state.offerNotificationsErrorMessage,
           onLoading: Skeletonizer(
+            containersColor: ColorsManager.skeletonColor,
             enabled: state.getOfferNotificationsState.isLoading && !hasData,
             child: _buildOffersList(
               theme: theme,
               notifications: List.generate(
                 6,
                 (context) => const OfferNotificationModel(
-                  body: "*****************",
-                  date: "*******",
+                  body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                  date: "22/12/2022",
                   status: false,
-                  offerUserName: "********",
+                  offerUserName: "John Doe",
                   id: 0,
                   offerId: 0,
-                  title: "********",
-                  time: "****",
+                  title: "Offer Title",
+                  time: "10:00",
                 ),
               ),
               status: state.getOfferNotificationsState,

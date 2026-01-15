@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
-import 'package:mokawlcom_app/features/shared/presentation/widgets/offer_price_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/offer_price_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/reply_on_offer_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 import 'package:vector_graphics/vector_graphics.dart';
@@ -86,43 +87,42 @@ class OfferDetails extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                if (isOffer)
-                  Row(
-                    children: [
-                      const VectorGraphic(
-                        loader: AssetBytesLoader(AssetsManager.pdf),
-                      ),
-                      const SizedBox(width: 10),
-                      // const VectorGraphic(
-                      //   loader: AssetBytesLoader(AssetsManager.image),
-                      // ),
-                      const Icon(
-                        Icons.image_outlined,
-                        size: 50,
-                        color: ColorsManager.primaryColor,
-                      ),
-                      const Spacer(),
-                      TextButton(
-                        onPressed: () async {
-                          // await showModalBottomSheet(
-                          //   isScrollControlled: true,
-                          //   backgroundColor: Colors.white,
-                          //   context: context,
-                          //   builder: (context) => OfferPriceBottomSheet(
-                          //     address: LocaleKeys.replyToThePriceOffer,
-                          //   ),
-                          // );
-                        },
-                        child: Text(
-                          LocaleKeys.addReply,
-                          style: theme.textTheme.bodyMedium!.copyWith(
-                            color: ColorsManager.primaryColor,
-                            fontWeight: FontWeight.bold,
+                Row(
+                  children: [
+                    const VectorGraphic(
+                      loader: AssetBytesLoader(AssetsManager.pdf),
+                    ),
+                    const SizedBox(width: 10),
+                    // const VectorGraphic(
+                    //   loader: AssetBytesLoader(AssetsManager.image),
+                    // ),
+                    const Icon(
+                      Icons.image_outlined,
+                      size: 50,
+                      color: ColorsManager.primaryColor,
+                    ),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () async {
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.white,
+                          context: context,
+                          builder: (context) => ReplyOnOfferBottomSheet(
+                            address: LocaleKeys.replyToThePriceOffer,
                           ),
+                        );
+                      },
+                      child: Text(
+                        LocaleKeys.addReply,
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: ColorsManager.primaryColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

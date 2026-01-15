@@ -143,5 +143,6 @@
   "sar": "ريال",
   "processing_file": "جار معالجة الملف...",
   "no_saved_companies": "لا يوجد شركات محفوظة",
-  "no_notifications_exist": "لا يوجد إشعارات"
+  "no_notifications_exist": "لا يوجد إشعارات",
+  "please_select_an_image":"من فضلك اختر صورة"
 }

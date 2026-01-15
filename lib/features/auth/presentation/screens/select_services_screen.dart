@@ -101,6 +101,7 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
             theme: theme,
             errorMessage: state.errorMessage,
             onLoading: Skeletonizer(
+              containersColor: ColorsManager.skeletonColor,
               enabled: state.getServicesState.isLoading && !hasData,
               child: _buildServices(
                 theme,

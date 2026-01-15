@@ -46,6 +46,7 @@ class _HomeSearchSectionState extends State<HomeSearchSection> {
             previous.getBannersState != current.getBannersState,
         builder: (context, state) {
           return Skeletonizer(
+            containersColor: ColorsManager.skeletonColor,
             enabled: state.getBannersState.isLoading,
             child: Row(
               children: [
