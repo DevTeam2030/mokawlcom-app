@@ -205,4 +205,5 @@ class LocaleKeys {
   static String get noSavedCompanies => 'no_saved_companies'.tr();
   static String get noNotificationsExist => 'no_notifications_exist'.tr();
   static String get pleaseSelectAnImage => 'please_select_an_image'.tr();
+  static String get noRepliesYet => 'no_replies_yet'.tr();
 }

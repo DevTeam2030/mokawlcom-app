@@ -3,15 +3,22 @@ import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/offer_price_bottom_sheet.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/reply_on_offer_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
 class OfferDetails extends StatelessWidget {
-  const OfferDetails({super.key, required this.theme, this.isOffer = false});
+  const OfferDetails({
+    super.key,
+    required this.theme,
+    this.isOffer = false,
+    required this.offerNotificationModel,
+  });
   final ThemeData theme;
   final bool isOffer;
+  final OfferNotificationModel offerNotificationModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,6 +31,7 @@ class OfferDetails extends StatelessWidget {
           ColoredBox(
             color: isOffer ? ColorsManager.surfaceColor : Colors.transparent,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,44 +51,76 @@ class OfferDetails extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 13),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          isOffer
-                              ? LocaleKeys.offerPrice
-                              : LocaleKeys.messageAddress,
-                          style: theme.textTheme.labelMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: ColorsManager.primaryColor,
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            offerNotificationModel.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.labelMedium!.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: ColorsManager.primaryColor,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 5),
+                          const SizedBox(height: 5),
+                          Text(
+                            textDirection: TextDirection.rtl,
+                            "${offerNotificationModel.time} - ${offerNotificationModel.date}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.labelSmall!.copyWith(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 10,
+                              color: ColorsManager.labelColor,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            "${LocaleKeys.offeredBy} : ${offerNotificationModel.offerUserName}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.labelSmall!.copyWith(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 10,
+                              color: ColorsManager.labelColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
-                        Text(
-                          "2-12-2025 16:00",
-                          style: theme.textTheme.labelSmall!.copyWith(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 10,
-                            color: ColorsManager.labelColor,
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            LocaleKeys.price,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.bodySmall!.copyWith(
+                              color: ColorsManager.primaryColor,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          "${LocaleKeys.offeredBy} :  محمد احمد",
-                          style: theme.textTheme.labelSmall!.copyWith(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 10,
-                            color: ColorsManager.labelColor,
+                          const SizedBox(height: 5),
+                          Text(
+                            "${offerNotificationModel.price}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.bodySmall!.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: ColorsManager.primaryColor,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "هذا نص تجريبي لاختبار شكل و حجم النصوص و طريقة عرضها في هذا المكان",
+                  offerNotificationModel.message,
                   style: theme.textTheme.labelSmall!.copyWith(
                     height: 1.5,
                     color: ColorsManager.accentTextColor,
@@ -89,38 +129,40 @@ class OfferDetails extends StatelessWidget {
                 const SizedBox(height: 16),
                 Row(
                   children: [
-                    const VectorGraphic(
-                      loader: AssetBytesLoader(AssetsManager.pdf),
-                    ),
+                    offerNotificationModel.isPdf
+                        ? const VectorGraphic(
+                            loader: AssetBytesLoader(AssetsManager.pdf),
+                          )
+                        : const SizedBox.shrink(),
                     const SizedBox(width: 10),
-                    // const VectorGraphic(
-                    //   loader: AssetBytesLoader(AssetsManager.image),
-                    // ),
-                    const Icon(
-                      Icons.image_outlined,
-                      size: 50,
-                      color: ColorsManager.primaryColor,
-                    ),
+                    !offerNotificationModel.isPdf
+                        ? const Icon(
+                            Icons.image_outlined,
+                            size: 50,
+                            color: ColorsManager.primaryColor,
+                          )
+                        : const SizedBox.shrink(),
                     const Spacer(),
-                    TextButton(
-                      onPressed: () async {
-                        await showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: Colors.white,
-                          context: context,
-                          builder: (context) => ReplyOnOfferBottomSheet(
-                            address: LocaleKeys.replyToThePriceOffer,
+                    if (isOffer)
+                      TextButton(
+                        onPressed: () async {
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.white,
+                            context: context,
+                            builder: (context) => ReplyOnOfferBottomSheet(
+                              address: LocaleKeys.replyToThePriceOffer,
+                            ),
+                          );
+                        },
+                        child: Text(
+                          LocaleKeys.addReply,
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            color: ColorsManager.primaryColor,
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                      },
-                      child: Text(
-                        LocaleKeys.addReply,
-                        style: theme.textTheme.bodyMedium!.copyWith(
-                          color: ColorsManager.primaryColor,
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
                   ],
                 ),
               ],

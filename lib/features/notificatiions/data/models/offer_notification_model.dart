@@ -4,32 +4,41 @@ class OfferNotificationModel extends Equatable {
   final int id;
   final int offerId;
   final String title;
-  final String body;
+  final String message;
   final String date;
   final String time;
   final bool status;
+  final bool isPdf;
+  final String url;
   final String offerUserName;
+  final num price;
 
   const OfferNotificationModel({
     required this.id,
     required this.offerId,
     required this.title,
-    required this.body,
+    required this.message,
     required this.date,
     required this.time,
     required this.status,
     required this.offerUserName,
+    required this.price,
+    required this.isPdf,
+    required this.url,
   });
   factory OfferNotificationModel.fromJson(Map<String, dynamic> json) {
     return OfferNotificationModel(
       id: json["id"] ?? 0,
       offerId: json["offer_id"] ?? 0,
-      title: json["not_title"] ?? "",
-      body: json["message"] ?? "",
+      title: json["title_offer"] ?? "",
+      message: json["message"] ?? "",
       date: json["date"] ?? "",
       time: json["time"] ?? "",
       status: json["status"] ?? false,
       offerUserName: json["offer_user_name"] ?? "",
+      isPdf: json["is_pdf"] ?? false,
+      url: json["file"] ?? "",
+      price: json["price"] ?? 0,
     );
   }
   @override
@@ -37,9 +46,12 @@ class OfferNotificationModel extends Equatable {
     id,
     offerId,
     title,
-    body,
+    message,
     date,
     time,
     offerUserName,
+    isPdf,
+    url,
+    price,
   ];
 }

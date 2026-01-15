@@ -25,7 +25,9 @@ class PriceOfferItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.pushRoute(const OfferDetailsRoute());
+        context.pushRoute(OfferDetailsRoute(
+          offerNotificationModel: offerNotificationModel,
+        ));
         context.read<NotificationsCubit>().markOfferNotificationAsRead(
           notificationId: offerNotificationModel.id,
         );

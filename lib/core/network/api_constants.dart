@@ -29,5 +29,6 @@ class ApiConstants {
   static const String getOfferNotifications = "/offer-notifications";
   static const String updateProfile = "/update-profile";
   static const String changeImage = "/change-image-profile";
+  static const String getOfferDetails = "/show-offer";
   
 }

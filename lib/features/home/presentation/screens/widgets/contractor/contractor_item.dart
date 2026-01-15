@@ -227,7 +227,7 @@ class ContractorItem extends StatelessWidget {
                         context.pushRoute(
                           ContractorDetailsRoute(
                             contractorId: contractorModel.id,
-                            isOfferrice: true,
+                            isOfferPrice: true,
         
                           ),
                         );

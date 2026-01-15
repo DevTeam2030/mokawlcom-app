@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/offer_details_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/repo/notifications_repo.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
 
@@ -208,5 +209,85 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     );
     updatedReadStatus[notificationId] = true;
     emit(state.copyWith(offerNotificationsReadStatus: updatedReadStatus));
+  }
+
+  Future<void> getOfferDetails({required int offerId}) async {
+    emit(
+      state.copyWith(
+        getOfferDetailsState: RequestStatus.loading,
+        offerDetails: const OfferDetailsModel.empty(),
+        isConnected: true,
+      ),
+    );
+    final result = await notificationsRepo.getOfferDetails(
+      page: state.offerDetailsCurrentPage,
+      offerId: offerId,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          state.copyWith(
+            getOfferDetailsState: RequestStatus.error,
+            offerDetailsErrorMessage: failure.errorMessage,
+            isConnected: failure.isConnected,
+          ),
+        );
+      },
+      (offerDetails) {
+        emit(
+          state.copyWith(
+            getOfferDetailsState: RequestStatus.success,
+            offerDetails: offerDetails,
+            offerDetailsCurrentPage: offerDetails.currentPage,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> loadMoreOfferDetails({
+    required int offerId,
+  }) async {
+    if (state.getOfferDetailsState == RequestStatus.loadingMore ||
+        state.offerDetailsCurrentPage >=
+            state.offerDetails.totalPages) {
+      return;
+    }
+    emit(
+      state.copyWith(
+        getOfferDetailsState: RequestStatus.loadingMore,
+        isConnected: true,
+      ),
+    );
+    final result = await notificationsRepo.getOfferDetails(
+      page: state.offerDetailsCurrentPage + 1,
+      offerId: offerId,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          state.copyWith(
+            getOfferDetailsState: RequestStatus.error,
+            offerDetailsErrorMessage: failure.errorMessage,
+            isConnected: failure.isConnected,
+          ),
+        );
+      },
+      (offerDetails) {
+        final updatedOfferDetails = state.offerDetails.copyWith(
+          replies: [
+            ...state.offerDetails.replies,
+            ...offerDetails.replies,
+          ],
+        );
+        emit(
+          state.copyWith(
+            getOfferDetailsState: RequestStatus.success,
+            offerDetails: updatedOfferDetails,
+            offerDetailsCurrentPage: offerDetails.currentPage,
+          ),
+        );
+      },
+    );
   }
 }

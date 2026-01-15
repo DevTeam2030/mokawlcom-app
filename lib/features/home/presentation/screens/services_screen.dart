@@ -190,7 +190,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
               borderRadius: BorderRadius.circular(12),
             ),
           );
-        }
+      }
 
         return ServiceGridItem(
           theme: theme,

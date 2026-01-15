@@ -190,14 +190,14 @@ class CompleteDataRoute extends PageRouteInfo<void> {
 class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
   ContractorDetailsRoute({
     Key? key,
-    bool isOfferrice = false,
+    bool isOfferPrice = false,
     required int contractorId,
     List<PageRouteInfo>? children,
   }) : super(
          ContractorDetailsRoute.name,
          args: ContractorDetailsRouteArgs(
            key: key,
-           isOfferrice: isOfferrice,
+           isOfferPrice: isOfferPrice,
            contractorId: contractorId,
          ),
          initialChildren: children,
@@ -212,7 +212,7 @@ class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
       return WrappedRoute(
         child: ContractorDetailsScreen(
           key: args.key,
-          isOfferPrice: args.isOfferrice,
+          isOfferPrice: args.isOfferPrice,
           contractorId: args.contractorId,
         ),
       );
@@ -223,19 +223,19 @@ class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
 class ContractorDetailsRouteArgs {
   const ContractorDetailsRouteArgs({
     this.key,
-    this.isOfferrice = false,
+    this.isOfferPrice = false,
     required this.contractorId,
   });
 
   final Key? key;
 
-  final bool isOfferrice;
+  final bool isOfferPrice;
 
   final int contractorId;
 
   @override
   String toString() {
-    return 'ContractorDetailsRouteArgs{key: $key, isOfferrice: $isOfferrice, contractorId: $contractorId}';
+    return 'ContractorDetailsRouteArgs{key: $key, isOfferPrice: $isOfferPrice, contractorId: $contractorId}';
   }
 
   @override
@@ -243,13 +243,13 @@ class ContractorDetailsRouteArgs {
     if (identical(this, other)) return true;
     if (other is! ContractorDetailsRouteArgs) return false;
     return key == other.key &&
-        isOfferrice == other.isOfferrice &&
+        isOfferPrice == other.isOfferPrice &&
         contractorId == other.contractorId;
   }
 
   @override
   int get hashCode =>
-      key.hashCode ^ isOfferrice.hashCode ^ contractorId.hashCode;
+      key.hashCode ^ isOfferPrice.hashCode ^ contractorId.hashCode;
 }
 
 /// generated route for
@@ -491,18 +491,56 @@ class NotificationsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [OfferDetailsScreen]
-class OfferDetailsRoute extends PageRouteInfo<void> {
-  const OfferDetailsRoute({List<PageRouteInfo>? children})
-    : super(OfferDetailsRoute.name, initialChildren: children);
+class OfferDetailsRoute extends PageRouteInfo<OfferDetailsRouteArgs> {
+  OfferDetailsRoute({
+    Key? key,
+    required OfferNotificationModel offerNotificationModel,
+    List<PageRouteInfo>? children,
+  }) : super(
+         OfferDetailsRoute.name,
+         args: OfferDetailsRouteArgs(
+           key: key,
+           offerNotificationModel: offerNotificationModel,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'OfferDetailsRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const OfferDetailsScreen();
+      final args = data.argsAs<OfferDetailsRouteArgs>();
+      return OfferDetailsScreen(
+        key: args.key,
+        offerNotificationModel: args.offerNotificationModel,
+      );
     },
   );
+}
+
+class OfferDetailsRouteArgs {
+  const OfferDetailsRouteArgs({this.key, required this.offerNotificationModel});
+
+  final Key? key;
+
+  final OfferNotificationModel offerNotificationModel;
+
+  @override
+  String toString() {
+    return 'OfferDetailsRouteArgs{key: $key, offerNotificationModel: $offerNotificationModel}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! OfferDetailsRouteArgs) return false;
+    return key == other.key &&
+        offerNotificationModel == other.offerNotificationModel;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ offerNotificationModel.hashCode;
 }
 
 /// generated route for

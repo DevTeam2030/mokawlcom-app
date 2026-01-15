@@ -105,7 +105,8 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
               notifications: List.generate(
                 6,
                 (context) => const OfferNotificationModel(
-                  body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                  message:
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                   date: "22/12/2022",
                   status: false,
                   offerUserName: "John Doe",
@@ -113,6 +114,9 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
                   offerId: 0,
                   title: "Offer Title",
                   time: "10:00",
+                  isPdf: false,
+                  price: 0,
+                  url: "",
                 ),
               ),
               status: state.getOfferNotificationsState,
@@ -171,7 +175,7 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
             ),
           );
         }
-        
+
         return PriceOfferItem(
           theme: theme,
           offerNotificationModel: notifications[index],
