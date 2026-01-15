@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_details_model.dart';
@@ -18,9 +20,15 @@ class NotificationsState extends Equatable {
   final OfferDetailsModel offerDetails;
   final String offerDetailsErrorMessage;
   final int offerDetailsCurrentPage;
-  final Map<int,bool> publicNotificationsReadStatus;
-  final Map<int,bool> offerNotificationsReadStatus;
+  final Map<int, bool> publicNotificationsReadStatus;
+  final Map<int, bool> offerNotificationsReadStatus;
   final bool isConnected;
+  final String replayOnOfferPriceMessage;
+  final bool isFileLoading;
+  final double progress;
+  final RequestStatus replayOnOfferPriceState;
+
+  final File? file;
 
   const NotificationsState({
     this.getPublicNotificationsState = RequestStatus.initial,
@@ -37,6 +45,11 @@ class NotificationsState extends Equatable {
     this.offerDetailsCurrentPage = 1,
     this.publicNotificationsReadStatus = const {},
     this.offerNotificationsReadStatus = const {},
+    this.replayOnOfferPriceMessage = "",
+    this.isFileLoading = false,
+    this.progress = 0,
+    this.file,
+    this.replayOnOfferPriceState = RequestStatus.initial,
     this.isConnected = true,
   });
 
@@ -53,8 +66,13 @@ class NotificationsState extends Equatable {
     OfferDetailsModel? offerDetails,
     String? offerDetailsErrorMessage,
     int? offerDetailsCurrentPage,
-    Map<int,bool>? publicNotificationsReadStatus,
-    Map<int,bool>? offerNotificationsReadStatus,
+    Map<int, bool>? publicNotificationsReadStatus,
+    Map<int, bool>? offerNotificationsReadStatus,
+    String? replayOnOfferPriceMessage,
+    bool? isFileLoading,
+    double? progress,
+    File? file,
+    RequestStatus? replayOnOfferPriceState,
     bool? isConnected,
   }) {
     return NotificationsState(
@@ -75,18 +93,26 @@ class NotificationsState extends Equatable {
           offerNotificationsCurrentPage ?? this.offerNotificationsCurrentPage,
       getOfferDetailsState: getOfferDetailsState ?? this.getOfferDetailsState,
       offerDetails: offerDetails ?? this.offerDetails,
-      offerDetailsErrorMessage: offerDetailsErrorMessage ?? this.offerDetailsErrorMessage,
-      offerDetailsCurrentPage: offerDetailsCurrentPage ?? this.offerDetailsCurrentPage,
+      offerDetailsErrorMessage:
+          offerDetailsErrorMessage ?? this.offerDetailsErrorMessage,
+      offerDetailsCurrentPage:
+          offerDetailsCurrentPage ?? this.offerDetailsCurrentPage,
       publicNotificationsReadStatus:
           publicNotificationsReadStatus ?? this.publicNotificationsReadStatus,
       offerNotificationsReadStatus:
           offerNotificationsReadStatus ?? this.offerNotificationsReadStatus,
+      replayOnOfferPriceMessage:
+          replayOnOfferPriceMessage ?? this.replayOnOfferPriceMessage,
+      isFileLoading: isFileLoading ?? this.isFileLoading,
+      progress: progress ?? this.progress,
+      file: file ?? this.file,
+      replayOnOfferPriceState: replayOnOfferPriceState ?? this.replayOnOfferPriceState,
       isConnected: isConnected ?? this.isConnected,
     );
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
     getPublicNotificationsState,
     publicNotifications,
     publicNotificationsErrorMessage,
@@ -101,6 +127,11 @@ class NotificationsState extends Equatable {
     offerDetailsCurrentPage,
     publicNotificationsReadStatus,
     offerNotificationsReadStatus,
+    replayOnOfferPriceMessage,
+    isFileLoading,
+    progress,
+    file,
+    replayOnOfferPriceState,
     isConnected,
   ];
 }

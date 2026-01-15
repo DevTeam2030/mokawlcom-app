@@ -81,21 +81,23 @@ class PriceOfferUploadFileSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 80),
-        BlocSelector<ContractorInfoCubit, ContractorInfoState, double>(
-          selector: (state) => state.progress,
-          builder: (context, progress) {
-            if (progress > 0 && progress < 1) {
+        BlocBuilder<ContractorInfoCubit, ContractorInfoState>(
+          buildWhen: (previous, current) =>
+              previous.progress != current.progress ||
+              previous.file != current.file,
+          builder: (context, state) {
+            if (state.progress > 0 && state.progress < 1 && state.file != null) {
               return Row(
                 children: [
                   Expanded(
                     child: LinearProgressIndicator(
-                      value: progress,
+                      value: state.progress,
                       color: ColorsManager.primaryColor,
                     ),
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    "${(progress * 100).toStringAsFixed(0)} %",
+                    "${(state.progress * 100).toStringAsFixed(0)} %",
                     style: theme.textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: ColorsManager.primaryColor,
@@ -103,7 +105,7 @@ class PriceOfferUploadFileSection extends StatelessWidget {
                   ),
                 ],
               );
-            } else if (progress == 1) {
+            } else if (state.progress == 1 && state.file != null) {
               return Row(
                 mainAxisAlignment: .center,
                 children: [

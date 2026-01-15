@@ -9,13 +9,16 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verific
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/price_offer_upload_file_section.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/reply_on_price_offer_upload_section.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 class ReplyOnOfferBottomSheet extends StatefulWidget {
-  const ReplyOnOfferBottomSheet({super.key, required this.address});
+  const ReplyOnOfferBottomSheet({super.key, required this.address, required this.offerId});
   final String address;
+  final String offerId;
 
   @override
   State<ReplyOnOfferBottomSheet> createState() =>
@@ -123,43 +126,43 @@ class _ReplyOnOfferBottomSheetState extends State<ReplyOnOfferBottomSheet> {
               const SizedBox(height: 8),
               const ReplyOnPriceOfferUploadFileSection(),
               const SizedBox(height: 24),
-              // BlocConsumer<HomeCubit, HomeState>(
-              //   listenWhen: (previous, current) =>
-              //       previous.addOfferPriceState != current.addOfferPriceState,
-              //   buildWhen: (previous, current) =>
-              //       previous.addOfferPriceState != current.addOfferPriceState,
-              //   listener: (context, state) {
-              //     if (state.addOfferPriceState.isError) {
-              //       showDialog(
-              //         context: context,
-              //         builder: (context) => ErrorDialog(
-              //           theme: theme,
-              //           message: state.addOfferPriceMessage,
-              //         ),
-              //       );
-              //     }
-              //     if (state.addOfferPriceState.isSuccess) {
-              //       showDialog(
-              //         context: context,
-              //         builder: (context) => SuccessDialog(
-              //           onPressed: () => Navigator.pop(context),
-              //           text: LocaleKeys.close,
-              //           theme: theme,
-              //           message: state.addOfferPriceMessage,
-              //         ),
-              //       );
-              //     }
-              //   },
-              //   builder: (context, state) {
-              //     return PrimaryButton(
-              //       isLoading: state.addOfferPriceState.isLoading,
-              //       onPressed: () async {
-              //         await _submit(context);
-              //       },
-              //       text: LocaleKeys.send,
-              //     );
-              //   },
-              // ),
+              BlocConsumer<NotificationsCubit, NotificationsState>(
+                listenWhen: (previous, current) =>
+                    previous.replayOnOfferPriceState != current.replayOnOfferPriceState,
+                buildWhen: (previous, current) =>
+                    previous.replayOnOfferPriceState != current.replayOnOfferPriceState,
+                listener: (context, state) {
+                  if (state.replayOnOfferPriceState.isError) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => ErrorDialog(
+                        theme: theme,
+                        message: state.replayOnOfferPriceMessage,
+                      ),
+                    );
+                  }
+                  if (state.replayOnOfferPriceState.isSuccess) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => SuccessDialog(
+                        onPressed: () => Navigator.pop(context),
+                        text: LocaleKeys.close,
+                        theme: theme,
+                        message: state.replayOnOfferPriceMessage,
+                      ),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return PrimaryButton(
+                    isLoading: state.replayOnOfferPriceState.isLoading,
+                    onPressed: () async {
+                      await _submit(context);
+                    },
+                    text: LocaleKeys.send,
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -170,6 +173,13 @@ class _ReplyOnOfferBottomSheetState extends State<ReplyOnOfferBottomSheet> {
   Future<void> _submit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      await context.read<NotificationsCubit>().replyOnOfferPrice(
+        price: _price,
+        title: _title,
+        message: _message,
+        offerId: widget.offerId,
+       
+      );
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;

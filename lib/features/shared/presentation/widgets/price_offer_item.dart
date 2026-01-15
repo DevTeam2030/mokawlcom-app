@@ -25,9 +25,9 @@ class PriceOfferItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.pushRoute(OfferDetailsRoute(
-          offerNotificationModel: offerNotificationModel,
-        ));
+        context.pushRoute(
+          OfferDetailsRoute(offerNotificationModel: offerNotificationModel),
+        );
         context.read<NotificationsCubit>().markOfferNotificationAsRead(
           notificationId: offerNotificationModel.id,
         );
@@ -36,7 +36,8 @@ class PriceOfferItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: BlocSelector<NotificationsCubit, NotificationsState, bool>(
           selector: (state) {
-            return state.offerNotificationsReadStatus[offerNotificationModel.id] ??
+            return state.offerNotificationsReadStatus[offerNotificationModel
+                    .id] ??
                 false;
           },
           builder: (context, isRead) {

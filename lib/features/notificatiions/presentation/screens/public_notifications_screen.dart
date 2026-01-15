@@ -100,15 +100,17 @@ class _PublicNotificationsScreenState extends State<PublicNotificationsScreen> {
           onLoading: Skeletonizer(
             containersColor: ColorsManager.skeletonColor,
             enabled: state.getPublicNotificationsState.isLoading && !hasData,
+            ignoreContainers: true,
             child: _buildNotificationsList(
               notifications: List.generate(
                 6,
                 (context) => const PublicNotificationModel(
-                  body: "*****************",
-                  date: "*******",
+                  body:
+                      "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore",
+                  date: "00/00/0000",
                   id: 0,
-                  title: "********",
-                  time: "****",
+                  title: "Notification Title Placeholder",
+                  time: "00:00",
                   status: false,
                 ),
               ),

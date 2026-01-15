@@ -135,7 +135,7 @@ class OfferDetails extends StatelessWidget {
                           )
                         : const SizedBox.shrink(),
                     const SizedBox(width: 10),
-                    !offerNotificationModel.isPdf
+                    !offerNotificationModel.isPdf && offerNotificationModel.url.isNotEmpty
                         ? const Icon(
                             Icons.image_outlined,
                             size: 50,
@@ -152,6 +152,7 @@ class OfferDetails extends StatelessWidget {
                             context: context,
                             builder: (context) => ReplyOnOfferBottomSheet(
                               address: LocaleKeys.replyToThePriceOffer,
+                              offerId: offerNotificationModel.offerId.toString(),
                             ),
                           );
                         },

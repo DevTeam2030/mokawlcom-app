@@ -9,6 +9,7 @@ import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
+import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
@@ -80,79 +81,99 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
           ),
         ),
       ),
-      body: BlocConsumer<NotificationsCubit, NotificationsState>(
-        listenWhen: (previous, current) =>
-            previous.getOfferDetailsState != current.getOfferDetailsState,
-        listener: (context, state) {
-          if (state.getOfferDetailsState.isError) {
-            showToast(
-              message: state.offerDetailsErrorMessage,
-              state: ToastStates.error,
-            );
-          }
-        },
-        buildWhen: (previous, current) =>
-            previous.getOfferDetailsState != current.getOfferDetailsState,
-        builder: (context, state) {
-          final hasData = state.offerDetails.replies.isNotEmpty;
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          OfferDetails(theme: theme, isOffer: true,offerNotificationModel: widget.offerNotificationModel ,),
+          Padding(
+          padding: const EdgeInsetsDirectional.only(start: 14),
+          child: Text(
+            LocaleKeys.replys,
+            style: theme.textTheme.bodyMedium!.copyWith(
+              color: ColorsManager.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+               const SizedBox(height: 16),
 
-          if (!state.isConnected && !hasData) {
-            return NoInternetWidget(
-              errorMessage: state.offerDetailsErrorMessage,
-              theme: theme,
-              onPressed: () {
-                context.read<NotificationsCubit>().getOfferDetails(
-                  offerId: widget.offerNotificationModel.offerId,
+          Expanded(
+            child: BlocConsumer<NotificationsCubit, NotificationsState>(
+              listenWhen: (previous, current) =>
+                  previous.getOfferDetailsState != current.getOfferDetailsState,
+              listener: (context, state) {
+                if (state.getOfferDetailsState.isError) {
+                  showToast(
+                    message: state.offerDetailsErrorMessage,
+                    state: ToastStates.error,
+                  );
+                }
+              },
+              buildWhen: (previous, current) =>
+                  previous.getOfferDetailsState != current.getOfferDetailsState,
+              builder: (context, state) {
+                final hasData = state.offerDetails.replies.isNotEmpty;
+            
+                if (!state.isConnected && !hasData) {
+                  return NoInternetWidget(
+                    errorMessage: state.offerDetailsErrorMessage,
+                    theme: theme,
+                    onPressed: () {
+                      context.read<NotificationsCubit>().getOfferDetails(
+                        offerId: widget.offerNotificationModel.offerId,
+                      );
+                    },
+                  );
+                }
+            
+                return UiStateBuilder(
+                  theme: theme,
+                  state: state.getOfferDetailsState,
+                  errorMessage: state.offerDetailsErrorMessage,
+                  onLoading: Skeletonizer(
+                    containersColor: ColorsManager.skeletonColor,
+                    enabled: state.getOfferDetailsState.isLoading && !hasData,
+                    child: _buildDetailsContent(
+                      theme: theme,
+                      replies: List.generate(
+                        3,
+                        (context) => const OfferNotificationModel(
+                          id: 0,
+                          message:
+                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                          date: "22/12/2022",
+                          time: "10:00",
+                          offerUserName: "John Doe",
+                          offerId: 0,
+                          title: "Offer Reply",
+                          status: false,
+                          isPdf: false,
+                          url: "",
+                          price: 0,
+                        ),
+                      ),
+                      status: state.getOfferDetailsState,
+                    ),
+                  ),
+                  onSuccess: hasData
+                      ? _buildDetailsContent(
+                          replies: state.offerDetails.replies,
+                          status: state.getOfferDetailsState,
+                          theme: theme,
+                        )
+                      : NoDataWidget(theme: theme, text: LocaleKeys.noRepliesYet),
+                  onError: hasData
+                      ? _buildDetailsContent(
+                          replies: state.offerDetails.replies,
+                          status: state.getOfferDetailsState,
+                          theme: theme,
+                        )
+                      : NoDataWidget(theme: theme, text: LocaleKeys.noRepliesYet),
                 );
               },
-            );
-          }
-
-          return UiStateBuilder(
-            theme: theme,
-            state: state.getOfferDetailsState,
-            errorMessage: state.offerDetailsErrorMessage,
-            onLoading: Skeletonizer(
-              containersColor: ColorsManager.skeletonColor,
-              enabled: state.getOfferDetailsState.isLoading && !hasData,
-              child: _buildDetailsContent(
-                theme: theme,
-                replies: List.generate(
-                  3,
-                  (context) => const OfferNotificationModel(
-                    id: 0,
-                    message:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-                    date: "22/12/2022",
-                    time: "10:00",
-                    offerUserName: "John Doe",
-                    offerId: 0,
-                    title: "Offer Reply",
-                    status: false,
-                    isPdf: false,
-                    url: "",
-                    price: 0,
-                  ),
-                ),
-                status: state.getOfferDetailsState,
-              ),
             ),
-            onSuccess: hasData
-                ? _buildDetailsContent(
-                    replies: state.offerDetails.replies,
-                    status: state.getOfferDetailsState,
-                    theme: theme,
-                  )
-                : NoDataWidget(theme: theme, text: LocaleKeys.noRepliesYet),
-            onError: hasData
-                ? _buildDetailsContent(
-                    replies: state.offerDetails.replies,
-                    status: state.getOfferDetailsState,
-                    theme: theme,
-                  )
-                : NoDataWidget(theme: theme, text: LocaleKeys.noRepliesYet),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
@@ -164,47 +185,28 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
   }) {
     _resetLoading(status);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        OfferDetails(theme: theme, isOffer: true,offerNotificationModel: widget.offerNotificationModel ,),
-        Padding(
-          padding: const EdgeInsetsDirectional.only(start: 14),
-          child: Text(
-            LocaleKeys.replys,
-            style: theme.textTheme.bodyMedium!.copyWith(
-              color: ColorsManager.primaryColor,
-              fontWeight: FontWeight.bold,
+    return ListView.separated(
+      controller: _scrollController,
+      itemCount: replies.length + (status.isLoadingMore ? 1 : 0),
+      separatorBuilder: (_, __) => const SizedBox(height: 16),
+      itemBuilder: (context, index) {
+        if (index == replies.length && status.isLoadingMore) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: SizedBox(
+                width: 26,
+                height: 26,
+                child: CircularProgressIndicator(
+                  color: ColorsManager.primaryColor,
+                ),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        Expanded(
-          child: ListView.separated(
-            controller: _scrollController,
-            itemCount: replies.length + (status.isLoadingMore ? 1 : 0),
-            separatorBuilder: (_, __) => const SizedBox(height: 16),
-            itemBuilder: (context, index) {
-              if (index == replies.length && status.isLoadingMore) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Center(
-                    child: SizedBox(
-                      width: 26,
-                      height: 26,
-                      child: CircularProgressIndicator(
-                        color: ColorsManager.primaryColor,
-                      ),
-                    ),
-                  ),
-                );
-              }
-
-              return OfferDetails(theme: theme,offerNotificationModel: replies[index],);
-            },
-          ),
-        ),
-      ],
+          );
+        }
+        
+        return OfferDetails(theme: theme,offerNotificationModel: replies[index],);
+      },
     );
   }
 }
