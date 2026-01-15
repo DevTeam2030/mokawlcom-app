@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/public_notificarion_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class PublicNotificationItem extends StatelessWidget {
@@ -17,6 +20,9 @@ class PublicNotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        context.read<NotificationsCubit>().markPublicNotificationAsRead(
+          notificationId: notification.id,
+        );
         showGeneralDialog(
           context: context,
           barrierLabel: notification.title,
@@ -60,7 +66,7 @@ class PublicNotificationItem extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                             "${notification.date} - ${notification.time}",
+                              "${notification.date} - ${notification.time}",
                               style: theme.textTheme.labelSmall!.copyWith(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10,
@@ -110,44 +116,54 @@ class PublicNotificationItem extends StatelessWidget {
           },
         );
       },
-      child: ColoredBox(
-        color: ColorsManager.surfaceColor,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            vertical: 12,
-            horizontal: 10,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                notification.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.labelMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: ColorsManager.primaryColor,
+      child: BlocSelector<NotificationsCubit, NotificationsState, bool>(
+        selector: (state) {
+          return state.publicNotificationsReadStatus[notification.id] ?? false;
+        },
+        builder: (context, isRead) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: ColoredBox(
+              color: isRead ? ColorsManager.surfaceColor : Colors.grey.shade200,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.symmetric(
+                  vertical: 12,
+                  horizontal: 10,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      notification.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.labelMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: ColorsManager.primaryColor,
+                      ),
+                    ),
+                    const SizedBox(height: 13),
+                    Text(
+                      "${notification.date} - ${notification.time}",
+                      style: theme.textTheme.labelSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                        color: ColorsManager.secondaryColor,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      notification.body,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.labelSmall!.copyWith(height: 1.5),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 13),
-              Text(
-                "${notification.date} - ${notification.time}",
-                style: theme.textTheme.labelSmall!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 10,
-                  color: ColorsManager.secondaryColor,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                notification.body,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.labelSmall!.copyWith(height: 1.5),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

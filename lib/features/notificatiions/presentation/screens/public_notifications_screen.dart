@@ -108,6 +108,7 @@ class _PublicNotificationsScreenState extends State<PublicNotificationsScreen> {
                   id: 0,
                   title: "********",
                   time: "****",
+                  status: false,
                 ),
               ),
               status: state.getPublicNotificationsState,

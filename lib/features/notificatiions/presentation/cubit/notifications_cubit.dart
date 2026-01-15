@@ -27,12 +27,22 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           ),
         );
       },
-      (publicNotifications) => emit(
-        state.copyWith(
-          getPublicNotificationsState: RequestStatus.success,
-          publicNotifications: publicNotifications,
-        ),
-      ),
+      (publicNotifications) {
+        final updatedPublicNotificationsReadStatus = Map<int, bool>.from(
+          state.publicNotificationsReadStatus,
+        );
+        for (var notification in publicNotifications.notifications) {
+          updatedPublicNotificationsReadStatus[notification.id] =
+              notification.status;
+        }
+        emit(
+          state.copyWith(
+            getPublicNotificationsState: RequestStatus.success,
+            publicNotifications: publicNotifications,
+            publicNotificationsReadStatus: updatedPublicNotificationsReadStatus,
+          ),
+        );
+      },
     );
   }
 
@@ -68,11 +78,19 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             ...publicNotifications.notifications,
           ],
         );
+        final updatedPublicNotificationsReadStatus = Map<int, bool>.from(
+          state.publicNotificationsReadStatus,
+        );
+        for (var notification in publicNotifications.notifications) {
+          updatedPublicNotificationsReadStatus[notification.id] =
+              notification.status;
+        }
         emit(
           state.copyWith(
             getPublicNotificationsState: RequestStatus.success,
             publicNotifications: updatedPublicNotifications,
             publicNotificationsCurrentPage: publicNotifications.currentPage,
+            publicNotificationsReadStatus: updatedPublicNotificationsReadStatus,
           ),
         );
       },
@@ -99,17 +117,28 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           ),
         );
       },
-      (offerNotifications) => emit(
-        state.copyWith(
-          getOfferNotificationsState: RequestStatus.success,
-          offerNotifications: offerNotifications,
-        ),
-      ),
+      (offerNotifications) {
+        final updatedOfferNotificationsReadStatus = Map<int, bool>.from(
+          state.offerNotificationsReadStatus,
+        );
+        for (var notification in offerNotifications.notifications) {
+          updatedOfferNotificationsReadStatus[notification.id] =
+              notification.status;
+        }
+        emit(
+          state.copyWith(
+            getOfferNotificationsState: RequestStatus.success,
+            offerNotifications: offerNotifications,
+            offerNotificationsCurrentPage: offerNotifications.currentPage,
+            offerNotificationsReadStatus: updatedOfferNotificationsReadStatus,
+          ),
+        );
+      },
     );
   }
 
   Future<void> loadMoreOfferNotifications() async {
-    if (state.getOfferNotificationsState == RequestStatus.loadingMore ||
+    if (state.getOfferNotificationsState.isLoadingMore ||
         state.offerNotificationsCurrentPage >=
             state.offerNotifications.totalPages) {
       return;
@@ -140,14 +169,44 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             ...offerNotifications.notifications,
           ],
         );
+        final updatedOfferNotificationsReadStatus = Map<int, bool>.from(
+          state.offerNotificationsReadStatus,
+        );
+        for (var notification in offerNotifications.notifications) {
+          updatedOfferNotificationsReadStatus[notification.id] =
+              notification.status;
+        }
         emit(
           state.copyWith(
             getOfferNotificationsState: RequestStatus.success,
             offerNotifications: updatedOfferNotifications,
             offerNotificationsCurrentPage: offerNotifications.currentPage,
+            offerNotificationsReadStatus: updatedOfferNotificationsReadStatus,
           ),
         );
       },
     );
+  }
+
+  void markPublicNotificationAsRead({required int notificationId}) {
+    if (state.publicNotificationsReadStatus.containsKey(notificationId)) {
+      return;
+    }
+    final updatedReadStatus = Map<int, bool>.from(
+      state.publicNotificationsReadStatus,
+    );
+    updatedReadStatus[notificationId] = true;
+    emit(state.copyWith(publicNotificationsReadStatus: updatedReadStatus));
+  }
+
+  void markOfferNotificationAsRead({required int notificationId}) {
+    if (state.offerNotificationsReadStatus.containsKey(notificationId)) {
+      return;
+    }
+    final updatedReadStatus = Map<int, bool>.from(
+      state.offerNotificationsReadStatus,
+    );
+    updatedReadStatus[notificationId] = true;
+    emit(state.copyWith(offerNotificationsReadStatus: updatedReadStatus));
   }
 }

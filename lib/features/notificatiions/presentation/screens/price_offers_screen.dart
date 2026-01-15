@@ -8,6 +8,7 @@ import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
+import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
@@ -105,12 +106,12 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
                 (context) => const OfferNotificationModel(
                   body: "*****************",
                   date: "*******",
+                  status: false,
+                  offerUserName: "********",
                   id: 0,
                   offerId: 0,
                   title: "********",
                   time: "****",
-                  link: "",
-                  iconType: "",
                 ),
               ),
               status: state.getOfferNotificationsState,
@@ -148,33 +149,35 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
   }) {
     _resetLoading(status);
 
-    return ListView.separated(
-      controller: _scrollController,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      itemCount: notifications.length + (status.isLoadingMore ? 1 : 0),
-      separatorBuilder: (_, __) =>
-          const CustomDivider(thickness: 0.8, height: 1),
-      itemBuilder: (context, index) {
-        if (index == notifications.length && status.isLoadingMore) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: Center(
-              child: SizedBox(
-                width: 26,
-                height: 26,
-                child: CircularProgressIndicator(
-                  color: ColorsManager.primaryColor,
+    return Expanded(
+      child: ListView.separated(
+        controller: _scrollController,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemCount: notifications.length + (status.isLoadingMore ? 1 : 0),
+        separatorBuilder: (_, __) =>
+            const CustomDivider(thickness: 0.8, height: 1),
+        itemBuilder: (context, index) {
+          if (index == notifications.length && status.isLoadingMore) {
+            return const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Center(
+                child: SizedBox(
+                  width: 26,
+                  height: 26,
+                  child: CircularProgressIndicator(
+                    color: ColorsManager.primaryColor,
+                  ),
                 ),
               ),
-            ),
+            );
+          }
+    
+          return PriceOfferItem(
+            theme: theme,
+            offerNotificationModel: notifications[index],
           );
-        }
-
-        return PriceOfferItem(
-          theme: theme,
-          offerNotificationModel: notifications[index],
-        );
-      },
+        },
+      ),
     );
   }
 }

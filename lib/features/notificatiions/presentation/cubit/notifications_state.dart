@@ -13,6 +13,8 @@ class NotificationsState extends Equatable {
   final OfferNotificationsModel offerNotifications;
   final String offerNotificationsErrorMessage;
   final int offerNotificationsCurrentPage;
+  final Map<int,bool> publicNotificationsReadStatus;
+  final Map<int,bool> offerNotificationsReadStatus;
   final bool isConnected;
 
   const NotificationsState({
@@ -24,6 +26,8 @@ class NotificationsState extends Equatable {
     this.offerNotifications = const OfferNotificationsModel.empty(),
     this.offerNotificationsErrorMessage = "",
     this.offerNotificationsCurrentPage = 1,
+    this.publicNotificationsReadStatus = const {},
+    this.offerNotificationsReadStatus = const {},
     this.isConnected = true,
   });
 
@@ -36,6 +40,8 @@ class NotificationsState extends Equatable {
     OfferNotificationsModel? offerNotifications,
     String? offerNotificationsErrorMessage,
     int? offerNotificationsCurrentPage,
+    Map<int,bool>? publicNotificationsReadStatus,
+    Map<int,bool>? offerNotificationsReadStatus,
     bool? isConnected,
   }) {
     return NotificationsState(
@@ -54,6 +60,10 @@ class NotificationsState extends Equatable {
           offerNotificationsErrorMessage ?? this.offerNotificationsErrorMessage,
       offerNotificationsCurrentPage:
           offerNotificationsCurrentPage ?? this.offerNotificationsCurrentPage,
+      publicNotificationsReadStatus:
+          publicNotificationsReadStatus ?? this.publicNotificationsReadStatus,
+      offerNotificationsReadStatus:
+          offerNotificationsReadStatus ?? this.offerNotificationsReadStatus,
       isConnected: isConnected ?? this.isConnected,
     );
   }
@@ -68,6 +78,8 @@ class NotificationsState extends Equatable {
     offerNotifications,
     offerNotificationsErrorMessage,
     offerNotificationsCurrentPage,
+    publicNotificationsReadStatus,
+    offerNotificationsReadStatus,
     isConnected,
   ];
 }
