@@ -144,12 +144,15 @@ class PublicNotificationItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 13),
                     Text(
+                      textDirection: TextDirection.ltr,
                       "${notification.date} - ${notification.time}",
                       style: theme.textTheme.labelSmall!.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 10,
                         color: ColorsManager.secondaryColor,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 8),
                     Text(

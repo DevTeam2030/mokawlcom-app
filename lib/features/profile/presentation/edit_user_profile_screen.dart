@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_intl_phone_field.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/profile_avatar_with_edit.dart';
@@ -72,12 +73,13 @@ class EditUserProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              CustomTextFormField(
-                type: TextInputType.phone,
-                hintText: LocaleKeys.pleaseEnterYourPhone,
-                autofillHints: const [AutofillHints.telephoneNumber],
-                textInputAction: TextInputAction.next,
-                fieldName: LocaleKeys.phone,
+              CustomIntlPhoneField(
+                onChanged: (completeNumber, countryCode) {
+                  // Handle phone change
+                },
+                onSubmitted: (_) {
+                  // Handle submit
+                },
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -99,7 +101,7 @@ class EditUserProfileScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar:  Padding(
+      bottomNavigationBar: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
         child: PrimaryButton(onPressed: () {}, text: LocaleKeys.save),
       ),

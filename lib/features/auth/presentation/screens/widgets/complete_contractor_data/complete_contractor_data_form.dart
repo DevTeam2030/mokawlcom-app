@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_intl_phone_field.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
@@ -26,6 +27,7 @@ class _CompleteContractorDataFormState
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode _autovalidateMode;
   late final TextEditingController _phoneController;
+  String phone = "";
   String? whatsApp;
   String? facebook;
   String? twitter;
@@ -37,16 +39,16 @@ class _CompleteContractorDataFormState
     super.initState();
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
-
     _phoneController = TextEditingController(
       text: context.read<AuthCubit>().state.phone,
     );
+    phone = context.read<AuthCubit>().state.phone;
   }
 
   @override
   void dispose() {
-    super.dispose();
     _phoneController.dispose();
+    super.dispose();
   }
 
   @override
@@ -83,13 +85,12 @@ class _CompleteContractorDataFormState
             ),
           ),
           const SizedBox(height: 8.0),
-          CustomTextFormField(
+          CustomIntlPhoneField(
             controller: _phoneController,
-            type: TextInputType.phone,
-            hintText: LocaleKeys.pleaseEnterYourPhone,
-            autofillHints: const [AutofillHints.telephoneNumber],
-            textInputAction: TextInputAction.next,
-            fieldName: LocaleKeys.phone,
+            onChanged: (completeNumber, countryCode) {
+              phone = completeNumber;
+            },
+            onSubmitted: (_) async => await _submit(context),
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -100,13 +101,11 @@ class _CompleteContractorDataFormState
             ),
           ),
           const SizedBox(height: 8.0),
-          CustomTextFormField(
-            type: TextInputType.phone,
-            hintText: "966132627722+",
-            textInputAction: TextInputAction.next,
-            fieldName: LocaleKeys.whatsApp,
-            onSaved: (value) => whatsApp = value,
-            validator: (_) => null,
+          CustomIntlPhoneField(
+            onChanged: (completeNumber, countryCode) {
+              whatsApp = completeNumber;
+            },
+            onSubmitted: (_) async => await _submit(context),
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -236,7 +235,7 @@ class _CompleteContractorDataFormState
       _formKey.currentState!.save();
       await context.read<AuthCubit>().completeContractorData(
         name: name,
-        phone: _phoneController.text,
+        phone: phone,
         hintAboutComany: hintAboutComany,
         whatsApp: whatsApp,
         facebook: facebook,

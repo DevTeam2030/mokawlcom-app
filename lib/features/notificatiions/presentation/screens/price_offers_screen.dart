@@ -149,35 +149,33 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
   }) {
     _resetLoading(status);
 
-    return Expanded(
-      child: ListView.separated(
-        controller: _scrollController,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        itemCount: notifications.length + (status.isLoadingMore ? 1 : 0),
-        separatorBuilder: (_, __) =>
-            const CustomDivider(thickness: 0.8, height: 1),
-        itemBuilder: (context, index) {
-          if (index == notifications.length && status.isLoadingMore) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              child: Center(
-                child: SizedBox(
-                  width: 26,
-                  height: 26,
-                  child: CircularProgressIndicator(
-                    color: ColorsManager.primaryColor,
-                  ),
+    return ListView.separated(
+      controller: _scrollController,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      itemCount: notifications.length + (status.isLoadingMore ? 1 : 0),
+      separatorBuilder: (_, __) =>
+          const CustomDivider(thickness: 0.8, height: 1),
+      itemBuilder: (context, index) {
+        if (index == notifications.length && status.isLoadingMore) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: SizedBox(
+                width: 26,
+                height: 26,
+                child: CircularProgressIndicator(
+                  color: ColorsManager.primaryColor,
                 ),
               ),
-            );
-          }
-    
-          return PriceOfferItem(
-            theme: theme,
-            offerNotificationModel: notifications[index],
+            ),
           );
-        },
-      ),
+        }
+        
+        return PriceOfferItem(
+          theme: theme,
+          offerNotificationModel: notifications[index],
+        );
+      },
     );
   }
 }

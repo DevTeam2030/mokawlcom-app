@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_dropdown_field.dart';
+import 'package:mokawlcom_app/core/widgets/custom_intl_phone_field.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/profile_avatar_with_edit.dart';
@@ -114,12 +115,13 @@ class EditContractorProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              CustomTextFormField(
-                type: TextInputType.phone,
-                hintText: LocaleKeys.pleaseEnterYourPhone,
-                autofillHints: const [AutofillHints.telephoneNumber],
-                textInputAction: TextInputAction.next,
-                fieldName: LocaleKeys.phone,
+              CustomIntlPhoneField(
+                onChanged: (completeNumber, countryCode) {
+                  // Handle phone change
+                },
+                onSubmitted: (_) {
+                  // Handle submit
+                },
               ),
 
               const SizedBox(height: 8.0),
@@ -131,11 +133,13 @@ class EditContractorProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-              CustomTextFormField(
-                type: TextInputType.phone,
-                hintText: "+966 123432123",
-                textInputAction: TextInputAction.next,
-                fieldName: LocaleKeys.whatsApp,
+              CustomIntlPhoneField(
+                onChanged: (completeNumber, countryCode) {
+                  // Handle WhatsApp change
+                },
+                onSubmitted: (_) {
+                  // Handle submit
+                },
               ),
               const SizedBox(height: 8.0),
               Text(

@@ -6,6 +6,7 @@ import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
+import 'package:mokawlcom_app/core/widgets/custom_intl_phone_field.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/password_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
@@ -129,15 +130,13 @@ class _SignupFormState extends State<SignupForm> {
             ),
           ),
           const SizedBox(height: 8.0),
-          CustomTextFormField(
-            type: TextInputType.phone,
-            hintText: LocaleKeys.pleaseEnterYourPhone,
-            autofillHints: const [AutofillHints.telephoneNumber],
-            textInputAction: TextInputAction.done,
-            onSaved: (phone) => _phone = phone!,
-            fieldName: LocaleKeys.phone,
-            onSubmit: (_) => _onSubmit(context),
+          CustomIntlPhoneField(
+            onChanged: (completeNumber, countryCode) {
+              _phone = completeNumber;
+            },
+            onSubmitted: (_)=>_onSubmit(context),
           ),
+
           const SizedBox(height: 16.0),
           BlocConsumer<AuthCubit, AuthState>(
             listenWhen: (prev, curr) =>
@@ -156,7 +155,9 @@ class _SignupFormState extends State<SignupForm> {
                   message: state.successMessage,
                   state: ToastStates.success,
                 );
-                context.pushRoute(VerificationRoute(email: _email,isUser: true));
+                context.pushRoute(
+                  VerificationRoute(email: _email, isUser: true),
+                );
               }
             },
             builder: (context, state) {

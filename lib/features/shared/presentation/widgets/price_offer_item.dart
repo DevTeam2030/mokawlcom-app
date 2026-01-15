@@ -91,7 +91,8 @@ class PriceOfferItem extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            "${offerNotificationModel.time} - ${offerNotificationModel.date}",
+                            textDirection: TextDirection.ltr,
+                            "${offerNotificationModel.date} - ${offerNotificationModel.time}",
                             style: theme.textTheme.labelSmall!.copyWith(
                               fontWeight: FontWeight.w400,
                               fontSize: 10,
