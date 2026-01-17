@@ -31,5 +31,6 @@ class ApiConstants {
   static const String changeImage = "/change-image-profile";
   static const String getOfferDetails = "/show-offer";
   static const String replayOfferPrice = "/replay-offer-price";
-  
+  static const String changePassword = "/change-password";
+  static const String deleteAccount = "/delete-account";
 }

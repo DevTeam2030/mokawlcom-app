@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
+import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/offer_price_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
@@ -130,17 +132,37 @@ class OfferDetails extends StatelessWidget {
                 Row(
                   children: [
                     offerNotificationModel.isPdf
-                        ? const VectorGraphic(
-                            loader: AssetBytesLoader(AssetsManager.pdf),
-                          )
+                        ? InkWell(
+                          onTap: () {
+                            LaunchUtils.open(
+                              url: offerNotificationModel.url,
+                              onError: (msg) {
+                                showToast(message: msg  , state: ToastStates.error);
+                              },
+                            );
+                          },
+                          child: const VectorGraphic(
+                              loader: AssetBytesLoader(AssetsManager.pdf),
+                            ),
+                        )
                         : const SizedBox.shrink(),
                     const SizedBox(width: 10),
                     !offerNotificationModel.isPdf && offerNotificationModel.url.isNotEmpty
-                        ? const Icon(
-                            Icons.image_outlined,
-                            size: 50,
-                            color: ColorsManager.primaryColor,
-                          )
+                        ? InkWell(
+                          onTap: () {
+                            LaunchUtils.open(
+                              url: offerNotificationModel.url,
+                              onError: (msg) {
+                                showToast(message: msg  , state: ToastStates.error);
+                              },
+                            );
+                          },
+                          child: const Icon(
+                              Icons.image_outlined,
+                              size: 50,
+                              color: ColorsManager.primaryColor,
+                            ),
+                        )
                         : const SizedBox.shrink(),
                     const Spacer(),
                     if (isOffer)

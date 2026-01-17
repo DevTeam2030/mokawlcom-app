@@ -23,10 +23,12 @@ class AuthCubit extends Cubit<AuthState> {
   final UserAuthRepo userAuthRepoImpl;
   final ContractorAuthRepo contractorAuthRepoImpl;
   final CacheHelper cacheHelper;
+  final FcmInitHelper fcmInitHelper;
   AuthCubit({
     required this.userAuthRepoImpl,
     required this.cacheHelper,
     required this.contractorAuthRepoImpl,
+    required this.fcmInitHelper,
   }) : super(const AuthState());
   Future<void> userSignup({
     required String name,
@@ -42,7 +44,7 @@ class AuthCubit extends Cubit<AuthState> {
       password: password,
       confirmPassword: confirmPassword,
       phone: phone,
-      fcmToken: await FcmInitHelper.getFcmToken() ?? "",
+      fcmToken: await fcmInitHelper.getFcmToken() ?? "",
     );
     final result = await userAuthRepoImpl.signup(
       userSignupRequestModel: userSignupRequestModel,
@@ -104,7 +106,7 @@ class AuthCubit extends Cubit<AuthState> {
       loginRequestModel: LoginRequestModel(
         email: email,
         password: password,
-        fcmToken: await FcmInitHelper.getFcmToken() ?? "",
+        fcmToken: await fcmInitHelper.getFcmToken() ?? "",
       ),
     );
     result.fold(
@@ -298,7 +300,7 @@ class AuthCubit extends Cubit<AuthState> {
         password: password,
         passwordConfirmation: confirmPassword,
         phone: phone,
-        fcmToken: await FcmInitHelper.getFcmToken() ?? "",
+        fcmToken: await fcmInitHelper.getFcmToken() ?? "",
         classificationId: state.classificiationId,
         services: state.servicesIds,
       ),

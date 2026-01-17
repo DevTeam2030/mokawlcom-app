@@ -70,6 +70,7 @@ class CustomTextFormField extends StatelessWidget {
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       style: Theme.of(context).textTheme.bodySmall!.copyWith(
         color: Theme.of(context).colorScheme.onSurfaceVariant,
+        fontWeight: FontWeight.bold,
       ),
       decoration: InputDecoration(
         filled: true,

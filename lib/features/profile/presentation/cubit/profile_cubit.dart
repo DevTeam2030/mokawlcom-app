@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
+import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -83,6 +84,48 @@ class ProfileCubit extends Cubit<ProfileState> {
       (successMessage) => emit(
         state.copyWith(
           updateUserProfileRequestStatus: RequestStatus.success,
+          successMessage: successMessage,
+        ),
+      ),
+    );
+  }
+
+  Future<void> changePassword({
+    required ChangePasswordRequestModel changePasswordRequestModel,
+  }) async {
+    emit(state.copyWith(changePasswordRequestState: RequestStatus.loading));
+    final result = await profileRepo.changePassword(
+      changePasswordRequestModel: changePasswordRequestModel,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          changePasswordRequestState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (successMessage) => emit(
+        state.copyWith(
+          changePasswordRequestState: RequestStatus.success,
+          successMessage: successMessage,
+        ),
+      ),
+    );
+  }
+
+  Future<void> deleteAccount() async {
+    emit(state.copyWith(deleteAccountRequestState: RequestStatus.loading));
+    final result = await profileRepo.deleteAccount();
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          deleteAccountRequestState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (successMessage) => emit(
+        state.copyWith(
+          deleteAccountRequestState: RequestStatus.success,
           successMessage: successMessage,
         ),
       ),

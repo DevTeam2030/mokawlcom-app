@@ -2,11 +2,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
+import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -14,7 +18,10 @@ import 'package:mokawlcom_app/my_icons.dart';
 import 'package:mokawlcom_app/my_app.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 
-Future<void> showLogoutBottomSheet({required context, required theme}) async {
+Future<void> showDeleteAccountBottomSheet({
+  required context,
+  required theme,
+}) async {
   await showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -38,7 +45,7 @@ Future<void> showLogoutBottomSheet({required context, required theme}) async {
             ),
             const SizedBox(height: 40),
             Text(
-              LocaleKeys.doYouWantToLogout,
+              LocaleKeys.doYouWantToDeleteYourAccount,
               style: theme.textTheme.bodyLarge!.copyWith(
                 fontWeight: FontWeight.w400,
               ),
@@ -59,19 +66,43 @@ Future<void> showLogoutBottomSheet({required context, required theme}) async {
               ),
             ),
             const SizedBox(height: 8),
-            PrimaryButton(
-              backgroundColor: ColorsManager.errorLight,
-              textColor: Colors.white,
-              onPressed: () async {
-                context.read<AppCubit>().changeUserType(
-                  userType: UserType.visitor,
-                );
-                Navigator.pop(context);
-                context.replaceRoute(const AuthRoute());
-                AppConstants.token = "";
-                await getIt<CacheHelper>().deleteAll();
+            BlocConsumer<ProfileCubit, ProfileState>(
+              listenWhen: (previous, current) =>
+                  previous.deleteAccountRequestState !=
+                  current.deleteAccountRequestState,
+              listener: (context, state) {
+                if (state.deleteAccountRequestState.isError) {
+                  showDialog(
+                    context: context,
+                    builder: (context) =>
+                        ErrorDialog(message: state.errorMessage, theme: theme),
+                  );
+                }
+                if (state.deleteAccountRequestState.isSuccess) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => SuccessDialog(
+                      message: state.successMessage,
+                      theme: theme,
+                      onPressed: () {
+                        context.pop();
+                      },
+                      text: LocaleKeys.exit,
+                    ),
+                  );
+                }
               },
-              text: LocaleKeys.exit,
+              builder: (context, state) {
+                return PrimaryButton(
+                  isLoading: state.deleteAccountRequestState.isLoading,
+                  backgroundColor: ColorsManager.errorLight,
+                  textColor: Colors.white,
+                  onPressed: () async {
+                    await context.read<ProfileCubit>().deleteAccount();
+                  },
+                  text: LocaleKeys.deleteAccount,
+                );
+              },
             ),
             const SizedBox(height: 8),
           ],

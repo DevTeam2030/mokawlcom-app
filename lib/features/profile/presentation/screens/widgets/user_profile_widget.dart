@@ -7,6 +7,7 @@ import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/profile_item.dart';
+import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/show_delete_account_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/show_language_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/show_logout_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
@@ -18,69 +19,81 @@ class UserProfileWidget extends StatelessWidget {
   final ThemeData theme;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ProfileItem(
-          theme: theme,
-          title: LocaleKeys.editMyProfile,
-          icon: Icons.edit_outlined,
-          onTap: () {
-            context.pushRoute(const EditUserProfileRoute());
-          },
-        ),
-        const SizedBox(height: 16.0),
-        ProfileItem(
-          theme: theme,
-          title: LocaleKeys.notifications,
-          icon: MyIcons.solidnotifications,
-          onTap: () {
-            final tabsRouter = AutoTabsRouter.of(context);
-            tabsRouter.setActiveIndex(1);
-          },
-          iconSize: 22.0,
-        ),
-        const SizedBox(height: 16.0),
-        ProfileItem(
-          theme: theme,
-          title: LocaleKeys.presentedOffers,
-          icon: MyIcons.list,
-          onTap: () {
-            context.pushRoute(const SubmittedPriceOffersRoute());
-          },
-          iconSize: 16.0,
-        ),
-        const SizedBox(height: 16.0),
-        ProfileItem(
-          theme: theme,
-          title: LocaleKeys.changePassword,
-          icon: MyIcons.eyesolid,
-          onTap: () {
-            context.pushRoute(const ChangePasswordRoute());
-          },
-          iconSize: 16.0,
-        ),
-        const SizedBox(height: 16.0),
-        ProfileItem(
-          theme: theme,
-          title: LocaleKeys.language,
-          icon: MyIcons.language,
-          isLanguage: true,
-          onTap: () {
-            showLanguageBottomSheet(context);
-          },
-          iconSize: 18.0,
-        ),
-        const SizedBox(height: 16.0),
-        ProfileItem(
-          theme: theme,
-          title: LocaleKeys.logout,
-          icon: MyIcons.exit,
-          onTap: () async {
-            await showLogoutBottomSheet(context: context, theme: theme);
-          },
-          iconSize: 18.0,
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ProfileItem(
+            theme: theme,
+            title: LocaleKeys.editMyProfile,
+            icon: Icons.edit_outlined,
+            onTap: () {
+              context.pushRoute(const EditUserProfileRoute());
+            },
+          ),
+          const SizedBox(height: 16.0),
+          ProfileItem(
+            theme: theme,
+            title: LocaleKeys.notifications,
+            icon: MyIcons.solidnotifications,
+            onTap: () {
+              final tabsRouter = AutoTabsRouter.of(context);
+              tabsRouter.setActiveIndex(1);
+            },
+            iconSize: 22.0,
+          ),
+          const SizedBox(height: 16.0),
+          ProfileItem(
+            theme: theme,
+            title: LocaleKeys.presentedOffers,
+            icon: MyIcons.list,
+            onTap: () {
+              context.pushRoute(const SubmittedPriceOffersRoute());
+            },
+            iconSize: 16.0,
+          ),
+          const SizedBox(height: 16.0),
+          ProfileItem(
+            theme: theme,
+            title: LocaleKeys.changePassword,
+            icon: MyIcons.eyesolid,
+            onTap: () {
+              context.pushRoute(const ChangePasswordRoute());
+            },
+            iconSize: 16.0,
+          ),
+          const SizedBox(height: 16.0),
+          ProfileItem(
+            theme: theme,
+            title: LocaleKeys.language,
+            icon: MyIcons.language,
+            isLanguage: true,
+            onTap: () {
+              showLanguageBottomSheet(context);
+            },
+            iconSize: 18.0,
+          ),
+          const SizedBox(height: 16.0),
+          ProfileItem(
+            theme: theme,
+            title: LocaleKeys.deleteAccount,
+            icon: MyIcons.trash,
+            onTap: () {
+              showDeleteAccountBottomSheet(context: context, theme: theme);
+            },
+            iconSize: 20.0,
+          ),
+          const SizedBox(height: 16.0),
+          ProfileItem(
+            theme: theme,
+            title: LocaleKeys.logout,
+            icon: MyIcons.exit,
+            onTap: () async {
+              await showLogoutBottomSheet(context: context, theme: theme);
+            },
+            iconSize: 18.0,
+          ),
+        ],
+      ),
     );
   }
 }

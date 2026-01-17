@@ -14,7 +14,7 @@ class UpdateUserProfileRequestModel extends Equatable{
   });
   Map<String, dynamic> toJson() => {
     "name": name,
-    "email": email,
+    //"email": email,
     "phone": phone,
     "address": address,
   };

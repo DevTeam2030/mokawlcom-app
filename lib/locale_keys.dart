@@ -206,4 +206,8 @@ class LocaleKeys {
   static String get noNotificationsExist => 'no_notifications_exist'.tr();
   static String get pleaseSelectAnImage => 'please_select_an_image'.tr();
   static String get noRepliesYet => 'no_replies_yet'.tr();
+  static String get deleteAccount => 'delete_account'.tr();
+  static String get doYouWantToDeleteYourAccount =>
+      'do_you_want_to_delete_your_account'.tr();
+  static String get back => 'back'.tr();
 }

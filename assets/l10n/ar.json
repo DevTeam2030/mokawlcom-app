@@ -127,7 +127,7 @@
   "password_is_too_short": "كلمة المرور يجب أن تكون على الأقل 6 أحرف",
   "confirmation_password_is_required": "تأكيد كلمة المرور مطلوب",
   "confirmation_password_is_too_short": "تأكيد كلمة المرور يجب أن تكون على الأقل 6 أحرف",
-  "passwords_do_not_match": "كلمتان المرور غير متطابقتان",
+  "passwords_do_not_match": "كلمتا المرور غير متطابقتان",
   "required": "مطلوب",
   "please_enter_your_address": "من فضلك أدخل عنوانك",
   "do_you_want_to_logout": "هل تريد تسجيل الخروج؟",
@@ -145,5 +145,8 @@
   "no_saved_companies": "لا يوجد شركات محفوظة",
   "no_notifications_exist": "لا يوجد إشعارات",
   "please_select_an_image":"من فضلك اختر صورة",
-  "no_replies_yet":"لا يوجد ردود بعد"
+  "no_replies_yet":"لا يوجد ردود بعد",
+  "delete_account":"حذف الحساب",
+  "do_you_want_to_delete_your_account":"هل تريد حذف حسابك؟",
+  "back":"رجوع"
 }

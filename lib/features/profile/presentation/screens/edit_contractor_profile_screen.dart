@@ -6,6 +6,7 @@ import 'package:mokawlcom_app/core/widgets/custom_intl_phone_field.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/complete_contractor_data/auth_user_image.dart';
+import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/profile_image.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
@@ -32,7 +33,7 @@ class EditContractorProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 28.0),
-              const AuthUserImage(),
+              const ProfileImage(),
               const SizedBox(height: 60.0),
               Text(
                 LocaleKeys.mainClassification,

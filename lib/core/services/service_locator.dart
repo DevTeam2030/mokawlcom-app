@@ -4,6 +4,7 @@ import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/local/shared_pref_helper.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
+import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/features/auth/data/data_source/contractor_auth_data_source.dart';
 import 'package:mokawlcom_app/features/auth/data/data_source/user_auth_data_source.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
@@ -50,7 +51,7 @@ class ServiceLocator {
     });
 
     getIt.registerLazySingleton<FilePickerService>(() => FilePickerService());
-
+    
     getIt.registerLazySingleton<UserAuthDataSource>(
       () => UserAuthDataSourceImpl(dioHelper: getIt<DioHelper>()),
     );
@@ -86,6 +87,7 @@ class ServiceLocator {
         userAuthRepoImpl: getIt<UserAuthRepo>(),
         cacheHelper: getIt<CacheHelper>(),
         contractorAuthRepoImpl: getIt<ContractorAuthRepo>(),
+        fcmInitHelper: getIt<FcmInitHelper>(),
       ),
     );
     getIt.registerLazySingleton<FavoriteDataSource>(
@@ -118,6 +120,9 @@ class ServiceLocator {
     getIt.registerFactory<NotificationsCubit>(
       () => NotificationsCubit(notificationsRepo: getIt<NotificationsRepo>()),
     );
+    getIt.registerLazySingleton<FcmInitHelper>(() => FcmInitHelper(
+        notificationsCubit: getIt<NotificationsCubit>(),appCubit: getIt<AppCubit>()));
+
     getIt.registerLazySingleton<ProfileDataSource>(
       () => ProfileDataSourceImpl(dioHelper: getIt<DioHelper>()),
     );

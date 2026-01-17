@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_intl_phone_field/flutter_intl_phone_field.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -50,72 +51,96 @@ class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
 
   @override
   Widget build(BuildContext context) {
-    return FormField<String>(
-      validator: (value) {
-        if (_phoneController.text.isEmpty) {
-          return LocaleKeys.pleaseEnterYourPhone;
-        }
-        return null;
-      },
-      builder: (fieldState) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            IntlPhoneField(
-              controller: _phoneController,
-              onSubmitted: widget.onSubmitted,
-              textInputAction: widget.textInputAction ?? TextInputAction.done,
-              enabled: widget.enabled,
-              initialCountryCode: widget.initialCountryCode,
-              decoration: InputDecoration(
-                labelText: widget.label ?? "",
-                filled: true,
-                fillColor: widget.fillColor ?? Colors.transparent,
-                errorText: fieldState.errorText,
-                prefixIcon: widget.prefixIcon,
-                contentPadding: const EdgeInsets.all(20),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
-                  borderSide: const BorderSide(
-                    color: ColorsManager.secondaryColor,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: FormField<String>(
+        validator: (value) {
+          if (_phoneController.text.isEmpty) {
+            return LocaleKeys.pleaseEnterYourPhone;
+          }
+          return null;
+        },
+        builder: (fieldState) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              IntlPhoneField(
+                controller: _phoneController,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.bold,
+                ),
+                dropdownTextStyle: Theme.of(context).textTheme.bodySmall!
+                    .copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: ColorsManager.primaryColor,
+                      fontSize: 14,
+                    ),
+                onSubmitted: widget.onSubmitted,
+                textInputAction: widget.textInputAction ?? TextInputAction.done,
+                enabled: widget.enabled,
+                initialCountryCode: widget.initialCountryCode,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                ],
+                decoration: InputDecoration(
+                  labelText: widget.label ?? "",
+                  filled: true,
+                  fillColor: widget.fillColor ?? Colors.transparent,
+                  errorText: fieldState.errorText,
+                  prefixIcon: widget.prefixIcon,
+                  contentPadding: const EdgeInsets.all(20),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      widget.borderRadius ?? 8,
+                    ),
+                    borderSide: const BorderSide(
+                      color: ColorsManager.secondaryColor,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      widget.borderRadius ?? 8,
+                    ),
+                    borderSide: const BorderSide(
+                      color: ColorsManager.primaryColor,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      widget.borderRadius ?? 8,
+                    ),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      widget.borderRadius ?? 8,
+                    ),
+                    borderSide: const BorderSide(
+                      color: ColorsManager.secondaryColor,
+                    ),
                   ),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
-                  borderSide: const BorderSide(
-                    color: ColorsManager.primaryColor,
-                    width: 2,
-                  ),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
-                  borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.error,
-                  ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
-                  borderSide: const BorderSide(
-                    color: ColorsManager.secondaryColor,
-                  ),
-                ),
+                validator: (phone) {
+                  if (phone == null || phone.completeNumber.isEmpty) {
+                    return LocaleKeys.pleaseEnterYourPhone;
+                  }
+                  return null;
+                },
+                onChanged: (phone) {
+                  fieldState.didChange(phone.completeNumber);
+                  if (widget.onChanged != null) {
+                    widget.onChanged!(phone.completeNumber, phone.countryCode);
+                  }
+                },
               ),
-              validator: (phone) {
-                if (phone == null || phone.completeNumber.isEmpty) {
-                  return LocaleKeys.pleaseEnterYourPhone;
-                }
-                return null;
-              },
-              onChanged: (phone) {
-                fieldState.didChange(phone.completeNumber);
-                if (widget.onChanged != null) {
-                  widget.onChanged!(phone.completeNumber, phone.countryCode);
-                }
-              },
-            ),
-          ],
-        );
-      },
+            ],
+          );
+        },
+      ),
     );
   }
 }

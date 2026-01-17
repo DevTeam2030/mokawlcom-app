@@ -14,20 +14,20 @@ import 'package:path_provider/path_provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  ServiceLocator().init();
-  await getIt.allReady();
-  AppConstants.token =
-      await getIt<CacheHelper>().readData(key: AppConstants.tokenKey) ?? "";
-  await FcmInitHelper.initAwesomeNotification();
-  await FcmInitHelper.initFirebaseMessagingListeners();
-  await FcmInitHelper.setAwesomeNotificationListeners();
-  await FcmInitHelper.handleInitialMessage();
-
   Bloc.observer = MyBlocObserver();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory(
       (await getTemporaryDirectory()).path,
     ),
   );
+  ServiceLocator().init();
+  await getIt.allReady();
+  AppConstants.token =
+      await getIt<CacheHelper>().readData(key: AppConstants.tokenKey) ?? "";
+  await getIt<FcmInitHelper>().initAwesomeNotification();
+  await getIt<FcmInitHelper>().setAwesomeNotificationListeners();
+  getIt<FcmInitHelper>().initFirebaseMessagingListeners();
+  await getIt<FcmInitHelper>().handleInitialMessage();
+
   runApp(const MyApp());
 }

@@ -79,7 +79,9 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
       },
       buildWhen: (previous, current) =>
           previous.getOfferNotificationsState !=
-          current.getOfferNotificationsState,
+              current.getOfferNotificationsState ||
+          previous.offerNotifications.notifications !=
+              current.offerNotifications.notifications,
       builder: (context, state) {
         final hasData = state.offerNotifications.notifications.isNotEmpty;
 

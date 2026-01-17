@@ -6,7 +6,11 @@ import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class ErrorDialog extends StatelessWidget {
-  const ErrorDialog({super.key, required this.theme, required this.message});
+  const ErrorDialog({
+    super.key,
+    required this.theme,
+    required this.message,
+  });
   final ThemeData theme;
   final String message;
   @override

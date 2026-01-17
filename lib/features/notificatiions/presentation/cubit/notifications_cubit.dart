@@ -4,9 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_details_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/public_notificarion_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/reply_offer_price_request_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/repo/notifications_repo.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/public_notifications_item.dart';
 
 class NotificationsCubit extends Cubit<NotificationsState> {
   final NotificationsRepo notificationsRepo;
@@ -338,11 +341,57 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           progress: 0,
         ),
       ),
-      (message) => emit(
-        state.copyWith(
-          replayOnOfferPriceState: RequestStatus.success,
-          replayOnOfferPriceMessage: message,
-          progress: 0,
+      (message) {
+        emit(
+          state.copyWith(
+            replayOnOfferPriceState: RequestStatus.success,
+            replayOnOfferPriceMessage: message,
+            progress: 0,
+          ),
+        );
+      },
+    );
+  }
+
+  void addPublicNotification({
+    required PublicNotificationModel publicNotification,
+  }) {
+    final currentList = List<PublicNotificationModel>.from(
+      state.publicNotifications.notifications,
+    );
+
+    final exists = currentList.any((e) => e.id == publicNotification.id);
+
+    if (exists) return;
+
+    currentList.insert(0, publicNotification);
+
+    emit(
+      state.copyWith(
+        publicNotifications: state.publicNotifications.copyWith(
+          notifications: currentList,
+        ),
+      ),
+    );
+  }
+
+  void addOfferNotification({
+    required OfferNotificationModel offerNotification,
+  }) {
+    final currentList = List<OfferNotificationModel>.from(
+      state.offerNotifications.notifications,
+    );
+
+    final exists = currentList.any((e) => e.id == offerNotification.id);
+
+    if (exists) return;
+
+    currentList.insert(0, offerNotification);
+
+    emit(
+      state.copyWith(
+        offerNotifications: state.offerNotifications.copyWith(
+          notifications: currentList,
         ),
       ),
     );

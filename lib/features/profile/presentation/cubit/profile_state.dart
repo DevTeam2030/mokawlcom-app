@@ -5,12 +5,16 @@ class ProfileState extends Equatable {
   final String errorMessage;
   final String successMessage;
   final File? profileImage;
+  final RequestStatus changePasswordRequestState;
+  final RequestStatus deleteAccountRequestState;
 
   const ProfileState({
     this.updateUserProfileRequestStatus = RequestStatus.initial,
     this.errorMessage = "",
     this.successMessage = "",
     this.profileImage,
+    this.changePasswordRequestState = RequestStatus.initial,
+    this.deleteAccountRequestState = RequestStatus.initial,
   });
 
   ProfileState copyWith({
@@ -18,6 +22,8 @@ class ProfileState extends Equatable {
     String? errorMessage,
     String? successMessage,
     File? profileImage,
+    RequestStatus? changePasswordRequestState,
+    RequestStatus? deleteAccountRequestState,
   }) {
     return ProfileState(
       updateUserProfileRequestStatus:
@@ -25,6 +31,10 @@ class ProfileState extends Equatable {
       errorMessage: errorMessage ?? this.errorMessage,
       successMessage: successMessage ?? this.successMessage,
       profileImage: profileImage ?? this.profileImage,
+      changePasswordRequestState:
+          changePasswordRequestState ?? this.changePasswordRequestState,
+      deleteAccountRequestState:
+          deleteAccountRequestState ?? this.deleteAccountRequestState,
     );
   }
 
@@ -33,5 +43,7 @@ class ProfileState extends Equatable {
     updateUserProfileRequestStatus,
     errorMessage,
     profileImage,
+    changePasswordRequestState,
+    deleteAccountRequestState,
   ];
 }

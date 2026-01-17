@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/error/failures.dart';
+import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 
 abstract class ProfileRepo {
@@ -11,4 +12,8 @@ abstract class ProfileRepo {
   Future<Either<Failure, String>> changeProfileImage({
     required File image,
   });
+  Future<Either<Failure, String>> changePassword({
+    required ChangePasswordRequestModel changePasswordRequestModel,
+  });
+  Future<Either<Failure, String>> deleteAccount();
 }
