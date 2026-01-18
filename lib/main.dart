@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mokawlcom_app/bloc_observer.dart';
 import 'package:mokawlcom_app/core/local/cache_helper.dart';
@@ -29,5 +30,7 @@ Future<void> main() async {
   getIt<FcmInitHelper>().initFirebaseMessagingListeners();
   await getIt<FcmInitHelper>().handleInitialMessage();
 
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((_) => runApp(const MyApp()));
 }

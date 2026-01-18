@@ -212,4 +212,36 @@ class LocaleKeys {
   static String get back => 'back'.tr();
   static String get thereAreNoOffersMade => 'there_are_no_offers_made'.tr();
   static String get noServicesYet => 'no_services_yet'.tr();
+  static String get noInternetConnection => 'no_internet_connection'.tr();
+
+  static String get requestCancelled => 'request_cancelled'.tr();
+
+  static String get connectionTimeout => 'connection_timeout'.tr();
+
+  static String get sendTimeout => 'send_timeout'.tr();
+
+  static String get receiveTimeout => 'receive_timeout'.tr();
+
+  static String get unexpectedError => 'unexpected_error'.tr();
+
+  static String get generalError => 'general_error'.tr();
+
+  static String get requestNotFound => 'request_not_found'.tr();
+
+  static String get internalServerError => 'internal_server_error'.tr();
+
+  static String get cannotOpenLink => 'cannot_open_link'.tr();
+
+  static String get invalidLink => 'invalid_link'.tr();
+
+  static String get cannotOpenCallApp => 'cannot_open_call_app'.tr();
+
+  static String get invalidNumber => 'invalid_number'.tr();
+
+  static String get fileSizeMustBeLessThan =>
+      'file_size_must_be_less_than'.tr();
+
+  static String get pleaseSelectFile => 'please_select_file'.tr();
+
+  static String get pleaseSelectLogo => 'please_select_logo'.tr();
 }

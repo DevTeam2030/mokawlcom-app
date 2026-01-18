@@ -1,4 +1,7 @@
+import 'package:localingo/localingo.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../locale_keys.dart';
 
 class LaunchUtils {
   LaunchUtils._();
@@ -11,15 +14,12 @@ class LaunchUtils {
       final Uri uri = Uri.parse(url);
 
       if (await canLaunchUrl(uri)) {
-        await launchUrl(
-          uri,
-          mode: LaunchMode.externalApplication,
-        );
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
-        onError('لا يمكن فتح الرابط');
+        onError(LocaleKeys.cannotOpenLink);
       }
     } catch (_) {
-      onError('رابط غير صالح');
+      onError(LocaleKeys.invalidLink);
     }
   }
 
@@ -31,15 +31,12 @@ class LaunchUtils {
       final Uri uri = Uri.parse('tel:$phone');
 
       if (await canLaunchUrl(uri)) {
-        await launchUrl(
-          uri,
-          mode: LaunchMode.externalApplication,
-        );
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
-        onError('لا يمكن فتح تطبيق المكالمات');
+        onError(LocaleKeys.cannotOpenCallApp);
       }
     } catch (_) {
-      onError('رقم غير صالح');
+      onError(LocaleKeys.invalidNumber);
     }
   }
 }

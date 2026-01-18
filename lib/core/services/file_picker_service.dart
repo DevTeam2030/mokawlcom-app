@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:localingo/localingo.dart';
+
+import '../../locale_keys.dart';
 
 class FilePickerService {
   static const int maxFileSizeInMB = 10;
@@ -21,7 +24,12 @@ class FilePickerService {
     final sizeInMB = file.lengthSync() / (1024 * 1024);
 
     if (sizeInMB > maxFileSizeInMB) {
-      throw Exception('File size must be less than ${maxFileSizeInMB}MB');
+      throw Exception(
+        LocaleKeys.fileSizeMustBeLessThan.tr().replaceAll(
+          '{}',
+          maxFileSizeInMB.toString(),
+        ),
+      );
     }
 
     return file;
@@ -45,7 +53,12 @@ class FilePickerService {
       final sizeInMB = file.lengthSync() / (1024 * 1024);
 
       if (sizeInMB > maxFileSizeInMB) {
-        throw Exception('File size must be less than ${maxFileSizeInMB}MB');
+        throw Exception(
+          LocaleKeys.fileSizeMustBeLessThan.tr().replaceAll(
+            '{}',
+            maxFileSizeInMB.toString(),
+          ),
+        );
       }
 
       validImages.add(file);

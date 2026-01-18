@@ -18,6 +18,7 @@ import 'package:mokawlcom_app/features/shared/data/models/classification_model.d
 import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
 import 'package:mokawlcom_app/features/shared/data/models/services_model.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
+import 'package:mokawlcom_app/locale_keys.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final UserAuthRepo userAuthRepoImpl;
@@ -352,7 +353,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(
         state.copyWith(
           completeContractorDataState: RequestStatus.error,
-          errorMessage: "Please select a logo",
+          errorMessage: LocaleKeys.pleaseSelectLogo,
         ),
       );
       return;

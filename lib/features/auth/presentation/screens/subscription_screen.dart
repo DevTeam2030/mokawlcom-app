@@ -67,21 +67,7 @@ class SubscriptionScreen extends StatelessWidget {
                   prev.subscibePlanState != curr.subscibePlanState,
               buildWhen: (prev, curr) =>
                   prev.subscibePlanState != curr.subscibePlanState,
-              listener: (context, state) {
-                if (state.subscibePlanState.isSuccess) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => SuccessDialog(
-                      onPressed: () {
-                        context.pushRoute(const CompleteDataRoute());
-                        Navigator.of(context).pop();
-                      },
-                      theme: theme,
-                      text: LocaleKeys.completeData,
-                      message: state.successMessage,
-                    ),
-                  );
-                }
+              listener: (context, state) async {
                 if (state.subscibePlanState.isError) {
                   showDialog(
                     context: context,
@@ -89,12 +75,28 @@ class SubscriptionScreen extends StatelessWidget {
                         ErrorDialog(theme: theme, message: state.errorMessage),
                   );
                 }
+                if (state.subscibePlanState.isSuccess) {
+                  await showDialog(
+                    context: context,
+                    builder: (context) => SuccessDialog(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      theme: theme,
+                      text: LocaleKeys.completeData,
+                      message: state.successMessage,
+                    ),
+                  );
+                  if (context.mounted) {
+                    context.replaceRoute(const CompleteDataRoute());
+                  }
+                }
               },
               builder: (context, state) {
                 return PrimaryButton(
                   isLoading: state.subscibePlanState.isLoading,
                   onPressed: () async {
-                   await context.read<AuthCubit>().subscibePlan();
+                    await context.read<AuthCubit>().subscibePlan();
                   },
                   text: LocaleKeys.tryNow,
                 );

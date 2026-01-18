@@ -150,7 +150,6 @@ class Auth extends AutoRouter implements AutoRouteWrapper {
     providers: [
       BlocProvider(create: (context) => getIt<AuthCubit>()),
       BlocProvider(create: (context) => getIt<FilesCubit>()),
-      
     ],
     child: this,
   );
@@ -167,12 +166,7 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
     providers: [
-      BlocProvider(
-        create: (context) => getIt<HomeCubit>()
-          ..getBanners()
-          ..getClassifications()
-          ..getServices(),
-      ),
+      BlocProvider(create: (context) => getIt<HomeCubit>()),
       BlocProvider(create: (context) => getIt<SearchBloc>()),
       BlocProvider(create: (context) => getIt<FavoriteCubit>()),
       BlocProvider(create: (context) => getIt<NotificationsCubit>()),

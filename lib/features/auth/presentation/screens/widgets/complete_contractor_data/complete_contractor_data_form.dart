@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_intl_phone_field/phone_number.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
@@ -27,13 +28,13 @@ class _CompleteContractorDataFormState
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode _autovalidateMode;
   late final TextEditingController _phoneController;
-  String phone = "";
   String? whatsApp;
   String? facebook;
   String? twitter;
   String? snapChat;
   String hintAboutComany = "";
   String name = "";
+  String _completePhone = '';
   @override
   void initState() {
     super.initState();
@@ -42,7 +43,6 @@ class _CompleteContractorDataFormState
     _phoneController = TextEditingController(
       text: context.read<AuthCubit>().state.phone,
     );
-    phone = context.read<AuthCubit>().state.phone;
   }
 
   @override
@@ -53,6 +53,10 @@ class _CompleteContractorDataFormState
 
   @override
   Widget build(BuildContext context) {
+    final phone = PhoneNumber.fromCompleteNumber(
+      completeNumber: context.read<AuthCubit>().state.phone,
+    );
+    _completePhone = phone.completeNumber;
     final theme = widget.theme;
     return Form(
       key: _formKey,
@@ -86,8 +90,10 @@ class _CompleteContractorDataFormState
           ),
           const SizedBox(height: 8.0),
           CustomIntlPhoneField(
+            controller: _phoneController,
+            initialCountryCode: phone.countryISOCode,
             onChanged: (completeNumber, countryCode) {
-              phone = completeNumber;
+              _completePhone = completeNumber;
             },
             onSubmitted: (_) async => await _submit(context),
           ),
@@ -191,27 +197,29 @@ class _CompleteContractorDataFormState
             buildWhen: (previous, current) =>
                 previous.completeContractorDataState !=
                 current.completeContractorDataState,
-            listener: (context, state) {
-              if (state.completeContractorDataState.isSuccess) {
-                showDialog(
-                  context: context,
-                  builder: (context) => SuccessDialog(
-                    message: state.successMessage,
-                    text: LocaleKeys.next,
-                    theme: theme,
-                    onPressed: () {
-                      context.navigateTo(const LoginRoute());
-                      Navigator.pop(context);
-                    },
-                  ),
-                );
-              }
+            listener: (context, state) async {
               if (state.completeContractorDataState.isError) {
                 showDialog(
                   context: context,
                   builder: (context) =>
                       ErrorDialog(message: state.errorMessage, theme: theme),
                 );
+              }
+              if (state.completeContractorDataState.isSuccess) {
+                await showDialog(
+                  context: context,
+                  builder: (context) => SuccessDialog(
+                    message: state.successMessage,
+                    text: LocaleKeys.next,
+                    theme: theme,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                );
+                if (context.mounted) {
+                  context.navigateTo(const LoginRoute());
+                }
               }
             },
             builder: (context, state) {
@@ -234,12 +242,12 @@ class _CompleteContractorDataFormState
       _formKey.currentState!.save();
       await context.read<AuthCubit>().completeContractorData(
         name: name,
-        phone: phone,
+        phone: _completePhone,
         hintAboutComany: hintAboutComany,
-        whatsApp: whatsApp,
-        facebook: facebook,
-        twitter: twitter,
-        snapChat: snapChat,
+        whatsApp: whatsApp?.replaceAll(" ", ""),
+        facebook: facebook?.replaceAll(" ", ""),
+        twitter: twitter?.replaceAll(" ", ""),
+        snapChat: snapChat?.replaceAll(" ", ""),
       );
     } else {
       setState(() {

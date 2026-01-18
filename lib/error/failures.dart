@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
+import '../locale_keys.dart';
+
 abstract class Failure extends Equatable {
   final String errorMessage;
   final bool isConnected;
@@ -18,32 +20,20 @@ class ServerFailure extends Failure {
   factory ServerFailure.fromDioError(DioException dioError) {
     switch (dioError.type) {
       case DioExceptionType.connectionError:
-        return const ServerFailure(
+        return ServerFailure(
           // 'Connection to API server failed due to internet connection',
-          "No Internet Connection",
+          LocaleKeys.noInternetConnection,
           isConnected: false,
         );
       case DioExceptionType.cancel:
-        return const ServerFailure(
-          'Request to API server was cancelled',
-          isConnected: false,
-        );
+        return ServerFailure(LocaleKeys.requestCancelled, isConnected: false);
       case DioExceptionType.connectionTimeout:
-        return const ServerFailure(
-          'Connection timeout with API server',
-          isConnected: false,
-        );
+        return ServerFailure(LocaleKeys.connectionTimeout, isConnected: false);
       case DioExceptionType.sendTimeout:
-        return const ServerFailure(
-          'Send timeout in connection with API server',
-          isConnected: false,
-        );
+        return ServerFailure(LocaleKeys.sendTimeout, isConnected: false);
 
       case DioExceptionType.receiveTimeout:
-        return const ServerFailure(
-          'Receive timeout in connection with API server',
-          isConnected: false,
-        );
+        return ServerFailure(LocaleKeys.receiveTimeout, isConnected: false);
       case DioExceptionType.badResponse:
         return ServerFailure.fromBadResponse(
           dioError.response!.statusCode!,
@@ -51,18 +41,15 @@ class ServerFailure extends Failure {
         );
       case DioExceptionType.unknown:
         if (dioError.error is SocketException) {
-          return const ServerFailure(
-            'No internet connection',
+          return ServerFailure(
+            LocaleKeys.noInternetConnection,
             isConnected: false,
           );
         }
-        return const ServerFailure(
-          'Unexpected Error , Please try again',
-          isConnected: false,
-        );
+        return ServerFailure(LocaleKeys.unexpectedError, isConnected: false);
       default:
         return ServerFailure(
-          dioError.message ?? 'There was an error, please try again',
+          dioError.message ?? LocaleKeys.generalError,
           isConnected: false,
         );
     }
@@ -72,11 +59,10 @@ class ServerFailure extends Failure {
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
       return ServerFailure(response["message"]);
     } else if (statusCode == 404) {
-      return const ServerFailure('Your request not found , please try later');
+      return ServerFailure(LocaleKeys.requestNotFound);
     } else if (statusCode == 500) {
-      return const ServerFailure('Internal server error , please try later');
+      return ServerFailure(LocaleKeys.internalServerError);
     }
     return ServerFailure(response["message"]);
   }
 }
-
