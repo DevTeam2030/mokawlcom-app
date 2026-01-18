@@ -10,7 +10,7 @@ import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/offer_details.dart';
@@ -20,7 +20,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 @RoutePage()
 class OfferDetailsScreen extends StatefulWidget {
   const OfferDetailsScreen({super.key, required this.offerNotificationModel});
-  final OfferNotificationModel offerNotificationModel;
+  final OfferModel offerNotificationModel;
 
   @override
   State<OfferDetailsScreen> createState() => _OfferDetailsScreenState();
@@ -84,18 +84,22 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          OfferDetails(theme: theme, isOffer: true,offerNotificationModel: widget.offerNotificationModel ,),
+          OfferDetails(
+            theme: theme,
+            isOffer: true,
+            offerNotificationModel: widget.offerNotificationModel,
+          ),
           Padding(
-          padding: const EdgeInsetsDirectional.only(start: 14),
-          child: Text(
-            LocaleKeys.replys,
-            style: theme.textTheme.bodyMedium!.copyWith(
-              color: ColorsManager.primaryColor,
-              fontWeight: FontWeight.bold,
+            padding: const EdgeInsetsDirectional.only(start: 14),
+            child: Text(
+              LocaleKeys.replys,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                color: ColorsManager.primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-               const SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           Expanded(
             child: BlocConsumer<NotificationsCubit, NotificationsState>(
@@ -113,7 +117,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                   previous.getOfferDetailsState != current.getOfferDetailsState,
               builder: (context, state) {
                 final hasData = state.offerDetails.replies.isNotEmpty;
-            
+
                 if (!state.isConnected && !hasData) {
                   return NoInternetWidget(
                     errorMessage: state.offerDetailsErrorMessage,
@@ -125,7 +129,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                     },
                   );
                 }
-            
+
                 return UiStateBuilder(
                   theme: theme,
                   state: state.getOfferDetailsState,
@@ -137,7 +141,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                       theme: theme,
                       replies: List.generate(
                         3,
-                        (context) => const OfferNotificationModel(
+                        (context) => const OfferModel(
                           id: 0,
                           message:
                               "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -161,14 +165,20 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                           status: state.getOfferDetailsState,
                           theme: theme,
                         )
-                      : NoDataWidget(theme: theme, text: LocaleKeys.noRepliesYet),
+                      : NoDataWidget(
+                          theme: theme,
+                          text: LocaleKeys.noRepliesYet,
+                        ),
                   onError: hasData
                       ? _buildDetailsContent(
                           replies: state.offerDetails.replies,
                           status: state.getOfferDetailsState,
                           theme: theme,
                         )
-                      : NoDataWidget(theme: theme, text: LocaleKeys.noRepliesYet),
+                      : NoDataWidget(
+                          theme: theme,
+                          text: LocaleKeys.noRepliesYet,
+                        ),
                 );
               },
             ),
@@ -179,7 +189,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
   }
 
   Widget _buildDetailsContent({
-    required List<OfferNotificationModel> replies,
+    required List<OfferModel> replies,
     required RequestStatus status,
     required ThemeData theme,
   }) {
@@ -204,8 +214,11 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
             ),
           );
         }
-        
-        return OfferDetails(theme: theme,offerNotificationModel: replies[index],);
+
+        return OfferDetails(
+          theme: theme,
+          offerNotificationModel: replies[index],
+        );
       },
     );
   }

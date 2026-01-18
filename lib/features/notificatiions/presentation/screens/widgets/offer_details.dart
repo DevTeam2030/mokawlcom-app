@@ -5,7 +5,7 @@ import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/offer_price_bottom_sheet.dart';
-import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/reply_on_offer_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
@@ -20,7 +20,7 @@ class OfferDetails extends StatelessWidget {
   });
   final ThemeData theme;
   final bool isOffer;
-  final OfferNotificationModel offerNotificationModel;
+  final OfferModel offerNotificationModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -133,36 +133,43 @@ class OfferDetails extends StatelessWidget {
                   children: [
                     offerNotificationModel.isPdf
                         ? InkWell(
-                          onTap: () {
-                            LaunchUtils.open(
-                              url: offerNotificationModel.url,
-                              onError: (msg) {
-                                showToast(message: msg  , state: ToastStates.error);
-                              },
-                            );
-                          },
-                          child: const VectorGraphic(
+                            onTap: () {
+                              LaunchUtils.open(
+                                url: offerNotificationModel.url,
+                                onError: (msg) {
+                                  showToast(
+                                    message: msg,
+                                    state: ToastStates.error,
+                                  );
+                                },
+                              );
+                            },
+                            child: const VectorGraphic(
                               loader: AssetBytesLoader(AssetsManager.pdf),
                             ),
-                        )
+                          )
                         : const SizedBox.shrink(),
                     const SizedBox(width: 10),
-                    !offerNotificationModel.isPdf && offerNotificationModel.url.isNotEmpty
+                    !offerNotificationModel.isPdf &&
+                            offerNotificationModel.url.isNotEmpty
                         ? InkWell(
-                          onTap: () {
-                            LaunchUtils.open(
-                              url: offerNotificationModel.url,
-                              onError: (msg) {
-                                showToast(message: msg  , state: ToastStates.error);
-                              },
-                            );
-                          },
-                          child: const Icon(
+                            onTap: () {
+                              LaunchUtils.open(
+                                url: offerNotificationModel.url,
+                                onError: (msg) {
+                                  showToast(
+                                    message: msg,
+                                    state: ToastStates.error,
+                                  );
+                                },
+                              );
+                            },
+                            child: const Icon(
                               Icons.image_outlined,
                               size: 50,
                               color: ColorsManager.primaryColor,
                             ),
-                        )
+                          )
                         : const SizedBox.shrink(),
                     const Spacer(),
                     if (isOffer)
@@ -176,7 +183,8 @@ class OfferDetails extends StatelessWidget {
                               heightFactor: 0.9,
                               child: ReplyOnOfferBottomSheet(
                                 address: LocaleKeys.replyToThePriceOffer,
-                                offerId: offerNotificationModel.offerId.toString(),
+                                offerId: offerNotificationModel.offerId
+                                    .toString(),
                               ),
                             ),
                           );

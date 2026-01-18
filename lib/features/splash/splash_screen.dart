@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _fadeAnimation = CurvedAnimation(
       parent: _controller,
-      curve: Curves.fastOutSlowIn,
+      curve: Curves.easeIn,
     );
 
     _controller.forward();

@@ -148,5 +148,6 @@
   "no_replies_yet":"No replies Yet",
   "delete_account":"Delete Account",
   "do_you_want_to_delete_your_account":"Do you want to delete your account?",
-  "back":"Back"
+  "back":"Back",
+  "there_are_no_offers_made":"There are no offers made"
 }

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class OfferNotificationModel extends Equatable {
+class OfferModel extends Equatable {
   final int id;
   final int offerId;
   final String title;
@@ -13,7 +13,7 @@ class OfferNotificationModel extends Equatable {
   final String offerUserName;
   final num price;
 
-  const OfferNotificationModel({
+  const OfferModel({
     required this.id,
     required this.offerId,
     required this.title,
@@ -26,8 +26,8 @@ class OfferNotificationModel extends Equatable {
     required this.isPdf,
     required this.url,
   });
-  factory OfferNotificationModel.fromJson(Map<String, dynamic> json) {
-    return OfferNotificationModel(
+  factory OfferModel.fromJson(Map<String, dynamic> json) {
+    return OfferModel(
       id: json["id"] ?? 0,
       offerId: json["offer_id"] ?? 0,
       title: json["title_offer"] ?? "",

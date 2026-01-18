@@ -5,7 +5,7 @@ import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
-import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -16,33 +16,35 @@ class PriceOfferItem extends StatelessWidget {
     super.key,
     required this.theme,
     this.isUser = false,
-    required this.offerNotificationModel,
+    required this.offerModel,
   });
   final ThemeData theme;
   final bool isUser;
-  final OfferNotificationModel offerNotificationModel;
+  final OfferModel offerModel;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         context.pushRoute(
-          OfferDetailsRoute(offerNotificationModel: offerNotificationModel),
+          OfferDetailsRoute(offerNotificationModel: offerModel),
         );
         context.read<NotificationsCubit>().markOfferNotificationAsRead(
-          notificationId: offerNotificationModel.id,
+          notificationId: offerModel.id,
         );
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: BlocSelector<NotificationsCubit, NotificationsState, bool>(
           selector: (state) {
-            return state.offerNotificationsReadStatus[offerNotificationModel
-                    .id] ??
-                false;
+            return state.offerNotificationsReadStatus[offerModel.id] ?? false;
           },
           builder: (context, isRead) {
             return ColoredBox(
-              color: isRead ? ColorsManager.surfaceColor : Colors.grey.shade200,
+              color: isUser
+                  ? ColorsManager.surfaceColor
+                  : isRead
+                  ? ColorsManager.surfaceColor
+                  : Colors.grey.shade200,
               child: Padding(
                 padding: const EdgeInsetsDirectional.symmetric(
                   horizontal: 14,
@@ -84,7 +86,7 @@ class PriceOfferItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            offerNotificationModel.title,
+                            offerModel.title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.labelMedium!.copyWith(
@@ -95,7 +97,7 @@ class PriceOfferItem extends StatelessWidget {
                           const SizedBox(height: 5),
                           Text(
                             textDirection: TextDirection.ltr,
-                            "${offerNotificationModel.date} - ${offerNotificationModel.time}",
+                            "${offerModel.date} - ${offerModel.time}",
                             style: theme.textTheme.labelSmall!.copyWith(
                               fontWeight: FontWeight.w400,
                               fontSize: 10,
@@ -106,7 +108,7 @@ class PriceOfferItem extends StatelessWidget {
                           Text(
                             isUser
                                 ? "${LocaleKeys.submittedTo} :  محمد احمد"
-                                : "${LocaleKeys.offeredBy} :  ${offerNotificationModel.offerUserName}",
+                                : "${LocaleKeys.offeredBy} :  ${offerModel.offerUserName}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.labelSmall!.copyWith(

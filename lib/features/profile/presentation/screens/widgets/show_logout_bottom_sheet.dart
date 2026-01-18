@@ -95,8 +95,7 @@ Future<void> showLogoutBottomSheet({required context, required theme}) async {
                   backgroundColor: ColorsManager.errorLight,
                   textColor: Colors.white,
                   onPressed: () async {
-                    // await context.read<ProfileCubit>().logout();
-                    context.replaceRoute(const AuthRoute());
+                    await context.read<ProfileCubit>().logout();
                   },
                   text: LocaleKeys.exit,
                 );

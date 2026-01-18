@@ -27,7 +27,7 @@ import 'package:mokawlcom_app/features/home/presentation/screens/contractor_deta
 import 'package:mokawlcom_app/features/home/presentation/screens/contractors_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/services_details_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/services_screen.dart';
-import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/notifications_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/offer_details_screen.dart';

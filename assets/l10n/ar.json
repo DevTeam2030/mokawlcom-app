@@ -148,5 +148,6 @@
   "no_replies_yet":"لا يوجد ردود بعد",
   "delete_account":"حذف الحساب",
   "do_you_want_to_delete_your_account":"هل تريد حذف حسابك؟",
-  "back":"رجوع"
+  "back":"رجوع",
+  "there_are_no_offers_made":"لا يوجد عروض مقدمة"
 }

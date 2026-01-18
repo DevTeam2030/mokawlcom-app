@@ -31,6 +31,7 @@ import 'package:mokawlcom_app/features/profile/data/data_source/profile_data_sou
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo_impl.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 
 // dependency injection
@@ -51,7 +52,7 @@ class ServiceLocator {
     });
 
     getIt.registerLazySingleton<FilePickerService>(() => FilePickerService());
-    
+
     getIt.registerLazySingleton<UserAuthDataSource>(
       () => UserAuthDataSourceImpl(dioHelper: getIt<DioHelper>()),
     );
@@ -129,7 +130,13 @@ class ServiceLocator {
       () => ProfileRepoImpl(profileDataSource: getIt<ProfileDataSource>()),
     );
     getIt.registerFactory<ProfileCubit>(
-      () => ProfileCubit(profileRepo: getIt<ProfileRepo>(),cacheHelper: getIt<CacheHelper>()),
+      () => ProfileCubit(
+        profileRepo: getIt<ProfileRepo>(),
+        cacheHelper: getIt<CacheHelper>(),
+      ),
+    );
+    getIt.registerFactory<UserDetailsCubit>(
+      () => UserDetailsCubit(profileRepo: getIt<ProfileRepo>()),
     );
   }
 }

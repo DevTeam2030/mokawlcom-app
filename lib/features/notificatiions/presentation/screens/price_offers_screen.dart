@@ -9,7 +9,7 @@ import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/price_offer_item.dart';
@@ -107,7 +107,7 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
               theme: theme,
               notifications: List.generate(
                 6,
-                (context) => const OfferNotificationModel(
+                (context) => const OfferModel(
                   message: "Offer details placeholder",
                   date: "00/00/0000",
                   status: false,
@@ -150,7 +150,7 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
   }
 
   Widget _buildOffersList({
-    required List<OfferNotificationModel> notifications,
+    required List<OfferModel> notifications,
     required RequestStatus status,
     required ThemeData theme,
   }) {
@@ -178,10 +178,7 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
           );
         }
 
-        return PriceOfferItem(
-          theme: theme,
-          offerNotificationModel: notifications[index],
-        );
+        return PriceOfferItem(theme: theme, offerModel: notifications[index]);
       },
     );
   }

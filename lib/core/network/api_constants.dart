@@ -34,6 +34,7 @@ class ApiConstants {
   static const String changePassword = "/change-password";
   static const String deleteAccount = "/delete-account";
   static const String editContractorProfile = "/update-profile-owner";
-  static const String logout = "/logout";
+  static const String logout = "/auth/logout";
   static const String profile = "/user-profile";
+  static const String userOffers = "/user-offers";
 }

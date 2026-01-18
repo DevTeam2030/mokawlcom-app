@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notification_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 
 class OfferNotificationsModel extends Equatable {
   final int currentPage;
   final int totalPages;
-  final List<OfferNotificationModel> notifications;
+  final List<OfferModel> notifications;
 
   const OfferNotificationsModel({
     required this.currentPage,
@@ -16,18 +16,16 @@ class OfferNotificationsModel extends Equatable {
     return OfferNotificationsModel(
       currentPage: json["current_page"] ?? 0,
       totalPages: json["total_pages"] ?? 0,
-      notifications: List<OfferNotificationModel>.from(
+      notifications: List<OfferModel>.from(
         (json["notifications"] as List? ?? []).map(
-          (x) => OfferNotificationModel.fromJson(x),
+          (x) => OfferModel.fromJson(x),
         ),
       ),
     );
   }
   const OfferNotificationsModel.empty()
     : this(currentPage: 0, totalPages: 0, notifications: const []);
-  OfferNotificationsModel copyWith({
-    List<OfferNotificationModel>? notifications,
-  }) {
+  OfferNotificationsModel copyWith({List<OfferModel>? notifications}) {
     return OfferNotificationsModel(
       currentPage: currentPage,
       totalPages: totalPages,

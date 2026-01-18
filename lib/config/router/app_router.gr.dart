@@ -494,7 +494,7 @@ class NotificationsRoute extends PageRouteInfo<void> {
 class OfferDetailsRoute extends PageRouteInfo<OfferDetailsRouteArgs> {
   OfferDetailsRoute({
     Key? key,
-    required OfferNotificationModel offerNotificationModel,
+    required OfferModel offerNotificationModel,
     List<PageRouteInfo>? children,
   }) : super(
          OfferDetailsRoute.name,
@@ -524,7 +524,7 @@ class OfferDetailsRouteArgs {
 
   final Key? key;
 
-  final OfferNotificationModel offerNotificationModel;
+  final OfferModel offerNotificationModel;
 
   @override
   String toString() {
@@ -804,7 +804,7 @@ class SubmittedPriceOffersRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const SubmittedPriceOffersScreen();
+      return WrappedRoute(child: const SubmittedPriceOffersScreen());
     },
   );
 }
