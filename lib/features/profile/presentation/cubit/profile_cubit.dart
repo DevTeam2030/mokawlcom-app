@@ -53,8 +53,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         state.copyWith(
           errorMessage: e.toString(),
           updateUserProfileRequestStatus: RequestStatus.error,
-          // ignore: avoid_redundant_argument_values
-          profileImage: null,
+          clearProfileImage: true,
         ),
       );
       return;
@@ -68,8 +67,6 @@ class ProfileCubit extends Cubit<ProfileState> {
         state.copyWith(
           errorMessage: LocaleKeys.pleaseSelectAnImage,
           updateUserProfileRequestStatus: RequestStatus.error,
-          // ignore: avoid_redundant_argument_values
-          profileImage: null,
         ),
       );
       return;
@@ -83,8 +80,6 @@ class ProfileCubit extends Cubit<ProfileState> {
         state.copyWith(
           updateUserProfileRequestStatus: RequestStatus.error,
           errorMessage: failure.errorMessage,
-          // ignore: avoid_redundant_argument_values
-          profileImage: null,
         ),
       ),
       (successMessage) => emit(

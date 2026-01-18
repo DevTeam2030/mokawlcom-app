@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 
 class ProfileImage extends StatelessWidget {
@@ -17,18 +18,36 @@ class ProfileImage extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 50,
-            backgroundColor: Colors.transparent,
-            child: BlocSelector<ProfileCubit, ProfileState, File?>(
-              selector: (state) {
-                return state.profileImage;
-              },
-              builder: (context, image) {
-                return CircleAvatar(
-                  radius: 48,
-                  backgroundColor: Colors.white,
-                  backgroundImage: image == null
-                      ? const AssetImage(AssetsManager.userImage)
-                      : FileImage(image),
+            backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+            child: BlocBuilder<ProfileCubit, ProfileState>(
+              buildWhen: (previous, current) =>
+                  previous.profileImage != current.profileImage ||
+                  previous.userModel.logo != current.userModel.logo,
+              builder: (context, state) {
+                Widget widget;
+
+                if (state.profileImage != null) {
+                  widget = Image.file(state.profileImage!, fit: .cover);
+                } else if (state.profileImage == null &&
+                    state.userModel.logo.isNotEmpty) {
+                  widget = CustomCachedNetworkImage(
+                    imageUrl: state.userModel.logo,
+                    width: 96,
+                    height: 96,
+                    fit: .cover,
+                  );
+                } else {
+                  widget = Image.asset(AssetsManager.userImage, fit: .cover);
+                }
+                return Container(
+                  width: 96,
+                  height: 96,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: widget,
                 );
               },
             ),

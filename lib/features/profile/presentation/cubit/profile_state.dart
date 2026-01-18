@@ -36,13 +36,16 @@ class ProfileState extends Equatable {
     RequestStatus? getUserProfileRequestState,
     UserModel? userModel,
     bool? isConnected,
+    bool? clearProfileImage,
   }) {
     return ProfileState(
       updateUserProfileRequestStatus:
           updateUserProfileRequestStatus ?? this.updateUserProfileRequestStatus,
       errorMessage: errorMessage ?? this.errorMessage,
       successMessage: successMessage ?? this.successMessage,
-      profileImage: profileImage ?? this.profileImage,
+      profileImage: clearProfileImage == true
+          ? null
+          : profileImage ?? this.profileImage,
       changePasswordRequestState:
           changePasswordRequestState ?? this.changePasswordRequestState,
       deleteAccountRequestState:
