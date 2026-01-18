@@ -5,6 +5,7 @@ class AppConstants {
       "200274876402-me35qgdlq8rub4ifdeus4h2j7uhbt9j6.apps.googleusercontent.com";
   static const String tokenKey = "token";
   static String token = "";
+  static String currentRoute = "";
   static UserType userType = UserType.visitor;
   static String language = "ar";
 }

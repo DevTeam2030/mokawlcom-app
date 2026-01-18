@@ -1,13 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_intl_phone_field/flutter_intl_phone_field.dart';
+import 'package:flutter_intl_phone_field/phone_number.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
-class CustomIntlPhoneField extends StatefulWidget {
+class CustomIntlPhoneField extends StatelessWidget {
   const CustomIntlPhoneField({
     super.key,
-    this.controller,
     this.onChanged,
     this.initialCountryCode = 'EG',
     this.label,
@@ -17,9 +19,9 @@ class CustomIntlPhoneField extends StatefulWidget {
     this.enabled = true,
     this.onSubmitted,
     this.textInputAction,
+    this.validator,
   });
 
-  final TextEditingController? controller;
   final void Function(String completeNumber, String countryCode)? onChanged;
   final String initialCountryCode;
   final String? label;
@@ -29,116 +31,74 @@ class CustomIntlPhoneField extends StatefulWidget {
   final bool enabled;
   final void Function(String)? onSubmitted;
   final TextInputAction? textInputAction;
-
-  @override
-  State<CustomIntlPhoneField> createState() => _CustomIntlPhoneFieldState();
-}
-
-class _CustomIntlPhoneFieldState extends State<CustomIntlPhoneField> {
-  late TextEditingController _phoneController;
-
-  @override
-  void initState() {
-    super.initState();
-    _phoneController = widget.controller ?? TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _phoneController.dispose();
-    super.dispose();
-  }
+  final FutureOr<String?> Function(PhoneNumber?)? validator;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Directionality(
       textDirection: TextDirection.ltr,
-      child: FormField<String>(
-        validator: (value) {
-          if (_phoneController.text.isEmpty) {
-            return LocaleKeys.pleaseEnterYourPhone;
+      child: IntlPhoneField(
+
+        style: theme.textTheme.bodySmall!.copyWith(
+          fontWeight: FontWeight.bold,
+          color: theme.colorScheme.onSurfaceVariant,
+        ),
+        dropdownTextStyle: theme.textTheme.bodySmall!.copyWith(
+          fontWeight: FontWeight.bold,
+          color: ColorsManager.primaryColor,
+          fontSize: 14,
+        ),
+        enabled: enabled,
+        initialCountryCode: initialCountryCode,
+        onSubmitted: onSubmitted,
+        textInputAction: textInputAction ?? TextInputAction.done,
+
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+
+        validator: validator?? (phone) {
+                if (phone == null ||
+                    phone.number.isEmpty ||
+                    phone.completeNumber.isEmpty) {
+                  return LocaleKeys.pleaseEnterYourPhone;
+                }
+                return null;
+              },
+
+        decoration: InputDecoration(
+          labelText: label ?? "",
+          filled: true,
+          fillColor: fillColor ?? Colors.transparent,
+          prefixIcon: prefixIcon,
+          contentPadding: const EdgeInsets.all(20),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius ?? 8),
+            borderSide: const BorderSide(color: ColorsManager.secondaryColor),
+          ),
+
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius ?? 8),
+            borderSide: const BorderSide(
+              color: ColorsManager.primaryColor,
+              width: 2,
+            ),
+          ),
+
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius ?? 8),
+            borderSide: BorderSide(color: theme.colorScheme.error),
+          ),
+
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius ?? 8),
+            borderSide: BorderSide(color: theme.colorScheme.error, width: 2),
+          ),
+        ),
+
+        onChanged: (phone) {
+          if (onChanged != null) {
+            onChanged!(phone.completeNumber, phone.countryCode);
           }
-          return null;
-        },
-        builder: (fieldState) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IntlPhoneField(
-                controller: _phoneController,
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  fontWeight: FontWeight.bold,
-                ),
-                dropdownTextStyle: Theme.of(context).textTheme.bodySmall!
-                    .copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: ColorsManager.primaryColor,
-                      fontSize: 14,
-                    ),
-                onSubmitted: widget.onSubmitted,
-                textInputAction: widget.textInputAction ?? TextInputAction.done,
-                enabled: widget.enabled,
-                initialCountryCode: widget.initialCountryCode,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                ],
-                decoration: InputDecoration(
-                  labelText: widget.label ?? "",
-                  filled: true,
-                  fillColor: widget.fillColor ?? Colors.transparent,
-                  errorText: fieldState.errorText,
-                  prefixIcon: widget.prefixIcon,
-                  contentPadding: const EdgeInsets.all(20),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      widget.borderRadius ?? 8,
-                    ),
-                    borderSide: const BorderSide(
-                      color: ColorsManager.secondaryColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      widget.borderRadius ?? 8,
-                    ),
-                    borderSide: const BorderSide(
-                      color: ColorsManager.primaryColor,
-                      width: 2,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      widget.borderRadius ?? 8,
-                    ),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.error,
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      widget.borderRadius ?? 8,
-                    ),
-                    borderSide: const BorderSide(
-                      color: ColorsManager.secondaryColor,
-                    ),
-                  ),
-                ),
-                validator: (phone) {
-                  if (phone == null || phone.completeNumber.isEmpty) {
-                    return LocaleKeys.pleaseEnterYourPhone;
-                  }
-                  return null;
-                },
-                onChanged: (phone) {
-                  fieldState.didChange(phone.completeNumber);
-                  if (widget.onChanged != null) {
-                    widget.onChanged!(phone.completeNumber, phone.countryCode);
-                  }
-                },
-              ),
-            ],
-          );
         },
       ),
     );

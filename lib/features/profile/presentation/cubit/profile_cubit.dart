@@ -3,8 +3,11 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -13,7 +16,9 @@ part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepo profileRepo;
-  ProfileCubit({required this.profileRepo}) : super(const ProfileState());
+  final CacheHelper cacheHelper;
+  ProfileCubit({required this.profileRepo, required this.cacheHelper})
+    : super(const ProfileState());
 
   Future<void> updateUserProfile({
     required UpdateUserProfileRequestModel updateUserProfileRequestModel,
@@ -123,9 +128,37 @@ class ProfileCubit extends Cubit<ProfileState> {
           errorMessage: failure.errorMessage,
         ),
       ),
+      (successMessage) {
+        cacheHelper.deleteAll();
+        AppConstants.token = "";
+        emit(
+          state.copyWith(
+            deleteAccountRequestState: RequestStatus.success,
+            successMessage: successMessage,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> editContractorProfile({
+    required EditContractorProfileRequestModel
+    editContractorProfileRequestModel,
+  }) async {
+    emit(state.copyWith(updateUserProfileRequestStatus: RequestStatus.loading));
+    final result = await profileRepo.editContractorProfile(
+      editContractorProfileRequestModel: editContractorProfileRequestModel,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          updateUserProfileRequestStatus: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
       (successMessage) => emit(
         state.copyWith(
-          deleteAccountRequestState: RequestStatus.success,
+          updateUserProfileRequestStatus: RequestStatus.success,
           successMessage: successMessage,
         ),
       ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 
 abstract class ProfileRepo {
@@ -16,4 +17,7 @@ abstract class ProfileRepo {
     required ChangePasswordRequestModel changePasswordRequestModel,
   });
   Future<Either<Failure, String>> deleteAccount();
+  Future<Either<Failure, String>> editContractorProfile({
+    required EditContractorProfileRequestModel editContractorProfileRequestModel,
+  });
 }

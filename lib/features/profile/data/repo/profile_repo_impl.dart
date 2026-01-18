@@ -5,6 +5,7 @@ import 'package:mokawlcom_app/core/utils/safe_api_call.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/profile/data/data_source/profile_data_source.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
 
@@ -41,5 +42,14 @@ class ProfileRepoImpl implements ProfileRepo {
   @override
   Future<Either<Failure, String>> deleteAccount() async => safeApiCall<String>(
     () => profileDataSource.deleteAccount(),
+  );
+
+  @override
+  Future<Either<Failure, String>> editContractorProfile({
+    required EditContractorProfileRequestModel editContractorProfileRequestModel,
+  }) async => safeApiCall<String>(
+    () => profileDataSource.editContractorProfile(
+      editContractorProfileRequestModel: editContractorProfileRequestModel,
+    ),
   );
 }

@@ -120,8 +120,7 @@ class ServiceLocator {
     getIt.registerFactory<NotificationsCubit>(
       () => NotificationsCubit(notificationsRepo: getIt<NotificationsRepo>()),
     );
-    getIt.registerLazySingleton<FcmInitHelper>(() => FcmInitHelper(
-        notificationsCubit: getIt<NotificationsCubit>(),appCubit: getIt<AppCubit>()));
+    getIt.registerLazySingleton<FcmInitHelper>(() => FcmInitHelper());
 
     getIt.registerLazySingleton<ProfileDataSource>(
       () => ProfileDataSourceImpl(dioHelper: getIt<DioHelper>()),
@@ -130,7 +129,7 @@ class ServiceLocator {
       () => ProfileRepoImpl(profileDataSource: getIt<ProfileDataSource>()),
     );
     getIt.registerFactory<ProfileCubit>(
-      () => ProfileCubit(profileRepo: getIt<ProfileRepo>()),
+      () => ProfileCubit(profileRepo: getIt<ProfileRepo>(),cacheHelper: getIt<CacheHelper>()),
     );
   }
 }

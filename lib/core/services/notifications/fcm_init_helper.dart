@@ -11,9 +11,7 @@ import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notific
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 
 class FcmInitHelper {
-  final NotificationsCubit notificationsCubit;
-  final AppCubit appCubit;
-  FcmInitHelper({required this.notificationsCubit, required this.appCubit});
+
 
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   final AwesomeNotifications _awesomeNotifications = AwesomeNotifications();
@@ -52,52 +50,85 @@ class FcmInitHelper {
   Future<void> initFirebaseMessagingListeners() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       debugPrint("📩 Foreground message: ${message.data}");
-      final curentRoute = getIt<AppRouter>().current.name;
-      print("current route: >>>>>>>>>>>>>>$curentRoute");
+      final curentRoute = AppConstants.currentRoute;
+     // print("current route: >>>>>>>>>>>>>>$curentRoute");
 
-      if (message.data['type'] == 'public') {
-        notificationsCubit.addPublicNotification(
-          publicNotification: PublicNotificationModel(
-            id: int.tryParse(message.data['id'] ?? "") ?? 0,
-            title: message.notification?.title ?? 'No title',
-            body: message.notification?.body ?? 'No body',
-            date: message.data['date'] ?? "",
-            time: message.data['time'] ?? "",
-            status: message.data['status'] ?? false,
-          ),
-        );
-      } else {
-        notificationsCubit.addOfferNotification(
-          offerNotification: OfferNotificationModel(
-            id: message.data['id'] ?? 0,
-            title: message.notification?.title ?? 'No title',
-            message: message.notification?.body ?? 'No body',
-            date: message.data['date'] ?? "",
-            time: message.data['time'] ?? "",
-            status: message.data['status'] ?? false,
-            isPdf: message.data['is_pdf'] ?? false,
-            price: message.data['price'] ?? 0,
-            offerUserName: message.data['offer_user_name'] ?? "",
-            url: message.data['file'] ?? "",
-            offerId: message.data['offer_id'] ?? 0,
-          ),
-        );
-      }
+      // if (message.data['type'] == 'public') {
+      //   notificationsCubit.addPublicNotification(
+      //     publicNotification: PublicNotificationModel(
+      //       id: int.tryParse(message.data['id'] ?? "") ?? 0,
+      //       title: message.notification?.title ?? 'No title',
+      //       body: message.notification?.body ?? 'No body',
+      //       date: message.data['date'] ?? "",
+      //       time: message.data['time'] ?? "",
+      //       status: bool.tryParse(message.data['status'] ?? "") ?? false,
+      //     ),
+      //   );
+      // } else {
+      //   notificationsCubit.addOfferNotification(
+      //     offerNotification: OfferNotificationModel(
+      //       id: int.tryParse(message.data['id'] ?? "") ?? 0,
+      //       title: message.notification?.title ?? 'No title',
+      //       message: message.notification?.body ?? 'No body',
+      //       date: message.data['date'] ?? "",
+      //       time: message.data['time'] ?? "",
+      //       status: bool.tryParse(message.data['status'] ?? "") ?? false,
+      //       isPdf: bool.tryParse(message.data['is_pdf'] ?? "") ?? false,
+      //       price: num.tryParse(message.data['price'] ?? "") ?? 0,
+      //       offerUserName: message.data['offer_user_name'] ?? "",
+      //       url: message.data['file'] ?? "",
+      //       offerId: int.tryParse(message.data['offer_id'] ?? "") ?? 0,
+      //     ),
+      //   );
+      // }
 
       if (curentRoute == NotificationsRoute.name) {
         return;
       }
-      appCubit.toggleTabs(tabIndex: 1);
+    //  appCubit.toggleTabs(tabIndex: 1);
+  
 
       _showAwesomeNotification(message);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       debugPrint("📲 Notification opened (background): ${message.data}");
-      final curentRoute = getIt<AppRouter>().current.name;
-      print("current route: >>>>>>>>>>>>>>$curentRoute");
-      await navigateToNotifications();
+      //final curentRoute = getIt<AppRouter>().current.name;
+     // print("current route: >>>>>>>>>>>>>>$curentRoute");
+      getIt<AppRouter>().push(
+      OfferDetailsRoute(
+        offerNotificationModel: OfferNotificationModel(
+          id: int.tryParse(message.data['id'] ?? "") ?? 0,
+          offerId: int.tryParse(message.data['offer_id'] ?? "") ?? 0,
+          title: message.notification?.title ?? 'No title',
+          message: message.notification?.body ?? 'No body',
+          date: message.data['date'] ?? "",
+          time: message.data['time'] ?? "",
+          status: false,
+          offerUserName: message.data['offer_user_name'] ?? "",
+          price: num.tryParse(message.data['price'] ?? "") ?? 0,
+          isPdf: bool.tryParse(message.data['is_pdf'] ?? "") ?? false,
+          url: message.data['file'] ?? "",
+        ),
+      ),
+    );
+    // notificationsCubit.addOfferNotification(
+    //   offerNotification: OfferNotificationModel(
+    //     id: int.tryParse(message.data['id'] ?? "") ?? 0,
+    //     offerId: int.tryParse(message.data['offer_id'] ?? "") ?? 0,
+    //     title: message.notification?.title ?? 'No title',
+    //     message: message.notification?.body ?? 'No body',
+    //     date: message.data['date'] ?? "",
+    //     time: message.data['time'] ?? "",
+    //     status: false,
+    //     offerUserName: message.data['offer_user_name'] ?? "",
+    //     price: num.tryParse(message.data['price'] ?? "") ?? 0,
+    //     isPdf: bool.tryParse(message.data['is_pdf'] ?? "") ?? false,
+    //     url: message.data['file'] ?? "",
+    //   ),
+    // );
     });
+    
   }
 
   Future<void> handleInitialMessage() async {
@@ -111,16 +142,7 @@ class FcmInitHelper {
   }
 
   Future<void> navigateToNotifications() async {
-    final String currentRoute = getIt<AppRouter>().current.name;
-    if (currentRoute == SplashTabRoute.name) {
-      await getIt<AppRouter>().replaceAll([
-        const AuthenticatedRoute(children: [BottomNavBarRoute()]),
-      ]);
-      getIt<AppCubit>().toggleTabs(tabIndex: 1);
-    } else if (currentRoute == AuthenticatedRoute.name ||
-        currentRoute == BottomNavBarRoute.name) {
-      getIt<AppCubit>().toggleTabs(tabIndex: 1);
-    }
+    
   }
 
   Future<String?> getFcmToken() async {

@@ -67,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         await Future.wait([
                           context.read<HomeCubit>().getBanners(),
                           context.read<HomeCubit>().getClassifications(),
+                          context.read<HomeCubit>().getServices(),
                         ]);
                       },
                     );

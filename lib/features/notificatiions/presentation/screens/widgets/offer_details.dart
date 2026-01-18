@@ -172,9 +172,12 @@ class OfferDetails extends StatelessWidget {
                             isScrollControlled: true,
                             backgroundColor: Colors.white,
                             context: context,
-                            builder: (context) => ReplyOnOfferBottomSheet(
-                              address: LocaleKeys.replyToThePriceOffer,
-                              offerId: offerNotificationModel.offerId.toString(),
+                            builder: (context) => FractionallySizedBox(
+                              heightFactor: 0.9,
+                              child: ReplyOnOfferBottomSheet(
+                                address: LocaleKeys.replyToThePriceOffer,
+                                offerId: offerNotificationModel.offerId.toString(),
+                              ),
                             ),
                           );
                         },

@@ -33,4 +33,5 @@ class ApiConstants {
   static const String replayOfferPrice = "/replay-offer-price";
   static const String changePassword = "/change-password";
   static const String deleteAccount = "/delete-account";
+  static const String editContractorProfile = "/update-profile-owner";
 }

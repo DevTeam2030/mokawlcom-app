@@ -8,7 +8,8 @@ class CustomDropdownField<T> extends StatelessWidget {
     required this.items,
     this.hintText,
     this.label,
-    this.onChanged, required this.theme,
+    this.onChanged,
+    required this.theme, this.onTap,
   });
 
   final T? value;
@@ -17,12 +18,12 @@ class CustomDropdownField<T> extends StatelessWidget {
   final String? label;
   final void Function(T?)? onChanged;
   final ThemeData theme;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-
     return InkWell(
-      onTap: () => _openBottomSheet(context, theme),
+      onTap: onTap ?? () => _openBottomSheet(context, theme),
       borderRadius: BorderRadius.circular(8),
       child: InputDecorator(
         decoration: InputDecoration(
@@ -36,8 +37,7 @@ class CustomDropdownField<T> extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide:
-                const BorderSide(color: ColorsManager.secondaryColor),
+            borderSide: const BorderSide(color: ColorsManager.secondaryColor),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
@@ -75,67 +75,69 @@ class CustomDropdownField<T> extends StatelessWidget {
         return SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _sheetHandle(),
-
-                if (label != null || hintText != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Text(
-                      label ?? hintText!,
-                      style: theme.textTheme.titleMedium!.copyWith(
-                        color: ColorsManager.primaryColor,
-                        fontWeight: FontWeight.bold,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _sheetHandle(),
+              
+                  if (label != null || hintText != null)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Text(
+                        label ?? hintText!,
+                        style: theme.textTheme.titleMedium!.copyWith(
+                          color: ColorsManager.primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-
-                ListView.separated(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.only(bottom: 20),
-                  itemCount: items.length,
-                  separatorBuilder: (_, __) => const Divider(
-                    height: 1,
-                    indent: 24,
-                    endIndent: 24,
-                    color: ColorsManager.dividerGray,
-                  ),
-                  itemBuilder: (_, index) {
-                    final item = items[index];
-                    final selected = item.value == value;
-
-                    return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 4,
-                      ),
-                      title: DefaultTextStyle(
-                        style: theme.textTheme.bodyMedium!.copyWith(
-                          color: selected
-                              ? ColorsManager.primaryColor
-                              : Colors.black87,
-                          fontWeight: selected
-                              ? FontWeight.bold
-                              : FontWeight.normal,
+              
+                  ListView.separated(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.only(bottom: 20),
+                    itemCount: items.length,
+                    separatorBuilder: (_, __) => const Divider(
+                      height: 1,
+                      indent: 24,
+                      endIndent: 24,
+                      color: ColorsManager.dividerGray,
+                    ),
+                    itemBuilder: (_, index) {
+                      final item = items[index];
+                      final selected = item.value == value;
+              
+                      return ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 4,
                         ),
-                        child: item.child,
-                      ),
-                      trailing: selected
-                          ? const Icon(
-                              Icons.check_circle,
-                              color: ColorsManager.primaryColor,
-                            )
-                          : null,
-                      onTap: () {
-                        onChanged?.call(item.value);
-                        Navigator.pop(context);
-                      },
-                    );
-                  },
-                ),
-              ],
+                        title: DefaultTextStyle(
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            color: selected
+                                ? ColorsManager.primaryColor
+                                : Colors.black87,
+                            fontWeight: selected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                          child: item.child,
+                        ),
+                        trailing: selected
+                            ? const Icon(
+                                Icons.check_circle,
+                                color: ColorsManager.primaryColor,
+                              )
+                            : null,
+                        onTap: () {
+                          onChanged?.call(item.value);
+                          Navigator.pop(context);
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         );

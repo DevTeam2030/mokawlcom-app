@@ -84,7 +84,7 @@ class PriceOfferItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            LocaleKeys.offerAddress,
+                            offerNotificationModel.title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.labelMedium!.copyWith(

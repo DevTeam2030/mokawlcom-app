@@ -20,66 +20,66 @@ class BottomNavBarScreen extends StatelessWidget {
     return AutoTabsScaffold(
       routes: const [HomeRoute(), NotificationsRoute(), ProfileRoute()],
       bottomNavigationBuilder: (context, tabsRouter) {
-        return BlocSelector<AppCubit, AppState, int>(
-          selector: (state) {
-            return state.tabIndex;
+        return BlocListener<AppCubit, AppState>(
+          listenWhen: (previous, current) =>
+              previous.tabIndex != current.tabIndex,
+          listener: (context, state) {
+            if (state.tabIndex == 1) {
+              final tabsRouter = AutoTabsRouter.of(context);
+              tabsRouter.setActiveIndex(state.tabIndex);
+            }
           },
-          builder: (context, tabIndex) {
-            return Container(
-              height: 72,
-              decoration: const BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: ColorsManager.navBorderColor,
-                    width: 1.5,
+          child: Container(
+            height: 72,
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  color: ColorsManager.navBorderColor,
+                  width: 1.5,
+                ),
+              ),
+              borderRadius: BorderRadiusDirectional.only(
+                topStart: Radius.circular(16),
+                topEnd: Radius.circular(16),
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: const BorderRadiusDirectional.only(
+                topStart: Radius.circular(16),
+                topEnd: Radius.circular(16),
+              ),
+              child: BottomNavigationBar(
+                key: ValueKey(Localizations.localeOf(context).languageCode),
+                currentIndex: tabsRouter.activeIndex,
+                onTap: (index) {
+                  if (index == 1) {
+                    context.read<AppCubit>().handleProtectedNavigation(
+                      context: context,
+                      onAllowed: () {
+                        tabsRouter.setActiveIndex(index);
+                      },
+                    );
+                  } else {
+                    tabsRouter.setActiveIndex(index);
+                  }
+                },
+                items: [
+                  BottomNavigationBarItem(
+                    icon: const Icon(MyIcons.home),
+                    label: LocaleKeys.home,
                   ),
-                ),
-                borderRadius: BorderRadiusDirectional.only(
-                  topStart: Radius.circular(16),
-                  topEnd: Radius.circular(16),
-                ),
+                  BottomNavigationBarItem(
+                    icon: const Icon(MyIcons.notification),
+                    label: LocaleKeys.notifications,
+                  ),
+                  BottomNavigationBarItem(
+                    icon: const Icon(MyIcons.user),
+                    label: LocaleKeys.profile,
+                  ),
+                ],
               ),
-              child: ClipRRect(
-                borderRadius: const BorderRadiusDirectional.only(
-                  topStart: Radius.circular(16),
-                  topEnd: Radius.circular(16),
-                ),
-                child: BottomNavigationBar(
-                  key: ValueKey(Localizations.localeOf(context).languageCode),
-                  currentIndex: tabsRouter.activeIndex,
-                  onTap: (index) {
-                    if (index == 1) {
-                      context.read<AppCubit>().handleProtectedNavigation(
-                        context: context,
-                        onAllowed: () {
-                          tabsRouter.setActiveIndex(index);
-                        },
-                      );
-                    } else {
-                      tabsRouter.setActiveIndex(index);
-                    }
-                    if (tabIndex == 1) {
-                      tabsRouter.setActiveIndex(1);
-                    }
-                  },
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: const Icon(MyIcons.home),
-                      label: LocaleKeys.home,
-                    ),
-                    BottomNavigationBarItem(
-                      icon: const Icon(MyIcons.notification),
-                      label: LocaleKeys.notifications,
-                    ),
-                    BottomNavigationBarItem(
-                      icon: const Icon(MyIcons.user),
-                      label: LocaleKeys.profile,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
+            ),
+          ),
         );
       },
     );

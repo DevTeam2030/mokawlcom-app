@@ -70,7 +70,7 @@ Future<void> showDeleteAccountBottomSheet({
               listenWhen: (previous, current) =>
                   previous.deleteAccountRequestState !=
                   current.deleteAccountRequestState,
-              listener: (context, state) {
+              listener: (context, state)async {
                 if (state.deleteAccountRequestState.isError) {
                   showDialog(
                     context: context,
@@ -79,17 +79,18 @@ Future<void> showDeleteAccountBottomSheet({
                   );
                 }
                 if (state.deleteAccountRequestState.isSuccess) {
-                  showDialog(
+                  await showDialog(
                     context: context,
                     builder: (context) => SuccessDialog(
                       message: state.successMessage,
                       theme: theme,
                       onPressed: () {
-                        context.pop();
+                      if(context.mounted) context.replaceRoute(const AuthRoute());
                       },
                       text: LocaleKeys.exit,
                     ),
                   );
+                 if(context.mounted) context.replaceRoute(const AuthRoute());
                 }
               },
               builder: (context, state) {
