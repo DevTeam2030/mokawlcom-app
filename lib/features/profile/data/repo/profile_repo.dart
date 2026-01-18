@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/add_service_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
@@ -29,7 +30,8 @@ abstract class ProfileRepo {
   Future<Either<Failure, ContractorServicesModel>> getContractorServices({
     required int page,
   });
-  Future<Either<Failure, UserModel>> getContractorProfile(
-    
-  );
+  Future<Either<Failure, UserModel>> getContractorProfile();
+  Future<Either<Failure, String>> addService({
+    required AddServiceRequestModel addServiceRequestModel,
+  }); 
 }

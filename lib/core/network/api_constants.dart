@@ -38,4 +38,5 @@ class ApiConstants {
   static const String profile = "/user-profile";
   static const String userOffers = "/user-offers";
   static const String getContractorServices = "/get-services";
+  static const String addService = "//add-service";
 }

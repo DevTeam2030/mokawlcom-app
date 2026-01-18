@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
+import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -65,6 +68,31 @@ class MyServiceItem extends StatelessWidget {
               color: ColorsManager.primaryColor,
               height: 1.5,
             ),
+          ),
+          const SizedBox(height: 10),
+          Wrap(
+            spacing: 5,
+            runSpacing: 10,
+            children: List<Widget>.generate(service.images.length, (index) {
+              return InkWell(
+                onTap: () {
+                  LaunchUtils.open(
+                    url: service.images[index],
+                    onError: (msg) {
+                      showToast(
+                        message: msg,
+                        state: ToastStates.error,
+                      );
+                    },
+                  );
+                },
+                child: const Icon(
+                  Icons.image_outlined,
+                  size: 35,
+                  color: ColorsManager.primaryColor,
+                ),
+              );
+            }),
           ),
         ],
       ),

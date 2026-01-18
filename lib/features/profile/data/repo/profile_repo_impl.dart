@@ -5,6 +5,7 @@ import 'package:mokawlcom_app/core/utils/safe_api_call.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/profile/data/data_source/profile_data_source.dart';
+import 'package:mokawlcom_app/features/profile/data/models/add_service_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
@@ -82,4 +83,11 @@ class ProfileRepoImpl implements ProfileRepo {
   @override
   Future<Either<Failure, UserModel>> getContractorProfile() async =>
       safeApiCall<UserModel>(() => profileDataSource.getContractorProfile());
+
+  @override
+  Future<Either<Failure, String>> addService({
+    required AddServiceRequestModel addServiceRequestModel,
+  }) async => safeApiCall<String>(
+    () => profileDataSource.addService(addServiceRequestModel: addServiceRequestModel),
+  );
 }

@@ -6,6 +6,7 @@ import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/add_service_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
@@ -31,8 +32,9 @@ abstract class ProfileDataSource {
   Future<UserModel> getContractorProfile();
 
   Future<UserOffersModel> getUserOffers({required int page});
-  Future<ContractorServicesModel> getContractorServices({
-    required int page,
+  Future<ContractorServicesModel> getContractorServices({required int page});
+  Future<String> addService({
+    required AddServiceRequestModel addServiceRequestModel,
   });
 }
 
@@ -183,6 +185,38 @@ class ProfileDataSourceImpl implements ProfileDataSource {
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return UserModel.fromJson(response.data["data"] ?? {});
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
+
+  @override
+  Future<String> addService({
+    required AddServiceRequestModel addServiceRequestModel,
+  }) async {
+    final Map<String, dynamic> formDataMap = {
+      ...addServiceRequestModel.toJson(),
+    };
+
+    if (addServiceRequestModel.images != null &&
+        addServiceRequestModel.images!.isNotEmpty) {
+      final List<MultipartFile> imageFiles = [];
+      for (final image in addServiceRequestModel.images!) {
+        final multipartFile = await MultipartFile.fromFile(image.path);
+        imageFiles.add(multipartFile);
+      }
+      formDataMap["images"] = imageFiles;
+    }
+
+    final formData = FormData.fromMap(formDataMap);
+
+    final response = await dioHelper.post(
+      url: ApiConstants.addService,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      data: formData,
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response.data["message"] ?? "";
     } else {
       throw ServerException(errorMessage: response.data["message"] ?? "");
     }
