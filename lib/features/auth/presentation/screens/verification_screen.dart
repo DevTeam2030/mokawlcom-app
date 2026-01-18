@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
@@ -127,35 +128,35 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 previous.activateAccountState != current.activateAccountState,
             buildWhen: (previous, current) =>
                 previous.activateAccountState != current.activateAccountState,
-            listener: (context, state) {
+            listener: (context, state) async {
               if (state.activateAccountState.isSuccess) {
-                showDialog(
+                if (state.activateAccountState.isError) {
+                  showDialog(
+                    context: context,
+                    builder: (context) =>
+                        ErrorDialog(theme: theme, message: state.errorMessage),
+                  );
+                }
+                await showDialog(
                   context: context,
                   builder: (context) => SuccessDialog(
                     theme: theme,
                     text: LocaleKeys.continueKey,
                     message: state.activateAccountResponseModel.message,
                     onPressed: () {
-                      if (widget.isUser) {
-                        context.navigateTo(const LoginRoute());
-                      } else {
-                        context.replaceRoute(
-                          UploadFilesRoute(
-                            contractorId: state.activateAccountResponseModel.id,
-                          ),
-                        );
-                      }
                       Navigator.pop(context);
                     },
                   ),
                 );
-              }
-              if (state.activateAccountState.isError) {
-                showDialog(
-                  context: context,
-                  builder: (context) =>
-                      ErrorDialog(theme: theme, message: state.errorMessage),
-                );
+                if (widget.isUser && context.mounted) {
+                  context.navigateTo(const LoginRoute());
+                } else if (context.mounted) {
+                  context.replaceRoute(
+                    UploadFilesRoute(
+                      contractorId: state.activateAccountResponseModel.id,
+                    ),
+                  );
+                }
               }
             },
             builder: (context, state) {

@@ -9,6 +9,7 @@ import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
@@ -160,6 +161,54 @@ class ProfileCubit extends Cubit<ProfileState> {
         state.copyWith(
           updateUserProfileRequestStatus: RequestStatus.success,
           successMessage: successMessage,
+        ),
+      ),
+    );
+  }
+
+  Future<void> logout() async {
+    emit(state.copyWith(logoutRequestState: RequestStatus.loading));
+    final result = await profileRepo.logout();
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          logoutRequestState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (successMessage) {
+        cacheHelper.deleteAll();
+        AppConstants.token = "";
+        emit(
+          state.copyWith(
+            logoutRequestState: RequestStatus.success,
+            successMessage: successMessage,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> getUserProfile() async {
+    emit(
+      state.copyWith(
+        getUserProfileRequestState: RequestStatus.loading,
+        isConnected: true,
+      ),
+    );
+    final result = await profileRepo.getUserProfile();
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          getUserProfileRequestState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (userModel) => emit(
+        state.copyWith(
+          getUserProfileRequestState: RequestStatus.success,
+          userModel: userModel,
         ),
       ),
     );

@@ -5,6 +5,7 @@ import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
 
 abstract class ProfileRepo {
   Future<Either<Failure, String>> updateProfile({
@@ -20,4 +21,6 @@ abstract class ProfileRepo {
   Future<Either<Failure, String>> editContractorProfile({
     required EditContractorProfileRequestModel editContractorProfileRequestModel,
   });
+  Future<Either<Failure, String>> logout();
+  Future<Either<Failure, UserModel>> getUserProfile();
 }

@@ -20,6 +20,7 @@ class CustomIntlPhoneField extends StatelessWidget {
     this.onSubmitted,
     this.textInputAction,
     this.validator,
+    this.controller,
   });
 
   final void Function(String completeNumber, String countryCode)? onChanged;
@@ -32,6 +33,7 @@ class CustomIntlPhoneField extends StatelessWidget {
   final void Function(String)? onSubmitted;
   final TextInputAction? textInputAction;
   final FutureOr<String?> Function(PhoneNumber?)? validator;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +41,12 @@ class CustomIntlPhoneField extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: IntlPhoneField(
-
+        controller: controller,
         style: theme.textTheme.bodySmall!.copyWith(
           fontWeight: FontWeight.bold,
           color: theme.colorScheme.onSurfaceVariant,
         ),
+
         dropdownTextStyle: theme.textTheme.bodySmall!.copyWith(
           fontWeight: FontWeight.bold,
           color: ColorsManager.primaryColor,
@@ -53,17 +56,18 @@ class CustomIntlPhoneField extends StatelessWidget {
         initialCountryCode: initialCountryCode,
         onSubmitted: onSubmitted,
         textInputAction: textInputAction ?? TextInputAction.done,
-
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
 
-        validator: validator?? (phone) {
-                if (phone == null ||
-                    phone.number.isEmpty ||
-                    phone.completeNumber.isEmpty) {
-                  return LocaleKeys.pleaseEnterYourPhone;
-                }
-                return null;
-              },
+        validator:
+            validator ??
+            (phone) {
+              if (phone == null ||
+                  phone.number.isEmpty ||
+                  phone.completeNumber.isEmpty) {
+                return LocaleKeys.pleaseEnterYourPhone;
+              }
+              return null;
+            },
 
         decoration: InputDecoration(
           labelText: label ?? "",

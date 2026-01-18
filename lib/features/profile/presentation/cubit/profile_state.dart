@@ -7,6 +7,10 @@ class ProfileState extends Equatable {
   final File? profileImage;
   final RequestStatus changePasswordRequestState;
   final RequestStatus deleteAccountRequestState;
+  final RequestStatus logoutRequestState;
+  final RequestStatus getUserProfileRequestState;
+  final UserModel userModel;
+  final bool isConnected;
 
   const ProfileState({
     this.updateUserProfileRequestStatus = RequestStatus.initial,
@@ -15,6 +19,10 @@ class ProfileState extends Equatable {
     this.profileImage,
     this.changePasswordRequestState = RequestStatus.initial,
     this.deleteAccountRequestState = RequestStatus.initial,
+    this.logoutRequestState = RequestStatus.initial,
+    this.getUserProfileRequestState = RequestStatus.initial,
+    this.userModel = const UserModel.empty(),
+    this.isConnected = true,
   });
 
   ProfileState copyWith({
@@ -24,6 +32,10 @@ class ProfileState extends Equatable {
     File? profileImage,
     RequestStatus? changePasswordRequestState,
     RequestStatus? deleteAccountRequestState,
+    RequestStatus? logoutRequestState,
+    RequestStatus? getUserProfileRequestState,
+    UserModel? userModel,
+    bool? isConnected,
   }) {
     return ProfileState(
       updateUserProfileRequestStatus:
@@ -35,6 +47,11 @@ class ProfileState extends Equatable {
           changePasswordRequestState ?? this.changePasswordRequestState,
       deleteAccountRequestState:
           deleteAccountRequestState ?? this.deleteAccountRequestState,
+      logoutRequestState: logoutRequestState ?? this.logoutRequestState,
+      getUserProfileRequestState:
+          getUserProfileRequestState ?? this.getUserProfileRequestState,
+      userModel: userModel ?? this.userModel,
+      isConnected: isConnected ?? this.isConnected,
     );
   }
 
@@ -45,5 +62,9 @@ class ProfileState extends Equatable {
     profileImage,
     changePasswordRequestState,
     deleteAccountRequestState,
+    logoutRequestState,
+    getUserProfileRequestState,
+    userModel,
+    isConnected,
   ];
 }

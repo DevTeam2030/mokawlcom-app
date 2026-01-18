@@ -7,6 +7,7 @@ import 'package:mokawlcom_app/features/profile/data/data_source/profile_data_sou
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
 
 class ProfileRepoImpl implements ProfileRepo {
@@ -51,5 +52,15 @@ class ProfileRepoImpl implements ProfileRepo {
     () => profileDataSource.editContractorProfile(
       editContractorProfileRequestModel: editContractorProfileRequestModel,
     ),
+  );
+
+  @override
+  Future<Either<Failure, String>> logout() async => safeApiCall<String>(
+    () => profileDataSource.logout(),
+  );
+
+  @override
+  Future<Either<Failure, UserModel>> getUserProfile() async => safeApiCall<UserModel>(
+    () => profileDataSource.getUserProfile(),
   );
 }
