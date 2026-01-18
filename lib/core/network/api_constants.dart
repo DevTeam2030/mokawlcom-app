@@ -37,4 +37,5 @@ class ApiConstants {
   static const String logout = "/auth/logout";
   static const String profile = "/user-profile";
   static const String userOffers = "/user-offers";
+  static const String getContractorServices = "/get-services";
 }

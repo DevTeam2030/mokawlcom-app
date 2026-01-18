@@ -468,7 +468,7 @@ class MyServicesRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const MyServicesScreen();
+      return WrappedRoute(child: const MyServicesScreen());
     },
   );
 }

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 class MyServiceItem extends StatelessWidget {
-  const MyServiceItem({super.key, required this.theme});
+  const MyServiceItem({super.key, required this.theme, required this.service});
   final ThemeData theme;
+  final ContractorServiceModel service;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,13 +28,16 @@ class MyServiceItem extends StatelessWidget {
             children: [
               const Icon(MyIcons.file, color: ColorsManager.primaryColor),
               const SizedBox(width: 10),
-              Text(
-                LocaleKeys.serviceAddress,
-                style: theme.textTheme.labelMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Text(
+                  service.title,
+                  style: theme.textTheme.labelMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              const Spacer(),
               const Icon(
                 MyIcons.trash,
                 color: ColorsManager.primaryColor,
@@ -47,14 +53,14 @@ class MyServiceItem extends StatelessWidget {
           ),
           const CustomDivider(),
           Text(
-            "${LocaleKeys.priceAverage} : 100 ريال",
+            "${LocaleKeys.priceAverage} : ${service.price}",
             style: theme.textTheme.labelSmall!.copyWith(
               color: ColorsManager.primaryColor,
               fontWeight: FontWeight.w400,
             ),
           ),
           Text(
-            "هذا نص تجريبي لاختبار شكل و حجم النصوص و طريقة عرضها  عرضها في هذا المكان حجم و لون الخط حيث يتم التحكم في الموقع .ذا النص وامكانية تغييرة في اي وقت عن طريق ادارة",
+            service.description,
             style: theme.textTheme.bodySmall!.copyWith(
               color: ColorsManager.primaryColor,
               height: 1.5,

@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/core/utils/safe_api_call.dart';
 import 'package:mokawlcom_app/error/failures.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/profile/data/data_source/profile_data_source.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
@@ -42,13 +44,13 @@ class ProfileRepoImpl implements ProfileRepo {
   );
 
   @override
-  Future<Either<Failure, String>> deleteAccount() async => safeApiCall<String>(
-    () => profileDataSource.deleteAccount(),
-  );
+  Future<Either<Failure, String>> deleteAccount() async =>
+      safeApiCall<String>(() => profileDataSource.deleteAccount());
 
   @override
   Future<Either<Failure, String>> editContractorProfile({
-    required EditContractorProfileRequestModel editContractorProfileRequestModel,
+    required EditContractorProfileRequestModel
+    editContractorProfileRequestModel,
   }) async => safeApiCall<String>(
     () => profileDataSource.editContractorProfile(
       editContractorProfileRequestModel: editContractorProfileRequestModel,
@@ -56,17 +58,28 @@ class ProfileRepoImpl implements ProfileRepo {
   );
 
   @override
-  Future<Either<Failure, String>> logout() async => safeApiCall<String>(
-    () => profileDataSource.logout(),
-  );
+  Future<Either<Failure, String>> logout() async =>
+      safeApiCall<String>(() => profileDataSource.logout());
 
   @override
-  Future<Either<Failure, UserModel>> getUserProfile() async => safeApiCall<UserModel>(
-    () => profileDataSource.getUserProfile(),
-  );
+  Future<Either<Failure, UserModel>> getUserProfile() async =>
+      safeApiCall<UserModel>(() => profileDataSource.getUserProfile());
 
   @override
-  Future<Either<Failure, UserOffersModel>> getUserOffers({required int page}) async => safeApiCall<UserOffersModel>(
+  Future<Either<Failure, UserOffersModel>> getUserOffers({
+    required int page,
+  }) async => safeApiCall<UserOffersModel>(
     () => profileDataSource.getUserOffers(page: page),
   );
+
+  @override
+  Future<Either<Failure, ContractorServicesModel>> getContractorServices({
+    required int page,
+  }) async => safeApiCall<ContractorServicesModel>(
+    () => profileDataSource.getContractorServices(page: page),
+  );
+
+  @override
+  Future<Either<Failure, UserModel>> getContractorProfile() async =>
+      safeApiCall<UserModel>(() => profileDataSource.getContractorProfile());
 }

@@ -211,4 +211,5 @@ class LocaleKeys {
       'do_you_want_to_delete_your_account'.tr();
   static String get back => 'back'.tr();
   static String get thereAreNoOffersMade => 'there_are_no_offers_made'.tr();
+  static String get noServicesYet => 'no_services_yet'.tr();
 }

@@ -86,6 +86,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         state.copyWith(
           updateUserProfileRequestStatus: RequestStatus.success,
           successMessage: successMessage,
+          clearProfileImage: true,
         ),
       ),
     );
@@ -192,6 +193,31 @@ class ProfileCubit extends Cubit<ProfileState> {
       ),
     );
     final result = await profileRepo.getUserProfile();
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          getUserProfileRequestState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (userModel) => emit(
+        state.copyWith(
+          getUserProfileRequestState: RequestStatus.success,
+          userModel: userModel,
+        ),
+      ),
+    );
+  }
+
+  Future<void> getContractorProfile() async {
+    emit(
+      state.copyWith(
+        getUserProfileRequestState: RequestStatus.loading,
+        isConnected: true,
+      ),
+    );
+    final result = await profileRepo.getContractorProfile();
     result.fold(
       (failure) => emit(
         state.copyWith(

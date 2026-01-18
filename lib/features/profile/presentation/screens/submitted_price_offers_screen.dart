@@ -28,7 +28,7 @@ class SubmittedPriceOffersScreen extends StatefulWidget
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<UserDetailsCubit>(),
+      create: (context) => getIt<UserDetailsCubit>() ..getUserOffers(),
       child: this,
     );
   }
@@ -43,10 +43,6 @@ class _SubmittedPriceOffersScreenState
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_onScroll);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<UserDetailsCubit>().getUserOffers();
-    });
   }
 
   void _onScroll() {

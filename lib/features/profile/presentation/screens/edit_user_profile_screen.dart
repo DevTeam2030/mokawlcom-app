@@ -86,6 +86,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                 _emailController.text = state.userModel.email;
                 _phoneController.text = phone.number;
                 _addressController.text = state.userModel.address;
+                _completePhone = phone.completeNumber;
                 return Padding(
                   padding: const EdgeInsetsDirectional.symmetric(
                     horizontal: 20.0,

@@ -149,5 +149,6 @@
   "delete_account":"حذف الحساب",
   "do_you_want_to_delete_your_account":"هل تريد حذف حسابك؟",
   "back":"رجوع",
-  "there_are_no_offers_made":"لا يوجد عروض مقدمة"
+  "there_are_no_offers_made":"لا يوجد عروض مقدمة",
+  "no_services_yet":"لا توجد خدمات بعد"
 }

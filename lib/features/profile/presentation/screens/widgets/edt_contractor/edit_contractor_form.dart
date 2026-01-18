@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_intl_phone_field/phone_number.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_intl_phone_field.dart';
@@ -9,6 +10,7 @@ import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
@@ -17,9 +19,11 @@ class EditContractorForm extends StatefulWidget {
     super.key,
     required this.classificationId,
     required this.serviceIds,
+    required this.userModel,
   });
   final int classificationId;
   final List<int> serviceIds;
+  final UserModel userModel;
 
   @override
   State<EditContractorForm> createState() => _EditContractorFormState();
@@ -30,23 +34,60 @@ class _EditContractorFormState extends State<EditContractorForm> {
   late AutovalidateMode _autoValidatorMode;
   late TextEditingController _phoneController;
   late TextEditingController _whatsAppController;
-  String? facebook;
-  String? twitter;
-  String? snapChat;
-  String? address;
-  String hintAboutComany = "";
-  String name = "";
+  late TextEditingController _addressController;
+  late TextEditingController _snapChatController;
+  late TextEditingController _twitterController;
+  late TextEditingController _facebookController;
+  late TextEditingController _nameController;
+  late TextEditingController _hintAboutCompanyController;
+String _phone ="" ;
+String _whatsapp = "";
+
   @override
   void initState() {
     super.initState();
+    _phone = widget.userModel.phone;
+    _whatsapp = widget.userModel.whatsapp;
     _formKey = GlobalKey<FormState>();
     _autoValidatorMode = AutovalidateMode.disabled;
-    _phoneController = TextEditingController();
-    _whatsAppController = TextEditingController();
+    _phoneController = TextEditingController(text: widget.userModel.phone);
+    _whatsAppController = TextEditingController(text: widget.userModel.phone);
+    _addressController = TextEditingController(text: widget.userModel.address);
+    _snapChatController = TextEditingController(
+      text: widget.userModel.snapchat,
+    );
+    _twitterController = TextEditingController(text: widget.userModel.twitter);
+    _facebookController = TextEditingController(
+      text: widget.userModel.facabook,
+    );
+    _nameController = TextEditingController(text: widget.userModel.name);
+    _hintAboutCompanyController = TextEditingController(
+      text: widget.userModel.hintAboutComppany,
+    );
+  }
+
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    _whatsAppController.dispose();
+    _addressController.dispose();
+    _snapChatController.dispose();
+    _twitterController.dispose();
+    _facebookController.dispose();
+    _nameController.dispose();
+    _hintAboutCompanyController.dispose();
+    _formKey.currentState?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final phone = PhoneNumber.fromCompleteNumber(
+      completeNumber: widget.userModel.phone,
+    );
+    final whatsapp = PhoneNumber.fromCompleteNumber(
+      completeNumber: widget.userModel.phone,
+    );
     final theme = Theme.of(context);
     return Form(
       key: _formKey,
@@ -64,11 +105,11 @@ class _EditContractorFormState extends State<EditContractorForm> {
           const SizedBox(height: 8.0),
           CustomTextFormField(
             type: TextInputType.name,
+            controller: _nameController,
             hintText: LocaleKeys.pleaseEnterYourName,
             autofillHints: const [AutofillHints.name],
             textInputAction: TextInputAction.next,
             fieldName: LocaleKeys.name,
-            onSaved: (value) => name = value!,
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -80,9 +121,11 @@ class _EditContractorFormState extends State<EditContractorForm> {
           ),
           const SizedBox(height: 8.0),
           CustomIntlPhoneField(
+            initialCountryCode: phone.countryISOCode,
             onChanged: (completeNumber, countryCode) {
-              _phoneController.text = completeNumber;
+              _phone = completeNumber;
             },
+            controller: _phoneController,
           ),
 
           const SizedBox(height: 8.0),
@@ -95,10 +138,12 @@ class _EditContractorFormState extends State<EditContractorForm> {
           ),
           const SizedBox(height: 8.0),
           CustomIntlPhoneField(
+            initialCountryCode: whatsapp.countryISOCode,
             validator: (_) => null,
             onChanged: (completeNumber, countryCode) {
-              _whatsAppController.text = completeNumber;
+              _whatsapp = completeNumber;
             },
+            controller: _whatsAppController,
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -115,8 +160,8 @@ class _EditContractorFormState extends State<EditContractorForm> {
             autofillHints: const [AutofillHints.addressCityAndState],
             textInputAction: TextInputAction.next,
             fieldName: LocaleKeys.address,
-            onSaved: (value) => address = value!,
             validator: (_) => null,
+            controller: _addressController,
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -140,8 +185,8 @@ class _EditContractorFormState extends State<EditContractorForm> {
             hintText: "@snap_user",
             textInputAction: TextInputAction.next,
             fieldName: LocaleKeys.snapchat,
-            onSaved: (value) => snapChat = value!,
             validator: (_) => null,
+            controller: _snapChatController,
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -157,8 +202,8 @@ class _EditContractorFormState extends State<EditContractorForm> {
             hintText: "@username",
             textInputAction: TextInputAction.next,
             fieldName: LocaleKeys.twitter,
-            onSaved: (value) => twitter = value!,
             validator: (_) => null,
+            controller: _twitterController,
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -174,8 +219,8 @@ class _EditContractorFormState extends State<EditContractorForm> {
             hintText: "https://www.facebook.com/username",
             textInputAction: TextInputAction.next,
             fieldName: LocaleKeys.facebook,
-            onSaved: (value) => facebook = value!,
             validator: (_) => null,
+            controller: _facebookController,
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -191,8 +236,8 @@ class _EditContractorFormState extends State<EditContractorForm> {
             maxLines: 10,
             textInputAction: TextInputAction.done,
             fieldName: LocaleKeys.hintAboutCompany,
-            onSaved: (value) => hintAboutComany = value!,
-            onSubmit: (_) => _onSubmit(context),
+            validator: (_) => null,
+            controller: _hintAboutCompanyController,
           ),
           const SizedBox(height: 40.0),
           BlocConsumer<ProfileCubit, ProfileState>(
@@ -244,14 +289,14 @@ class _EditContractorFormState extends State<EditContractorForm> {
         editContractorProfileRequestModel: EditContractorProfileRequestModel(
           classificationId: widget.classificationId,
           serviceIds: widget.serviceIds,
-          name: name.trim(),
-          phone: _phoneController.text.replaceAll(" ", ""),
-          whatsapp: _whatsAppController.text.replaceAll(" ", ""),
-          address: address?.trim(),
-          spanchat: snapChat?.trim(),
-          twitter: twitter?.trim(),
-          facebook: facebook?.trim(),
-          hintAboutCompany: hintAboutComany.trim(),
+          name: _nameController.text.trim(),
+          phone: _phone.replaceAll(" ", ""),
+          whatsapp: _whatsapp.replaceAll(" ", ""),
+          address: _addressController.text.trim(),
+          spanchat: _snapChatController.text.trim(),
+          twitter: _twitterController.text.trim(),
+          facebook: _facebookController.text.trim(),
+          hintAboutCompany: _hintAboutCompanyController.text.trim(),
         ),
       );
     } else {
