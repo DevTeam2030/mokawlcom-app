@@ -112,9 +112,11 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                     state: ToastStates.error,
                   );
                 }
+                
               },
               buildWhen: (previous, current) =>
-                  previous.getOfferDetailsState != current.getOfferDetailsState,
+                  previous.getOfferDetailsState != current.getOfferDetailsState ||
+                  previous.offerDetails != current.offerDetails,
               builder: (context, state) {
                 final hasData = state.offerDetails.replies.isNotEmpty;
 

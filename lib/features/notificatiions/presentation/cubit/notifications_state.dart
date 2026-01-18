@@ -72,6 +72,7 @@ class NotificationsState extends Equatable {
     bool? isFileLoading,
     double? progress,
     File? file,
+    bool? clearFile,
     RequestStatus? replayOnOfferPriceState,
     bool? isConnected,
   }) {
@@ -105,7 +106,7 @@ class NotificationsState extends Equatable {
           replayOnOfferPriceMessage ?? this.replayOnOfferPriceMessage,
       isFileLoading: isFileLoading ?? this.isFileLoading,
       progress: progress ?? this.progress,
-      file: file ?? this.file,
+      file: clearFile == true ? null : file ?? this.file,
       replayOnOfferPriceState: replayOnOfferPriceState ?? this.replayOnOfferPriceState,
       isConnected: isConnected ?? this.isConnected,
     );

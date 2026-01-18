@@ -4,6 +4,7 @@ import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/data_source/notifications_data_source.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_details_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/reply_offer_price_request_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/reply_on_offer_response_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/repo/notifications_repo.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/public_notifications_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notifications_model.dart';
@@ -40,10 +41,10 @@ class NotificationsRepoImpl implements NotificationsRepo {
   );
 
   @override
-  Future<Either<Failure, String>> replyOnOfferPrice({
+  Future<Either<Failure, ReplyOnOfferResponseModel>> replyOnOfferPrice({
     required ReplyOfferPriceRequestModel replyOfferPriceRequestModel,
     required void Function(double progress) onProgress,
-  }) async => await safeApiCall(
+  }) async => await safeApiCall<ReplyOnOfferResponseModel>(
     () async => await notificationsDataSource.replyOnOfferPrice(
       replyOfferPriceRequestModel: replyOfferPriceRequestModel,
       onProgress: onProgress,

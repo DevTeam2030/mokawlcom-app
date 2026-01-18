@@ -7,6 +7,7 @@ import 'package:mokawlcom_app/features/notificatiions/data/models/public_notific
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_details_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notifications_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/reply_offer_price_request_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/reply_on_offer_response_model.dart';
 
 abstract class NotificationsDataSource {
   Future<PublicNotificationsModel> getPublicNotifications({required int page});
@@ -15,7 +16,7 @@ abstract class NotificationsDataSource {
     required int page,
     required int offerId,
   });
-  Future<String> replyOnOfferPrice({
+  Future<ReplyOnOfferResponseModel> replyOnOfferPrice({
     required ReplyOfferPriceRequestModel replyOfferPriceRequestModel,
     required void Function(double progress) onProgress,
   });
@@ -76,7 +77,7 @@ class NotificationsDataSourceImpl implements NotificationsDataSource {
   }
 
   @override
-  Future<String> replyOnOfferPrice({
+  Future<ReplyOnOfferResponseModel> replyOnOfferPrice({
     required ReplyOfferPriceRequestModel replyOfferPriceRequestModel,
     required void Function(double progress) onProgress,
   }) async {
@@ -107,7 +108,7 @@ class NotificationsDataSourceImpl implements NotificationsDataSource {
     );
 
     if (result.statusCode == 200 || result.statusCode == 201) {
-      return result.data["message"] ?? "";
+      return ReplyOnOfferResponseModel.fromJson(result.data ?? {});
     } else {
       throw ServerException(errorMessage: result.data["message"] ?? "");
     }

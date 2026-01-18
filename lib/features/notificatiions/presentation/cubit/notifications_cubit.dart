@@ -341,12 +341,20 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           progress: 0,
         ),
       ),
-      (message) {
+      (replyOnOfferResponseModel) {
+        final updatedOfferDetails = state.offerDetails.copyWith(
+          replies: [
+            ...state.offerDetails.replies,
+            replyOnOfferResponseModel.offerModel,
+          ],
+        );
         emit(
           state.copyWith(
             replayOnOfferPriceState: RequestStatus.success,
-            replayOnOfferPriceMessage: message,
+            replayOnOfferPriceMessage: replyOnOfferResponseModel.message,
             progress: 0,
+            clearFile: true,
+            offerDetails: updatedOfferDetails,
           ),
         );
       },
