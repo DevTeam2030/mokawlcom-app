@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
-import 'package:mokawlcom_app/features/profile/data/models/add_service_request_model.dart';
-import 'package:mokawlcom_app/features/profile/data/models/contractor_services_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/service/add_service_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -17,7 +17,12 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
       super(const UserDetailsState());
 
   Future<void> getUserOffers() async {
-    emit(state.copyWith(getUserOffersState: RequestStatus.loading));
+    emit(
+      state.copyWith(
+        getUserOffersState: RequestStatus.loading,
+        isConnected: true,
+      ),
+    );
     final result = await profileRepo.getUserOffers(
       page: state.userOffersCurrentPage,
     );
@@ -148,7 +153,6 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
       final List<XFile> pickedFiles = await _imagePicker.pickMultiImage(
         imageQuality: 85,
         limit: state.maxImages,
-        
       );
 
       if (pickedFiles.isEmpty) {
@@ -247,6 +251,89 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
           successMessage: succesMessage,
         ),
       ),
+    );
+  }
+
+  Future<void> getDeals() async {
+    emit(
+      state.copyWith(getDealsState: RequestStatus.loading, isConnected: true),
+    );
+    final result = await profileRepo.getDeals(page: state.dealsCurrentPage);
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          getDealsState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (dealsModel) => emit(
+        state.copyWith(
+          getDealsState: RequestStatus.success,
+          dealsModel: dealsModel,
+          dealsCurrentPage: dealsModel.currentPage,
+        ),
+      ),
+    );
+  }
+
+  Future<void> loadMoreDeals() async {
+    if (state.dealsCurrentPage >= state.dealsModel.totalPages ||
+        state.getDealsState.isLoadingMore) {
+      return;
+    }
+    emit(state.copyWith(getDealsState: RequestStatus.loadingMore));
+    final result = await profileRepo.getDeals(page: state.dealsCurrentPage + 1);
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          getDealsState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (dealsModel) => emit(
+        state.copyWith(
+          getDealsState: RequestStatus.success,
+          dealsModel: dealsModel.copyWith(
+            deals: [...state.dealsModel.deals, ...dealsModel.deals],
+          ),
+          dealsCurrentPage: dealsModel.currentPage,
+        ),
+      ),
+    );
+  }
+
+  Future<void> addDeal({
+    required String title,
+    required String description,
+  }) async {
+    emit(state.copyWith(addDealState: RequestStatus.loading));
+    final result = await profileRepo.addDeal(
+      title: title,
+      description: description,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          addDealState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+         
+        ),
+      ),
+      (addDealResponseModel) {
+        final updatedDeals = [
+          ...state.dealsModel.deals,
+          addDealResponseModel.dealModel,
+        ];
+        emit(
+          state.copyWith(
+            addDealState: RequestStatus.success,
+            successMessage: addDealResponseModel.message,
+            dealsModel: state.dealsModel.copyWith(deals: updatedDeals),
+          ),
+        );
+      },
     );
   }
 }

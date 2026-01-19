@@ -83,18 +83,23 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
           vertical: 20,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, 
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextButton(
-          onPressed: () => context.pushRoute(AddNewServiceRoute(theme: theme)),
-          child: Text(
-            LocaleKeys.addNewService,
-            style: theme.textTheme.bodyLarge!.copyWith(
-              color: ColorsManager.primaryColor,
+              onPressed: () => context.pushRoute(
+                AddNewServiceRoute(
+                  theme: theme,
+                  userDetailsCubit: context.read<UserDetailsCubit>(),
+                ),
+              ),
+              child: Text(
+                LocaleKeys.addNewService,
+                style: theme.textTheme.bodyLarge!.copyWith(
+                  color: ColorsManager.primaryColor,
+                ),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             Expanded(
               child: BlocConsumer<UserDetailsCubit, UserDetailsState>(
@@ -103,7 +108,10 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                     current.getContractorServicesState,
                 listener: (context, state) {
                   if (state.getContractorServicesState.isError) {
-                    showToast(message: state.errorMessage, state: ToastStates.error);
+                    showToast(
+                      message: state.errorMessage,
+                      state: ToastStates.error,
+                    );
                   }
                 },
                 buildWhen: (previous, current) =>
@@ -112,25 +120,30 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                     previous.contractorServicesModel !=
                         current.contractorServicesModel,
                 builder: (context, state) {
-                  final hasData = state.contractorServicesModel.services.isNotEmpty;
-              
+                  final hasData =
+                      state.contractorServicesModel.services.isNotEmpty;
+
                   if (!state.isConnected && !hasData) {
                     return NoInternetWidget(
                       errorMessage: state.errorMessage,
                       theme: theme,
                       onPressed: () {
-                        context.read<UserDetailsCubit>().getContractorServices();
+                        context
+                            .read<UserDetailsCubit>()
+                            .getContractorServices();
                       },
                     );
                   }
-              
+
                   return UiStateBuilder(
                     theme: theme,
                     state: state.getContractorServicesState,
                     errorMessage: state.errorMessage,
                     onLoading: Skeletonizer(
                       containersColor: ColorsManager.skeletonColor,
-                      enabled: state.getContractorServicesState.isLoading && !hasData,
+                      enabled:
+                          state.getContractorServicesState.isLoading &&
+                          !hasData,
                       child: _buildServicesList(
                         theme: theme,
                         services: List.generate(
@@ -152,14 +165,20 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                             status: state.getContractorServicesState,
                             theme: theme,
                           )
-                        : NoDataWidget(theme: theme, text: LocaleKeys.noServicesYet),
+                        : NoDataWidget(
+                            theme: theme,
+                            text: LocaleKeys.noServicesYet,
+                          ),
                     onError: hasData
                         ? _buildServicesList(
                             services: state.contractorServicesModel.services,
                             status: state.getContractorServicesState,
                             theme: theme,
                           )
-                        : NoDataWidget(theme: theme, text: LocaleKeys.noServicesYet),
+                        : NoDataWidget(
+                            theme: theme,
+                            text: LocaleKeys.noServicesYet,
+                          ),
                   );
                 },
               ),
@@ -196,7 +215,7 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
             ),
           );
         }
-        
+
         return MyServiceItem(theme: theme, service: services[index]);
       },
     );

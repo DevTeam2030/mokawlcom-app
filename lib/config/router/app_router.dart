@@ -34,6 +34,7 @@ import 'package:mokawlcom_app/features/notificatiions/presentation/screens/offer
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/price_offers_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/public_notifications_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/add_new_service_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/available_deals_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/change_password_screen.dart';

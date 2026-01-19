@@ -2,12 +2,18 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
-import 'package:mokawlcom_app/features/profile/data/models/contractor_services_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/deal/add_deal_response_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/deal/deals_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_offers_model.dart';
 
 class UserDetailsState extends Equatable {
   final RequestStatus getUserOffersState;
   final RequestStatus addNewServiceState;
+  final RequestStatus getDealsState;
+  final RequestStatus addDealState;
+  final DealsModel dealsModel;
+  final int dealsCurrentPage;
   final UserOffersModel userOffersModel;
   final String errorMessage;
   final String successMessage;
@@ -40,6 +46,10 @@ class UserDetailsState extends Equatable {
     this.imageErrorMessage = '',
     this.maxImages = 5,
     this.maxSizeInMB = 10,
+    this.getDealsState = RequestStatus.initial,
+    this.dealsModel = const DealsModel.empty(),
+    this.dealsCurrentPage = 1,
+    this.addDealState = RequestStatus.initial,
   });
 
   bool get hasReachedMaxImages => selectedImages.length >= maxImages;
@@ -62,6 +72,10 @@ class UserDetailsState extends Equatable {
     String? imageErrorMessage,
     int? maxImages,
     int? maxSizeInMB,
+    RequestStatus? getDealsState,
+    DealsModel? dealsModel,
+    int? dealsCurrentPage,
+    RequestStatus? addDealState,
   }) {
     return UserDetailsState(
       getUserOffersState: getUserOffersState ?? this.getUserOffersState,
@@ -84,6 +98,10 @@ class UserDetailsState extends Equatable {
       imageErrorMessage: imageErrorMessage ?? this.imageErrorMessage,
       maxImages: maxImages ?? this.maxImages,
       maxSizeInMB: maxSizeInMB ?? this.maxSizeInMB,
+      getDealsState: getDealsState ?? this.getDealsState,
+      dealsModel: dealsModel ?? this.dealsModel,
+      dealsCurrentPage: dealsCurrentPage ?? this.dealsCurrentPage,
+      addDealState: addDealState ?? this.addDealState,
     );
   }
 
@@ -105,5 +123,9 @@ class UserDetailsState extends Equatable {
     imageErrorMessage,
     maxImages,
     maxSizeInMB,
+    getDealsState,
+    dealsModel,
+    dealsCurrentPage,
+    addDealState,
   ];
 }

@@ -19,15 +19,20 @@ import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
 class AddNewServiceScreen extends StatefulWidget implements AutoRouteWrapper {
-  const AddNewServiceScreen({super.key, required this.theme});
+  const AddNewServiceScreen({
+    super.key,
+    required this.theme,
+    required this.userDetailsCubit,
+  });
   final ThemeData theme;
+  final UserDetailsCubit userDetailsCubit;
 
   @override
   State<AddNewServiceScreen> createState() => _AddNewServiceScreenState();
 
   @override
   Widget wrappedRoute(BuildContext context) =>
-      BlocProvider(create: (_) => getIt<UserDetailsCubit>(), child: this);
+      BlocProvider.value(value: userDetailsCubit, child: this);
 }
 
 class _AddNewServiceScreenState extends State<AddNewServiceScreen> {

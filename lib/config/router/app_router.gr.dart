@@ -16,10 +16,15 @@ class AddNewServiceRoute extends PageRouteInfo<AddNewServiceRouteArgs> {
   AddNewServiceRoute({
     Key? key,
     required ThemeData theme,
+    required UserDetailsCubit userDetailsCubit,
     List<PageRouteInfo>? children,
   }) : super(
          AddNewServiceRoute.name,
-         args: AddNewServiceRouteArgs(key: key, theme: theme),
+         args: AddNewServiceRouteArgs(
+           key: key,
+           theme: theme,
+           userDetailsCubit: userDetailsCubit,
+         ),
          initialChildren: children,
        );
 
@@ -30,33 +35,45 @@ class AddNewServiceRoute extends PageRouteInfo<AddNewServiceRouteArgs> {
     builder: (data) {
       final args = data.argsAs<AddNewServiceRouteArgs>();
       return WrappedRoute(
-        child: AddNewServiceScreen(key: args.key, theme: args.theme),
+        child: AddNewServiceScreen(
+          key: args.key,
+          theme: args.theme,
+          userDetailsCubit: args.userDetailsCubit,
+        ),
       );
     },
   );
 }
 
 class AddNewServiceRouteArgs {
-  const AddNewServiceRouteArgs({this.key, required this.theme});
+  const AddNewServiceRouteArgs({
+    this.key,
+    required this.theme,
+    required this.userDetailsCubit,
+  });
 
   final Key? key;
 
   final ThemeData theme;
 
+  final UserDetailsCubit userDetailsCubit;
+
   @override
   String toString() {
-    return 'AddNewServiceRouteArgs{key: $key, theme: $theme}';
+    return 'AddNewServiceRouteArgs{key: $key, theme: $theme, userDetailsCubit: $userDetailsCubit}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! AddNewServiceRouteArgs) return false;
-    return key == other.key && theme == other.theme;
+    return key == other.key &&
+        theme == other.theme &&
+        userDetailsCubit == other.userDetailsCubit;
   }
 
   @override
-  int get hashCode => key.hashCode ^ theme.hashCode;
+  int get hashCode => key.hashCode ^ theme.hashCode ^ userDetailsCubit.hashCode;
 }
 
 /// generated route for
@@ -102,7 +119,7 @@ class AvailableDealsRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const AvailableDealsScreen();
+      return WrappedRoute(child: const AvailableDealsScreen());
     },
   );
 }
@@ -680,18 +697,59 @@ class SelectServicesRouteArgs {
 
 /// generated route for
 /// [SendOfferToContractorsScreen]
-class SendOfferToContractorsRoute extends PageRouteInfo<void> {
-  const SendOfferToContractorsRoute({List<PageRouteInfo>? children})
-    : super(SendOfferToContractorsRoute.name, initialChildren: children);
+class SendOfferToContractorsRoute
+    extends PageRouteInfo<SendOfferToContractorsRouteArgs> {
+  SendOfferToContractorsRoute({
+    Key? key,
+    required UserDetailsCubit userDetailsCubit,
+    List<PageRouteInfo>? children,
+  }) : super(
+         SendOfferToContractorsRoute.name,
+         args: SendOfferToContractorsRouteArgs(
+           key: key,
+           userDetailsCubit: userDetailsCubit,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'SendOfferToContractorsRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const SendOfferToContractorsScreen();
+      final args = data.argsAs<SendOfferToContractorsRouteArgs>();
+      return SendOfferToContractorsScreen(
+        key: args.key,
+        userDetailsCubit: args.userDetailsCubit,
+      );
     },
   );
+}
+
+class SendOfferToContractorsRouteArgs {
+  const SendOfferToContractorsRouteArgs({
+    this.key,
+    required this.userDetailsCubit,
+  });
+
+  final Key? key;
+
+  final UserDetailsCubit userDetailsCubit;
+
+  @override
+  String toString() {
+    return 'SendOfferToContractorsRouteArgs{key: $key, userDetailsCubit: $userDetailsCubit}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! SendOfferToContractorsRouteArgs) return false;
+    return key == other.key && userDetailsCubit == other.userDetailsCubit;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ userDetailsCubit.hashCode;
 }
 
 /// generated route for

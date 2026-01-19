@@ -250,4 +250,5 @@ class LocaleKeys {
   static String get imageSizeExceeded => 'image_size_exceeded'.tr();
 
   static String get errorPickingImages => 'error_picking_images'.tr();
+  static String get noDealsYet => 'no_deals_yet'.tr();
 }

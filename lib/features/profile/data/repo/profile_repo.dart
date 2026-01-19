@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
-import 'package:mokawlcom_app/features/profile/data/models/add_service_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/deal/add_deal_response_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/service/add_service_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
-import 'package:mokawlcom_app/features/profile/data/models/contractor_services_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/deal/deals_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
@@ -35,4 +37,9 @@ abstract class ProfileRepo {
     required AddServiceRequestModel addServiceRequestModel,
     required void Function(int, int)? onSendProgress,
   }); 
+  Future<Either<Failure, DealsModel>> getDeals({required int page});
+  Future<Either<Failure, AddDealResponseModel>> addDeal({
+    required String title,
+    required String description,
+  });
 }

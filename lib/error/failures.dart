@@ -56,13 +56,23 @@ class ServerFailure extends Failure {
   }
 
   factory ServerFailure.fromBadResponse(int statusCode, dynamic response) {
+    // Handle response that could be String or Map
+    String getMessage() {
+      if (response is String) {
+        return response;
+      } else if (response is Map && response.containsKey("message")) {
+        return response["message"];
+      }
+      return LocaleKeys.generalError;
+    }
+
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
-      return ServerFailure(response["message"]);
+      return ServerFailure(getMessage());
     } else if (statusCode == 404) {
       return ServerFailure(LocaleKeys.requestNotFound);
     } else if (statusCode == 500) {
       return ServerFailure(LocaleKeys.internalServerError);
     }
-    return ServerFailure(response["message"]);
+    return ServerFailure(getMessage());
   }
 }
