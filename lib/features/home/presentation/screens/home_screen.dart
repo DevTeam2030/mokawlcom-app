@@ -53,7 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context, state) {
               return state.isConnected
                   ? CustomScrollView(
-                      physics: const BouncingScrollPhysics(),
                       slivers: [
                         const SliverToBoxAdapter(child: HomeHeader()),
                         SliverToBoxAdapter(

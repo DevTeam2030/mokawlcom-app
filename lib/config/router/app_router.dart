@@ -33,12 +33,14 @@ import 'package:mokawlcom_app/features/notificatiions/presentation/screens/notif
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/offer_details_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/price_offers_screen.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/public_notifications_screen.dart';
+import 'package:mokawlcom_app/features/profile/data/models/deal/deal_model.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/add_new_service_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/available_deals_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/change_password_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/edit_contractor_profile_screen.dart';
+import 'package:mokawlcom_app/features/profile/presentation/screens/edit_deal_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/edit_user_profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/my_current_package_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/my_services_screen.dart';
@@ -132,6 +134,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SendOfferToContractorsRoute.page),
         AutoRoute(page: SubmittedPriceOffersRoute.page),
         AutoRoute(page: SavedCompaniesRoute.page),
+        AutoRoute(page: EditDealRoute.page),
       ],
     ),
   ];

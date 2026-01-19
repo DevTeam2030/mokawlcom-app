@@ -39,6 +39,8 @@ class ApiConstants {
   static const String userOffers = "/user-offers";
   static const String getContractorServices = "/get-services";
   static const String addService = "/add-service";
-  static const String getDeals = "/get-deals";
+  static const String getDeals = "/user-deals";
   static const String addDeal = "/add-deal";
+  static const String deleteDeal = "/delete-deal";
+  static const String editDeal = "/update-deal";
 }

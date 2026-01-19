@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
-import 'package:mokawlcom_app/features/profile/data/models/deal/add_deal_response_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/deal/deals_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_offers_model.dart';
@@ -12,6 +11,8 @@ class UserDetailsState extends Equatable {
   final RequestStatus addNewServiceState;
   final RequestStatus getDealsState;
   final RequestStatus addDealState;
+  final RequestStatus deleteDealState;
+  final RequestStatus editDealState;
   final DealsModel dealsModel;
   final int dealsCurrentPage;
   final UserOffersModel userOffersModel;
@@ -50,6 +51,8 @@ class UserDetailsState extends Equatable {
     this.dealsModel = const DealsModel.empty(),
     this.dealsCurrentPage = 1,
     this.addDealState = RequestStatus.initial,
+    this.deleteDealState = RequestStatus.initial,
+    this.editDealState = RequestStatus.initial,
   });
 
   bool get hasReachedMaxImages => selectedImages.length >= maxImages;
@@ -76,6 +79,8 @@ class UserDetailsState extends Equatable {
     DealsModel? dealsModel,
     int? dealsCurrentPage,
     RequestStatus? addDealState,
+    RequestStatus? deleteDealState,
+    RequestStatus? editDealState,
   }) {
     return UserDetailsState(
       getUserOffersState: getUserOffersState ?? this.getUserOffersState,
@@ -102,6 +107,8 @@ class UserDetailsState extends Equatable {
       dealsModel: dealsModel ?? this.dealsModel,
       dealsCurrentPage: dealsCurrentPage ?? this.dealsCurrentPage,
       addDealState: addDealState ?? this.addDealState,
+      deleteDealState: deleteDealState ?? this.deleteDealState,
+      editDealState: editDealState ?? this.editDealState,
     );
   }
 
@@ -127,5 +134,7 @@ class UserDetailsState extends Equatable {
     dealsModel,
     dealsCurrentPage,
     addDealState,
+    deleteDealState,
+    editDealState,
   ];
 }

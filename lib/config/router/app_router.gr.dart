@@ -381,6 +381,83 @@ class EditContractorProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [EditDealScreen]
+class EditDealRoute extends PageRouteInfo<EditDealRouteArgs> {
+  EditDealRoute({
+    Key? key,
+    required UserDetailsCubit userDetailsCubit,
+    required DealModel deal,
+    required int dealIndex,
+    List<PageRouteInfo>? children,
+  }) : super(
+         EditDealRoute.name,
+         args: EditDealRouteArgs(
+           key: key,
+           userDetailsCubit: userDetailsCubit,
+           deal: deal,
+           dealIndex: dealIndex,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'EditDealRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EditDealRouteArgs>();
+      return WrappedRoute(
+        child: EditDealScreen(
+          key: args.key,
+          userDetailsCubit: args.userDetailsCubit,
+          deal: args.deal,
+          dealIndex: args.dealIndex,
+        ),
+      );
+    },
+  );
+}
+
+class EditDealRouteArgs {
+  const EditDealRouteArgs({
+    this.key,
+    required this.userDetailsCubit,
+    required this.deal,
+    required this.dealIndex,
+  });
+
+  final Key? key;
+
+  final UserDetailsCubit userDetailsCubit;
+
+  final DealModel deal;
+
+  final int dealIndex;
+
+  @override
+  String toString() {
+    return 'EditDealRouteArgs{key: $key, userDetailsCubit: $userDetailsCubit, deal: $deal, dealIndex: $dealIndex}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! EditDealRouteArgs) return false;
+    return key == other.key &&
+        userDetailsCubit == other.userDetailsCubit &&
+        deal == other.deal &&
+        dealIndex == other.dealIndex;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^
+      userDetailsCubit.hashCode ^
+      deal.hashCode ^
+      dealIndex.hashCode;
+}
+
+/// generated route for
 /// [EditUserProfileScreen]
 class EditUserProfileRoute extends PageRouteInfo<void> {
   const EditUserProfileRoute({List<PageRouteInfo>? children})
@@ -718,9 +795,11 @@ class SendOfferToContractorsRoute
     name,
     builder: (data) {
       final args = data.argsAs<SendOfferToContractorsRouteArgs>();
-      return SendOfferToContractorsScreen(
-        key: args.key,
-        userDetailsCubit: args.userDetailsCubit,
+      return WrappedRoute(
+        child: SendOfferToContractorsScreen(
+          key: args.key,
+          userDetailsCubit: args.userDetailsCubit,
+        ),
       );
     },
   );

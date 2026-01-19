@@ -49,16 +49,18 @@ class ContractorItem extends StatelessWidget {
                       ),
                     );
                   },
-                  child: CircleAvatar(
-                    radius: 26,
-                    backgroundColor: ColorsManager.secondaryColor,
-                    child: CircleAvatar(
-                      radius: 25,
-                      child: CustomCachedNetworkImage(
-                        imageUrl: contractorModel.image,
-                        width: 50,
-                        height: 50,
-                      ),
+                  child: Container(
+                    height: 52,
+                    width: 52,
+                    decoration: const BoxDecoration(
+                      color: ColorsManager.secondaryColor,
+                      shape: BoxShape.circle,
+                    ),
+                    clipBehavior: .antiAliasWithSaveLayer,
+                    child: CustomCachedNetworkImage(
+                      imageUrl: contractorModel.image,
+                      width: 50,
+                      height: 50,
                     ),
                   ),
                 ),

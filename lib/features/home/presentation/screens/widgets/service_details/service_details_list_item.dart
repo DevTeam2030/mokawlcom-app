@@ -26,6 +26,7 @@ class ServiceDetailsListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 5),
+            if(contractorServiceModel.images.isNotEmpty)
             SizedBox(
               height: 168,
               child: ListView.separated(
@@ -55,6 +56,7 @@ class ServiceDetailsListItem extends StatelessWidget {
                 ),
               ),
             ),
+             if(contractorServiceModel.images.isNotEmpty)
             const SizedBox(height: 22),
 
             /// Details
@@ -72,7 +74,7 @@ class ServiceDetailsListItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    "متوسط السعر : ${contractorServiceModel.price} ${LocaleKeys.sar}",
+                    "${LocaleKeys.priceAverage} : ${contractorServiceModel.price}",
                     style: theme.textTheme.labelSmall!.copyWith(
                       fontSize: 10,
                       color: ColorsManager.purpleAccent,

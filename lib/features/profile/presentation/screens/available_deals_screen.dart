@@ -86,9 +86,11 @@ class _AvailableDealsScreenState extends State<AvailableDealsScreen> {
           children: [
             TextButton(
               onPressed: () {
-                context.router.push( SendOfferToContractorsRoute(
-                  userDetailsCubit: context.read<UserDetailsCubit>(),
-                ));
+                context.router.push(
+                  SendOfferToContractorsRoute(
+                    userDetailsCubit: context.read<UserDetailsCubit>(),
+                  ),
+                );
               },
               child: Text(
                 LocaleKeys.addNewOffer,
@@ -101,12 +103,25 @@ class _AvailableDealsScreenState extends State<AvailableDealsScreen> {
             Expanded(
               child: BlocConsumer<UserDetailsCubit, UserDetailsState>(
                 listenWhen: (previous, current) =>
-                    previous.getDealsState != current.getDealsState,
+                    previous.getDealsState != current.getDealsState ||
+                    previous.deleteDealState != current.deleteDealState,
                 listener: (context, state) {
                   if (state.getDealsState.isError) {
                     showToast(
                       message: state.errorMessage,
                       state: ToastStates.error,
+                    );
+                  }
+                  if (state.deleteDealState.isError) {
+                    showToast(
+                      message: state.errorMessage,
+                      state: ToastStates.error,
+                    );
+                  }
+                  if (state.deleteDealState.isSuccess) {
+                    showToast(
+                      message: state.successMessage,
+                      state: ToastStates.success,
                     );
                   }
                 },
@@ -204,7 +219,11 @@ class _AvailableDealsScreenState extends State<AvailableDealsScreen> {
           );
         }
 
-        return AvailableDealsItem(theme: theme, deal: deals[index]);
+        return AvailableDealsItem(
+          theme: theme,
+          deal: deals[index],
+          index: index,
+        );
       },
     );
   }

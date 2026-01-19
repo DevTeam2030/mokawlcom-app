@@ -15,7 +15,12 @@ class DealModel extends Equatable {
     title: json['title'] ?? '',
     description: json['description'] ?? '',
   );
-  
+  DealModel copyWith({String? title, String? description}) => DealModel(
+    id: id,
+    title: title ?? this.title,
+    description: description ?? this.description,
+  );
+
   @override
   List<Object> get props => [id, title, description];
 }

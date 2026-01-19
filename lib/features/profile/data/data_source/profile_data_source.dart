@@ -6,7 +6,6 @@ import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
-import 'package:mokawlcom_app/features/profile/data/models/deal/add_deal_response_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/add_service_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
@@ -41,7 +40,14 @@ abstract class ProfileDataSource {
   });
   Future<DealsModel> getDeals({required int page});
 
-  Future<AddDealResponseModel> addDeal({
+  Future<String> addDeal({
+    required String title,
+    required String description,
+  });
+  Future<String> deleteDeal({required int dealId});
+
+  Future<String> editDeal({
+    required int dealId,
     required String title,
     required String description,
   });
@@ -251,7 +257,7 @@ class ProfileDataSourceImpl implements ProfileDataSource {
   }
 
   @override
-  Future<AddDealResponseModel> addDeal({
+  Future<String> addDeal({
     required String title,
     required String description,
   }) async {
@@ -261,7 +267,39 @@ class ProfileDataSourceImpl implements ProfileDataSource {
       data: {"title": title, "description": description},
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return AddDealResponseModel.fromJson(response.data ?? {});
+      return response.data["message"] ?? "";
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
+
+  @override
+  Future<String> deleteDeal({required int dealId}) async {
+    final response = await dioHelper.post(
+      url: ApiConstants.deleteDeal,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      data: {"id": dealId},
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response.data["message"] ?? "";
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
+
+  @override
+  Future<String> editDeal({
+    required int dealId,
+    required String title,
+    required String description,
+  }) async {
+    final response = await dioHelper.post(
+      url: ApiConstants.editDeal,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      data: {"id": dealId, "title": title, "description": description},
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response.data["message"] ?? "";
     } else {
       throw ServerException(errorMessage: response.data["message"] ?? "");
     }

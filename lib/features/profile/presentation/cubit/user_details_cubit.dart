@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/features/profile/data/models/deal/deal_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/add_service_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
@@ -318,18 +319,73 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
         state.copyWith(
           addDealState: RequestStatus.error,
           errorMessage: failure.errorMessage,
-         
         ),
       ),
-      (addDealResponseModel) {
-        final updatedDeals = [
-          ...state.dealsModel.deals,
-          addDealResponseModel.dealModel,
-        ];
+      (message) => emit(
+        state.copyWith(
+          addDealState: RequestStatus.success,
+          successMessage: message,
+        ),
+      ),
+    );
+  }
+
+  Future<void> deleteDeal({required int dealId}) async {
+    final oldState = state;
+    final updatedDeals = List<DealModel>.from(state.dealsModel.deals);
+    updatedDeals.removeWhere((deal) => deal.id == dealId);
+    emit(
+      state.copyWith(
+        deleteDealState: RequestStatus.loading,
+        dealsModel: state.dealsModel.copyWith(deals: updatedDeals),
+      ),
+    );
+    final result = await profileRepo.deleteDeal(dealId: dealId);
+    result.fold(
+      (failure) => emit(
+        oldState.copyWith(
+          deleteDealState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (message) => emit(
+        state.copyWith(
+          deleteDealState: RequestStatus.success,
+          successMessage: message,
+        ),
+      ),
+    );
+  }
+
+  Future<void> editDeal({
+    required int dealId,
+    required int index,
+    required String title,
+    required String description,
+  }) async {
+    emit(state.copyWith(editDealState: RequestStatus.loading));
+    final result = await profileRepo.editDeal(
+      dealId: dealId,
+      title: title,
+      description: description,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          editDealState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (message) {
+        final updatedDeals = List<DealModel>.from(state.dealsModel.deals);
+        updatedDeals[index] = updatedDeals[index].copyWith(
+          title: title,
+          description: description,
+        );
         emit(
           state.copyWith(
-            addDealState: RequestStatus.success,
-            successMessage: addDealResponseModel.message,
+            editDealState: RequestStatus.success,
+            successMessage: message,
             dealsModel: state.dealsModel.copyWith(deals: updatedDeals),
           ),
         );

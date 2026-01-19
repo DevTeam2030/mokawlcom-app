@@ -53,7 +53,7 @@ class _HomeSearchSectionState extends State<HomeSearchSection> {
                 BlocListener<SearchBloc, SearchState>(
                   listenWhen: (previous, current) =>
                       previous.searchContractorsState !=
-                      current.searchContractorsState,  
+                      current.searchContractorsState,
                   listener: (context, state) {
                     if (state.searchContractorsState.isLoading) {
                       context.pushRoute(ContractorsRoute(fromSearch: true));
@@ -105,23 +105,21 @@ class _HomeSearchSectionState extends State<HomeSearchSection> {
                   valueListenable: searchNotifier,
                   builder: (context, value, _) {
                     return IconButton(
-                      onPressed: value.isEmpty
-                          ? null
-                          : () async {
-                              _focusNode.unfocus();
-                              await showModalBottomSheet(
-                                backgroundColor: Colors.white,
-                                isScrollControlled: true,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(12),
-                                  ),
-                                ),
-                                context: context,
-                                builder: (context) =>
-                                    HomeFilterBottomSheet(query: value),
-                              );
-                            },
+                      onPressed: () async {
+                        _focusNode.unfocus();
+                        await showModalBottomSheet(
+                          backgroundColor: Colors.white,
+                          isScrollControlled: true,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(12),
+                            ),
+                          ),
+                          context: context,
+                          builder: (context) =>
+                              HomeFilterBottomSheet(query: value),
+                        );
+                      },
                       icon: const Icon(Icons.filter_list, size: 46),
                     );
                   },

@@ -26,6 +26,7 @@ class AddNewServiceScreen extends StatefulWidget implements AutoRouteWrapper {
   });
   final ThemeData theme;
   final UserDetailsCubit userDetailsCubit;
+  
 
   @override
   State<AddNewServiceScreen> createState() => _AddNewServiceScreenState();
