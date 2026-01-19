@@ -166,5 +166,8 @@
   "invalid_number": "رقم غير صالح",
   "please_select_file": "من فضلك اختر ملف",
   "file_size_must_be_less_than": "حجم الملف يجب أن يكون أقل من {} ميجابايت",
-  "please_select_logo": "من فضلك اختر شعار"
+  "please_select_logo": "من فضلك اختر شعار",
+  "max_images_reached": "تم الوصول للحد الأقصى من الصور",
+  "image_size_exceeded": "حجم الصورة تجاوز الحد الأقصى. الحد الأقصى هو",
+  "error_picking_images": "خطأ في اختيار الصور"
 }

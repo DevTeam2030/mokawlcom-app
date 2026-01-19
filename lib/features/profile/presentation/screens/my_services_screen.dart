@@ -82,85 +82,89 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
           horizontal: 16,
           vertical: 20,
         ),
-        child: BlocConsumer<UserDetailsCubit, UserDetailsState>(
-          listenWhen: (previous, current) =>
-              previous.getContractorServicesState !=
-              current.getContractorServicesState,
-          listener: (context, state) {
-            if (state.getContractorServicesState.isError) {
-              showToast(
-                message: state.errorMessage,
-                state: ToastStates.error,
-              );
-            }
-          },
-          buildWhen: (previous, current) =>
-              previous.getContractorServicesState !=
-                  current.getContractorServicesState ||
-              previous.contractorServicesModel !=
-                  current.contractorServicesModel,
-          builder: (context, state) {
-            final hasData =
-                state.contractorServicesModel.services.isNotEmpty;
-                
-            if (!state.isConnected && !hasData) {
-              return NoInternetWidget(
-                errorMessage: state.errorMessage,
-                theme: theme,
-                onPressed: () {
-                  context
-                      .read<UserDetailsCubit>()
-                      .getContractorServices();
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, 
+          children: [
+            TextButton(
+          onPressed: () => context.pushRoute(AddNewServiceRoute(theme: theme)),
+          child: Text(
+            LocaleKeys.addNewService,
+            style: theme.textTheme.bodyLarge!.copyWith(
+              color: ColorsManager.primaryColor,
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+
+            Expanded(
+              child: BlocConsumer<UserDetailsCubit, UserDetailsState>(
+                listenWhen: (previous, current) =>
+                    previous.getContractorServicesState !=
+                    current.getContractorServicesState,
+                listener: (context, state) {
+                  if (state.getContractorServicesState.isError) {
+                    showToast(message: state.errorMessage, state: ToastStates.error);
+                  }
                 },
-              );
-            }
-                
-            return UiStateBuilder(
-              theme: theme,
-              state: state.getContractorServicesState,
-              errorMessage: state.errorMessage,
-              onLoading: Skeletonizer(
-                containersColor: ColorsManager.skeletonColor,
-                enabled:
-                    state.getContractorServicesState.isLoading &&
-                    !hasData,
-                child: _buildServicesList(
-                  theme: theme,
-                  services: List.generate(
-                    5,
-                    (index) => const ContractorServiceModel(
-                      id: 0,
-                      title: 'Loading...',
-                      description: 'Loading description...',
-                      price: '0',
-                      images: [],
+                buildWhen: (previous, current) =>
+                    previous.getContractorServicesState !=
+                        current.getContractorServicesState ||
+                    previous.contractorServicesModel !=
+                        current.contractorServicesModel,
+                builder: (context, state) {
+                  final hasData = state.contractorServicesModel.services.isNotEmpty;
+              
+                  if (!state.isConnected && !hasData) {
+                    return NoInternetWidget(
+                      errorMessage: state.errorMessage,
+                      theme: theme,
+                      onPressed: () {
+                        context.read<UserDetailsCubit>().getContractorServices();
+                      },
+                    );
+                  }
+              
+                  return UiStateBuilder(
+                    theme: theme,
+                    state: state.getContractorServicesState,
+                    errorMessage: state.errorMessage,
+                    onLoading: Skeletonizer(
+                      containersColor: ColorsManager.skeletonColor,
+                      enabled: state.getContractorServicesState.isLoading && !hasData,
+                      child: _buildServicesList(
+                        theme: theme,
+                        services: List.generate(
+                          5,
+                          (index) => const ContractorServiceModel(
+                            id: 0,
+                            title: 'Loading...',
+                            description: 'Loading description...',
+                            price: '0',
+                            images: [],
+                          ),
+                        ),
+                        status: state.getContractorServicesState,
+                      ),
                     ),
-                  ),
-                  status: state.getContractorServicesState,
-                ),
+                    onSuccess: hasData
+                        ? _buildServicesList(
+                            services: state.contractorServicesModel.services,
+                            status: state.getContractorServicesState,
+                            theme: theme,
+                          )
+                        : NoDataWidget(theme: theme, text: LocaleKeys.noServicesYet),
+                    onError: hasData
+                        ? _buildServicesList(
+                            services: state.contractorServicesModel.services,
+                            status: state.getContractorServicesState,
+                            theme: theme,
+                          )
+                        : NoDataWidget(theme: theme, text: LocaleKeys.noServicesYet),
+                  );
+                },
               ),
-              onSuccess: hasData
-                  ? _buildServicesList(
-                      services: state.contractorServicesModel.services,
-                      status: state.getContractorServicesState,
-                      theme: theme,
-                    )
-                  : NoDataWidget(
-                      theme: theme,
-                      text: LocaleKeys.noServicesYet,
-                    ),
-              onError: hasData
-                  ? _buildServicesList(
-                      services: state.contractorServicesModel.services,
-                      status: state.getContractorServicesState,
-                      theme: theme,
-                    )
-                  : NoDataWidget(
-                      theme: theme,
-                      text: LocaleKeys.noServicesYet,
-                    ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );
@@ -173,45 +177,28 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
   }) {
     _resetLoading(status);
 
-    return Column(
-      crossAxisAlignment: .start,
-      children: [
-        TextButton(
-          onPressed: () => context.pushRoute(AddNewServiceRoute(theme: theme)),
-          child: Text(
-            LocaleKeys.addNewService,
-            style: theme.textTheme.bodyLarge!.copyWith(
-              color: ColorsManager.primaryColor,
+    return ListView.separated(
+      controller: _scrollController,
+      itemCount: services.length + (status.isLoadingMore ? 1 : 0),
+      separatorBuilder: (_, __) => const SizedBox(height: 20),
+      itemBuilder: (context, index) {
+        if (index == services.length && status.isLoadingMore) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: SizedBox(
+                width: 26,
+                height: 26,
+                child: CircularProgressIndicator(
+                  color: ColorsManager.primaryColor,
+                ),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        Expanded(
-          child: ListView.separated(
-            controller: _scrollController,
-            itemCount: services.length + (status.isLoadingMore ? 1 : 0),
-            separatorBuilder: (_, __) => const SizedBox(height: 20),
-            itemBuilder: (context, index) {
-              if (index == services.length && status.isLoadingMore) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Center(
-                    child: SizedBox(
-                      width: 26,
-                      height: 26,
-                      child: CircularProgressIndicator(
-                        color: ColorsManager.primaryColor,
-                      ),
-                    ),
-                  ),
-                );
-              }
-
-              return MyServiceItem(theme: theme, service: services[index]);
-            },
-          ),
-        ),
-      ],
+          );
+        }
+        
+        return MyServiceItem(theme: theme, service: services[index]);
+      },
     );
   }
 }

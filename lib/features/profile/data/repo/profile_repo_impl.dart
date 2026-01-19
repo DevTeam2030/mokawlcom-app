@@ -87,7 +87,11 @@ class ProfileRepoImpl implements ProfileRepo {
   @override
   Future<Either<Failure, String>> addService({
     required AddServiceRequestModel addServiceRequestModel,
+    required void Function(int, int)? onSendProgress,
   }) async => safeApiCall<String>(
-    () => profileDataSource.addService(addServiceRequestModel: addServiceRequestModel),
+    () => profileDataSource.addService(
+      addServiceRequestModel: addServiceRequestModel,
+      onSendProgress: onSendProgress,
+    ),
   );
 }

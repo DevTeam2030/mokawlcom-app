@@ -244,4 +244,10 @@ class LocaleKeys {
   static String get pleaseSelectFile => 'please_select_file'.tr();
 
   static String get pleaseSelectLogo => 'please_select_logo'.tr();
+
+  static String get maxImagesReached => 'max_images_reached'.tr();
+
+  static String get imageSizeExceeded => 'image_size_exceeded'.tr();
+
+  static String get errorPickingImages => 'error_picking_images'.tr();
 }

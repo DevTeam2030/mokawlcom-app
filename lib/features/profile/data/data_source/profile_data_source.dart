@@ -35,6 +35,7 @@ abstract class ProfileDataSource {
   Future<ContractorServicesModel> getContractorServices({required int page});
   Future<String> addService({
     required AddServiceRequestModel addServiceRequestModel,
+    required void Function(int, int)? onSendProgress,
   });
 }
 
@@ -193,6 +194,7 @@ class ProfileDataSourceImpl implements ProfileDataSource {
   @override
   Future<String> addService({
     required AddServiceRequestModel addServiceRequestModel,
+   required void Function(int, int)? onSendProgress,
   }) async {
     final Map<String, dynamic> formDataMap = {
       ...addServiceRequestModel.toJson(),
@@ -202,7 +204,10 @@ class ProfileDataSourceImpl implements ProfileDataSource {
         addServiceRequestModel.images!.isNotEmpty) {
       final List<MultipartFile> imageFiles = [];
       for (final image in addServiceRequestModel.images!) {
-        final multipartFile = await MultipartFile.fromFile(image.path);
+        final multipartFile = await MultipartFile.fromFile(
+          image.path,
+          filename: image.path.split('/').last,
+          );
         imageFiles.add(multipartFile);
       }
       formDataMap["images"] = imageFiles;
@@ -214,6 +219,7 @@ class ProfileDataSourceImpl implements ProfileDataSource {
       url: ApiConstants.addService,
       headers: {"Authorization": "Bearer ${AppConstants.token}"},
       data: formData,
+      onSendProgress: onSendProgress,
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response.data["message"] ?? "";

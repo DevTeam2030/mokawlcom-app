@@ -284,8 +284,8 @@ class ContractorItem extends StatelessWidget {
                           ),
                         ),
                         onPressed: () async {
-                          await LaunchUtils.open(
-                            url: contractorModel.phone,
+                          await LaunchUtils.call(
+                            phone: contractorModel.phone,
                             onError: (msg) {
                               showToast(
                                 message: msg,

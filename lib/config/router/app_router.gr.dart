@@ -29,7 +29,9 @@ class AddNewServiceRoute extends PageRouteInfo<AddNewServiceRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<AddNewServiceRouteArgs>();
-      return AddNewServiceScreen(key: args.key, theme: args.theme);
+      return WrappedRoute(
+        child: AddNewServiceScreen(key: args.key, theme: args.theme),
+      );
     },
   );
 }

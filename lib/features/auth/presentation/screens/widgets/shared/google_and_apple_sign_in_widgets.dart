@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
@@ -33,8 +35,8 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 8.0),
-        Container(
+       Platform.isIOS ?  const SizedBox(height: 8.0):const SizedBox.shrink(),
+     Platform.isIOS ?   Container(
           height: 48.0,
           decoration: BoxDecoration(
             color: Colors.black,
@@ -54,7 +56,7 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
               const Image(image: AssetImage(AssetsManager.appleIcon)),
             ],
           ),
-        ),
+        ):const SizedBox.shrink(),
       ],
     );
   }

@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16.0),
               GoogleAndAppleSignInWidgets(
                 onGoogleTap: () async {
-                  await GoogleSignInService.instance.signIn();
+                 // await GoogleSignInService.instance.signIn();
                 },
               ),
               const SizedBox(height: 16.0),

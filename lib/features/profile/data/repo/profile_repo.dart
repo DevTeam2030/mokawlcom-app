@@ -33,5 +33,6 @@ abstract class ProfileRepo {
   Future<Either<Failure, UserModel>> getContractorProfile();
   Future<Either<Failure, String>> addService({
     required AddServiceRequestModel addServiceRequestModel,
+    required void Function(int, int)? onSendProgress,
   }); 
 }
