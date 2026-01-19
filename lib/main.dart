@@ -29,6 +29,7 @@ Future<void> main() async {
   await getIt<FcmInitHelper>().setAwesomeNotificationListeners();
   getIt<FcmInitHelper>().initFirebaseMessagingListeners();
   await getIt<FcmInitHelper>().handleInitialMessage();
+  print(AppConstants.token);
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

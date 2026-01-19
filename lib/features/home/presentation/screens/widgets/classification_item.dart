@@ -41,7 +41,9 @@ class ClassificationItem extends StatelessWidget {
                     color: ColorsManager.skeletonColor,
                   ),
                 ),
-                child: CustomCachedNetworkImage(imageUrl: classificationModel.image),
+                child: CustomCachedNetworkImage(
+                  imageUrl: classificationModel.image,
+                ),
               ),
             ),
           ),
@@ -56,7 +58,7 @@ class ClassificationItem extends StatelessWidget {
           ),
         ),
         Text(
-          "(${classificationModel.number})",
+          "(${classificationModel.numberOfServices})",
           style: theme.textTheme.labelSmall!.copyWith(
             fontWeight: FontWeight.w400,
             color: ColorsManager.textColor,

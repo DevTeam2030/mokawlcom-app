@@ -37,7 +37,15 @@ class CustomCachedNetworkImage extends StatelessWidget {
       memCacheWidth: cacheWidth,
       memCacheHeight: cacheHeight,
       errorWidget: (context, url, error) =>
-          const Icon(Icons.error_outline, size: 50),
+          Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Icon(Icons.error),
+        ),
     );
   }
 }

@@ -16,7 +16,7 @@ class ServiceModel extends Equatable {
   factory ServiceModel.fromJson(Map<String, dynamic> json) => ServiceModel(
     id: json['id'] ?? 0,
     name: json['name'] ?? '',
-    number: json['main_cat_id'] ?? 0,
+    number: json['no_sub_cat'] ?? 0,
     image: json['image'] ?? '',
   );
 

@@ -41,6 +41,7 @@ import 'package:mokawlcom_app/features/profile/presentation/screens/available_de
 import 'package:mokawlcom_app/features/profile/presentation/screens/change_password_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/edit_contractor_profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/edit_deal_screen.dart';
+import 'package:mokawlcom_app/features/profile/presentation/screens/edit_service_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/edit_user_profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/my_current_package_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/my_services_screen.dart';
@@ -135,6 +136,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SubmittedPriceOffersRoute.page),
         AutoRoute(page: SavedCompaniesRoute.page),
         AutoRoute(page: EditDealRoute.page),
+        AutoRoute(page: EditServiceRoute.page),
       ],
     ),
   ];

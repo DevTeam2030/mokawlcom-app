@@ -114,7 +114,7 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
                           id: i,
                           name: 'Loading',
                           image: '',
-                          number: i,
+                          numberOfServices: i,
                         ),
                       ),
                 state.getClassificationsState,

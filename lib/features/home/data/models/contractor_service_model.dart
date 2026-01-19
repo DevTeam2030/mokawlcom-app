@@ -24,6 +24,21 @@ class ContractorServiceModel extends Equatable {
           (json['images'] as List<dynamic>? ?? []).map((x) => x),
         ),
       );
+  
+  ContractorServiceModel copyWith({
+    String? title,
+    String? description,
+    String? price,
+    List<String>? images,
+  }) =>
+      ContractorServiceModel(
+        id: id,
+        title: title ?? this.title,
+        description: description ?? this.description,
+        price: price ?? this.price,
+        images: images ?? this.images,
+      );
+  
   @override
   List<Object?> get props => [id, title, description, price, images];
 }

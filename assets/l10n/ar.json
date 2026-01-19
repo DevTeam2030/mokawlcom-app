@@ -171,5 +171,8 @@
   "image_size_exceeded": "حجم الصورة تجاوز الحد الأقصى. الحد الأقصى هو",
   "error_picking_images": "خطأ في اختيار الصور",
   "no_deals_yet": "لا يوجد صفقات بعد",
-  "edit_deal":"تعديل الصفقة"
+  "edit_deal":"تعديل الصفقة",
+  "package_is_valid_for":"الباقة صالحة لمدة",
+  "months":"شهور",
+  "edit_service":"تعديل الخدمة"
 }

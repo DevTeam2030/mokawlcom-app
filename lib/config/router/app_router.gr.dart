@@ -458,6 +458,91 @@ class EditDealRouteArgs {
 }
 
 /// generated route for
+/// [EditServiceScreen]
+class EditServiceRoute extends PageRouteInfo<EditServiceRouteArgs> {
+  EditServiceRoute({
+    Key? key,
+    required ThemeData theme,
+    required UserDetailsCubit userDetailsCubit,
+    required ContractorServiceModel service,
+    required int serviceIndex,
+    List<PageRouteInfo>? children,
+  }) : super(
+         EditServiceRoute.name,
+         args: EditServiceRouteArgs(
+           key: key,
+           theme: theme,
+           userDetailsCubit: userDetailsCubit,
+           service: service,
+           serviceIndex: serviceIndex,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'EditServiceRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EditServiceRouteArgs>();
+      return WrappedRoute(
+        child: EditServiceScreen(
+          key: args.key,
+          theme: args.theme,
+          userDetailsCubit: args.userDetailsCubit,
+          service: args.service,
+          serviceIndex: args.serviceIndex,
+        ),
+      );
+    },
+  );
+}
+
+class EditServiceRouteArgs {
+  const EditServiceRouteArgs({
+    this.key,
+    required this.theme,
+    required this.userDetailsCubit,
+    required this.service,
+    required this.serviceIndex,
+  });
+
+  final Key? key;
+
+  final ThemeData theme;
+
+  final UserDetailsCubit userDetailsCubit;
+
+  final ContractorServiceModel service;
+
+  final int serviceIndex;
+
+  @override
+  String toString() {
+    return 'EditServiceRouteArgs{key: $key, theme: $theme, userDetailsCubit: $userDetailsCubit, service: $service, serviceIndex: $serviceIndex}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! EditServiceRouteArgs) return false;
+    return key == other.key &&
+        theme == other.theme &&
+        userDetailsCubit == other.userDetailsCubit &&
+        service == other.service &&
+        serviceIndex == other.serviceIndex;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^
+      theme.hashCode ^
+      userDetailsCubit.hashCode ^
+      service.hashCode ^
+      serviceIndex.hashCode;
+}
+
+/// generated route for
 /// [EditUserProfileScreen]
 class EditUserProfileRoute extends PageRouteInfo<void> {
   const EditUserProfileRoute({List<PageRouteInfo>? children})

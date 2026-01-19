@@ -216,7 +216,11 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
           );
         }
 
-        return MyServiceItem(theme: theme, service: services[index]);
+        return MyServiceItem(
+          theme: theme,
+          service: services[index],
+          index: index,
+        );
       },
     );
   }

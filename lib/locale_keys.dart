@@ -252,5 +252,8 @@ class LocaleKeys {
   static String get errorPickingImages => 'error_picking_images'.tr();
   static String get noDealsYet => 'no_deals_yet'.tr();
   static String get editDeal => 'edit_deal'.tr(); 
+  static String get packageIsValidFor => 'package_is_valid_for'.tr();
+  static String get months => 'months'.tr();
+  static String get editService => 'edit_service'.tr();
 
 }

@@ -78,7 +78,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
                         id: i,
                         name: '******',
                         image: '',
-                        number: i,
+                        numberOfServices: i,
                       ),
                     ),
               status: state.getClassificationsState,

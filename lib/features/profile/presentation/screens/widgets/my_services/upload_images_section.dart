@@ -145,7 +145,7 @@ class UploadImagesSection extends StatelessWidget {
                 ],
               ),
             ] else if (state.imageUploadProgress == 1 &&
-                state.isImageLoading) ...[
+                state.selectedImages.isNotEmpty) ...[
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

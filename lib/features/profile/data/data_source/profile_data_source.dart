@@ -6,7 +6,9 @@ import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/plan/plan_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/add_service_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/service/edit_service_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/deal/deals_model.dart';
@@ -38,6 +40,10 @@ abstract class ProfileDataSource {
     required AddServiceRequestModel addServiceRequestModel,
     required void Function(int, int)? onSendProgress,
   });
+  Future<String> editService({
+    required EditServiceRequestModel editServiceRequestModel,
+    required void Function(int, int)? onSendProgress,
+  });
   Future<DealsModel> getDeals({required int page});
 
   Future<String> addDeal({
@@ -51,6 +57,8 @@ abstract class ProfileDataSource {
     required String title,
     required String description,
   });
+
+  Future<PlanModel> getPlan();
 }
 
 class ProfileDataSourceImpl implements ProfileDataSource {
@@ -243,6 +251,43 @@ class ProfileDataSourceImpl implements ProfileDataSource {
   }
 
   @override
+  Future<String> editService({
+    required EditServiceRequestModel editServiceRequestModel,
+    required void Function(int, int)? onSendProgress,
+  }) async {
+    final Map<String, dynamic> formDataMap = {
+      ...editServiceRequestModel.toJson(),
+    };
+
+    if (editServiceRequestModel.images != null &&
+        editServiceRequestModel.images!.isNotEmpty) {
+      final List<MultipartFile> imageFiles = [];
+      for (final image in editServiceRequestModel.images!) {
+        final multipartFile = await MultipartFile.fromFile(
+          image.path,
+          filename: image.path.split('/').last,
+        );
+        imageFiles.add(multipartFile);
+      }
+      formDataMap["images"] = imageFiles;
+    }
+
+    final formData = FormData.fromMap(formDataMap);
+
+    final response = await dioHelper.post(
+      url: ApiConstants.editService,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      data: formData,
+      onSendProgress: onSendProgress,
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response.data["message"] ?? "";
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
+
+  @override
   Future<DealsModel> getDeals({required int page}) async {
     final response = await dioHelper.get(
       url: ApiConstants.getDeals,
@@ -300,6 +345,19 @@ class ProfileDataSourceImpl implements ProfileDataSource {
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response.data["message"] ?? "";
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
+
+  @override
+  Future<PlanModel> getPlan() async {
+    final response = await dioHelper.get(
+      url: ApiConstants.getPlan,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return PlanModel.fromJson(response.data["data"] ?? {});
     } else {
       throw ServerException(errorMessage: response.data["message"] ?? "");
     }

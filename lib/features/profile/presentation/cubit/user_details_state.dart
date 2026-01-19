@@ -9,6 +9,7 @@ import 'package:mokawlcom_app/features/profile/data/models/user_offers_model.dar
 class UserDetailsState extends Equatable {
   final RequestStatus getUserOffersState;
   final RequestStatus addNewServiceState;
+  final RequestStatus editServiceState;
   final RequestStatus getDealsState;
   final RequestStatus addDealState;
   final RequestStatus deleteDealState;
@@ -33,6 +34,7 @@ class UserDetailsState extends Equatable {
   const UserDetailsState({
     this.getUserOffersState = RequestStatus.initial,
     this.addNewServiceState = RequestStatus.initial,
+    this.editServiceState = RequestStatus.initial,
     this.userOffersModel = const UserOffersModel.empty(),
     this.errorMessage = '',
     this.successMessage = '',
@@ -61,6 +63,7 @@ class UserDetailsState extends Equatable {
   UserDetailsState copyWith({
     RequestStatus? getUserOffersState,
     RequestStatus? addNewServiceState,
+    RequestStatus? editServiceState,
     UserOffersModel? userOffersModel,
     String? errorMessage,
     String? successMessage,
@@ -85,6 +88,7 @@ class UserDetailsState extends Equatable {
     return UserDetailsState(
       getUserOffersState: getUserOffersState ?? this.getUserOffersState,
       addNewServiceState: addNewServiceState ?? this.addNewServiceState,
+      editServiceState: editServiceState ?? this.editServiceState,
       userOffersModel: userOffersModel ?? this.userOffersModel,
       errorMessage: errorMessage ?? this.errorMessage,
       successMessage: successMessage ?? this.successMessage,
@@ -116,6 +120,7 @@ class UserDetailsState extends Equatable {
   List<Object?> get props => [
     getUserOffersState,
     addNewServiceState,
+    editServiceState,
     userOffersModel,
     errorMessage,
     successMessage,

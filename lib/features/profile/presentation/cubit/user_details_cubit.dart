@@ -2,8 +2,10 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/deal/deal_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/add_service_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/service/edit_service_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
@@ -149,7 +151,7 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
     }
 
     try {
-      emit(state.copyWith(isImageLoading: true));
+      emit(state.copyWith(isImageLoading: true, imageErrorMessage: ''));
 
       final List<XFile> pickedFiles = await _imagePicker.pickMultiImage(
         imageQuality: 85,
@@ -217,6 +219,10 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
     emit(state.copyWith(selectedImages: updatedImages));
   }
 
+  void clearImages() {
+    emit(state.copyWith(selectedImages: []));
+  }
+
   Future<void> addService({
     required String classificationId,
     required String name,
@@ -252,6 +258,62 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
           successMessage: succesMessage,
         ),
       ),
+    );
+  }
+
+  Future<void> editService({
+    required int serviceId,
+    required int index,
+    required String classificationId,
+    required String name,
+    required String description,
+    required String price,
+  }) async {
+    emit(state.copyWith(editServiceState: RequestStatus.loading));
+    final result = await profileRepo.editService(
+      editServiceRequestModel: EditServiceRequestModel(
+        serviceId: serviceId,
+        name: name,
+        description: description,
+        price: price,
+        images: state.selectedImages,
+        classificationId: classificationId,
+      ),
+      onSendProgress: (sent, total) {
+        emit(state.copyWith(imageUploadProgress: sent / total));
+      },
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          editServiceState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+          imageUploadProgress: 0.0,
+        ),
+      ),
+      (successMessage) {
+        final updatedServices = List<ContractorServiceModel>.from(
+          state.contractorServicesModel.services,
+        );
+        if (index >= 0 && index < updatedServices.length) {
+          updatedServices[index] = updatedServices[index].copyWith(
+            title: name,
+            description: description,
+            price: price,
+          );
+        }
+        emit(
+          state.copyWith(
+            editServiceState: RequestStatus.success,
+            imageUploadProgress: 0.0,
+            successMessage: successMessage,
+            contractorServicesModel: state.contractorServicesModel.copyWith(
+              services: updatedServices,
+            ),
+          ),
+        );
+      },
     );
   }
 

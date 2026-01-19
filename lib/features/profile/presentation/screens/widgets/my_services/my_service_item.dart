@@ -1,17 +1,22 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
+import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 class MyServiceItem extends StatelessWidget {
-  const MyServiceItem({super.key, required this.theme, required this.service});
+  const MyServiceItem({super.key, required this.theme, required this.service, required this.index});
   final ThemeData theme;
   final ContractorServiceModel service;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +52,20 @@ class MyServiceItem extends StatelessWidget {
                 size: 18,
               ),
               const SizedBox(width: 16),
-              const Icon(
-                MyIcons.editsolid,
-                color: ColorsManager.primaryColor,
-                size: 18,
+              InkWell(
+                onTap: () => context.pushRoute(
+                  EditServiceRoute(
+                    theme: theme,
+                    service: service,
+                    userDetailsCubit: context.read<UserDetailsCubit>(),
+                    serviceIndex: index,
+                  ),
+                ),
+                child: const Icon(
+                  MyIcons.editsolid,
+                  color: ColorsManager.primaryColor,
+                  size: 18,
+                ),
               ),
             ],
           ),
@@ -79,10 +94,7 @@ class MyServiceItem extends StatelessWidget {
                   LaunchUtils.open(
                     url: service.images[index],
                     onError: (msg) {
-                      showToast(
-                        message: msg,
-                        state: ToastStates.error,
-                      );
+                      showToast(message: msg, state: ToastStates.error);
                     },
                   );
                 },

@@ -5,7 +5,9 @@ import 'package:mokawlcom_app/core/utils/safe_api_call.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/profile/data/data_source/profile_data_source.dart';
+import 'package:mokawlcom_app/features/profile/data/models/plan/plan_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/add_service_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/service/edit_service_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/deal/deals_model.dart';
@@ -95,6 +97,18 @@ class ProfileRepoImpl implements ProfileRepo {
       onSendProgress: onSendProgress,
     ),
   );
+  
+  @override
+  Future<Either<Failure, String>> editService({
+    required EditServiceRequestModel editServiceRequestModel,
+    required void Function(int, int)? onSendProgress,
+  }) async => safeApiCall<String>(
+    () => profileDataSource.editService(
+      editServiceRequestModel: editServiceRequestModel,
+      onSendProgress: onSendProgress,
+    ),
+  );
+  
   @override
   Future<Either<Failure, DealsModel>> getDeals({required int page}) async =>
       safeApiCall<DealsModel>(() => profileDataSource.getDeals(page: page));
@@ -120,4 +134,8 @@ class ProfileRepoImpl implements ProfileRepo {
       description: description,
     ),
   );
+
+  @override
+  Future<Either<Failure, PlanModel>> getPlan() async =>
+      safeApiCall<PlanModel>(() => profileDataSource.getPlan());
 }

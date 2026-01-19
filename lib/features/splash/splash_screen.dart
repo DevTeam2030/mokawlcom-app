@@ -77,14 +77,14 @@ class _SplashScreenState extends State<SplashScreen>
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(AssetsManager.splashLogo),
-              Text(
-                LocaleKeys.fasterAcessBestResults,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  fontSize: 15,
-                  color: ColorsManager.secondaryColor,
-                ),
-              ),
+              // Text(
+              //   LocaleKeys.fasterAcessBestResults,
+              //   textAlign: TextAlign.center,
+              //   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              //     fontSize: 15,
+              //     color: ColorsManager.secondaryColor,    
+              //   ),
+              // ),
             ],
           ),
         ),
