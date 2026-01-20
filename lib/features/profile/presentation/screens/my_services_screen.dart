@@ -90,6 +90,7 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                 AddNewServiceRoute(
                   theme: theme,
                   userDetailsCubit: context.read<UserDetailsCubit>(),
+                  
                 ),
               ),
               child: Text(

@@ -13,6 +13,7 @@ import 'package:mokawlcom_app/features/profile/data/models/change_password_reque
 import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/deal/deals_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/service/service_response_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_offers_model.dart';
@@ -36,11 +37,11 @@ abstract class ProfileDataSource {
 
   Future<UserOffersModel> getUserOffers({required int page});
   Future<ContractorServicesModel> getContractorServices({required int page});
-  Future<String> addService({
+  Future<ServiceResponseModel> addService({
     required AddServiceRequestModel addServiceRequestModel,
     required void Function(int, int)? onSendProgress,
   });
-  Future<String> editService({
+  Future<ServiceResponseModel> editService({
     required EditServiceRequestModel editServiceRequestModel,
     required void Function(int, int)? onSendProgress,
   });
@@ -214,7 +215,7 @@ class ProfileDataSourceImpl implements ProfileDataSource {
   }
 
  @override
-Future<String> addService({
+Future<ServiceResponseModel> addService({
   required AddServiceRequestModel addServiceRequestModel,
   required void Function(int, int)? onSendProgress,
 }) async {
@@ -247,7 +248,7 @@ Future<String> addService({
   );
 
   if (response.statusCode == 200 || response.statusCode == 201) {
-    return response.data["message"] ?? "";
+    return ServiceResponseModel.fromJson(response.data ?? {});
   } else {
     throw ServerException(errorMessage: response.data["message"] ?? "");
   }
@@ -255,7 +256,7 @@ Future<String> addService({
 
 
   @override
-Future<String> editService({
+Future<ServiceResponseModel> editService({
   required EditServiceRequestModel editServiceRequestModel,
   required void Function(int, int)? onSendProgress,
 }) async {
@@ -288,7 +289,7 @@ Future<String> editService({
   );
 
   if (response.statusCode == 200 || response.statusCode == 201) {
-    return response.data["message"] ?? "";
+    return ServiceResponseModel.fromJson(response.data ?? {});
   } else {
     throw ServerException(errorMessage: response.data["message"] ?? "");
   }

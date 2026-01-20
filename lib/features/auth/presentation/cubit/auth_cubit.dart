@@ -143,6 +143,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> googleLogin() async {
+    if (state.googleLoginState.isLoading) return;
     emit(state.copyWith(googleLoginState: RequestStatus.loading));
 
     final result = await userAuthRepoImpl.googleLogin();

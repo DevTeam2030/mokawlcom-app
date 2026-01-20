@@ -164,47 +164,50 @@ class _ServicesScreenState extends State<ServicesScreen> {
     );
   }
 
-  GridView _buildServices({
+  Widget _buildServices({
     required ThemeData theme,
     required List<ServiceModel> services,
     required RequestStatus status,
   }) {
     _resetLoading(status);
 
-    return GridView.builder(
-      key: const PageStorageKey("Services"),
-      controller: _scrollController,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 14,
-        crossAxisSpacing: 20,
-        childAspectRatio: 0.78,
-      ),
-      itemCount: services.length + (status.isLoadingMore ? 3 : 0),
-      itemBuilder: (context, index) {
-        if (index >= services.length && status.isLoadingMore) {
-          return Container(
-            decoration: BoxDecoration(
-              color: ColorsManager.skeletonColor,
-              borderRadius: BorderRadius.circular(12),
-            ),
-          );
-      }
-
-        return ServiceGridItem(
-          theme: theme,
-          serviceModel: services[index],
-          onTap: () {
-            context.pushRoute(
-              ContractorsRoute(
-                classificationModel: widget.classificationModel,
-                serviceModel: services[index],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: GridView.builder(
+        key: const PageStorageKey("Services"),
+        controller: _scrollController,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: 14,
+          crossAxisSpacing: 20,
+          childAspectRatio: 0.78,
+        ),
+        itemCount: services.length + (status.isLoadingMore ? 3 : 0),
+        itemBuilder: (context, index) {
+          if (index >= services.length && status.isLoadingMore) {
+            return Container(
+              decoration: BoxDecoration(
+                color: ColorsManager.skeletonColor,
+                borderRadius: BorderRadius.circular(12),
               ),
             );
-          },
-        );
-      },
+        }
+      
+          return ServiceGridItem(
+            theme: theme,
+            serviceModel: services[index],
+            onTap: () {
+              context.pushRoute(
+                ContractorsRoute(
+                  classificationModel: widget.classificationModel,
+                  serviceModel: services[index],
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

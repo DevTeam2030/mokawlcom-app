@@ -123,38 +123,41 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
           ),
         ),
         const SizedBox(height: 16),
-        GridView.builder(
-          controller: _scrollController,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 14,
-            crossAxisSpacing: 20,
-            childAspectRatio: 0.78,
-          ),
-          itemCount: classifications.length + (status.isLoadingMore ? 2 : 0),
-          itemBuilder: (context, index) {
-            if (index >= classifications.length && status.isLoadingMore) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: ColorsManager.skeletonColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              );
-            }
-
-            return ClassificationItem(
-              theme: widget.theme,
-              classificationModel: classifications[index],
-              onTap: () {
-                context.pushRoute(
-                  ServicesRoute(classificationModel: classifications[index]),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: GridView.builder(
+            controller: _scrollController,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 14,
+              crossAxisSpacing: 20,
+              childAspectRatio: 0.78,
+            ),
+            itemCount: classifications.length + (status.isLoadingMore ? 2 : 0),
+            itemBuilder: (context, index) {
+              if (index >= classifications.length && status.isLoadingMore) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: ColorsManager.skeletonColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 );
-              },
-            );
-          },
+              }
+
+              return ClassificationItem(
+                theme: widget.theme,
+                classificationModel: classifications[index],
+                onTap: () {
+                  context.pushRoute(
+                    ServicesRoute(classificationModel: classifications[index]),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ],
     );

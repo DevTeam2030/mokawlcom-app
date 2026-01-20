@@ -251,13 +251,22 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
           imageUploadProgress: 0.0,
         ),
       ),
-      (succesMessage) => emit(
-        state.copyWith(
-          addNewServiceState: RequestStatus.success,
-          imageUploadProgress: 0.0,
-          successMessage: succesMessage,
-        ),
-      ),
+      (serviceResponseModel) {
+        final updatedServices = List<ContractorServiceModel>.from(
+          state.contractorServicesModel.services,
+        );
+        updatedServices.add(serviceResponseModel.contractorServiceModel);
+        emit(
+          state.copyWith(
+            addNewServiceState: RequestStatus.success,
+            imageUploadProgress: 0.0,
+            successMessage: serviceResponseModel.message,
+            contractorServicesModel: state.contractorServicesModel.copyWith(
+              services: updatedServices,
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -292,22 +301,16 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
           imageUploadProgress: 0.0,
         ),
       ),
-      (successMessage) {
+      (serviceResponseModel) {
         final updatedServices = List<ContractorServiceModel>.from(
           state.contractorServicesModel.services,
         );
-        if (index >= 0 && index < updatedServices.length) {
-          updatedServices[index] = updatedServices[index].copyWith(
-            title: name,
-            description: description,
-            price: price,
-          );
-        }
+        updatedServices[index] = serviceResponseModel.contractorServiceModel;
         emit(
           state.copyWith(
             editServiceState: RequestStatus.success,
             imageUploadProgress: 0.0,
-            successMessage: successMessage,
+            successMessage: serviceResponseModel.message,
             contractorServicesModel: state.contractorServicesModel.copyWith(
               services: updatedServices,
             ),

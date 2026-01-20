@@ -10,6 +10,7 @@ import 'package:mokawlcom_app/features/profile/data/models/change_password_reque
 import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/deal/deals_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/service/service_response_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_offers_model.dart';
@@ -34,11 +35,11 @@ abstract class ProfileRepo {
     required int page,
   });
   Future<Either<Failure, UserModel>> getContractorProfile();
-  Future<Either<Failure, String>> addService({
+  Future<Either<Failure, ServiceResponseModel>> addService({
     required AddServiceRequestModel addServiceRequestModel,
     required void Function(int, int)? onSendProgress,
   });
-  Future<Either<Failure, String>> editService({
+  Future<Either<Failure, ServiceResponseModel>> editService({
     required EditServiceRequestModel editServiceRequestModel,
     required void Function(int, int)? onSendProgress,
   });

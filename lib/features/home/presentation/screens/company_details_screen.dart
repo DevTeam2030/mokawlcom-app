@@ -66,8 +66,8 @@ class CompanyDetailsScreen extends StatelessWidget {
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () {
-                  LaunchUtils.open(
-                    url: contractorDetails.email,
+                  LaunchUtils.email(
+                    email: contractorDetails.email,
                     onError: (msg) =>
                         showToast(message: msg, state: ToastStates.error),
                   );

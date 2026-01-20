@@ -53,10 +53,14 @@ class _CompleteContractorDataFormState
 
   @override
   Widget build(BuildContext context) {
-    final phone = PhoneNumber.fromCompleteNumber(
-      completeNumber: context.read<AuthCubit>().state.phone,
-    );
-    _completePhone = phone.completeNumber;
+    PhoneNumber? phone;
+    if (context.read<AuthCubit>().state.phone.isNotEmpty &&
+        context.read<AuthCubit>().state.phone.startsWith('+')) {
+      phone = PhoneNumber.fromCompleteNumber(
+        completeNumber: context.read<AuthCubit>().state.phone,
+      );
+    }
+    _completePhone = phone?.completeNumber ?? "";
     final theme = widget.theme;
     return Form(
       key: _formKey,
@@ -91,7 +95,7 @@ class _CompleteContractorDataFormState
           const SizedBox(height: 8.0),
           CustomIntlPhoneField(
             controller: _phoneController,
-            initialCountryCode: phone.countryISOCode,
+            initialCountryCode: phone?.countryISOCode ?? "EG",
             onChanged: (completeNumber, countryCode) {
               _completePhone = completeNumber;
             },

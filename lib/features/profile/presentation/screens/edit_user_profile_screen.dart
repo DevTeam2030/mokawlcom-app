@@ -79,14 +79,20 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
             onLoading: const Center(child: CircularProgressIndicator()),
             onSuccess: Builder(
               builder: (context) {
-                final phone = PhoneNumber.fromCompleteNumber(
-                  completeNumber: state.userModel.phone,
-                );
+                PhoneNumber? phone;
+
+                if (state.userModel.phone.isNotEmpty &&
+                    state.userModel.phone.startsWith('+')) {
+                  phone = PhoneNumber.fromCompleteNumber(
+                    completeNumber: state.userModel.phone,
+                  );
+                }
+
                 _nameController.text = state.userModel.name;
                 _emailController.text = state.userModel.email;
-                _phoneController.text = phone.number;
+                _phoneController.text = phone?.number ?? '';
                 _addressController.text = state.userModel.address;
-                _completePhone = phone.completeNumber;
+                _completePhone = phone?.completeNumber ?? '';
                 return Padding(
                   padding: const EdgeInsetsDirectional.symmetric(
                     horizontal: 20.0,
@@ -144,7 +150,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                           ),
                           const SizedBox(height: 8.0),
                           CustomIntlPhoneField(
-                            initialCountryCode: phone.countryISOCode,
+                            initialCountryCode: phone?.countryISOCode ??"EG",
                             controller: _phoneController,
                             onChanged: (completeNumber, countryCode) {
                               _completePhone = completeNumber;

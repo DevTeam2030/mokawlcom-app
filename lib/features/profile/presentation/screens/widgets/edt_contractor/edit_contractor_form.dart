@@ -40,8 +40,8 @@ class _EditContractorFormState extends State<EditContractorForm> {
   late TextEditingController _facebookController;
   late TextEditingController _nameController;
   late TextEditingController _hintAboutCompanyController;
-String _phone ="" ;
-String _whatsapp = "";
+  String _phone = "";
+  String _whatsapp = "";
 
   @override
   void initState() {
@@ -82,12 +82,23 @@ String _whatsapp = "";
 
   @override
   Widget build(BuildContext context) {
-    final phone = PhoneNumber.fromCompleteNumber(
-      completeNumber: widget.userModel.phone,
-    );
-    final whatsapp = PhoneNumber.fromCompleteNumber(
-      completeNumber: widget.userModel.phone,
-    );
+    PhoneNumber? phone;
+
+    if (widget.userModel.phone.isNotEmpty &&
+        widget.userModel.phone.startsWith('+')) {
+      phone = PhoneNumber.fromCompleteNumber(
+        completeNumber: widget.userModel.phone,
+      );
+    }
+
+    PhoneNumber? whatsapp;
+
+    if (widget.userModel.whatsapp.isNotEmpty &&
+        widget.userModel.whatsapp.startsWith('+')) {
+      whatsapp = PhoneNumber.fromCompleteNumber(
+        completeNumber: widget.userModel.whatsapp,
+      );
+    }
     final theme = Theme.of(context);
     return Form(
       key: _formKey,
@@ -121,7 +132,7 @@ String _whatsapp = "";
           ),
           const SizedBox(height: 8.0),
           CustomIntlPhoneField(
-            initialCountryCode: phone.countryISOCode,
+            initialCountryCode: phone?.countryISOCode??"EG",
             onChanged: (completeNumber, countryCode) {
               _phone = completeNumber;
             },
@@ -138,7 +149,7 @@ String _whatsapp = "";
           ),
           const SizedBox(height: 8.0),
           CustomIntlPhoneField(
-            initialCountryCode: whatsapp.countryISOCode,
+            initialCountryCode: whatsapp?.countryISOCode??"EG",
             validator: (_) => null,
             onChanged: (completeNumber, countryCode) {
               _whatsapp = completeNumber;

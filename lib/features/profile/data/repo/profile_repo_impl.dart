@@ -12,6 +12,7 @@ import 'package:mokawlcom_app/features/profile/data/models/change_password_reque
 import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/deal/deals_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/service/service_response_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_offers_model.dart';
@@ -88,10 +89,10 @@ class ProfileRepoImpl implements ProfileRepo {
       safeApiCall<UserModel>(() => profileDataSource.getContractorProfile());
 
   @override
-  Future<Either<Failure, String>> addService({
+  Future<Either<Failure, ServiceResponseModel>> addService({
     required AddServiceRequestModel addServiceRequestModel,
     required void Function(int, int)? onSendProgress,
-  }) async => safeApiCall<String>(
+  }) async => safeApiCall<ServiceResponseModel>(
     () => profileDataSource.addService(
       addServiceRequestModel: addServiceRequestModel,
       onSendProgress: onSendProgress,
@@ -99,10 +100,10 @@ class ProfileRepoImpl implements ProfileRepo {
   );
   
   @override
-  Future<Either<Failure, String>> editService({
+  Future<Either<Failure, ServiceResponseModel>> editService({
     required EditServiceRequestModel editServiceRequestModel,
     required void Function(int, int)? onSendProgress,
-  }) async => safeApiCall<String>(
+  }) async => safeApiCall<ServiceResponseModel>(
     () => profileDataSource.editService(
       editServiceRequestModel: editServiceRequestModel,
       onSendProgress: onSendProgress,
