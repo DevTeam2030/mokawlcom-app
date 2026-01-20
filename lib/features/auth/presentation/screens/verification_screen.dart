@@ -165,10 +165,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
               return PrimaryButton(
                 isLoading: state.activateAccountState.isLoading,
                 onPressed: () {
-                  context.read<AuthCubit>().activateAccount(
-                    email: widget.email,
-                    verificationCode: verificationCode,
-                  );
+                  if (verificationCode.length == 5) {
+                    context.read<AuthCubit>().activateAccount(
+                      email: widget.email,
+                      verificationCode: verificationCode,
+                    );
+                  }
                 },
                 text: LocaleKeys.verify,
               );

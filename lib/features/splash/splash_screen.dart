@@ -26,16 +26,13 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-   
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     );
 
-    _fadeAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
+    _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
     _controller.forward();
 
@@ -82,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen>
               //   textAlign: TextAlign.center,
               //   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
               //     fontSize: 15,
-              //     color: ColorsManager.secondaryColor,    
+              //     color: ColorsManager.secondaryColor,
               //   ),
               // ),
             ],

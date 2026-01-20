@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/core/utils/isolate_parsers.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/home/data/models/add_offer_price_request_model.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
@@ -78,9 +80,7 @@ class HomeDataSourceImpl implements HomeDataSource {
   }) async {
     final result = await dioHelper.get(
       url: ApiConstants.getContractorInfo,
-      headers: {
-        "Authorization": "Bearer ${AppConstants.token}",
-      },
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
       queryParameters: {"contractor_id": contractorId},
     );
     if (result.statusCode == 200) {
@@ -97,9 +97,7 @@ class HomeDataSourceImpl implements HomeDataSource {
   }) async {
     final result = await dioHelper.post(
       url: ApiConstants.rateContractor,
-      headers: {
-        "Authorization": "Bearer ${AppConstants.token}",
-      },
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
       data: {"contractor_id": contractorId, "rate": rating},
     );
     if (result.statusCode == 200) {
@@ -110,45 +108,40 @@ class HomeDataSourceImpl implements HomeDataSource {
   }
 
   @override
-Future<String> addOfferPrice({
-  required AddOfferPriceRequestModel addOfferPriceRequestModel,
-  required void Function(double progress) onProgress,
-}) async {
-  final formData = FormData.fromMap(
-    addOfferPriceRequestModel.toJson(),
-  );
+  Future<String> addOfferPrice({
+    required AddOfferPriceRequestModel addOfferPriceRequestModel,
+    required void Function(double progress) onProgress,
+  }) async {
+    final formData = FormData.fromMap(addOfferPriceRequestModel.toJson());
 
-  if (addOfferPriceRequestModel.file != null) {
-    formData.files.add(
-      MapEntry(
-        'file',
-        await MultipartFile.fromFile(
-          addOfferPriceRequestModel.file!.path,
-          filename: addOfferPriceRequestModel.file!.path.split('/').last,
+    if (addOfferPriceRequestModel.file != null) {
+      formData.files.add(
+        MapEntry(
+          'file',
+          await MultipartFile.fromFile(
+            addOfferPriceRequestModel.file!.path,
+            filename: addOfferPriceRequestModel.file!.path.split('/').last,
+          ),
         ),
-      ),
+      );
+    }
+
+    final result = await dioHelper.post(
+      url: ApiConstants.addOfferPrice,
+      headers: {
+        "Authorization": "Bearer ${AppConstants.token}",
+        "Accept": "application/json",
+      },
+      data: formData,
+      onSendProgress: (sent, total) {
+        if (total != 0) onProgress(sent / total);
+      },
     );
+
+    if (result.statusCode == 200 || result.statusCode == 201) {
+      return result.data["message"] ?? "";
+    } else {
+      throw ServerException(errorMessage: result.data["message"] ?? "");
+    }
   }
-
-  final result = await dioHelper.post(
-    url: ApiConstants.addOfferPrice,
-    headers: {
-      "Authorization": "Bearer ${AppConstants.token}",
-      "Accept": "application/json",
-    },
-    data: formData,
-    onSendProgress: (sent, total) {
-      if (total != 0) onProgress(sent / total);
-    },
-  );
-
-  if (result.statusCode == 200 || result.statusCode == 201) {
-    return result.data["message"] ?? "";
-  } else {
-    throw ServerException(
-      errorMessage: result.data["message"] ?? "",
-    );
-  }
-}
-
 }

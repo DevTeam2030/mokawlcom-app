@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/core/utils/isolate_parsers.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/complete_contractor_data_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
@@ -12,12 +14,8 @@ import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
 import 'package:mokawlcom_app/features/shared/data/models/services_model.dart';
 
 abstract class ContractorAuthDataSource {
-  Future<ClassificationsModel> getClassifications({
-    required int page,
-  });
-  Future<ServicesModel> getServices({
-    required int page,
-  });
+  Future<ClassificationsModel> getClassifications({required int page});
+  Future<ServicesModel> getServices({required int page});
   Future<String> contractorSignUp({
     required ContractorSignUpRequestModel contractorSignUpRequestModel,
   });
@@ -49,36 +47,42 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
 
   ContractorAuthDataSourceImpl({required this.dioHelper});
   @override
-  Future<ClassificationsModel> getClassifications({
-    required int page,
-  }) async {
+  Future<ClassificationsModel> getClassifications({required int page}) async {
     final response = await dioHelper.get(
       url: ApiConstants.getClassifications,
-      queryParameters: {
-        "page": page,
-      },
+      queryParameters: {"page": page},
     );
     if (response.statusCode == 200) {
-      return ClassificationsModel.fromJson(response.data);
+      // Parse JSON in isolate to avoid blocking UI thread
+      final Map<String, dynamic> jsonData = Map<String, dynamic>.from(
+        response.data,
+      );
+      return await compute<Map<String, dynamic>, ClassificationsModel>(
+        parseClassificationsModel,
+        jsonData,
+      );
     } else {
       throw ServerException(errorMessage: response.data["message"]);
     }
   }
 
   @override
-  Future<ServicesModel> getServices({
-    required int page,
-  }) async {
+  Future<ServicesModel> getServices({required int page}) async {
     final response = await dioHelper.get(
       url: ApiConstants.getServices,
-      queryParameters: {
-        "page": page,
-      },
+      queryParameters: {"page": page},
     );
     if (response.statusCode == 200) {
-      return ServicesModel.fromJson(response.data);
+      // Parse JSON in isolate to avoid blocking UI thread
+      final Map<String, dynamic> jsonData = Map<String, dynamic>.from(
+        response.data,
+      );
+      return await compute<Map<String, dynamic>, ServicesModel>(
+        parseServicesModel,
+        jsonData,
+      );
     } else {
-      throw ServerException(errorMessage: response.data["message"]);
+      throw ServerException(errorMessage: response.data["message"]??"");
     }
   }
 

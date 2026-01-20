@@ -65,7 +65,7 @@ class UserAuthRepoImpl implements UserAuthRepo {
     final idToken = await GoogleSignInService.instance.signIn();
 
     if (idToken == null || idToken.isEmpty) {
-      return const Left(ServerFailure("Google sign in was cancelled"));
+      return const Left(ServerFailure(""));
     }
     GoogleSignInRequestModel googleSignInRequestModel =
         GoogleSignInRequestModel(

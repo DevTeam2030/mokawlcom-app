@@ -71,7 +71,7 @@ class _UserSignupScreenState extends State<UserSignupScreen> {
                 const SizedBox(height: 16.0),
                 GoogleAndAppleSignInWidgets(
                   onGoogleTap: () async {
-                   await context.read<AuthCubit>().googleLogin();
+                    await context.read<AuthCubit>().googleLogin();
                   },
                 ),
                 const SizedBox(height: 16.0),
@@ -106,6 +106,4 @@ class _UserSignupScreenState extends State<UserSignupScreen> {
       ),
     );
   }
-
-  
 }

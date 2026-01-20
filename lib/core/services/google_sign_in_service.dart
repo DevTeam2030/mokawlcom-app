@@ -51,7 +51,7 @@ class GoogleSignInService {
         debugPrint("User cancelled Google Sign-In");
         return null;
       }
-      throw ServerException(errorMessage: e.toString());
+     throw ServerException(errorMessage: e.toString());
     } catch (e) {
       throw ServerException(errorMessage: e.toString());
     }

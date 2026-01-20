@@ -100,9 +100,11 @@ class _LoginFormState extends State<LoginForm> {
                   state: ToastStates.success,
                 );
                 if (!state.userLoginResponseModel.filesUploaded) {
-                  context.pushRoute( UploadFilesRoute(
-                    contractorId: state.userLoginResponseModel.userId,
-                  ));
+                  context.pushRoute(
+                    UploadFilesRoute(
+                      contractorId: state.userLoginResponseModel.userId,
+                    ),
+                  );
                   return;
                 } else if (!state.userLoginResponseModel.planCompleted) {
                   context.pushRoute(const SubscriptionRoute());
@@ -110,8 +112,8 @@ class _LoginFormState extends State<LoginForm> {
                 } else if (!state.userLoginResponseModel.completeData) {
                   context.pushRoute(const CompleteDataRoute());
                   return;
-                } else if(state.userLoginResponseModel.userApproved == 1){
-                  context.pushRoute(const AuthenticatedRoute());
+                } else if (state.userLoginResponseModel.userApproved == 1) {
+                  context.replaceRoute(const AuthenticatedRoute());
                 }
               }
               if (state.userLoginState.isError) {

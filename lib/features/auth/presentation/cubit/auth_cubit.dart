@@ -72,6 +72,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String verificationCode,
   }) async {
+    if (state.activateAccountState.isLoading) return;
     emit(state.copyWith(activateAccountState: RequestStatus.loading));
     final result = await userAuthRepoImpl.activateUserAccount(
       email: email,
@@ -143,14 +144,20 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> googleLogin() async {
     emit(state.copyWith(googleLoginState: RequestStatus.loading));
+
     final result = await userAuthRepoImpl.googleLogin();
     result.fold(
-      (failure) => emit(
-        state.copyWith(
-          googleLoginState: RequestStatus.error,
-          errorMessage: failure.errorMessage,
-        ),
-      ),
+      (failure) {
+        if (failure.errorMessage.isEmpty) {
+          return;
+        }
+        emit(
+          state.copyWith(
+            googleLoginState: RequestStatus.error,
+            errorMessage: failure.errorMessage,
+          ),
+        );
+      },
       (userLoginResponseModel) async {
         AppConstants.token = userLoginResponseModel.token;
         await cacheHelper.saveData(
