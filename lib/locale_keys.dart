@@ -255,5 +255,5 @@ class LocaleKeys {
   static String get packageIsValidFor => 'package_is_valid_for'.tr();
   static String get months => 'months'.tr();
   static String get editService => 'edit_service'.tr();
-
+  static String get googleSignInNotSupportedOnThisPlatform => 'google_sign_in_not_supported_on_this_platform'.tr();
 }

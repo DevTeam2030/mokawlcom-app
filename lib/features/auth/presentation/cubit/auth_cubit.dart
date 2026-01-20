@@ -9,6 +9,7 @@ import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/complete_contractor_data_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/upload_file_model.dart';
+import 'package:mokawlcom_app/features/auth/data/models/google_signin_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/login_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
@@ -31,6 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
     required this.contractorAuthRepoImpl,
     required this.fcmInitHelper,
   }) : super(const AuthState());
+
   Future<void> userSignup({
     required String name,
     required String email,
@@ -139,7 +141,34 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-   Future<void> getClassifications() async {
+  Future<void> googleLogin() async {
+    emit(state.copyWith(googleLoginState: RequestStatus.loading));
+    final result = await userAuthRepoImpl.googleLogin();
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          googleLoginState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (userLoginResponseModel) async {
+        AppConstants.token = userLoginResponseModel.token;
+        await cacheHelper.saveData(
+          key: AppConstants.tokenKey,
+          value: userLoginResponseModel.token,
+        );
+        emit(
+          state.copyWith(
+            googleLoginState: RequestStatus.success,
+            userLoginResponseModel: userLoginResponseModel,
+            phone: userLoginResponseModel.phone,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> getClassifications() async {
     emit(
       state.copyWith(
         getClassificationsState: RequestStatus.loading,
@@ -276,6 +305,7 @@ class AuthCubit extends Cubit<AuthState> {
       },
     );
   }
+
   void saveSettings({
     required int classificiationId,
     required List<int> servicesIds,

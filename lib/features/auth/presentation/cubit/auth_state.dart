@@ -17,6 +17,7 @@ class AuthState extends Equatable {
   final RequestStatus activateAccountState;
   final ActivateAccountResponseModel activateAccountResponseModel;
   final RequestStatus userLoginState;
+  final RequestStatus googleLoginState;
   final UserLoginResponseModel userLoginResponseModel;
   // contractor sign up
   final RequestStatus getClassificationsState;
@@ -45,6 +46,7 @@ class AuthState extends Equatable {
     this.activateAccountResponseModel =
         const ActivateAccountResponseModel.empty(),
     this.userLoginState = RequestStatus.initial,
+    this.googleLoginState = RequestStatus.initial,
     this.userLoginResponseModel = const UserLoginResponseModel.empty(),
     this.classificiationId = 0,
     this.servicesIds = const [],
@@ -72,6 +74,7 @@ class AuthState extends Equatable {
     RequestStatus? activateAccountState,
     ActivateAccountResponseModel? activateAccountResponseModel,
     RequestStatus? userLoginState,
+    RequestStatus? googleLoginState,
     UserLoginResponseModel? userLoginResponseModel,
     ServicesModel? servicesModel,
     ClassificationsModel? classificationsModel,
@@ -100,6 +103,7 @@ class AuthState extends Equatable {
       activateAccountResponseModel:
           activateAccountResponseModel ?? this.activateAccountResponseModel,
       userLoginState: userLoginState ?? this.userLoginState,
+      googleLoginState: googleLoginState ?? this.googleLoginState,
       userLoginResponseModel:
           userLoginResponseModel ?? this.userLoginResponseModel,
       classificationsModel: classificationsModel ?? this.classificationsModel,
@@ -136,6 +140,7 @@ class AuthState extends Equatable {
     activateAccountState,
     activateAccountResponseModel,
     userLoginState,
+    googleLoginState,
     userLoginResponseModel,
     classificationsModel,
     servicesModel,

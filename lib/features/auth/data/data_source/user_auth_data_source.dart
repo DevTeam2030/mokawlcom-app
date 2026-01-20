@@ -2,6 +2,7 @@ import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/auth/data/models/activate_account_response_model.dart';
+import 'package:mokawlcom_app/features/auth/data/models/google_signin_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/login_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
@@ -18,9 +19,11 @@ abstract class UserAuthDataSource {
     required LoginRequestModel loginRequestModel,
   });
 
-  Future<String> forgetPassword({
-    required String email,
+  Future<UserLoginResponseModel> googleLogin({
+    required GoogleSignInRequestModel googleSignInRequestModel,
   });
+
+  Future<String> forgetPassword({required String email});
 }
 
 class UserAuthDataSourceImpl implements UserAuthDataSource {
@@ -72,10 +75,24 @@ class UserAuthDataSourceImpl implements UserAuthDataSource {
       throw ServerException(errorMessage: response.data["message"]);
     }
   }
-@override
-  Future<String> forgetPassword({
-    required String email,
+
+  @override
+  Future<UserLoginResponseModel> googleLogin({
+    required GoogleSignInRequestModel googleSignInRequestModel,
   }) async {
+    final response = await dioHelper.post(
+      url: ApiConstants.userLoginGoogle,
+      data: googleSignInRequestModel.toJson(),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return UserLoginResponseModel.fromJson(response.data ?? {});
+    } else {
+      throw ServerException(errorMessage: response.data["message"]);
+    }
+  }
+
+  @override
+  Future<String> forgetPassword({required String email}) async {
     final response = await dioHelper.post(
       url: ApiConstants.forgetPassword,
       data: {"email": email},

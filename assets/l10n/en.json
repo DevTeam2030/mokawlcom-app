@@ -174,7 +174,9 @@
   "edit_deal": "Edit Deal",
   "The_package_is_valid_for": "The package is valid for",
   "months": "months",
-  "edit_service": "Edit Service"
+  "edit_service": "Edit Service",
+  "google_sign_in_not_supported_on_this_platform":"Google Sign-In not supported on this platform"
+
   
 
 }

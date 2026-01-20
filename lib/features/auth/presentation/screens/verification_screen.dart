@@ -129,14 +129,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
             buildWhen: (previous, current) =>
                 previous.activateAccountState != current.activateAccountState,
             listener: (context, state) async {
+              if (state.activateAccountState.isError) {
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      ErrorDialog(theme: theme, message: state.errorMessage),
+                );
+              }
               if (state.activateAccountState.isSuccess) {
-                if (state.activateAccountState.isError) {
-                  showDialog(
-                    context: context,
-                    builder: (context) =>
-                        ErrorDialog(theme: theme, message: state.errorMessage),
-                  );
-                }
                 await showDialog(
                   context: context,
                   builder: (context) => SuccessDialog(
@@ -148,14 +148,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     },
                   ),
                 );
-                if (widget.isUser && context.mounted) {
-                  context.navigateTo(const LoginRoute());
-                } else if (context.mounted) {
-                  context.replaceRoute(
-                    UploadFilesRoute(
-                      contractorId: state.activateAccountResponseModel.id,
-                    ),
-                  );
+                if (context.mounted) {
+                  if (widget.isUser) {
+                    context.navigateTo(const LoginRoute());
+                  } else {
+                    context.replaceRoute(
+                      UploadFilesRoute(
+                        contractorId: state.activateAccountResponseModel.id,
+                      ),
+                    );
+                  }
                 }
               }
             },

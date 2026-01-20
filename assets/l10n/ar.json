@@ -174,5 +174,6 @@
   "edit_deal":"تعديل الصفقة",
   "package_is_valid_for":"الباقة صالحة لمدة",
   "months":"شهور",
-  "edit_service":"تعديل الخدمة"
+  "edit_service":"تعديل الخدمة",
+  "google_sign_in_not_supported_on_this_platform":"تسجيل الدخول بواسطة الجوجل غير مدعوم على هذه المنصة"
 }

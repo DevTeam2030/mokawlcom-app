@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/features/auth/data/models/activate_account_response_model.dart';
+import 'package:mokawlcom_app/features/auth/data/models/google_signin_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/login_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
@@ -17,8 +18,7 @@ abstract class UserAuthRepo {
   Future<Either<Failure, UserLoginResponseModel>> userLogin({
     required LoginRequestModel loginRequestModel,
   });
-  Future<Either<Failure, String>> forgetPassword({
-    required String email,
-  });
+  Future<Either<Failure, UserLoginResponseModel>> googleLogin();
+  Future<Either<Failure, String>> forgetPassword({required String email});
   Stream<UserType> get userTypeStream;
 }

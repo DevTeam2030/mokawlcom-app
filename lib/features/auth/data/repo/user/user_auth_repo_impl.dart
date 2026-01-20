@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
+import 'package:mokawlcom_app/core/services/google_sign_in_service.dart';
+import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/core/utils/safe_api_call.dart';
 import 'package:mokawlcom_app/error/failures.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/auth/data/models/activate_account_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/data_source/user_auth_data_source.dart';
+import 'package:mokawlcom_app/features/auth/data/models/google_signin_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/login_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
@@ -28,22 +31,12 @@ class UserAuthRepoImpl implements UserAuthRepo {
   Future<Either<Failure, ActivateAccountResponseModel>> activateUserAccount({
     required String email,
     required String verificationCode,
-  }) async {
-    final result = await safeApiCall<ActivateAccountResponseModel>(
-      () => userAuthDataSource.activateUserAccount(
-        email: email,
-        verificationCode: verificationCode,
-      ),
-    );
-    result.fold((l) {}, (activateAccountResponseModel) {
-      if (activateAccountResponseModel.type == "normal") {
-        _userTypeController.add(UserType.user);
-      } else {
-        _userTypeController.add(UserType.contractor);
-      }
-    });
-    return result;
-  }
+  }) async => safeApiCall<ActivateAccountResponseModel>(
+    () => userAuthDataSource.activateUserAccount(
+      email: email,
+      verificationCode: verificationCode,
+    ),
+  );
 
   final _userTypeController = StreamController<UserType>.broadcast();
 
@@ -63,6 +56,29 @@ class UserAuthRepoImpl implements UserAuthRepo {
       } else {
         _userTypeController.add(UserType.contractor);
       }
+    });
+    return result;
+  }
+
+  @override
+  Future<Either<Failure, UserLoginResponseModel>> googleLogin() async {
+    final idToken = await GoogleSignInService.instance.signIn();
+
+    if (idToken == null || idToken.isEmpty) {
+      return const Left(ServerFailure("Google sign in was cancelled"));
+    }
+    GoogleSignInRequestModel googleSignInRequestModel =
+        GoogleSignInRequestModel(
+          idToken: idToken,
+          fcmToken: await FcmInitHelper().getFcmToken() ?? "",
+        );
+    final result = await safeApiCall<UserLoginResponseModel>(() {
+      return userAuthDataSource.googleLogin(
+        googleSignInRequestModel: googleSignInRequestModel,
+      );
+    });
+    result.fold((l) {}, (userLoginResponseModel) {
+      _userTypeController.add(UserType.user);
     });
     return result;
   }

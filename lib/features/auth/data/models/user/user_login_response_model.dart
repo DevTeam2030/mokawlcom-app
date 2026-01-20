@@ -26,17 +26,18 @@ class UserLoginResponseModel extends Equatable {
   });
 
   factory UserLoginResponseModel.fromJson(Map<String, dynamic> json) {
+    final data = json["data"];
     return UserLoginResponseModel(
       message: json['message'] ?? "",
-      token: json["data"]?['access_token'] ?? "",
-      type: json["data"]?['type'] ?? "",
-      name: json["data"]?['name'] ?? "",
-      phone: json["data"]?['phone'] ?? "",
-      userApproved: json["data"]?['user_approved'] ?? 0,
-      filesUploaded: json["data"]?['files_uploaded'] ?? true,
-      planCompleted: json["data"]?['plan_completed'] ?? true,
-      completeData: json["data"]?['complete_data'] ?? true,
-      userId: json["data"]?['id'] ?? 0,
+      token: data?['access_token'] ?? "",
+      type: data?['type'] ?? "",
+      name: data?['name'] ?? "",
+      phone: data?['phone'] ?? "",
+      userApproved: data?['user_approved'] ?? 0,
+      filesUploaded: data?['files_uploaded'] ?? true,
+      planCompleted: data?['plan_completed'] ?? true,
+      completeData: data?['complete_data'] ?? true,
+      userId: data?['id'] ?? 0,
     );
   }
   const UserLoginResponseModel.empty()

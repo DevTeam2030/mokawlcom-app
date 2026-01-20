@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
+import 'package:mokawlcom_app/locale_keys.dart';
 
 class GoogleSignInService {
   GoogleSignInService._();
@@ -23,34 +24,40 @@ class GoogleSignInService {
               _handleAuthEvent,
               onError: _handleAuthError,
             );
-
-            // _googleSignIn.attemptLightweightAuthentication();
           }),
     );
 
     _isInitialized = true;
   }
 
-  Future<void> signIn() async {
+  Future<String?> signIn() async {
     try {
       await _init();
+
+      // Create a new completer for this sign-in attempt
+      final completer = Completer<String?>();
+      _currentCompleter = completer;
+
       if (_googleSignIn.supportsAuthenticate()) {
         await _googleSignIn.authenticate();
+        return await completer.future;
       } else {
-        throw const ServerException(
-          errorMessage: "Google Sign-In not supported on this platform",
+        throw ServerException(
+          errorMessage: LocaleKeys.googleSignInNotSupportedOnThisPlatform,
         );
       }
     } on GoogleSignInException catch (e) {
       if (e.code == GoogleSignInExceptionCode.canceled) {
         debugPrint("User cancelled Google Sign-In");
-        return;
+        return null;
       }
       throw ServerException(errorMessage: e.toString());
     } catch (e) {
       throw ServerException(errorMessage: e.toString());
     }
   }
+
+  Completer<String?>? _currentCompleter;
 
   Future<void> _handleAuthEvent(GoogleSignInAuthenticationEvent event) async {
     if (event is GoogleSignInAuthenticationEventSignIn) {
@@ -60,11 +67,25 @@ class GoogleSignInService {
 
       debugPrint("User email: ${user.email}");
       debugPrint("ID Token: $idToken");
+
+      // Complete the sign-in with the idToken
+      if (_currentCompleter != null && !_currentCompleter!.isCompleted) {
+        _currentCompleter!.complete(idToken);
+      }
+    } else if (event is GoogleSignInAuthenticationEventSignOut) {
+      debugPrint("User signed out");
     }
   }
 
   void _handleAuthError(Object error) {
     debugPrint("Google Sign-In error: $error");
+    if (_currentCompleter != null && !_currentCompleter!.isCompleted) {
+      _currentCompleter!.completeError(error);
+    }
+  }
+
+  Future<void> signOut() async {
+    await _googleSignIn.signOut();
   }
 
   void dispose() {
