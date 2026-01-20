@@ -19,9 +19,9 @@ class FavoriteRepoImpl implements FavoriteRepo {
   );
 
   @override
-  Future<Either<Failure, String>> addFavorite({
+  Future<Either<Failure, FavoriteModel>> addFavorite({
     required int contractorId,
-  }) async => await safeApiCall<String>(
+  }) async => await safeApiCall<FavoriteModel>(
     () => favoriteDataSource.addFavorite(contractorId: contractorId),
   );
 

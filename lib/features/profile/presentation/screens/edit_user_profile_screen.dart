@@ -140,6 +140,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                           const SizedBox(height: 8.0),
                           CustomTextFormField(
                             controller: _emailController,
+                            readOnly: true,
                             type: TextInputType.emailAddress,
                             hintText: "example@email.com",
                             autofillHints: const [AutofillHints.email],

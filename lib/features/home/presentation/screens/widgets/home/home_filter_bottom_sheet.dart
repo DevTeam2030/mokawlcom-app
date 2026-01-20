@@ -15,7 +15,7 @@ import 'package:mokawlcom_app/locale_keys.dart';
 
 class HomeFilterBottomSheet extends StatefulWidget {
   const HomeFilterBottomSheet({super.key, required this.query});
-final String query;
+  final String query;
   @override
   State<HomeFilterBottomSheet> createState() => _HomeFilterBottomSheetState();
 }
@@ -69,7 +69,8 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
           BlocSelector<HomeCubit, HomeState, List<ClassificationModel>>(
             selector: (state) => state.classificationsModel.classifications,
             builder: (context, classifications) {
-              if (classifications.isNotEmpty && selectedClassification.value == null) {
+              if (classifications.isNotEmpty &&
+                  selectedClassification.value == null) {
                 selectedClassification.value = classifications.first;
               }
               return ValueListenableBuilder<ClassificationModel?>(
@@ -139,11 +140,11 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
             text: LocaleKeys.applyFilter,
             onPressed: () {
               context.read<SearchBloc>().add(
-              SearchContractorsEvent(
+                SearchContractorsEvent(
                   query: widget.query,
                   ignoreDebounce: true,
-                  classificationId: selectedClassification.value?.id,
-                  serviceId: selectedService.value?.id,
+                  classificationId: selectedClassification.value?.id ?? 0,
+                  serviceId: selectedService.value?.id ?? 0,
                 ),
               );
             },

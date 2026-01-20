@@ -37,15 +37,10 @@ class ContractorDetailsScreen extends StatefulWidget
   final int contractorId;
 
   @override
-  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (context) =>
-            getIt<ContractorInfoCubit>()
-              ..getContractorDetails(contractorId: contractorId),
-      ),
-      BlocProvider(create: (context) => getIt<FavoriteCubit>()),
-    ],
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create: (context) =>
+        getIt<ContractorInfoCubit>()
+          ..getContractorDetails(contractorId: contractorId),
     child: this,
   );
 

@@ -81,6 +81,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   Future<void> addFavorite({required int contractorId}) async {
+    
     emit(state.copyWith(addFavoriteState: RequestStatus.loading));
     final result = await favoriteRepo.addFavorite(contractorId: contractorId);
     result.fold(
@@ -91,11 +92,15 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           isConnected: failure.isConnected,
         ),
       ),
-      (message) {
+      (favoriteModel) {
+        final Map<int, FavoriteModel> updatedFavorites = {
+          ...state.favorites,
+          favoriteModel.contractorId: favoriteModel,
+        };
         emit(
           state.copyWith(
             addFavoriteState: RequestStatus.success,
-            successMessage: message,
+            favorites: updatedFavorites,
           ),
         );
       },
@@ -124,12 +129,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           isConnected: failure.isConnected,
         ),
       ),
-      (message) => emit(
-        state.copyWith(
-          removeFavoriteState: RequestStatus.success,
-          successMessage: message,
-        ),
-      ),
+      (message) {},
     );
   }
 

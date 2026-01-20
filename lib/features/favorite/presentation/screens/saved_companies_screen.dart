@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/no_data_widget.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/features/favorite/data/models/favorite_model.dart';
@@ -15,16 +16,11 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 
 @RoutePage()
-class SavedCompaniesScreen extends StatefulWidget implements AutoRouteWrapper{
+class SavedCompaniesScreen extends StatefulWidget {
   const SavedCompaniesScreen({super.key});
 
   @override
   State<SavedCompaniesScreen> createState() => _SavedCompaniesScreenState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (context) => getIt<FavoriteCubit>(), child: this);
-  }
 }
 
 class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
@@ -35,9 +31,6 @@ class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_onScroll);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<FavoriteCubit>().getFavorites();
-    });
   }
 
   void _onScroll() {
@@ -135,28 +128,14 @@ class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
                     state.favorites.values.toList(),
                     state.getFavoritesState,
                   )
-                : Center(
-                    child: Text(
-                      LocaleKeys.noSavedCompanies,
-                      style: theme.textTheme.bodyLarge!.copyWith(
-                        color: ColorsManager.primaryColor,
-                      ),
-                    ),
-                  ),
+                : NoDataWidget(text: LocaleKeys.noSavedCompanies, theme: theme),
             onError: state.favorites.isNotEmpty
                 ? _buildList(
                     theme,
                     state.favorites.values.toList(),
                     state.getFavoritesState,
                   )
-                : Center(
-                    child: Text(
-                      LocaleKeys.noSavedCompanies,
-                      style: theme.textTheme.bodyLarge!.copyWith(
-                        color: ColorsManager.primaryColor,
-                      ),
-                    ),
-                  ),
+                : NoDataWidget(text: LocaleKeys.noSavedCompanies, theme: theme),
           );
         },
       ),

@@ -40,100 +40,84 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      body: BlocListener<AuthCubit, AuthState>(
-        listenWhen: (previous, current) =>
-            previous.googleLoginState != current.googleLoginState,
-        listener: (context, state) {
-          if (state.googleLoginState.isSuccess) {
-            showToast(
-              message: state.userLoginResponseModel.message,
-              state: ToastStates.success,
-            );
-            context.replaceRoute(const AuthenticatedRoute());
-          }
-          if (state.googleLoginState.isError) {
-            showToast(message: state.errorMessage, state: ToastStates.error);
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsetsDirectional.all(20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Align(
-                  alignment: AlignmentDirectional.center,
-                  child: Image(
-                    image: AssetImage(AssetsManager.appLogo),
-                    width: 150,
-                    height: 150,
+      body: Padding(
+        padding: const EdgeInsetsDirectional.all(20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Align(
+                alignment: AlignmentDirectional.center,
+                child: Image(
+                  image: AssetImage(AssetsManager.appLogo),
+                  width: 150,
+                  height: 150,
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              Align(
+                alignment: AlignmentDirectional.center,
+                child: Text(
+                  LocaleKeys.welcomeAgain,
+                  style: theme.textTheme.headlineSmall!.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: ColorsManager.primaryColor,
                   ),
                 ),
-                const SizedBox(height: 10.0),
-                Align(
-                  alignment: AlignmentDirectional.center,
-                  child: Text(
-                    LocaleKeys.welcomeAgain,
-                    style: theme.textTheme.headlineSmall!.copyWith(
-                      fontWeight: FontWeight.w500,
+              ),
+              const SizedBox(height: 16.0),
+              LoginForm(theme: theme),
+              const SizedBox(height: 16.0),
+              const CustomAuthDivider(),
+              const SizedBox(height: 16.0),
+              GoogleAndAppleSignInWidgets(
+                onGoogleTap: () async {
+                  await context.read<AuthCubit>().googleLogin();
+                },
+              ),
+              const SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    LocaleKeys.doNotHaveAnAccount,
+                    style: theme.textTheme.bodyMedium!.copyWith(
                       color: ColorsManager.primaryColor,
                     ),
                   ),
-                ),
-                const SizedBox(height: 16.0),
-                LoginForm(theme: theme),
-                const SizedBox(height: 16.0),
-                const CustomAuthDivider(),
-                const SizedBox(height: 16.0),
-                GoogleAndAppleSignInWidgets(
-                  onGoogleTap: () async {
-                    await context.read<AuthCubit>().googleLogin();
-                  },
-                ),
-                const SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      LocaleKeys.doNotHaveAnAccount,
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        color: ColorsManager.primaryColor,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        context.pushRoute(const UserSignupRoute());
-                      },
-                      child: Text(
-                        LocaleKeys.signUp,
-                        style: theme.textTheme.bodyMedium!.copyWith(
-                          color: ColorsManager.primaryColor,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Align(
-                  alignment: AlignmentDirectional.center,
-                  child: TextButton(
-                    onPressed: () {
-                      context.read<AppCubit>().changeUserType(
-                        userType: UserType.visitor,
-                      );
-                      context.navigateTo(const AuthenticatedRoute());
+                  InkWell(
+                    onTap: () {
+                      context.pushRoute(const UserSignupRoute());
                     },
                     child: Text(
-                      LocaleKeys.signInAsVisitor,
-                      style: theme.textTheme.bodyLarge!.copyWith(
-                        color: Colors.black,
+                      LocaleKeys.signUp,
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        color: ColorsManager.primaryColor,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ),
+                ],
+              ),
+              Align(
+                alignment: AlignmentDirectional.center,
+                child: TextButton(
+                  onPressed: () {
+                    context.read<AppCubit>().changeUserType(
+                      userType: UserType.visitor,
+                    );
+                    context.navigateTo(const AuthenticatedRoute());
+                  },
+                  child: Text(
+                    LocaleKeys.signInAsVisitor,
+                    style: theme.textTheme.bodyLarge!.copyWith(
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

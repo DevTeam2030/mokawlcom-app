@@ -7,7 +7,7 @@ import 'package:mokawlcom_app/features/favorite/data/models/favorites_model.dart
 
 abstract class FavoriteDataSource {
   Future<FavoritesModel> getFavorites({required int page});
-  Future<String> addFavorite({required int contractorId});
+  Future<FavoriteModel> addFavorite({required int contractorId});
   Future<String> removeFavorite({required int contractorId});
 }
 
@@ -30,14 +30,14 @@ class FavoriteDataSourceImpl implements FavoriteDataSource {
   }
 
   @override
-  Future<String> addFavorite({required int contractorId}) async {
+  Future<FavoriteModel> addFavorite({required int contractorId}) async {
     final result = await dioHelper.post(
       headers: {"Authorization": "Bearer ${AppConstants.token}"},
       url: ApiConstants.addFavorite,
       query: {"contractor_id": contractorId},
     );
     if (result.statusCode == 200) {
-      return result.data["message"] ?? "";
+      return FavoriteModel.fromJson(result.data["data"] ?? {});
     }
     throw ServerException(errorMessage: result.data["message"] ?? "");
   }
