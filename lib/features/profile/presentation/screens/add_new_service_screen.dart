@@ -26,7 +26,6 @@ class AddNewServiceScreen extends StatefulWidget implements AutoRouteWrapper {
   });
   final ThemeData theme;
   final UserDetailsCubit userDetailsCubit;
-  
 
   @override
   State<AddNewServiceScreen> createState() => _AddNewServiceScreenState();
@@ -211,7 +210,9 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                   },
                   builder: (context, state) {
                     return PrimaryButton(
-                      isLoading: state.addNewServiceState.isLoading,
+                      isLoading:
+                          state.addNewServiceState.isLoading &&
+                          state.selectedImages.isEmpty,
                       text: LocaleKeys.save,
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {

@@ -49,7 +49,7 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 8.0),
           CustomTextFormField(
             type: TextInputType.text,
-            hintText: "example@gmai.com",
+            hintText: "user@example.com",
             autofillHints: const [AutofillHints.email],
             textInputAction: TextInputAction.next,
             fieldName: LocaleKeys.email,

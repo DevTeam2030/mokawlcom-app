@@ -40,6 +40,9 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> getClassifications() async {
+    if (state.classificationsModel.classifications.isNotEmpty) {
+      return;
+    }
     emit(
       state.copyWith(
         getClassificationsState: RequestStatus.loading,
@@ -110,6 +113,9 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> getServices() async {
+    if (state.servicesModel.services.isNotEmpty) {
+      return;
+    }
     emit(
       state.copyWith(
         getServicesState: RequestStatus.loading,

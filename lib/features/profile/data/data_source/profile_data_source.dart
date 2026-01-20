@@ -213,79 +213,87 @@ class ProfileDataSourceImpl implements ProfileDataSource {
     }
   }
 
-  @override
-  Future<String> addService({
-    required AddServiceRequestModel addServiceRequestModel,
-    required void Function(int, int)? onSendProgress,
-  }) async {
-    final Map<String, dynamic> formDataMap = {
-      ...addServiceRequestModel.toJson(),
-    };
+ @override
+Future<String> addService({
+  required AddServiceRequestModel addServiceRequestModel,
+  required void Function(int, int)? onSendProgress,
+}) async {
+  final Map<String, dynamic> formDataMap = {
+    ...addServiceRequestModel.toJson(),
+  };
 
-    if (addServiceRequestModel.images != null &&
-        addServiceRequestModel.images!.isNotEmpty) {
-      final List<MultipartFile> imageFiles = [];
-      for (final image in addServiceRequestModel.images!) {
-        final multipartFile = await MultipartFile.fromFile(
+  if (addServiceRequestModel.images != null &&
+      addServiceRequestModel.images!.isNotEmpty) {
+    final List<MultipartFile> imageFiles = [];
+
+    for (final image in addServiceRequestModel.images!) {
+      imageFiles.add(
+        await MultipartFile.fromFile(
           image.path,
           filename: image.path.split('/').last,
-        );
-        imageFiles.add(multipartFile);
-      }
-      formDataMap["images"] = imageFiles;
+        ),
+      );
     }
-
-    final formData = FormData.fromMap(formDataMap);
-
-    final response = await dioHelper.post(
-      url: ApiConstants.addService,
-      headers: {"Authorization": "Bearer ${AppConstants.token}"},
-      data: formData,
-      onSendProgress: onSendProgress,
-    );
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return response.data["message"] ?? "";
-    } else {
-      throw ServerException(errorMessage: response.data["message"] ?? "");
-    }
+    formDataMap['images[]'] = imageFiles;
   }
+
+  final formData = FormData.fromMap(formDataMap);
+
+  final response = await dioHelper.post(
+    url: ApiConstants.addService,
+    headers: {"Authorization": "Bearer ${AppConstants.token}"},
+    data: formData,
+    onSendProgress: onSendProgress,
+  );
+
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    return response.data["message"] ?? "";
+  } else {
+    throw ServerException(errorMessage: response.data["message"] ?? "");
+  }
+}
+
 
   @override
-  Future<String> editService({
-    required EditServiceRequestModel editServiceRequestModel,
-    required void Function(int, int)? onSendProgress,
-  }) async {
-    final Map<String, dynamic> formDataMap = {
-      ...editServiceRequestModel.toJson(),
-    };
+Future<String> editService({
+  required EditServiceRequestModel editServiceRequestModel,
+  required void Function(int, int)? onSendProgress,
+}) async {
+  final Map<String, dynamic> formDataMap = {
+    ...editServiceRequestModel.toJson(),
+  };
 
-    if (editServiceRequestModel.images != null &&
-        editServiceRequestModel.images!.isNotEmpty) {
-      final List<MultipartFile> imageFiles = [];
-      for (final image in editServiceRequestModel.images!) {
-        final multipartFile = await MultipartFile.fromFile(
+  if (editServiceRequestModel.images != null &&
+      editServiceRequestModel.images!.isNotEmpty) {
+    final List<MultipartFile> imageFiles = [];
+
+    for (final image in editServiceRequestModel.images!) {
+      imageFiles.add(
+        await MultipartFile.fromFile(
           image.path,
           filename: image.path.split('/').last,
-        );
-        imageFiles.add(multipartFile);
-      }
-      formDataMap["images"] = imageFiles;
+        ),
+      );
     }
-
-    final formData = FormData.fromMap(formDataMap);
-
-    final response = await dioHelper.post(
-      url: ApiConstants.editService,
-      headers: {"Authorization": "Bearer ${AppConstants.token}"},
-      data: formData,
-      onSendProgress: onSendProgress,
-    );
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return response.data["message"] ?? "";
-    } else {
-      throw ServerException(errorMessage: response.data["message"] ?? "");
-    }
+    formDataMap['images[]'] = imageFiles;
   }
+
+  final formData = FormData.fromMap(formDataMap);
+
+  final response = await dioHelper.post(
+    url: ApiConstants.editService,
+    headers: {"Authorization": "Bearer ${AppConstants.token}"},
+    data: formData,
+    onSendProgress: onSendProgress,
+  );
+
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    return response.data["message"] ?? "";
+  } else {
+    throw ServerException(errorMessage: response.data["message"] ?? "");
+  }
+}
+
 
   @override
   Future<DealsModel> getDeals({required int page}) async {

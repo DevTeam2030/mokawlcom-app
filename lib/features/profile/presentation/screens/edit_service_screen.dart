@@ -256,7 +256,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                   },
                   builder: (context, state) {
                     return PrimaryButton(
-                      isLoading: state.editServiceState.isLoading,
+                      isLoading: state.editServiceState.isLoading && state.selectedImages.isEmpty,
                       text: LocaleKeys.editService,
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
