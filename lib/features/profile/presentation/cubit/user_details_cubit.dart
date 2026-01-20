@@ -255,7 +255,7 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
         final updatedServices = List<ContractorServiceModel>.from(
           state.contractorServicesModel.services,
         );
-        updatedServices.add(serviceResponseModel.contractorServiceModel);
+        updatedServices.insert(0, serviceResponseModel.contractorServiceModel);
         emit(
           state.copyWith(
             addNewServiceState: RequestStatus.success,
@@ -317,6 +317,37 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
           ),
         );
       },
+    );
+  }
+
+  Future<void> deleteService({required int serviceId, required int index}) async {
+    final oldState = state;
+    final updatedServices = List<ContractorServiceModel>.from(
+      state.contractorServicesModel.services,
+    );
+    updatedServices.removeAt(index);
+    emit(
+      state.copyWith(
+        deleteServiceState: RequestStatus.loading,
+        contractorServicesModel: state.contractorServicesModel.copyWith(
+          services: updatedServices,
+        ),
+      ),
+    );
+    final result = await profileRepo.deleteService(serviceId: serviceId);
+    result.fold(
+      (failure) => emit(
+        oldState.copyWith(
+          deleteServiceState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (message) => emit(
+        state.copyWith(
+          deleteServiceState: RequestStatus.success,
+          successMessage: message,
+        ),
+      ),
     );
   }
 

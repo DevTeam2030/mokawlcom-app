@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_intl_phone_field/phone_number.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
@@ -18,11 +19,16 @@ import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/prof
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
-class EditUserProfileScreen extends StatefulWidget {
+class EditUserProfileScreen extends StatefulWidget implements AutoRouteWrapper{
   const EditUserProfileScreen({super.key});
 
   @override
   State<EditUserProfileScreen> createState() => _EditUserProfileScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (context) => getIt<ProfileCubit>(), child: this);
+  }
 }
 
 class _EditUserProfileScreenState extends State<EditUserProfileScreen> {

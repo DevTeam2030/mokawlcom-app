@@ -98,7 +98,7 @@ class ProfileRepoImpl implements ProfileRepo {
       onSendProgress: onSendProgress,
     ),
   );
-  
+
   @override
   Future<Either<Failure, ServiceResponseModel>> editService({
     required EditServiceRequestModel editServiceRequestModel,
@@ -109,7 +109,7 @@ class ProfileRepoImpl implements ProfileRepo {
       onSendProgress: onSendProgress,
     ),
   );
-  
+
   @override
   Future<Either<Failure, DealsModel>> getDeals({required int page}) async =>
       safeApiCall<DealsModel>(() => profileDataSource.getDeals(page: page));
@@ -139,4 +139,11 @@ class ProfileRepoImpl implements ProfileRepo {
   @override
   Future<Either<Failure, PlanModel>> getPlan() async =>
       safeApiCall<PlanModel>(() => profileDataSource.getPlan());
+
+  @override
+  Future<Either<Failure, String>> deleteService({
+    required int serviceId,
+  }) async => safeApiCall<String>(
+    () => profileDataSource.deleteService(serviceId: serviceId),
+  );
 }

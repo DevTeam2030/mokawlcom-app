@@ -258,4 +258,5 @@ class LocaleKeys {
   static String get googleSignInNotSupportedOnThisPlatform => 'google_sign_in_not_supported_on_this_platform'.tr();
   static String get cannotOpenEmailApp => 'cannot_open_email_app'.tr();
   static String get invalidEmail => 'invalid_email'.tr();
+  static String get done => 'done'.tr();
 }

@@ -6,6 +6,7 @@ import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/profile_item.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/show_delete_account_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/show_language_bottom_sheet.dart';
@@ -15,8 +16,13 @@ import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 class UserProfileWidget extends StatelessWidget {
-  const UserProfileWidget({super.key, required this.theme});
+  const UserProfileWidget({
+    super.key,
+    required this.theme,
+    required this.profileCubit,
+  });
   final ThemeData theme;
+  final ProfileCubit profileCubit;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -78,7 +84,11 @@ class UserProfileWidget extends StatelessWidget {
             title: LocaleKeys.deleteAccount,
             icon: MyIcons.trash,
             onTap: () {
-              showDeleteAccountBottomSheet(context: context, theme: theme);
+              showDeleteAccountBottomSheet(
+                context: context,
+                theme: theme,
+                profileCubit: profileCubit,
+              );
             },
             iconSize: 20.0,
           ),
@@ -88,7 +98,11 @@ class UserProfileWidget extends StatelessWidget {
             title: LocaleKeys.logout,
             icon: MyIcons.exit,
             onTap: () async {
-              await showLogoutBottomSheet(context: context, theme: theme);
+              await showLogoutBottomSheet(
+                context: context,
+                theme: theme,
+                profileCubit: profileCubit,
+              );
             },
             iconSize: 18.0,
           ),

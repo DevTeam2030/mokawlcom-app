@@ -55,4 +55,5 @@ abstract class ProfileRepo {
     required String description,
   });
   Future<Either<Failure, PlanModel>> getPlan();
+  Future<Either<Failure, String>> deleteService({required int serviceId});
 }

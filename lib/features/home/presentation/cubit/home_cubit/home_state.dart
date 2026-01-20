@@ -24,15 +24,15 @@ class HomeState extends Equatable {
   final bool isConnected;
 
   const HomeState({
-    this.getBannersState = RequestStatus.initial,
-    this.getClassificationsState = RequestStatus.initial,
+    this.getBannersState = RequestStatus.loading,
+    this.getClassificationsState = RequestStatus.loading,
     this.classificationsModel = const ClassificationsModel.empty(),
     this.banners = const [],
     this.bannersErrorMessage = '',
     this.classificationsErrorMessage = '',
     this.classificationsPage = 1,
     this.classificationsTotalPages = 1,
-    this.getServicesState = RequestStatus.initial,
+    this.getServicesState = RequestStatus.loading,
     this.servicesModel = const ServicesModel.empty(),
     this.servicesErrorMessage = '',
     this.servicesPage = 1,

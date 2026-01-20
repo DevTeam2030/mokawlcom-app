@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/locale_keys.dart';
 
 class CustomDropdownField<T> extends StatelessWidget {
   const CustomDropdownField({
@@ -137,7 +138,7 @@ class CustomDropdownField<T> extends StatelessWidget {
         return DraggableScrollableSheet(
           initialChildSize: 0.7,
           minChildSize: 0.5,
-          maxChildSize: 0.95,
+          maxChildSize: 0.9,
           expand: false,
           builder: (context, scrollController) {
             return SafeArea(
@@ -421,7 +422,7 @@ class _MultiSelectSheetState<T> extends State<_MultiSelectSheet<T>> {
                   ),
                 ),
                 child: Text(
-                  'Done',
+                  LocaleKeys.done,
                   style: widget.theme.textTheme.bodyLarge!.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

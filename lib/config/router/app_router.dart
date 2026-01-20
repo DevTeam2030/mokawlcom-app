@@ -100,6 +100,7 @@ class AppRouter extends RootStackRouter {
           children: [
             AutoRoute(
               initial: true,
+              
               page: HomeTabRoute.page,
               children: [
                 AutoRoute(initial: true, page: HomeRoute.page),
@@ -174,9 +175,7 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
     providers: [
       BlocProvider(create: (context) => getIt<HomeCubit>()),
       BlocProvider(create: (context) => getIt<SearchBloc>()),
-      BlocProvider(create: (context) => getIt<FavoriteCubit>()),
       BlocProvider(create: (context) => getIt<NotificationsCubit>()),
-      BlocProvider(create: (context) => getIt<ProfileCubit>()),
     ],
     child: this,
   );

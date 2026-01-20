@@ -13,7 +13,12 @@ import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 class MyServiceItem extends StatelessWidget {
-  const MyServiceItem({super.key, required this.theme, required this.service, required this.index});
+  const MyServiceItem({
+    super.key,
+    required this.theme,
+    required this.service,
+    required this.index,
+  });
   final ThemeData theme;
   final ContractorServiceModel service;
   final int index;
@@ -46,10 +51,16 @@ class MyServiceItem extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              const Icon(
-                MyIcons.trash,
-                color: ColorsManager.primaryColor,
-                size: 18,
+              InkWell(
+                onTap: () => context.read<UserDetailsCubit>().deleteService(
+                  serviceId: service.id,
+                  index: index,
+                ),
+                child: const Icon(
+                  MyIcons.trash,
+                  color: ColorsManager.primaryColor,
+                  size: 18,
+                ),
               ),
               const SizedBox(width: 16),
               InkWell(

@@ -151,7 +151,7 @@ class ChangePasswordRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ChangePasswordScreen();
+      return WrappedRoute(child: const ChangePasswordScreen());
     },
   );
 }
@@ -375,7 +375,7 @@ class EditContractorProfileRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const EditContractorProfileScreen();
+      return WrappedRoute(child: const EditContractorProfileScreen());
     },
   );
 }
@@ -553,7 +553,7 @@ class EditUserProfileRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const EditUserProfileScreen();
+      return WrappedRoute(child: const EditUserProfileScreen());
     },
   );
 }
@@ -767,7 +767,7 @@ class ProfileRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ProfileScreen();
+      return WrappedRoute(child: const ProfileScreen());
     },
   );
 }
@@ -799,7 +799,7 @@ class SavedCompaniesRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const SavedCompaniesScreen();
+      return WrappedRoute(child: const SavedCompaniesScreen());
     },
   );
 }

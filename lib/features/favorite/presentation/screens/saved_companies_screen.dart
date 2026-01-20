@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
@@ -14,11 +15,16 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 
 @RoutePage()
-class SavedCompaniesScreen extends StatefulWidget {
+class SavedCompaniesScreen extends StatefulWidget implements AutoRouteWrapper{
   const SavedCompaniesScreen({super.key});
 
   @override
   State<SavedCompaniesScreen> createState() => _SavedCompaniesScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (context) => getIt<FavoriteCubit>(), child: this);
+  }
 }
 
 class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {

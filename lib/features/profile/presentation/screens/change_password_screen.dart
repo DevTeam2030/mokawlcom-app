@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/password_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
@@ -12,11 +13,16 @@ import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
-class ChangePasswordScreen extends StatefulWidget {
+class ChangePasswordScreen extends StatefulWidget implements AutoRouteWrapper {
   const ChangePasswordScreen({super.key});
 
   @override
   State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (context) => getIt<ProfileCubit>(), child: this);
+  }
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {

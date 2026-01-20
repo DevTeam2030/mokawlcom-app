@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/custom_dropdown_field.dart';
@@ -20,12 +21,17 @@ import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
-class EditContractorProfileScreen extends StatefulWidget {
+class EditContractorProfileScreen extends StatefulWidget implements AutoRouteWrapper {
   const EditContractorProfileScreen({super.key});
 
   @override
   State<EditContractorProfileScreen> createState() =>
       _EditContractorProfileScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (context) => getIt<ProfileCubit>(), child: this);
+  }
 }
 
 class _EditContractorProfileScreenState

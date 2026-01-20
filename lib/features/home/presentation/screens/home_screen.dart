@@ -26,14 +26,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _checkNotificationPermission();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.wait([
-        context.read<HomeCubit>().getBanners(),
-        context.read<HomeCubit>().getClassifications(),
-        context.read<HomeCubit>().getServices(),
-      ]);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        await Future.wait([
+          context.read<HomeCubit>().getBanners(),
+          context.read<HomeCubit>().getClassifications(),
+          context.read<HomeCubit>().getServices(),
+        ]);
+      }
     });
+    _checkNotificationPermission();
   }
 
   Future<void> _checkNotificationPermission() async {

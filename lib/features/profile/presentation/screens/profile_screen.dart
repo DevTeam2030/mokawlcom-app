@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/contractor_profile_widget.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/profile_item.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/user_profile_widget.dart';
@@ -13,8 +15,16 @@ import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 @RoutePage()
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatelessWidget implements AutoRouteWrapper {
   const ProfileScreen({super.key});
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<ProfileCubit>(),
+      child: this,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +48,14 @@ class ProfileScreen extends StatelessWidget {
           builder: (context, state) {
             return SingleChildScrollView(
               child: switch (state) {
-                UserType.user => UserProfileWidget(theme: theme),
-                UserType.contractor => ContractorProfileWidget(theme: theme),
+                UserType.user => UserProfileWidget(
+                  theme: theme,
+                  profileCubit: context.read<ProfileCubit>(),
+                ),
+                UserType.contractor => ContractorProfileWidget(
+                  theme: theme,
+                  profileCubit: context.read<ProfileCubit>(),
+                ),
                 UserType.visitor => VisitorProfileWidget(theme: theme),
               },
             );

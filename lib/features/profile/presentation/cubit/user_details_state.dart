@@ -14,6 +14,7 @@ class UserDetailsState extends Equatable {
   final RequestStatus addDealState;
   final RequestStatus deleteDealState;
   final RequestStatus editDealState;
+  final RequestStatus deleteServiceState;
   final DealsModel dealsModel;
   final int dealsCurrentPage;
   final UserOffersModel userOffersModel;
@@ -55,6 +56,7 @@ class UserDetailsState extends Equatable {
     this.addDealState = RequestStatus.initial,
     this.deleteDealState = RequestStatus.initial,
     this.editDealState = RequestStatus.initial,
+    this.deleteServiceState = RequestStatus.initial,
   });
 
   bool get hasReachedMaxImages => selectedImages.length >= maxImages;
@@ -84,6 +86,7 @@ class UserDetailsState extends Equatable {
     RequestStatus? addDealState,
     RequestStatus? deleteDealState,
     RequestStatus? editDealState,
+    RequestStatus? deleteServiceState,
   }) {
     return UserDetailsState(
       getUserOffersState: getUserOffersState ?? this.getUserOffersState,
@@ -113,6 +116,7 @@ class UserDetailsState extends Equatable {
       addDealState: addDealState ?? this.addDealState,
       deleteDealState: deleteDealState ?? this.deleteDealState,
       editDealState: editDealState ?? this.editDealState,
+      deleteServiceState: deleteServiceState ?? this.deleteServiceState,
     );
   }
 
@@ -141,5 +145,6 @@ class UserDetailsState extends Equatable {
     addDealState,
     deleteDealState,
     editDealState,
+    deleteServiceState,
   ];
 }

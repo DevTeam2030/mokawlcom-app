@@ -60,6 +60,7 @@ abstract class ProfileDataSource {
   });
 
   Future<PlanModel> getPlan();
+  Future<String> deleteService({required int serviceId});
 }
 
 class ProfileDataSourceImpl implements ProfileDataSource {
@@ -367,6 +368,20 @@ Future<ServiceResponseModel> editService({
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return PlanModel.fromJson(response.data["data"] ?? {});
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
+
+  @override
+  Future<String> deleteService({required int serviceId}) async {
+    final response = await dioHelper.post(
+      url: ApiConstants.deleteService,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      data: {"service_id": serviceId},
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response.data["message"] ?? "";
     } else {
       throw ServerException(errorMessage: response.data["message"] ?? "");
     }
