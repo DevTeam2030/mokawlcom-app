@@ -41,9 +41,7 @@ class AppCubit extends HydratedCubit<AppState> {
     onAllowed();
   }
 
-  void toggleTabs({required int tabIndex}) {
-    emit(state.copyWith(tabIndex: tabIndex));
-  }
+ 
 
   Future<void> checkNotificationPermission() async {
     var status = await Permission.notification.status;

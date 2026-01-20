@@ -3,16 +3,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/services/notifications/notification_controller.dart';
+import 'package:mokawlcom_app/core/services/notifications/notification_service.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
-import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
-import 'package:mokawlcom_app/features/notificatiions/data/models/public_notificarion_model.dart';
-import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
-import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 
 class FcmInitHelper {
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   final AwesomeNotifications _awesomeNotifications = AwesomeNotifications();
+  final NotificationService _notificationService = NotificationService();
+  final AppRouter _appRouter = getIt<AppRouter>();
 
   Future<void> initAwesomeNotification() async {
     await _awesomeNotifications.initialize(null, [
@@ -35,6 +34,9 @@ class FcmInitHelper {
         channelKey: 'high_importance_channel',
         title: message.notification?.title ?? 'No title',
         body: message.notification?.body ?? 'No body',
+        payload: {
+          'type': message.data['type'] ?? 'unknown',
+        },
       ),
     );
   }
@@ -46,98 +48,127 @@ class FcmInitHelper {
   }
 
   Future<void> initFirebaseMessagingListeners() async {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       debugPrint("📩 Foreground message: ${message.data}");
-      final curentRoute = AppConstants.currentRoute;
-      // print("current route: >>>>>>>>>>>>>>$curentRoute");
+      final currentRoute = AppConstants.currentRoute;
 
-      // if (message.data['type'] == 'public') {
-      //   notificationsCubit.addPublicNotification(
-      //     publicNotification: PublicNotificationModel(
-      //       id: int.tryParse(message.data['id'] ?? "") ?? 0,
-      //       title: message.notification?.title ?? 'No title',
-      //       body: message.notification?.body ?? 'No body',
-      //       date: message.data['date'] ?? "",
-      //       time: message.data['time'] ?? "",
-      //       status: bool.tryParse(message.data['status'] ?? "") ?? false,
-      //     ),
-      //   );
-      // } else {
-      //   notificationsCubit.addOfferNotification(
-      //     offerNotification: OfferNotificationModel(
-      //       id: int.tryParse(message.data['id'] ?? "") ?? 0,
-      //       title: message.notification?.title ?? 'No title',
-      //       message: message.notification?.body ?? 'No body',
-      //       date: message.data['date'] ?? "",
-      //       time: message.data['time'] ?? "",
-      //       status: bool.tryParse(message.data['status'] ?? "") ?? false,
-      //       isPdf: bool.tryParse(message.data['is_pdf'] ?? "") ?? false,
-      //       price: num.tryParse(message.data['price'] ?? "") ?? 0,
-      //       offerUserName: message.data['offer_user_name'] ?? "",
-      //       url: message.data['file'] ?? "",
-      //       offerId: int.tryParse(message.data['offer_id'] ?? "") ?? 0,
-      //     ),
-      //   );
-      // }
+      // Parse notification data
+      final notificationData = NotificationData.fromRemoteMessage(message);
 
-      if (curentRoute == NotificationsRoute.name) {
+      // Add to stream for NotificationsCubit to handle
+      _notificationService.addNotification(notificationData);
+
+      // If user is on notifications screen, don't show popup notification
+      if (currentRoute == NotificationsRoute.name ||
+          currentRoute == PublicNotificationsRoute.name ||
+          currentRoute == PriceOffersRoute.name) {
+        debugPrint("📱 User is on notifications screen, skipping popup");
         return;
       }
-      //  appCubit.toggleTabs(tabIndex: 1);
 
+      // Show notification popup and navigate
       _showAwesomeNotification(message);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       debugPrint("📲 Notification opened (background): ${message.data}");
-      //final curentRoute = getIt<AppRouter>().current.name;
-      // print("current route: >>>>>>>>>>>>>>$curentRoute");
-      getIt<AppRouter>().push(
-        OfferDetailsRoute(
-          offerNotificationModel: OfferModel(
-            id: int.tryParse(message.data['id'] ?? "") ?? 0,
-            offerId: int.tryParse(message.data['offer_id'] ?? "") ?? 0,
-            title: message.notification?.title ?? 'No title',
-            message: message.notification?.body ?? 'No body',
-            date: message.data['date'] ?? "",
-            time: message.data['time'] ?? "",
-            status: false,
-            offerUserName: message.data['offer_user_name'] ?? "",
-            price: num.tryParse(message.data['price'] ?? "") ?? 0,
-            isPdf: bool.tryParse(message.data['is_pdf'] ?? "") ?? false,
-            url: message.data['file'] ?? "",
-          ),
-        ),
-      );
-      // notificationsCubit.addOfferNotification(
-      //   offerNotification: OfferNotificationModel(
-      //     id: int.tryParse(message.data['id'] ?? "") ?? 0,
-      //     offerId: int.tryParse(message.data['offer_id'] ?? "") ?? 0,
-      //     title: message.notification?.title ?? 'No title',
-      //     message: message.notification?.body ?? 'No body',
-      //     date: message.data['date'] ?? "",
-      //     time: message.data['time'] ?? "",
-      //     status: false,
-      //     offerUserName: message.data['offer_user_name'] ?? "",
-      //     price: num.tryParse(message.data['price'] ?? "") ?? 0,
-      //     isPdf: bool.tryParse(message.data['is_pdf'] ?? "") ?? false,
-      //     url: message.data['file'] ?? "",
-      //   ),
-      // );
+
+      // Parse notification data
+      final notificationData = NotificationData.fromRemoteMessage(message);
+
+      // Add to stream for NotificationsCubit to handle
+      _notificationService.addNotification(notificationData);
+
+      // Navigate to notifications tab
+      await _navigateToNotificationsTab(type: notificationData.type);
     });
+  }
+
+  /// Navigate to notifications tab using proper AutoRoute navigation
+  Future<void> _navigateToNotificationsTab({
+    required NotificationType type,
+  }) async {
+    try {
+      if (type == NotificationType.offerNotification) {
+        await _appRouter.navigate(
+          const AuthenticatedRoute(
+            children: [
+              BottomNavBarRoute(
+                children: [
+                  NotificationsRoute(children: [PriceOffersRoute()]),
+                ],
+              ),
+            ],
+          ),
+        );
+      } else {
+        await _appRouter.navigate(
+          const AuthenticatedRoute(
+            children: [
+              BottomNavBarRoute(
+                children: [
+                  NotificationsRoute(children: [PublicNotificationsRoute()]),
+                ],
+              ),
+            ],
+          ),
+        );
+      }
+      debugPrint("✅ Navigation to notifications tab completed");
+    } catch (e) {
+      debugPrint("❌ Error navigating to notifications: $e");
+    }
   }
 
   Future<void> handleInitialMessage() async {
     final RemoteMessage? message = await firebaseMessaging.getInitialMessage();
     if (message != null) {
-      await getIt<AppRouter>().replaceAll([
-        const AuthenticatedRoute(children: [BottomNavBarRoute()]),
-      ]);
-      getIt<AppCubit>().toggleTabs(tabIndex: 1);
+      debugPrint("🚀 App opened from terminated state by notification");
+
+      // Parse notification data
+      final notificationData = NotificationData.fromRemoteMessage(message);
+
+      // Add to stream for NotificationsCubit to handle
+      _notificationService.addNotification(notificationData);
+
+      // Navigate directly to notifications tab
+      if (notificationData.type == NotificationType.offerNotification) {
+        await _appRouter.replaceAll([
+          const AuthenticatedRoute(
+            children: [
+              BottomNavBarRoute(
+                children: [
+                  NotificationsRoute(children: [PriceOffersRoute()]),
+                ],
+              ),
+            ],
+          ),
+        ]);
+      } else {
+        await _appRouter.replaceAll([
+          const AuthenticatedRoute(
+            children: [
+              BottomNavBarRoute(
+                children: [
+                  NotificationsRoute(children: [PublicNotificationsRoute()]),
+                ],
+              ),
+            ],
+          ),
+        ]);
+      }
+
+      debugPrint("✅ App initialized with notification route");
     }
   }
 
-  Future<void> navigateToNotifications() async {}
+  Future<void> navigateToNotifications({
+    required bool isOffer,
+  }) async {
+    await _navigateToNotificationsTab(
+      type: isOffer ? NotificationType.offerNotification : NotificationType.publicNotification,
+    );
+  }
 
   Future<String?> getFcmToken() async {
     final token = await firebaseMessaging.getToken();

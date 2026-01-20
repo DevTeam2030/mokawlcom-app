@@ -80,8 +80,8 @@ class _PublicNotificationsScreenState extends State<PublicNotificationsScreen> {
       buildWhen: (previous, current) =>
           previous.getPublicNotificationsState !=
               current.getPublicNotificationsState ||
-          previous.publicNotifications.notifications !=
-              current.publicNotifications.notifications,
+          previous.publicNotifications !=
+              current.publicNotifications,
       builder: (context, state) {
         final hasData = state.publicNotifications.notifications.isNotEmpty;
 
@@ -101,7 +101,7 @@ class _PublicNotificationsScreenState extends State<PublicNotificationsScreen> {
           errorMessage: state.publicNotificationsErrorMessage,
           onLoading: Skeletonizer(
             containersColor: ColorsManager.skeletonColor,
-            enabled: state.getPublicNotificationsState.isLoading && !hasData,
+            enabled: state.getPublicNotificationsState.isLoading && state.isPublicFirstLoading,
             ignoreContainers: true,
             child: _buildNotificationsList(
               notifications: List.generate(

@@ -216,6 +216,7 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
                       context.read<AppCubit>().handleProtectedNavigation(
                         context: context,
                         onAllowed: () async {
+                          context.read<ContractorInfoCubit>().clearFile();
                           await _showBottomSheet(
                             context: context,
                             contractorId: widget.contractorId,

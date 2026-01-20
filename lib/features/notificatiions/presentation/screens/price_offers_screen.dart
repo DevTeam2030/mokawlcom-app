@@ -80,8 +80,8 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
       buildWhen: (previous, current) =>
           previous.getOfferNotificationsState !=
               current.getOfferNotificationsState ||
-          previous.offerNotifications.notifications !=
-              current.offerNotifications.notifications,
+          previous.offerNotifications!=
+              current.offerNotifications,
       builder: (context, state) {
         final hasData = state.offerNotifications.notifications.isNotEmpty;
 
@@ -101,7 +101,7 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
           errorMessage: state.offerNotificationsErrorMessage,
           onLoading: Skeletonizer(
             containersColor: ColorsManager.skeletonColor,
-            enabled: state.getOfferNotificationsState.isLoading && !hasData,
+            enabled: state.getOfferNotificationsState.isLoading && state.isOfferFirstLoading,
             ignoreContainers: true,
             child: _buildOffersList(
               theme: theme,

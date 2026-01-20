@@ -1,20 +1,58 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
+import 'package:mokawlcom_app/core/services/notifications/notification_service.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_details_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/public_notificarion_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/reply_offer_price_request_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/repo/notifications_repo.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
-import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/public_notifications_item.dart';
 
 class NotificationsCubit extends Cubit<NotificationsState> {
   final NotificationsRepo notificationsRepo;
+  final NotificationService _notificationService = NotificationService();
+  StreamSubscription<NotificationData>? _notificationSubscription;
+
   NotificationsCubit({required this.notificationsRepo})
-    : super(const NotificationsState());
+    : super(const NotificationsState()) {
+    _subscribeToNotifications();
+  }
+
+  void _subscribeToNotifications() {
+    _notificationSubscription = _notificationService.notificationStream.listen(
+      (notificationData) {
+        debugPrint(
+          "🔔 Received notification in cubit: ${notificationData.type}",
+        );
+
+        if (notificationData.type == NotificationType.publicNotification) {
+          addPublicNotification(
+            publicNotification:
+                notificationData.notification as PublicNotificationModel,
+          );
+        } else {
+          addOfferNotification(
+            offerNotification: notificationData.notification as OfferModel,
+          );
+        }
+      },
+      onError: (error) {
+        debugPrint("❌ Error in notification stream: $error");
+      },
+    );
+  }
+
+  @override
+  Future<void> close() {
+    _notificationSubscription?.cancel();
+    return super.close();
+  }
+
   Future<void> getPublicNotifications() async {
     emit(
       state.copyWith(
@@ -48,6 +86,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             getPublicNotificationsState: RequestStatus.success,
             publicNotifications: publicNotifications,
             publicNotificationsReadStatus: updatedPublicNotificationsReadStatus,
+            isPublicFirstLoading: false,
           ),
         );
       },
@@ -139,6 +178,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             offerNotifications: offerNotifications,
             offerNotificationsCurrentPage: offerNotifications.currentPage,
             offerNotificationsReadStatus: updatedOfferNotificationsReadStatus,
+            isOfferFirstLoading: false,
           ),
         );
       },
@@ -197,9 +237,6 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
   void markPublicNotificationAsRead({required int notificationId}) {
-    if (state.publicNotificationsReadStatus.containsKey(notificationId)) {
-      return;
-    }
     final updatedReadStatus = Map<int, bool>.from(
       state.publicNotificationsReadStatus,
     );
@@ -208,9 +245,6 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
   void markOfferNotificationAsRead({required int notificationId}) {
-    if (state.offerNotificationsReadStatus.containsKey(notificationId)) {
-      return;
-    }
     final updatedReadStatus = Map<int, bool>.from(
       state.offerNotificationsReadStatus,
     );

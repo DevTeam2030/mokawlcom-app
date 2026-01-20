@@ -43,6 +43,7 @@ class ContractorInfoState extends Equatable {
     bool? isSaved,
     double? rating,
     bool? isConnected,
+    bool clearFile = false,
   }) {
     return ContractorInfoState(
       getContractorDetailsState:
@@ -52,7 +53,7 @@ class ContractorInfoState extends Equatable {
       addOfferPriceMessage: addOfferPriceMessage ?? this.addOfferPriceMessage,
       isFileLoading: isFileLoading ?? this.isFileLoading,
       progress: progress ?? this.progress,
-      file: file ?? this.file,
+      file:clearFile? null : file ?? this.file,
       contractorDetails: contractorDetails ?? this.contractorDetails,
       errorMessage: errorMessage ?? this.errorMessage,
       isSaved: isSaved ?? this.isSaved,
