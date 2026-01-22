@@ -52,6 +52,7 @@ class ContractorDetailsTopSection extends StatelessWidget {
             child: Container(
               width: 48,
               height: 48,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               decoration: BoxDecoration(
                 border: Border.all(
                   color: ColorsManager.secondaryColor,
@@ -59,11 +60,14 @@ class ContractorDetailsTopSection extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: CustomCachedNetworkImage(
-                imageUrl: contractorDetailsModel.logo,
-                width: 48,
-                height: 48,
-                fit: BoxFit.cover,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: CustomCachedNetworkImage(
+                  imageUrl: contractorDetailsModel.logo,
+                  width: 48,
+                  height: 48,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -189,12 +193,12 @@ class ContractorDetailsTopSection extends StatelessWidget {
                       : null,
                   child: RatingBar.builder(
                     initialRating: state.rating,
+                     unratedColor: ColorsManager.borderLightBlue,
                     ignoreGestures: AppConstants.userType == UserType.visitor,
                     itemSize: 24,
                     itemBuilder: (context, index) {
                       return const Icon(MyIcons.star, color: Colors.amber);
                     },
-                    unratedColor: ColorsManager.secondaryColor,
                     onRatingUpdate: (rating) {
                       context.read<AppCubit>().handleProtectedNavigation(
                         context: context,

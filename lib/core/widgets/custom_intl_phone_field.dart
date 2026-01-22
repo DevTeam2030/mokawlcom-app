@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_intl_phone_field/countries.dart';
 import 'package:flutter_intl_phone_field/flutter_intl_phone_field.dart';
 import 'package:flutter_intl_phone_field/phone_number.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/core/utils/arabic_countries.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
@@ -11,7 +14,7 @@ class CustomIntlPhoneField extends StatelessWidget {
   const CustomIntlPhoneField({
     super.key,
     this.onChanged,
-    this.initialCountryCode = 'EG',
+    this.initialCountryCode = 'QA',
     this.label,
     this.borderRadius,
     this.fillColor,
@@ -38,9 +41,14 @@ class CustomIntlPhoneField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    // final locale = Localizations.localeOf(context);
+    // final languageCode = locale.languageCode;
+
     return Directionality(
       textDirection: TextDirection.ltr,
       child: IntlPhoneField(
+        languageCode: AppConstants.language,
+        countries: getLocalizedCountries(context),
         controller: controller,
         style: theme.textTheme.bodySmall!.copyWith(
           fontWeight: FontWeight.bold,

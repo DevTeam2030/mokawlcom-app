@@ -132,7 +132,7 @@ class _EditContractorFormState extends State<EditContractorForm> {
           ),
           const SizedBox(height: 8.0),
           CustomIntlPhoneField(
-            initialCountryCode: phone?.countryISOCode??"EG",
+            initialCountryCode: phone?.countryISOCode??"QA",
             onChanged: (completeNumber, countryCode) {
               _phone = completeNumber;
             },
@@ -149,7 +149,7 @@ class _EditContractorFormState extends State<EditContractorForm> {
           ),
           const SizedBox(height: 8.0),
           CustomIntlPhoneField(
-            initialCountryCode: whatsapp?.countryISOCode??"EG",
+            initialCountryCode: whatsapp?.countryISOCode??"QA",
             validator: (_) => null,
             onChanged: (completeNumber, countryCode) {
               _whatsapp = completeNumber;

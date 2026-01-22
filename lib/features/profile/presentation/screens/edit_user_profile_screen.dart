@@ -157,7 +157,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                           ),
                           const SizedBox(height: 8.0),
                           CustomIntlPhoneField(
-                            initialCountryCode: phone?.countryISOCode ??"EG",
+                            initialCountryCode: phone?.countryISOCode ??"QA",
                             controller: _phoneController,
                             onChanged: (completeNumber, countryCode) {
                               _completePhone = completeNumber;

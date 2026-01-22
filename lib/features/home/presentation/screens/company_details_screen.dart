@@ -36,7 +36,7 @@ class CompanyDetailsScreen extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 LocaleKeys.hintAboutCompany,
-                style: theme.textTheme.bodySmall!.copyWith(
+                style: theme.textTheme.bodyMedium!.copyWith(
                   fontWeight: FontWeight.w700,
                   color: ColorsManager.primaryColor,
                 ),
@@ -46,7 +46,7 @@ class CompanyDetailsScreen extends StatelessWidget {
                 text: contractorDetails.description,
                 color: ColorsManager.accentTextColor,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               Text(
                 LocaleKeys.commuincationsData,
                 style: theme.textTheme.bodyMedium!.copyWith(
@@ -64,8 +64,8 @@ class CompanyDetailsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              TextButton(
-                onPressed: () {
+              InkWell(
+                onTap: () {
                   LaunchUtils.email(
                     email: contractorDetails.email,
                     onError: (msg) =>
@@ -126,6 +126,7 @@ class CompanyDetailsScreen extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 contractorDetails.phone,
+                textDirection: TextDirection.ltr,
                 style: theme.textTheme.bodyMedium!.copyWith(
                   color: ColorsManager.primaryColor,
                 ),
@@ -143,6 +144,7 @@ class CompanyDetailsScreen extends StatelessWidget {
               contractorDetails.whatsapp.isNotEmpty
                   ? Text(
                       contractorDetails.whatsapp,
+                      textDirection: TextDirection.ltr,
                       style: theme.textTheme.bodyMedium!.copyWith(
                         color: ColorsManager.primaryColor,
                       ),

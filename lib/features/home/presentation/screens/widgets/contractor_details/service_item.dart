@@ -15,7 +15,6 @@ class ServiceItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: ColorsManager.fillColor,
         borderRadius: BorderRadius.circular(20.0),
-        border: Border.all(),
       ),
       child: Text(
         service,

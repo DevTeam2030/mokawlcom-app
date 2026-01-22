@@ -29,6 +29,7 @@ class ContractorItem extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
+        color: ColorsManager.surfaceColor,
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(color: ColorsManager.borderLightBlue, width: .8),
       ),
@@ -118,7 +119,7 @@ class ContractorItem extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return const Icon(MyIcons.star, color: Colors.amber);
                       },
-                      unratedColor: ColorsManager.secondaryColor,
+                      unratedColor: ColorsManager.borderLightBlue,
                       onRatingUpdate: (rating) {},
                     ),
                   ],
