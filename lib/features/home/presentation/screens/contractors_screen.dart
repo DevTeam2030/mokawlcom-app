@@ -8,6 +8,7 @@ import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
@@ -115,7 +116,11 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
               previous.getContractorsState != current.getContractorsState,
           listener: (context, state) {
             if (state.getContractorsState.isError) {
-              showToast(message: state.errorMessage, state: ToastStates.error);
+              showDialog(
+                context: context,
+                builder: (context) =>
+                    ErrorDialog(theme: theme, message: state.errorMessage),
+              );
             }
           },
           builder: (context, state) {

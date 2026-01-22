@@ -10,6 +10,9 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
+import 'package:mokawlcom_app/locale_keys.dart';
 
 class GoogleAndAppleSignInWidgets extends StatelessWidget {
   const GoogleAndAppleSignInWidgets({super.key, required this.onGoogleTap});
@@ -22,17 +25,30 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
         BlocConsumer<AuthCubit, AuthState>(
           listenWhen: (previous, current) =>
               previous.googleLoginState != current.googleLoginState,
-          listener: (context, state) {
-            if (state.googleLoginState.isSuccess) {
-              showToast(
-                message: state.userLoginResponseModel.message,
-                state: ToastStates.success,
+          listener: (context, state) async{
+             if (state.googleLoginState.isError && state.errorMessage.isNotEmpty) {
+              showDialog(
+                context: context,
+                builder: (context) => ErrorDialog(
+                  theme: theme,
+                  message: state.errorMessage,
+                ),
               );
+            }
+            if (state.googleLoginState.isSuccess) {
+              await showDialog(
+                context: context,
+                builder: (context) => SuccessDialog(
+                  theme: theme,
+                  message: state.userLoginResponseModel.message,
+                  text: LocaleKeys.continueKey,
+                ),
+              );
+              if(context.mounted){
               context.replaceRoute(const AuthenticatedRoute());
+              }
             }
-            if (state.googleLoginState.isError && state.errorMessage.isNotEmpty) {
-              showToast(message: state.errorMessage, state: ToastStates.error);
-            }
+           
           },
           buildWhen: (previous, current) =>
               previous.googleLoginState != current.googleLoginState,  

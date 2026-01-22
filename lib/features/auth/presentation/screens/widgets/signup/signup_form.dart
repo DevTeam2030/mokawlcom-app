@@ -13,6 +13,8 @@ import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class SignupForm extends StatefulWidget {
@@ -169,21 +171,30 @@ class _SignupFormState extends State<SignupForm> {
                 prev.userSignupState != curr.userSignupState,
             buildWhen: (prev, curr) =>
                 prev.userSignupState != curr.userSignupState,
-            listener: (context, state) {
+            listener: (context, state) async {
               if (state.userSignupState.isError) {
-                showToast(
-                  message: state.errorMessage,
-                  state: ToastStates.error,
+                showDialog(
+                  context: context,
+                  builder: (context) => ErrorDialog(
+                    theme: widget.theme,
+                    message: state.errorMessage,
+                  ),
                 );
               }
               if (state.userSignupState.isSuccess) {
-                showToast(
-                  message: state.successMessage,
-                  state: ToastStates.success,
+                await showDialog(
+                  context: context,
+                  builder: (context) => SuccessDialog(
+                    theme: widget.theme,
+                    message: state.successMessage,
+                    text: LocaleKeys.continueKey,
+                  ),
                 );
-                context.pushRoute(
-                  VerificationRoute(email: _email, isUser: true),
-                );
+                if (context.mounted) {
+                  context.pushRoute(
+                    VerificationRoute(email: _email, isUser: true),
+                  );
+                }
               }
             },
             builder: (context, state) {

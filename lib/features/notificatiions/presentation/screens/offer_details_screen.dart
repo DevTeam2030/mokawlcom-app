@@ -10,6 +10,7 @@ import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
@@ -107,9 +108,12 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                   previous.getOfferDetailsState != current.getOfferDetailsState,
               listener: (context, state) {
                 if (state.getOfferDetailsState.isError) {
-                  showToast(
-                    message: state.offerDetailsErrorMessage,
-                    state: ToastStates.error,
+                  showDialog(
+                    context: context,
+                    builder: (context) => ErrorDialog(
+                      theme: theme,
+                      message: state.offerDetailsErrorMessage,
+                    ),
                   );
                 }
                 

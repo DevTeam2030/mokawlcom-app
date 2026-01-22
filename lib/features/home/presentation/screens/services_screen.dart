@@ -8,6 +8,7 @@ import 'package:mokawlcom_app/core/utils/no_data_widget.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/service_grid_item.dart';
@@ -102,9 +103,12 @@ class _ServicesScreenState extends State<ServicesScreen> {
             buildWhen: (p, c) => p.getServicesState != c.getServicesState,
             listener: (context, state) {
               if (state.getServicesState.isError) {
-                showToast(
-                  message: state.servicesErrorMessage,
-                  state: ToastStates.error,
+                showDialog(
+                  context: context,
+                  builder: (context) => ErrorDialog(
+                    theme: theme,
+                    message: state.servicesErrorMessage,
+                  ),
                 );
               }
             },

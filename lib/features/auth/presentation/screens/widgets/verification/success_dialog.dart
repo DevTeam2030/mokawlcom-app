@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
@@ -8,12 +9,12 @@ import 'package:mokawlcom_app/locale_keys.dart';
 class SuccessDialog extends StatelessWidget {
   const SuccessDialog({
     super.key,
-    required this.onPressed,
+    this.onPressed,
     required this.theme,
     required this.text,
     required this.message,
   });
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final ThemeData theme;
   final String text;
   final String message;
@@ -37,16 +38,15 @@ class SuccessDialog extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            // Text(
-            //   LocaleKeys.yourAccountCreatedSuccessfully,
-            //   style: theme.textTheme.titleMedium!.copyWith(
-            //     color: ColorsManager.successLight,
-            //     fontWeight: FontWeight.w400,
-            //   ),
-            //   textAlign: TextAlign.center,
-            // ),
             const SizedBox(height: 20),
-            PrimaryButton(onPressed: onPressed, text: text),
+            PrimaryButton(
+              onPressed:
+                  onPressed ??
+                  () {
+                    context.pop();
+                  },
+              text: text,
+            ),
           ],
         ),
       ),

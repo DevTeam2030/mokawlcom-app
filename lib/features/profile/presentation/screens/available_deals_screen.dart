@@ -9,6 +9,8 @@ import 'package:mokawlcom_app/core/utils/no_data_widget.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/features/profile/data/models/deal/deal_model.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
@@ -107,21 +109,31 @@ class _AvailableDealsScreenState extends State<AvailableDealsScreen> {
                     previous.deleteDealState != current.deleteDealState,
                 listener: (context, state) {
                   if (state.getDealsState.isError) {
-                    showToast(
-                      message: state.errorMessage,
-                      state: ToastStates.error,
+                    showDialog(
+                      context: context,
+                      builder: (context) => ErrorDialog(
+                        theme: theme,
+                        message: state.errorMessage,
+                      ),
                     );
                   }
                   if (state.deleteDealState.isError) {
-                    showToast(
-                      message: state.errorMessage,
-                      state: ToastStates.error,
+                    showDialog(
+                      context: context,
+                      builder: (context) => ErrorDialog(
+                        theme: theme,
+                        message: state.errorMessage,
+                      ),
                     );
                   }
                   if (state.deleteDealState.isSuccess) {
-                    showToast(
-                      message: state.successMessage,
-                      state: ToastStates.success,
+                    showDialog(
+                      context: context,
+                      builder: (context) => SuccessDialog(
+                        theme: theme,
+                        message: state.successMessage,
+                        text: LocaleKeys.continueKey,
+                      ),
                     );
                   }
                 },

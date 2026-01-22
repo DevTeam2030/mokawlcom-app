@@ -8,6 +8,8 @@ import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
@@ -93,15 +95,20 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 previous.forgetPasswordState != current.forgetPasswordState,
             listener: (context, state) {
               if (state.forgetPasswordState.isSuccess) {
-                showToast(
-                  message: state.successMessage,
-                  state: ToastStates.success,
+                showDialog(
+                  context: context,
+                  builder: (context) => SuccessDialog(
+                    message: state.successMessage,
+                    theme: theme,
+                    text: LocaleKeys.exit,
+                  ),
                 );
               }
               if (state.forgetPasswordState.isError) {
-                showToast(
-                  message: state.errorMessage,
-                  state: ToastStates.error,
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      ErrorDialog(theme: theme, message: state.errorMessage),
                 );
               }
             },

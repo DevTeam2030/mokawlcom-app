@@ -12,6 +12,7 @@ import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/services/services_list_item.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -87,7 +88,11 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
         listenWhen: (p, c) => p.getServicesState != c.getServicesState,
         listener: (context, state) {
           if (state.getServicesState.isError) {
-            showToast(message: state.errorMessage, state: ToastStates.error);
+            showDialog(
+              context: context,
+              builder: (context) =>
+                  ErrorDialog(theme: theme, message: state.errorMessage),
+            );
           }
         },
         builder: (context, state) {
@@ -206,9 +211,12 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
           PrimaryButton(
             onPressed: () {
               if (selectedIndices.value.isEmpty) {
-                showToast(
-                  message: LocaleKeys.pleaseSelectAtLeastOneService,
-                  state: ToastStates.error,
+                showDialog(
+                  context: context,
+                  builder: (context) => ErrorDialog(
+                    theme: theme,
+                    message: LocaleKeys.pleaseSelectAtLeastOneService,
+                  ),
                 );
                 return;
               }

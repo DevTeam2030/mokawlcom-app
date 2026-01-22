@@ -4,6 +4,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/offer_price_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/reply_on_offer_bottom_sheet.dart';
@@ -152,9 +153,12 @@ class OfferDetails extends StatelessWidget {
                               LaunchUtils.open(
                                 url: offerNotificationModel.url,
                                 onError: (msg) {
-                                  showToast(
-                                    message: msg,
-                                    state: ToastStates.error,
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => ErrorDialog(
+                                      theme: theme,
+                                      message: msg,
+                                    ),
                                   );
                                 },
                               );
@@ -172,9 +176,12 @@ class OfferDetails extends StatelessWidget {
                               LaunchUtils.open(
                                 url: offerNotificationModel.url,
                                 onError: (msg) {
-                                  showToast(
-                                    message: msg,
-                                    state: ToastStates.error,
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => ErrorDialog(
+                                      theme: theme,
+                                      message: msg,
+                                    ),
                                   );
                                 },
                               );

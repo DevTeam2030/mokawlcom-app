@@ -9,6 +9,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/service_item.dart';
@@ -166,9 +167,10 @@ class ContractorDetailsTopSection extends StatelessWidget {
                 previous.rating != current.rating,
             listener: (context, state) {
               if (state.rateContractorState.isError) {
-                showToast(
-                  message: state.errorMessage,
-                  state: ToastStates.error,
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      ErrorDialog(theme: theme, message: state.errorMessage),
                 );
               }
             },

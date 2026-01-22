@@ -10,6 +10,7 @@ import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
@@ -109,9 +110,12 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                     current.getContractorServicesState,
                 listener: (context, state) {
                   if (state.getContractorServicesState.isError) {
-                    showToast(
-                      message: state.errorMessage,
-                      state: ToastStates.error,
+                    showDialog(
+                      context: context,
+                      builder: (context) => ErrorDialog(
+                        theme: theme,
+                        message: state.errorMessage,
+                      ),
                     );
                   }
                 },

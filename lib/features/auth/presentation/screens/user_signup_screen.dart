@@ -14,6 +14,8 @@ import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/shared/custom_auth_divider.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/shared/google_and_apple_sign_in_widgets.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/signup/signup_form.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
@@ -47,16 +49,26 @@ class _UserSignupScreenState extends State<UserSignupScreen> {
       body: BlocListener<AuthCubit, AuthState>(
         listenWhen: (previous, current) =>
             previous.googleLoginState != current.googleLoginState,
-        listener: (context, state) {
-          if (state.googleLoginState.isSuccess) {
-            showToast(
-              message: state.userLoginResponseModel.message,
-              state: ToastStates.success,
-            );
-            context.replaceRoute(const AuthenticatedRoute());
-          }
+        listener: (context, state) async {
           if (state.googleLoginState.isError) {
-            showToast(message: state.errorMessage, state: ToastStates.error);
+            showDialog(
+              context: context,
+              builder: (context) =>
+                  ErrorDialog(theme: theme, message: state.errorMessage),
+            );
+          }
+          if (state.googleLoginState.isSuccess) {
+            await showDialog(
+              context: context,
+              builder: (context) => SuccessDialog(
+                theme: theme,
+                message: state.successMessage,
+                text: LocaleKeys.continueKey,
+              ),
+            );
+            if (context.mounted) {
+              context.replaceRoute(const AuthenticatedRoute());
+            }
           }
         },
         child: Padding(

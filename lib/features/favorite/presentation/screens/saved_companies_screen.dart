@@ -7,6 +7,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/no_data_widget.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/favorite/data/models/favorite_model.dart';
 import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_cubit.dart';
 import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_state.dart';
@@ -16,17 +17,17 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 
 @RoutePage()
-class SavedCompaniesScreen extends StatefulWidget implements AutoRouteWrapper{
+class SavedCompaniesScreen extends StatefulWidget implements AutoRouteWrapper {
   const SavedCompaniesScreen({super.key});
 
   @override
   State<SavedCompaniesScreen> createState() => _SavedCompaniesScreenState();
-  
+
   @override
-      Widget wrappedRoute(BuildContext context) => BlocProvider(
-        create: (context) => getIt<FavoriteCubit>()..getFavorites(),
-        child: this,
-      );
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create: (context) => getIt<FavoriteCubit>()..getFavorites(),
+    child: this,
+  );
 }
 
 class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
@@ -87,10 +88,18 @@ class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
             prev.favorites != curr.favorites,
         listener: (context, state) {
           if (state.getFavoritesState.isError) {
-            showToast(message: state.errorMessage, state: ToastStates.error);
+            showDialog(
+              context: context,
+              builder: (context) =>
+                  ErrorDialog(theme: theme, message: state.errorMessage),
+            );
           }
           if (state.removeFavoriteState.isError) {
-            showToast(message: state.errorMessage, state: ToastStates.error);
+            showDialog(
+              context: context,
+              builder: (context) =>
+                  ErrorDialog(theme: theme, message: state.errorMessage),
+            );
           }
         },
         builder: (context, state) {

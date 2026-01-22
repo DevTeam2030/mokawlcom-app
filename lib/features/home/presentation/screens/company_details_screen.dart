@@ -5,6 +5,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
+import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/service_details/expandable_text_widget.dart';
@@ -68,8 +69,11 @@ class CompanyDetailsScreen extends StatelessWidget {
                 onTap: () {
                   LaunchUtils.email(
                     email: contractorDetails.email,
-                    onError: (msg) =>
-                        showToast(message: msg, state: ToastStates.error),
+                    onError: (msg) => showDialog(
+                      context: context,
+                      builder: (context) =>
+                          ErrorDialog(theme: theme, message: msg),
+                    ),
                   );
                 },
                 child: Text(
@@ -161,9 +165,10 @@ class CompanyDetailsScreen extends StatelessWidget {
                             LaunchUtils.open(
                               url: contractorDetails.facebook,
                               onError: (msg) {
-                                showToast(
-                                  message: msg,
-                                  state: ToastStates.warning,
+                                showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      ErrorDialog(theme: theme, message: msg),
                                 );
                               },
                             );
@@ -185,9 +190,10 @@ class CompanyDetailsScreen extends StatelessWidget {
                             LaunchUtils.open(
                               url: contractorDetails.twitter,
                               onError: (msg) {
-                                showToast(
-                                  message: msg,
-                                  state: ToastStates.warning,
+                                showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      ErrorDialog(theme: theme, message: msg),
                                 );
                               },
                             );
@@ -209,9 +215,10 @@ class CompanyDetailsScreen extends StatelessWidget {
                             LaunchUtils.open(
                               url: contractorDetails.instagram,
                               onError: (msg) {
-                                showToast(
-                                  message: msg,
-                                  state: ToastStates.warning,
+                                showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      ErrorDialog(theme: theme, message: msg),
                                 );
                               },
                             );
@@ -233,9 +240,10 @@ class CompanyDetailsScreen extends StatelessWidget {
                             LaunchUtils.open(
                               url: contractorDetails.spanchat,
                               onError: (msg) {
-                                showToast(
-                                  message: msg,
-                                  state: ToastStates.warning,
+                                showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      ErrorDialog(theme: theme, message: msg),
                                 );
                               },
                             );
