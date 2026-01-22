@@ -112,10 +112,9 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future<void> getServices() async {
-    if (state.servicesModel.services.isNotEmpty) {
-      return;
-    }
+  Future<void> getServices({
+    required int classificationId,
+  }) async {
     emit(
       state.copyWith(
         getServicesState: RequestStatus.loading,
@@ -124,6 +123,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
     final result = await contractorAuthRepoImpl.getServices(
       page: state.servicesPage,
+      classificationId: classificationId,
     );
     result.fold(
       (failure) => emit(
@@ -144,7 +144,9 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future<void> loadMoreServices() async {
+  Future<void> loadMoreServices({
+    required int classificationId,
+  }) async {
     if (state.servicesPage >= state.servicesTotalPages ||
         state.getServicesState.isLoading) {
       return;
@@ -157,6 +159,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
     final result = await contractorAuthRepoImpl.getServices(
       page: state.servicesPage + 1,
+      classificationId: classificationId,
     );
     result.fold(
       (failure) => emit(

@@ -29,9 +29,10 @@ class ContractorAuthRepoImpl implements ContractorAuthRepo {
   @override
   Future<Either<Failure, ServicesModel>> getServices({
     required int page,
+    required int classificationId,
   }) async {
     return await safeApiCall<ServicesModel>(
-      () => contractorAuthDataSource.getServices(page: page),
+      () => contractorAuthDataSource.getServices(page: page, classificationId: classificationId),
     );
   }
 

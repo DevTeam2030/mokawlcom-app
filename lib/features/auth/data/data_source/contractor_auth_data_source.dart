@@ -15,7 +15,7 @@ import 'package:mokawlcom_app/features/shared/data/models/services_model.dart';
 
 abstract class ContractorAuthDataSource {
   Future<ClassificationsModel> getClassifications({required int page});
-  Future<ServicesModel> getServices({required int page});
+  Future<ServicesModel> getServices({required int page, required int classificationId});
   Future<String> contractorSignUp({
     required ContractorSignUpRequestModel contractorSignUpRequestModel,
   });
@@ -67,10 +67,10 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
   }
 
   @override
-  Future<ServicesModel> getServices({required int page}) async {
+  Future<ServicesModel> getServices({required int page, required int classificationId}) async {
     final response = await dioHelper.get(
       url: ApiConstants.getServices,
-      queryParameters: {"page": page},
+      queryParameters: {"page": page, "category_id": classificationId},
     );
     if (response.statusCode == 200) {
       // Parse JSON in isolate to avoid blocking UI thread

@@ -21,7 +21,8 @@ import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
-class EditContractorProfileScreen extends StatefulWidget implements AutoRouteWrapper {
+class EditContractorProfileScreen extends StatefulWidget
+    implements AutoRouteWrapper {
   const EditContractorProfileScreen({super.key});
 
   @override
@@ -30,7 +31,10 @@ class EditContractorProfileScreen extends StatefulWidget implements AutoRouteWra
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (context) => getIt<ProfileCubit>(), child: this);
+    return BlocProvider(
+      create: (context) => getIt<ProfileCubit>(),
+      child: this,
+    );
   }
 }
 
@@ -48,7 +52,6 @@ class _EditContractorProfileScreenState
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.wait([
         context.read<HomeCubit>().getClassifications(),
-        context.read<HomeCubit>().getServices(),
         context.read<ProfileCubit>().getContractorProfile(),
       ]);
     });
@@ -87,7 +90,9 @@ class _EditContractorProfileScreenState
               onPressed: () {
                 Future.wait([
                   context.read<HomeCubit>().getClassifications(),
-                  context.read<HomeCubit>().getServices(),
+                  context.read<HomeCubit>().getServices(
+                    classificationId: selectedClassification.value!.id,
+                  ),
                   context.read<ProfileCubit>().getContractorProfile(),
                 ]);
               },
@@ -116,8 +121,8 @@ class _EditContractorProfileScreenState
 
                     BlocBuilder<HomeCubit, HomeState>(
                       buildWhen: (previous, current) =>
-                          previous.classificationsModel.classifications !=
-                              current.classificationsModel.classifications ||
+                          previous.classificationsModel !=
+                              current.classificationsModel ||
                           previous.getClassificationsState !=
                               current.getClassificationsState,
                       builder: (context, state) {
@@ -126,6 +131,12 @@ class _EditContractorProfileScreenState
                               .classificationsModel
                               .classifications
                               .firstOrNull;
+                          if (selectedClassification.value != null) {
+                            context.read<HomeCubit>().getServices(
+                              classificationId:
+                                  selectedClassification.value!.id,
+                            );
+                          }
                         }
                         return ValueListenableBuilder<ClassificationModel?>(
                           valueListenable: selectedClassification,
@@ -151,6 +162,10 @@ class _EditContractorProfileScreenState
                                   .toList(),
                               onChanged: (newValue) {
                                 selectedClassification.value = newValue!;
+                                context.read<HomeCubit>().getServices(
+                                  classificationId:
+                                      selectedClassification.value!.id,
+                                );
                               },
                               onLoadMore: () {
                                 context
@@ -190,9 +205,30 @@ class _EditContractorProfileScreenState
                               ? [state.servicesModel.services.first]
                               : [];
                         }
+                        if (state.getServicesState.isLoading) {
+                          return const Center(child: LinearProgressIndicator());
+                        }
                         return ValueListenableBuilder<List<ServiceModel>>(
                           valueListenable: selectedServices,
                           builder: (context, selectedList, _) {
+                            if (state.servicesModel.services.isEmpty) {
+                              selectedServices.value = [];
+                              return Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: ColorsManager.secondaryColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  LocaleKeys.noServicesAvailable,
+                                  style: theme.textTheme.bodySmall!.copyWith(
+                                    color: ColorsManager.secondaryColor,
+                                  ),
+                                ),
+                              );
+                            }
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -216,9 +252,10 @@ class _EditContractorProfileScreenState
                                     selectedServices.value = newList;
                                   },
                                   onLoadMore: () {
-                                    context
-                                        .read<HomeCubit>()
-                                        .loadMoreServices();
+                                    context.read<HomeCubit>().loadMoreServices(
+                                      classificationId:
+                                          selectedClassification.value!.id,
+                                    );
                                   },
                                   isLoadingMore:
                                       state.getServicesState.isLoadingMore,

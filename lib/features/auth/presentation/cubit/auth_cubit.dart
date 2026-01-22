@@ -241,7 +241,9 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> getServices() async {
+  Future<void> getServices({
+    required int classificationId,
+  }) async {
     emit(
       state.copyWith(
         getServicesState: RequestStatus.loading,
@@ -250,6 +252,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
     final result = await contractorAuthRepoImpl.getServices(
       page: state.servicesCurrentPage,
+      classificationId: classificationId,
     );
     result.fold(
       (failure) => emit(
@@ -270,7 +273,9 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> loadMoreServices() async {
+  Future<void> loadMoreServices({
+    required int classificationId,
+  }) async {
     if (state.servicesCurrentPage >= state.servicesTotalPages ||
         state.getServicesState.isLoading) {
       return;
@@ -283,6 +288,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
     final result = await contractorAuthRepoImpl.getServices(
       page: state.servicesCurrentPage + 1,
+      classificationId: classificationId,
     );
     result.fold(
       (failure) => emit(

@@ -14,6 +14,7 @@ abstract class ContractorAuthRepo {
   });
   Future<Either<Failure, ServicesModel>> getServices({
     required int page,
+    required int classificationId,
   });
   Future<Either<Failure, String>> contractorSignUp({
     required ContractorSignUpRequestModel contractorSignUpRequestModel,

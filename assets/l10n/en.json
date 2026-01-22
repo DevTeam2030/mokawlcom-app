@@ -178,7 +178,8 @@
   "google_sign_in_not_supported_on_this_platform":"Google Sign-In not supported on this platform",
   "cannot_open_email_app":"Cannot open email app",
   "invalid_email":"Invalid email",
-  "done":"Done"
+  "done":"Done",
+  "no_services_available":"No services available"
 
   
 

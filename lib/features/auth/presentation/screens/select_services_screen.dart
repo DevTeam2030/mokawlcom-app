@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/no_data_widget.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
@@ -36,7 +37,9 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
     _scrollController = ScrollController()..addListener(_onScroll);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AuthCubit>().getServices();
+      context.read<AuthCubit>().getServices(
+        classificationId: widget.classificationId,
+      );
     });
   }
 
@@ -46,7 +49,9 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
       _isLoadingMore = true;
-      context.read<AuthCubit>().loadMoreServices();
+      context.read<AuthCubit>().loadMoreServices(
+        classificationId: widget.classificationId,
+      );
     }
   }
 
@@ -88,11 +93,13 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
         builder: (context, state) {
           final hasData = state.servicesModel.services.isNotEmpty;
 
-          if (!state.isConnected && !hasData) {
+          if (!state.isConnected) {
             return NoInternetWidget(
               errorMessage: state.errorMessage,
               theme: theme,
-              onPressed: () => context.read<AuthCubit>().getServices(),
+              onPressed: () => context.read<AuthCubit>().getServices(
+                classificationId: widget.classificationId,
+              ),
             );
           }
 
@@ -119,16 +126,26 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
                 state.getServicesState,
               ),
             ),
-            onSuccess: _buildServices(
-              theme,
-              state.servicesModel.services,
-              state.getServicesState,
-            ),
-            onError: _buildServices(
-              theme,
-              state.servicesModel.services,
-              state.getServicesState,
-            ),
+            onSuccess: hasData
+                ? _buildServices(
+                    theme,
+                    state.servicesModel.services,
+                    state.getServicesState,
+                  )
+                : NoDataWidget(
+                    text: LocaleKeys.noServicesAvailable,
+                    theme: theme,
+                  ),
+            onError: hasData
+                ? _buildServices(
+                    theme,
+                    state.servicesModel.services,
+                    state.getServicesState,
+                  )
+                : NoDataWidget(
+                    text: LocaleKeys.noServicesAvailable,
+                    theme: theme,
+                  ),
           );
         },
       ),

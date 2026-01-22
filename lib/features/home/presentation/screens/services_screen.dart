@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
+import 'package:mokawlcom_app/core/utils/no_data_widget.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
@@ -33,6 +34,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeCubit>().getServices(
+        classificationId: widget.classificationModel.id,
+      );
+    });
   }
 
   void _onScroll() {
@@ -41,14 +47,15 @@ class _ServicesScreenState extends State<ServicesScreen> {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent * 0.7) {
       _isLoadingMore = true;
-      context.read<HomeCubit>().loadMoreServices();
+      context.read<HomeCubit>().loadMoreServices(
+        classificationId: widget.classificationModel.id,
+      );
     }
   }
 
   void _resetLoading(RequestStatus status) {
     if (_isLoadingMore &&
-        (status == RequestStatus.success ||
-            status == RequestStatus.error)) {
+        (status == RequestStatus.success || status == RequestStatus.error)) {
       _isLoadingMore = false;
     }
   }
@@ -91,10 +98,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
           ),
           const SizedBox(height: 16),
           BlocConsumer<HomeCubit, HomeState>(
-            listenWhen: (p, c) =>
-                p.getServicesState != c.getServicesState,
-            buildWhen: (p, c) =>
-                p.getServicesState != c.getServicesState,
+            listenWhen: (p, c) => p.getServicesState != c.getServicesState,
+            buildWhen: (p, c) => p.getServicesState != c.getServicesState,
             listener: (context, state) {
               if (state.getServicesState.isError) {
                 showToast(
@@ -104,15 +109,16 @@ class _ServicesScreenState extends State<ServicesScreen> {
               }
             },
             builder: (context, state) {
-              final hasData =
-                  state.servicesModel.services.isNotEmpty;
+              final hasData = state.servicesModel.services.isNotEmpty;
 
               if (!state.isConnected && !hasData) {
                 return NoInternetWidget(
                   errorMessage: state.servicesErrorMessage,
                   theme: theme,
                   onPressed: () {
-                    context.read<HomeCubit>().getServices();
+                    context.read<HomeCubit>().getServices(
+                      classificationId: widget.classificationModel.id,
+                    );
                   },
                 );
               }
@@ -124,8 +130,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   errorMessage: state.servicesErrorMessage,
                   onLoading: Skeletonizer(
                     containersColor: ColorsManager.skeletonColor,
-                    enabled:
-                        state.getServicesState.isLoading && !hasData,
+                    enabled: state.getServicesState.isLoading,
                     child: _buildServices(
                       theme: theme,
                       services: hasData
@@ -142,19 +147,26 @@ class _ServicesScreenState extends State<ServicesScreen> {
                       status: state.getServicesState,
                     ),
                   ),
-                  onSuccess: _buildServices(
-                    theme: theme,
-                    services: state.servicesModel.services,
-                    status: state.getServicesState,
-                  ),
+                  onSuccess: hasData
+                      ? _buildServices(
+                          theme: theme,
+                          services: state.servicesModel.services,
+                          status: state.getServicesState,
+                        )
+                      : NoDataWidget(
+                          text: LocaleKeys.noServicesYet,
+                          theme: theme,
+                        ),
                   onError: hasData
                       ? _buildServices(
                           theme: theme,
-                          services:
-                              state.servicesModel.services,
+                          services: state.servicesModel.services,
                           status: state.getServicesState,
                         )
-                      : const SizedBox.shrink(),
+                      : NoDataWidget(
+                          text: LocaleKeys.noServicesYet,
+                          theme: theme,
+                        ),
                 ),
               );
             },
@@ -192,8 +204,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
             );
-        }
-      
+          }
+
           return ServiceGridItem(
             theme: theme,
             serviceModel: services[index],

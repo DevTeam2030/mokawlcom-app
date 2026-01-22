@@ -9,6 +9,7 @@ import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_model.dart';
+import 'package:mokawlcom_app/features/home/presentation/screens/widgets/service_details/expandable_text_widget.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
@@ -17,7 +18,8 @@ class ContractorItem extends StatelessWidget {
   const ContractorItem({
     super.key,
     required this.contractorModel,
-    required this.theme, required this.serviceId,
+    required this.theme,
+    required this.serviceId,
   });
   final int serviceId;
   final ContractorModel contractorModel;
@@ -45,8 +47,7 @@ class ContractorItem extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     context.pushRoute(
-                      ContractorDetailsRoute(contractorId: contractorModel.id,
-                      ),
+                      ContractorDetailsRoute(contractorId: contractorModel.id),
                     );
                   },
                   child: Container(
@@ -59,11 +60,10 @@ class ContractorItem extends StatelessWidget {
                     clipBehavior: .antiAliasWithSaveLayer,
                     child: ClipOval(
                       child: CustomCachedNetworkImage(
-                      imageUrl: contractorModel.image,
-                      width: 50,
-                      height: 50,
-                      
-                    ),
+                        imageUrl: contractorModel.image,
+                        width: 50,
+                        height: 50,
+                      ),
                     ),
                   ),
                 ),
@@ -113,7 +113,6 @@ class ContractorItem extends StatelessWidget {
                     const SizedBox(height: 4),
                     RatingBar.builder(
                       initialRating: contractorModel.rating.toDouble(),
-                      allowHalfRating: true,
                       ignoreGestures: true,
                       itemSize: 18,
                       itemBuilder: (context, index) {
@@ -158,8 +157,7 @@ class ContractorItem extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 context.pushRoute(
-                  ContractorDetailsRoute(contractorId: contractorModel.id,
-                  ),
+                  ContractorDetailsRoute(contractorId: contractorModel.id),
                 );
               },
               child: Text(
@@ -176,24 +174,10 @@ class ContractorItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  contractorModel.description,
-                  style: theme.textTheme.bodySmall,
-                ),
-                const SizedBox(height: 4),
-                GestureDetector(
-                  onTap: () {
-                    context.pushRoute(
-                      ContractorDetailsRoute(contractorId: contractorModel.id, ),
-                    );
-                  },
-                  child: Text(
-                    LocaleKeys.showMore,
-                    style: theme.textTheme.bodySmall!.copyWith(
-                      color: Colors.orange,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                ExpandableTextWidget(
+                  text: contractorModel.description,
+                  navigateToDetails: true,
+                  contractorId: contractorModel.id,
                 ),
               ],
             ),
@@ -233,7 +217,6 @@ class ContractorItem extends StatelessWidget {
                           ContractorDetailsRoute(
                             contractorId: contractorModel.id,
                             isOfferPrice: true,
-        
                           ),
                         );
                       },

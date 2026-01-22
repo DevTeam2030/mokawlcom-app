@@ -32,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
         await Future.wait([
           context.read<HomeCubit>().getBanners(),
           context.read<HomeCubit>().getClassifications(),
-          context.read<HomeCubit>().getServices(),
         ]);
       }
     });
@@ -54,8 +53,19 @@ class _HomeScreenState extends State<HomeScreen> {
             buildWhen: (previous, current) =>
                 previous.isConnected != current.isConnected,
             builder: (context, state) {
-              return state.isConnected
-                  ? CustomScrollView(
+              if (!state.isConnected && state.classificationsModel.classifications.isEmpty) {
+                return NoInternetWidget(
+                  errorMessage: state.bannersErrorMessage,
+                  theme: theme,
+                  onPressed: () async {
+                    await Future.wait([
+                      context.read<HomeCubit>().getBanners(),
+                      context.read<HomeCubit>().getClassifications(),
+                    ]);
+                  },
+                );
+              }
+              return CustomScrollView(
                       slivers: [
                         const SliverToBoxAdapter(child: HomeHeader()),
                         SliverToBoxAdapter(
@@ -69,17 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     )
-                  : NoInternetWidget(
-                      errorMessage: state.bannersErrorMessage,
-                      theme: theme,
-                      onPressed: () async {
-                        await Future.wait([
-                          context.read<HomeCubit>().getBanners(),
-                          context.read<HomeCubit>().getClassifications(),
-                          context.read<HomeCubit>().getServices(),
-                        ]);
-                      },
-                    );
+                  ;
             },
           ),
         ),
