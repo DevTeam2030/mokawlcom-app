@@ -57,7 +57,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   LocaleKeys.enterYourMail,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium!.copyWith(
-                    color: ColorsManager.secondaryColor,
+                    color: ColorsManager.unselectedNavColor,
                   ),
                 ),
                 const SizedBox(height: 40),

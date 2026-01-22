@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
@@ -71,18 +72,16 @@ class SavedCompanyItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      const Icon(MyIcons.star, color: Colors.amber, size: 14),
-                      const SizedBox(width: 4),
-                      Text(
-                        favoriteModel.rate.toString(),
-                        style: theme.textTheme.bodySmall!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
+                  RatingBar.builder(
+                      initialRating: favoriteModel.rate.toDouble(),
+                      ignoreGestures: true,
+                      itemSize: 18,
+                      itemBuilder: (context, index) {
+                        return const Icon(MyIcons.star, color: Colors.amber);
+                      },
+                      unratedColor: ColorsManager.borderLightBlue,
+                      onRatingUpdate: (rating) {},
+                    ),
                 ],
               ),
             ),

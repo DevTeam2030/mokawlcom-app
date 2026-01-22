@@ -124,7 +124,9 @@ class PublicNotificationItem extends StatelessWidget {
           return ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: ColoredBox(
-              color: isRead ? ColorsManager.surfaceColor : Colors.grey.shade200,
+              color: isRead
+                  ? ColorsManager.surfaceColor
+                  : ColorsManager.lightBlueBg,
               child: Padding(
                 padding: const EdgeInsetsDirectional.symmetric(
                   vertical: 12,

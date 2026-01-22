@@ -56,6 +56,8 @@ class ClassificationItem extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           classificationModel.name,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
           style: theme.textTheme.labelSmall!.copyWith(
             fontWeight: FontWeight.w400,
             color: ColorsManager.textColor,
@@ -63,7 +65,9 @@ class ClassificationItem extends StatelessWidget {
           ),
         ),
         Text(
-          "(${classificationModel.numberOfServices})",
+          "(${classificationModel.numberOfServices })",
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
           style: theme.textTheme.labelSmall!.copyWith(
             fontWeight: FontWeight.w400,
             color: ColorsManager.textColor,

@@ -166,28 +166,29 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                               _completePhone = completeNumber;
                             },
                             textInputAction: TextInputAction.next,
+                            onSubmitted: (_) => _submit(context),
                           ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            LocaleKeys.address,
-                            style: theme.textTheme.bodyLarge!.copyWith(
-                              color: ColorsManager.primaryColor,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          CustomTextFormField(
-                            controller: _addressController,
-                            type: TextInputType.streetAddress,
-                            hintText: LocaleKeys.pleaseEnterYourAddress,
-                            autofillHints: const [
-                              AutofillHints.fullStreetAddress,
-                            ],
-                            textInputAction: TextInputAction.done,
-                            fieldName: LocaleKeys.address,
+                          //const SizedBox(height: 8.0),
+                          // Text(
+                          //   LocaleKeys.address,
+                          //   style: theme.textTheme.bodyLarge!.copyWith(
+                          //     color: ColorsManager.primaryColor,
+                          //     fontWeight: FontWeight.w400,
+                          //   ),
+                          // ),
+                          // const SizedBox(height: 8.0),
+                          // CustomTextFormField(
+                          //   controller: _addressController,
+                          //   type: TextInputType.streetAddress,
+                          //   hintText: LocaleKeys.pleaseEnterYourAddress,
+                          //   autofillHints: const [
+                          //     AutofillHints.fullStreetAddress,
+                          //   ],
+                          //   textInputAction: TextInputAction.done,
+                          //   fieldName: LocaleKeys.address,
 
-                            onSubmit: (_) => _submit(context),
-                          ),
+                          //   onSubmit: (_) => _submit(context),
+                          // ),
                         ],
                       ),
                     ),

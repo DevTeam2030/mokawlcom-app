@@ -106,14 +106,29 @@ class OfferDetails extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          Text(
-                            "${offerNotificationModel.price}",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: theme.textTheme.bodySmall!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: ColorsManager.primaryColor,
-                            ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: Text(
+                                    "${offerNotificationModel.price}",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: theme.textTheme.bodySmall!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: ColorsManager.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                LocaleKeys.sar,
+                                style: theme.textTheme.bodySmall!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorsManager.primaryColor,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -178,9 +193,10 @@ class OfferDetails extends StatelessWidget {
                           await showModalBottomSheet(
                             isScrollControlled: true,
                             backgroundColor: Colors.white,
+                            useSafeArea: true,
                             context: context,
                             builder: (context) => FractionallySizedBox(
-                              heightFactor: 0.9,
+                              heightFactor: 1,
                               child: ReplyOnOfferBottomSheet(
                                 address: LocaleKeys.replyToThePriceOffer,
                                 offerId: offerNotificationModel.offerId

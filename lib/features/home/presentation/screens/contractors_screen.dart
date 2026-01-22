@@ -142,6 +142,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
               onLoading: Skeletonizer(
                 enabled: state.getContractorsState.isLoading && !hasData,
                 containersColor: ColorsManager.skeletonColor,
+                ignoreContainers: true,
                 child: _buildContractorsList(
                   contractors: !hasData
                       ? List.generate(

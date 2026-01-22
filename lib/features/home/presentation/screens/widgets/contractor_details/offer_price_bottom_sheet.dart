@@ -160,7 +160,7 @@ class _OfferPriceBottomSheetState extends State<OfferPriceBottomSheet> {
                   },
                   builder: (context, state) {
                     return PrimaryButton(
-                      isLoading: state.addOfferPriceState.isLoading,
+                      isLoading: state.addOfferPriceState.isLoading && state.file ==null,
                       onPressed: () async {
                         await _submit(context);
                       },

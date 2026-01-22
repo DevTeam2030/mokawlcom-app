@@ -80,13 +80,15 @@ class PriceOfferUploadFileSection extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(height: 80),
+        const SizedBox(height: 30),
         BlocBuilder<ContractorInfoCubit, ContractorInfoState>(
           buildWhen: (previous, current) =>
               previous.progress != current.progress ||
               previous.file != current.file,
           builder: (context, state) {
-            if (state.progress > 0 && state.progress < 1 && state.file != null) {
+            if (state.progress > 0 &&
+                state.progress < 1 &&
+                state.file != null) {
               return Row(
                 children: [
                   Expanded(

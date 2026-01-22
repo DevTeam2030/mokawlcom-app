@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/services/pick_image_service.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/deal/deal_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/add_service_request_model.dart';
@@ -13,11 +14,9 @@ import 'package:mokawlcom_app/locale_keys.dart';
 
 class UserDetailsCubit extends Cubit<UserDetailsState> {
   final ProfileRepo profileRepo;
-  final ImagePicker _imagePicker;
 
-  UserDetailsCubit({required this.profileRepo, ImagePicker? imagePicker})
-    : _imagePicker = imagePicker ?? ImagePicker(),
-      super(const UserDetailsState());
+  UserDetailsCubit({required this.profileRepo})
+      : super(const UserDetailsState());
 
   Future<void> getUserOffers() async {
     emit(
@@ -153,10 +152,8 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
     try {
       emit(state.copyWith(isImageLoading: true, imageErrorMessage: ''));
 
-      final List<XFile> pickedFiles = await _imagePicker.pickMultiImage(
-        imageQuality: 85,
-        limit: state.maxImages,
-      );
+      final List<File> pickedFiles =
+          await ImagePickerService.pickMultipleImages();
 
       if (pickedFiles.isEmpty) {
         emit(state.copyWith(isImageLoading: false));
@@ -175,7 +172,7 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
             state.copyWith(
               isImageLoading: false,
               imageErrorMessage:
-                  '${LocaleKeys.imageSizeExceeded} ${state.maxSizeInMB}MB',
+                  '${LocaleKeys.imageSizeExceeded} ${state.maxSizeInMB} MB',
             ),
           );
           return;
@@ -320,7 +317,10 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
     );
   }
 
-  Future<void> deleteService({required int serviceId, required int index}) async {
+  Future<void> deleteService({
+    required int serviceId,
+    required int index,
+  }) async {
     final oldState = state;
     final updatedServices = List<ContractorServiceModel>.from(
       state.contractorServicesModel.services,

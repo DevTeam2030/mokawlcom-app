@@ -27,13 +27,18 @@ class ProfileImage extends StatelessWidget {
                 Widget widget;
 
                 if (state.profileImage != null) {
-                  widget = Image.file(state.profileImage!, fit: .cover);
+                  widget = Image.file(
+                    state.profileImage!,
+                    fit: .cover,
+                    width: 96,
+                    height: 96,
+                  );
                 } else if (state.profileImage == null &&
                     state.userModel.logo.isNotEmpty) {
                   widget = CustomCachedNetworkImage(
                     imageUrl: state.userModel.logo,
-                    width: 96,
-                    height: 96,
+                    width: 500,
+                    height: 500,
                     fit: .cover,
                   );
                 } else {

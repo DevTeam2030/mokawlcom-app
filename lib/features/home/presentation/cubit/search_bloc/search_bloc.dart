@@ -159,7 +159,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     return (events, mapper) {
       final debouncedEvents = events
           .where((event) => durationMapper(event) != Duration.zero)
-          .debounceTime(const Duration(milliseconds: 500));
+          .debounceTime(const Duration(seconds: 2));
 
       final immediateEvents = events.where(
         (event) => durationMapper(event) == Duration.zero,

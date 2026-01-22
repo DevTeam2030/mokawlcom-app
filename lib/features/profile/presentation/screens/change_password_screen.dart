@@ -21,13 +21,19 @@ class ChangePasswordScreen extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (context) => getIt<ProfileCubit>(), child: this);
+    return BlocProvider(
+      create: (context) => getIt<ProfileCubit>(),
+      child: this,
+    );
   }
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   late final GlobalKey<FormState> formKey;
   late AutovalidateMode _autovalidateMode;
+  late final ValueNotifier<AutovalidateMode> _oldPasswordAutovalidateMode;
+  late final ValueNotifier<AutovalidateMode> _newPasswordAutovalidateMode;
+  late final ValueNotifier<AutovalidateMode> _confirmPasswordAutovalidateMode;
   String _oldPassword = "";
   String _newPassword = "";
   String _confirmPassword = "";
@@ -36,6 +42,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     super.initState();
     formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
+    _oldPasswordAutovalidateMode = ValueNotifier(AutovalidateMode.disabled);
+    _newPasswordAutovalidateMode = ValueNotifier(AutovalidateMode.disabled);
+    _confirmPasswordAutovalidateMode = ValueNotifier(AutovalidateMode.disabled);
+  }
+
+  @override
+  void dispose() {
+    _oldPasswordAutovalidateMode.dispose();
+    _newPasswordAutovalidateMode.dispose();
+    _confirmPasswordAutovalidateMode.dispose();
+    super.dispose();
   }
 
   @override
@@ -68,10 +85,30 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
                 const SizedBox(height: 8.0),
-                PasswordField(
-                  hintText: "********",
-                  textInputAction: TextInputAction.next,
-                  onChanged: (value) => _oldPassword = value!,
+                ValueListenableBuilder<AutovalidateMode>(
+                  valueListenable: _oldPasswordAutovalidateMode,
+                  builder: (context, autovalidateMode, _) {
+                    return PasswordField(
+                      autovalidateMode: autovalidateMode,
+                      hintText: "********",
+                      textInputAction: TextInputAction.next,
+                      onChanged: (value) {
+                        _oldPassword = value!;
+                        // Enable autovalidation once user starts typing
+                        _oldPasswordAutovalidateMode.value =
+                            AutovalidateMode.always;
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return LocaleKeys.passwordIsRequired;
+                        }
+                        if (value.length < 6) {
+                          return LocaleKeys.passwordIsTooShort;
+                        }
+                        return null;
+                      },
+                    );
+                  },
                 ),
                 const SizedBox(height: 16.0),
                 Text(
@@ -81,10 +118,35 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
                 const SizedBox(height: 8.0),
-                PasswordField(
-                  hintText: "********",
-                  textInputAction: TextInputAction.next,
-                  onChanged: (value) => _newPassword = value!,
+                ValueListenableBuilder<AutovalidateMode>(
+                  valueListenable: _newPasswordAutovalidateMode,
+                  builder: (context, autovalidateMode, _) {
+                    return PasswordField(
+                      autovalidateMode: autovalidateMode,
+                      hintText: "********",
+                      textInputAction: TextInputAction.next,
+                      onChanged: (value) {
+                        _newPassword = value!;
+                        // Enable autovalidation once user starts typing
+                        _newPasswordAutovalidateMode.value =
+                            AutovalidateMode.always;
+                        // Enable autovalidation for confirm password once user starts typing
+                        if (_confirmPassword.isNotEmpty) {
+                          _confirmPasswordAutovalidateMode.value =
+                              AutovalidateMode.always;
+                        }
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return LocaleKeys.passwordIsRequired;
+                        }
+                        if (value.length < 6) {
+                          return LocaleKeys.passwordIsTooShort;
+                        }
+                        return null;
+                      },
+                    );
+                  },
                 ),
                 const SizedBox(height: 16.0),
                 Text(
@@ -94,19 +156,33 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
                 const SizedBox(height: 8.0),
-                PasswordField(
-                  hintText: "********",
-                  textInputAction: TextInputAction.done,
-                  onChanged: (value) => _confirmPassword = value!,
-                  onSubmit: (_) => _onSubmit(),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return LocaleKeys.passwordIsRequired;
-                    }
-                    if (value != _newPassword) {
-                      return LocaleKeys.passwordsDoNotMatch;
-                    }
-                    return null;
+                ValueListenableBuilder<AutovalidateMode>(
+                  valueListenable: _confirmPasswordAutovalidateMode,
+                  builder: (context, autovalidateMode, _) {
+                    return PasswordField(
+                      autovalidateMode: autovalidateMode,
+                      hintText: "********",
+                      textInputAction: TextInputAction.done,
+                      onChanged: (value) {
+                        _confirmPassword = value!;
+                        // Enable autovalidation once user starts typing
+                        _confirmPasswordAutovalidateMode.value =
+                            AutovalidateMode.always;
+                      },
+                      onSubmit: (_) => _onSubmit(),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return LocaleKeys.passwordIsRequired;
+                        }
+                        if (value.length < 6) {
+                          return LocaleKeys.passwordIsTooShort;
+                        }
+                        if (value != _newPassword) {
+                          return LocaleKeys.passwordsDoNotMatch;
+                        }
+                        return null;
+                      },
+                    );
                   },
                 ),
               ],

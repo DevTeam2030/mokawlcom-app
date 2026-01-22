@@ -125,7 +125,7 @@ class _ReplyOnOfferBottomSheetState extends State<ReplyOnOfferBottomSheet> {
               ),
               const SizedBox(height: 8),
               const ReplyOnPriceOfferUploadFileSection(),
-              const SizedBox(height: 24),
+              const SizedBox(height: 30),
               BlocConsumer<NotificationsCubit, NotificationsState>(
                 listenWhen: (previous, current) =>
                     previous.replayOnOfferPriceState != current.replayOnOfferPriceState,

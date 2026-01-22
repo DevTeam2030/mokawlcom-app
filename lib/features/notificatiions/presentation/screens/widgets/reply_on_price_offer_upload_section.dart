@@ -82,7 +82,6 @@ class ReplyOnPriceOfferUploadFileSection extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(height: 80),
         BlocBuilder<NotificationsCubit, NotificationsState>(
           buildWhen: (previous, current) =>
               previous.progress != current.progress ||
