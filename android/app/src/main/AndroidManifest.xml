@@ -11,11 +11,18 @@
 
     <!-- Media access (Android 13+) -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+
+    <!-- Documents access (Android 13+) for PDFs -->
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED"/>
 
     <!-- Storage (Android 12 and below) -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29"/>
 
     <!-- ================= QUERIES (Android 11+) ================= -->
 
@@ -83,6 +90,23 @@
         <!-- Custom Tabs -->
         <intent>
             <action android:name="android.support.customtabs.action.CustomTabsService"/>
+        </intent>
+
+        <!-- Browser intents -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:scheme="https"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:scheme="http"/>
+        </intent>
+
+        <!-- Document providers (for PDF picking) -->
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT"/>
         </intent>
 
     </queries>
