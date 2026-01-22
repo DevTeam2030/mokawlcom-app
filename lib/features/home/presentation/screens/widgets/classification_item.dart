@@ -26,6 +26,7 @@ class ClassificationItem extends StatelessWidget {
             child: Container(
               width: 100,
               height: 100,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 color: ColorsManager.lightGrayBg,
@@ -41,8 +42,12 @@ class ClassificationItem extends StatelessWidget {
                     color: ColorsManager.skeletonColor,
                   ),
                 ),
-                child: CustomCachedNetworkImage(
-                  imageUrl: classificationModel.image,
+                child: ClipOval(
+                  child: CustomCachedNetworkImage(
+                    imageUrl: classificationModel.image,
+                    width: 100,
+                    height: 100,
+                  ),
                 ),
               ),
             ),

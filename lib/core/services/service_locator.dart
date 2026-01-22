@@ -38,18 +38,16 @@ import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart'
 final GetIt getIt = GetIt.instance;
 
 class ServiceLocator {
-  void init() {
+  void init({
+    required SharedPrefHelper sharedPrefHelper,
+    required CacheHelper cacheHelper,
+  }) {
     getIt.registerSingleton<AppRouter>(AppRouter());
     getIt.registerLazySingleton<DioHelper>(() => DioHelper());
 
-    getIt.registerSingletonAsync<SharedPrefHelper>(
-      () async => await SharedPrefHelper.init(),
-    );
+    getIt.registerSingleton<SharedPrefHelper>(sharedPrefHelper);
 
-    getIt.registerSingletonAsync<CacheHelper>(() async {
-      final sharedPrefHelper = await getIt.getAsync<SharedPrefHelper>();
-      return CacheHelper(sharedPrefHelper: sharedPrefHelper);
-    });
+    getIt.registerSingleton<CacheHelper>(cacheHelper);
 
     getIt.registerLazySingleton<FilePickerService>(() => FilePickerService());
 

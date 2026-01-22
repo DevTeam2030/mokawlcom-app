@@ -16,19 +16,25 @@ class ServicesDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BlocSelector<ContractorInfoCubit, ContractorInfoState, List<ContractorServiceModel>>(
+    return BlocSelector<
+      ContractorInfoCubit,
+      ContractorInfoState,
+      List<ContractorServiceModel>
+    >(
       selector: (state) {
         return state.contractorDetails.services;
       },
       builder: (context, contractorServices) {
-        return contractorServices.isNotEmpty ? ListView.separated(
-          itemBuilder: (context, index) => ServiceDetailsListItem(
-            theme: theme,
-            contractorServiceModel: contractorServices[index],
-          ),
-          separatorBuilder: (_, __) => const SizedBox(height: 14),
-          itemCount: contractorServices.length,
-        ):NoDataWidget(text: LocaleKeys.noServicesYet, theme: theme);
+        return contractorServices.isNotEmpty
+            ? ListView.separated(
+                itemBuilder: (context, index) => ServiceDetailsListItem(
+                  theme: theme,
+                  contractorServiceModel: contractorServices[index],
+                ),
+                separatorBuilder: (_, __) => const SizedBox(height: 14),
+                itemCount: contractorServices.length,
+              )
+            : NoDataWidget(text: LocaleKeys.noServicesYet, theme: theme);
       },
     );
   }

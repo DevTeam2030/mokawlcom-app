@@ -1,8 +1,27 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.mokawlcom_app">
 
+    <!-- ================= PERMISSIONS ================= -->
+
+    <!-- Internet -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- Notifications (Android 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <!-- Media access (Android 13+) -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+
+    <!-- Storage (Android 12 and below) -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"/>
+
+    <!-- ================= QUERIES (Android 11+) ================= -->
+
     <queries>
 
+        <!-- Process text -->
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
@@ -13,7 +32,8 @@
             <action android:name="android.intent.action.VIEW"/>
             <data android:scheme="tel"/>
         </intent>
-        <!-- Facebook (App + Web) -->
+
+        <!-- Facebook -->
         <intent>
             <action android:name="android.intent.action.VIEW"/>
             <data android:scheme="fb"/>
@@ -67,11 +87,16 @@
 
     </queries>
 
+    <!-- ================= APPLICATION ================= -->
+
     <application
         android:label="Mokawlcom"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:enableOnBackInvokedCallback="true">
+        android:enableOnBackInvokedCallback="true"
+        android:hardwareAccelerated="true"
+        android:largeHeap="false"
+        android:extractNativeLibs="true">
 
         <activity
             android:name=".MainActivity"

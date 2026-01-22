@@ -27,8 +27,7 @@ class NotificationsState extends Equatable {
   final bool isFileLoading;
   final double progress;
   final RequestStatus replayOnOfferPriceState;
-  final bool isOfferFirstLoading;
-  final bool isPublicFirstLoading;
+ 
 
   final File? file;
 
@@ -53,8 +52,6 @@ class NotificationsState extends Equatable {
     this.file,
     this.replayOnOfferPriceState = RequestStatus.initial,
     this.isConnected = true,
-    this.isOfferFirstLoading = true,
-    this.isPublicFirstLoading = true,
   });
 
   NotificationsState copyWith({
@@ -79,8 +76,6 @@ class NotificationsState extends Equatable {
     bool? clearFile,
     RequestStatus? replayOnOfferPriceState,
     bool? isConnected,
-    bool? isOfferFirstLoading,
-    bool? isPublicFirstLoading,
   }) {
     return NotificationsState(
       getPublicNotificationsState:
@@ -116,8 +111,6 @@ class NotificationsState extends Equatable {
       replayOnOfferPriceState:
           replayOnOfferPriceState ?? this.replayOnOfferPriceState,
       isConnected: isConnected ?? this.isConnected,
-      isOfferFirstLoading: isOfferFirstLoading ?? this.isOfferFirstLoading,
-      isPublicFirstLoading: isPublicFirstLoading ?? this.isPublicFirstLoading,
     );
   }
 
@@ -143,7 +136,5 @@ class NotificationsState extends Equatable {
     file,
     replayOnOfferPriceState,
     isConnected,
-    isOfferFirstLoading,
-    isPublicFirstLoading,
   ];
 }

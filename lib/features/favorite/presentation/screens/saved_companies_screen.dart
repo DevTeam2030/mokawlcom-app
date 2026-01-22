@@ -16,11 +16,17 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 
 @RoutePage()
-class SavedCompaniesScreen extends StatefulWidget {
+class SavedCompaniesScreen extends StatefulWidget implements AutoRouteWrapper{
   const SavedCompaniesScreen({super.key});
 
   @override
   State<SavedCompaniesScreen> createState() => _SavedCompaniesScreenState();
+  
+  @override
+      Widget wrappedRoute(BuildContext context) => BlocProvider(
+        create: (context) => getIt<FavoriteCubit>()..getFavorites(),
+        child: this,
+      );
 }
 
 class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {

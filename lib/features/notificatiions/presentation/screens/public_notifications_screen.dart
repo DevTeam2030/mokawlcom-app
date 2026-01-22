@@ -101,7 +101,7 @@ class _PublicNotificationsScreenState extends State<PublicNotificationsScreen> {
           errorMessage: state.publicNotificationsErrorMessage,
           onLoading: Skeletonizer(
             containersColor: ColorsManager.skeletonColor,
-            enabled: state.getPublicNotificationsState.isLoading && state.isPublicFirstLoading,
+            enabled: state.getPublicNotificationsState.isLoading ,
             ignoreContainers: true,
             child: _buildNotificationsList(
               notifications: List.generate(

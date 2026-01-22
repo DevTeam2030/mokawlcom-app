@@ -62,17 +62,14 @@ class UserAuthRepoImpl implements UserAuthRepo {
 
   @override
   Future<Either<Failure, UserLoginResponseModel>> googleLogin() async {
-    final idToken = await GoogleSignInService.instance.signIn();
+    final result = await safeApiCall<UserLoginResponseModel>(() async {
+      final idToken = await GoogleSignInService.instance.signIn();
 
-    if (idToken == null || idToken.isEmpty) {
-      return const Left(ServerFailure(""));
-    }
-    GoogleSignInRequestModel googleSignInRequestModel =
-        GoogleSignInRequestModel(
-          idToken: idToken,
-          fcmToken: await FcmInitHelper().getFcmToken() ?? "",
-        );
-    final result = await safeApiCall<UserLoginResponseModel>(() {
+      GoogleSignInRequestModel googleSignInRequestModel =
+          GoogleSignInRequestModel(
+            idToken: idToken!,
+            fcmToken: await FcmInitHelper().getFcmToken() ?? "",
+          );
       return userAuthDataSource.googleLogin(
         googleSignInRequestModel: googleSignInRequestModel,
       );

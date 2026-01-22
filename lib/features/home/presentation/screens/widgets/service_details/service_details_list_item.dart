@@ -26,38 +26,40 @@ class ServiceDetailsListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 5),
-            if(contractorServiceModel.images.isNotEmpty)
-            SizedBox(
-              height: 168,
-              child: ListView.separated(
-                padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-                scrollDirection: Axis.horizontal,
-                itemCount: contractorServiceModel.images.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 10),
-                itemBuilder: (context, index) => GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) => ImageLightBox(
-                        images: contractorServiceModel.images,
-                        initialIndex: index,
+            if (contractorServiceModel.images.isNotEmpty)
+              SizedBox(
+                height: 168,
+                child: ListView.separated(
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: 10,
+                  ),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: contractorServiceModel.images.length,
+                  separatorBuilder: (_, __) => const SizedBox(width: 10),
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => ImageLightBox(
+                          images: contractorServiceModel.images,
+                          initialIndex: index,
+                        ),
+                      );
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: CustomCachedNetworkImage(
+                        imageUrl: contractorServiceModel.images[index],
+                        height: 166,
+                        width: 250,
+                        fit: BoxFit.cover,
                       ),
-                    );
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: CustomCachedNetworkImage(
-                      imageUrl: contractorServiceModel.images[index],
-                      height: 166,
-                      width: 250,
-                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
-            ),
-             if(contractorServiceModel.images.isNotEmpty)
-            const SizedBox(height: 22),
+            if (contractorServiceModel.images.isNotEmpty)
+              const SizedBox(height: 22),
 
             /// Details
             Padding(
@@ -107,7 +109,7 @@ class ImageLightBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       insetPadding: EdgeInsets.zero,
@@ -116,13 +118,21 @@ class ImageLightBox extends StatelessWidget {
         child: FractionallySizedBox(
           heightFactor: 0.4,
           child: PageView.builder(
-            controller: PageController(initialPage: initialIndex),
+            controller: PageController(
+              initialPage: initialIndex,
+            ),
             itemCount: images.length,
             itemBuilder: (context, index) {
-              return InteractiveViewer(
-                child: CustomCachedNetworkImage(
-                  imageUrl: images[index],
-                  fit: BoxFit.cover,
+              return Padding(
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 5),
+                child: InteractiveViewer(
+                  child: ClipRRect(
+                    borderRadius: .circular(8),
+                    child: CustomCachedNetworkImage(
+                      imageUrl: images[index],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               );
             },

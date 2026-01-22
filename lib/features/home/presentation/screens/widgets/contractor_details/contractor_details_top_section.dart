@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/enums/user_type.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
@@ -176,25 +178,35 @@ class ContractorDetailsTopSection extends StatelessWidget {
                         Icon(MyIcons.star, color: ColorsManager.skeletonColor),
                   ),
                 ),
-                child: RatingBar.builder(
-                  initialRating: state.rating,
-                  allowHalfRating: true,
-                  itemSize: 24,
-                  itemBuilder: (context, index) {
-                    return const Icon(MyIcons.star, color: Colors.amber);
-                  },
-                  unratedColor: ColorsManager.secondaryColor,
-                  onRatingUpdate: (rating) {
-                    context.read<AppCubit>().handleProtectedNavigation(
-                      context: context,
-                      onAllowed: () {
-                        context.read<ContractorInfoCubit>().rateContractor(
-                          contractorId: contractorDetailsModel.id,
-                          rating: rating,
-                        );
-                      },
-                    );
-                  },
+                child: GestureDetector(
+                  onTap: AppConstants.userType == UserType.visitor
+                      ? () {
+                          context.read<AppCubit>().handleProtectedNavigation(
+                            context: context,
+                            onAllowed: () {},
+                          );
+                        }
+                      : null,
+                  child: RatingBar.builder(
+                    initialRating: state.rating,
+                    ignoreGestures: AppConstants.userType == UserType.visitor,
+                    itemSize: 24,
+                    itemBuilder: (context, index) {
+                      return const Icon(MyIcons.star, color: Colors.amber);
+                    },
+                    unratedColor: ColorsManager.secondaryColor,
+                    onRatingUpdate: (rating) {
+                      context.read<AppCubit>().handleProtectedNavigation(
+                        context: context,
+                        onAllowed: () {
+                          context.read<ContractorInfoCubit>().rateContractor(
+                            contractorId: contractorDetailsModel.id,
+                            rating: rating,
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               );
             },

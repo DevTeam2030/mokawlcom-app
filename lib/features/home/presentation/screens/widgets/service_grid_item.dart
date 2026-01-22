@@ -41,7 +41,13 @@ class ServiceGridItem extends StatelessWidget {
                     color: ColorsManager.skeletonColor,
                   ),
                 ),
-                child: CustomCachedNetworkImage(imageUrl: serviceModel.image),
+                child: ClipOval(
+                  child: CustomCachedNetworkImage(
+                    imageUrl: serviceModel.image,
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
               ),
             ),
           ),

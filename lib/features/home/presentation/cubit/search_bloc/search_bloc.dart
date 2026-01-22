@@ -23,7 +23,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       transformer: debounceRestartable<SearchContractorsEvent>(
         (event) => (event.ignoreDebounce ?? false)
             ? Duration.zero
-            : const Duration(milliseconds: 500),
+            : const Duration(seconds: 2),
       ),
     );
     on<GetContractorsEvent>(_getContractorsEvent);

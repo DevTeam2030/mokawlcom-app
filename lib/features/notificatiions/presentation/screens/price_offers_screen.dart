@@ -101,7 +101,7 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
           errorMessage: state.offerNotificationsErrorMessage,
           onLoading: Skeletonizer(
             containersColor: ColorsManager.skeletonColor,
-            enabled: state.getOfferNotificationsState.isLoading && state.isOfferFirstLoading,
+            enabled: state.getOfferNotificationsState.isLoading,
             ignoreContainers: true,
             child: _buildOffersList(
               theme: theme,

@@ -624,18 +624,54 @@ class LoginRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [MyCurrentPackageScreen]
-class MyCurrentPackageRoute extends PageRouteInfo<void> {
-  const MyCurrentPackageRoute({List<PageRouteInfo>? children})
-    : super(MyCurrentPackageRoute.name, initialChildren: children);
+class MyCurrentPackageRoute extends PageRouteInfo<MyCurrentPackageRouteArgs> {
+  MyCurrentPackageRoute({
+    Key? key,
+    required ProfileCubit profileCubit,
+    List<PageRouteInfo>? children,
+  }) : super(
+         MyCurrentPackageRoute.name,
+         args: MyCurrentPackageRouteArgs(key: key, profileCubit: profileCubit),
+         initialChildren: children,
+       );
 
   static const String name = 'MyCurrentPackageRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const MyCurrentPackageScreen();
+      final args = data.argsAs<MyCurrentPackageRouteArgs>();
+      return WrappedRoute(
+        child: MyCurrentPackageScreen(
+          key: args.key,
+          profileCubit: args.profileCubit,
+        ),
+      );
     },
   );
+}
+
+class MyCurrentPackageRouteArgs {
+  const MyCurrentPackageRouteArgs({this.key, required this.profileCubit});
+
+  final Key? key;
+
+  final ProfileCubit profileCubit;
+
+  @override
+  String toString() {
+    return 'MyCurrentPackageRouteArgs{key: $key, profileCubit: $profileCubit}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! MyCurrentPackageRouteArgs) return false;
+    return key == other.key && profileCubit == other.profileCubit;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ profileCubit.hashCode;
 }
 
 /// generated route for
@@ -799,7 +835,7 @@ class SavedCompaniesRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const SavedCompaniesScreen();
+      return WrappedRoute(child: const SavedCompaniesScreen());
     },
   );
 }

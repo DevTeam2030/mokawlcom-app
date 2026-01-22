@@ -57,10 +57,13 @@ class ContractorItem extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     clipBehavior: .antiAliasWithSaveLayer,
-                    child: CustomCachedNetworkImage(
+                    child: ClipOval(
+                      child: CustomCachedNetworkImage(
                       imageUrl: contractorModel.image,
                       width: 50,
                       height: 50,
+                      
+                    ),
                     ),
                   ),
                 ),

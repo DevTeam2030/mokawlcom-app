@@ -148,17 +148,12 @@ class AuthCubit extends Cubit<AuthState> {
 
     final result = await userAuthRepoImpl.googleLogin();
     result.fold(
-      (failure) {
-        if (failure.errorMessage.isEmpty) {
-          return;
-        }
-        emit(
-          state.copyWith(
-            googleLoginState: RequestStatus.error,
-            errorMessage: failure.errorMessage,
-          ),
-        );
-      },
+      (failure) => emit(
+        state.copyWith(
+          googleLoginState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
       (userLoginResponseModel) async {
         AppConstants.token = userLoginResponseModel.token;
         await cacheHelper.saveData(

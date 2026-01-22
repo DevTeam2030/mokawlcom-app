@@ -30,7 +30,7 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
               );
               context.replaceRoute(const AuthenticatedRoute());
             }
-            if (state.googleLoginState.isError) {
+            if (state.googleLoginState.isError && state.errorMessage.isNotEmpty) {
               showToast(message: state.errorMessage, state: ToastStates.error);
             }
           },

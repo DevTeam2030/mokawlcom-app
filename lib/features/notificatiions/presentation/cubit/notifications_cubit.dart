@@ -86,7 +86,6 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             getPublicNotificationsState: RequestStatus.success,
             publicNotifications: publicNotifications,
             publicNotificationsReadStatus: updatedPublicNotificationsReadStatus,
-            isPublicFirstLoading: false,
           ),
         );
       },
@@ -178,7 +177,6 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             offerNotifications: offerNotifications,
             offerNotificationsCurrentPage: offerNotifications.currentPage,
             offerNotificationsReadStatus: updatedOfferNotificationsReadStatus,
-            isOfferFirstLoading: false,
           ),
         );
       },
