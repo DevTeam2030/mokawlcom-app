@@ -260,4 +260,5 @@ class LocaleKeys {
   static String get invalidEmail => 'invalid_email'.tr();
   static String get done => 'done'.tr();
   static String get noServicesAvailable => 'no_services_available'.tr();
+  static String get pleaseSelectClassification => 'please_select_classification'.tr();
 }

@@ -115,7 +115,7 @@ class ContractorItem extends StatelessWidget {
                     RatingBar.builder(
                       initialRating: contractorModel.rating.toDouble(),
                       ignoreGestures: true,
-                      itemSize: 18,
+                      itemSize: 16,
                       itemBuilder: (context, index) {
                         return const Icon(MyIcons.star, color: Colors.amber);
                       },

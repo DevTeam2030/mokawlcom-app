@@ -33,7 +33,7 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
   @override
   void initState() {
     super.initState();
-    selectedIndices = ValueNotifier({0});
+    selectedIndices = ValueNotifier({});
     _scrollController = ScrollController()..addListener(_onScroll);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

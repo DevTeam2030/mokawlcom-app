@@ -32,7 +32,7 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
   @override
   void initState() {
     super.initState();
-    activeIndex = ValueNotifier<int>(0);
+    activeIndex = ValueNotifier<int>(-1);
     _scrollController = ScrollController()..addListener(_onScroll);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -187,6 +187,13 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
           const SizedBox(height: 10),
           PrimaryButton(
             onPressed: () {
+              if (activeIndex.value == -1) {
+                showToast(
+                  message: LocaleKeys.pleaseSelectClassification,
+                  state: ToastStates.error,
+                );
+                return;
+              }
               context.pushRoute(
                 SelectServicesRoute(
                   classificationId: classifications[activeIndex.value].id,

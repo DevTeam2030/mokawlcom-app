@@ -259,7 +259,6 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
           name: _nameController.text,
           email: _emailController.text,
           phone: _completePhone,
-          address: _addressController.text,
         ),
       );
     } else {

@@ -61,7 +61,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 LocaleKeys.verificationCodeSent,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium!.copyWith(
-                  color: ColorsManager.secondaryColor,
+                  color: ColorsManager.unselectedNavColor,
                 ),
               ),
             ),

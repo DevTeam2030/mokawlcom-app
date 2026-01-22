@@ -76,7 +76,7 @@
   "price": "السعر",
   "message": "الرسالة",
   "attach_a_file": "ارفاق ملف",
-  "public_notifications": "الاشعارات العامة",
+  "public_notifications": "الإشعارات العامة",
   "prices_offers": "عروض الأسعار",
   "offer_address": "عنوان العرض",
   "offered_by": "مقدم من",
@@ -179,5 +179,6 @@
   "cannot_open_email_app":"لا يمكن فتح تطبيق البريد الإلكتروني",
   "invalid_email":"بريد إلكتروني غير صالح",
   "done":"تم",
-  "no_services_available":"لا يوجد خدمات متاحة"
+  "no_services_available":"لا يوجد خدمات متاحة",
+  "please_select_classification":"من فضلك اختر التصنيف"
 }

@@ -179,7 +179,8 @@
   "cannot_open_email_app":"Cannot open email app",
   "invalid_email":"Invalid email",
   "done":"Done",
-  "no_services_available":"No services available"
+  "no_services_available":"No services available",
+  "please_select_classification":"Please select classification"
 
   
 
