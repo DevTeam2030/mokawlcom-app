@@ -24,6 +24,7 @@ class ContractorSignupForm extends StatefulWidget {
 class _ContractorSignupFormState extends State<ContractorSignupForm> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode _autovalidateMode;
+  late final ValueNotifier<AutovalidateMode> _confirmPasswordAutovalidateMode;
   late String _companyName;
   late String _email;
   late String _password;
@@ -35,6 +36,15 @@ class _ContractorSignupFormState extends State<ContractorSignupForm> {
     super.initState();
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
+    _confirmPasswordAutovalidateMode = ValueNotifier(AutovalidateMode.disabled);
+    _password = '';
+    _confirmPassword = '';
+  }
+
+  @override
+  void dispose() {
+    _confirmPasswordAutovalidateMode.dispose();
+    super.dispose();
   }
 
   @override
@@ -90,7 +100,14 @@ class _ContractorSignupFormState extends State<ContractorSignupForm> {
           PasswordField(
             hintText: "********",
             textInputAction: TextInputAction.next,
-            onChanged: (password) => _password = password!,
+            onChanged: (password) {
+              _password = password!;
+              // Enable autovalidation for confirm password once user starts typing
+              if (_confirmPassword.isNotEmpty) {
+                _confirmPasswordAutovalidateMode.value =
+                    AutovalidateMode.always;
+              }
+            },
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -101,22 +118,33 @@ class _ContractorSignupFormState extends State<ContractorSignupForm> {
             ),
           ),
           const SizedBox(height: 8.0),
-          PasswordField(
-            hintText: "********",
-            textInputAction: TextInputAction.next,
-            onChanged: (confirmPassword) => _confirmPassword = confirmPassword!,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return LocaleKeys.passwordIsRequired;
-              }
+          ValueListenableBuilder<AutovalidateMode>(
+            valueListenable: _confirmPasswordAutovalidateMode,
+            builder: (context, autovalidateMode, _) {
+              return PasswordField(
+                autovalidateMode: autovalidateMode,
+                hintText: "********",
+                textInputAction: TextInputAction.next,
+                onChanged: (confirmPassword) {
+                  _confirmPassword = confirmPassword!;
+                  // Enable autovalidation once user starts typing
+                  _confirmPasswordAutovalidateMode.value =
+                      AutovalidateMode.always;
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return LocaleKeys.passwordIsRequired;
+                  }
 
-              final minLength = value.length >= 6;
+                  final minLength = value.length >= 6;
 
-              if (!minLength) return LocaleKeys.passwordIsTooShort;
-              if (value != _password) {
-                return LocaleKeys.passwordsDoNotMatch;
-              }
-              return null;
+                  if (!minLength) return LocaleKeys.passwordIsTooShort;
+                  if (value != _password) {
+                    return LocaleKeys.passwordsDoNotMatch;
+                  }
+                  return null;
+                },
+              );
             },
           ),
           const SizedBox(height: 8.0),

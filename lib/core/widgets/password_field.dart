@@ -13,6 +13,7 @@ class PasswordField extends StatefulWidget {
     this.textInputAction,
     this.validator,
     this.onChanged,
+    this.autovalidateMode,
   });
 
   final void Function(String?)? onSaved;
@@ -22,6 +23,7 @@ class PasswordField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final String? Function(String?)? validator;
   final void Function(String?)? onChanged;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
@@ -60,6 +62,7 @@ class _PasswordFieldState extends State<PasswordField> {
           //  prefixIcon: const Icon(Icons.lock_outline),
           autofillHints: const [AutofillHints.password],
           obscureText: isObscured,
+          autovalidateMode: widget.autovalidateMode,
           suffixIcon: IconButton(
             onPressed: () => _obscureTextNotifier.value = !isObscured,
             icon: isObscured

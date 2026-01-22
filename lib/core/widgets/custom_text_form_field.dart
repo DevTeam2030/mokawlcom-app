@@ -25,7 +25,10 @@ class CustomTextFormField extends StatelessWidget {
     this.onTap,
     this.enabled = true,
     this.readOnly = false,
-    this.maxLines = 1, required this.fieldName, this.onChanged,
+    this.maxLines = 1,
+    required this.fieldName,
+    this.onChanged,
+    this.autovalidateMode,
   });
 
   final TextEditingController? controller;
@@ -51,6 +54,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool readOnly;
   final int maxLines;
   final String fieldName;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +64,7 @@ class CustomTextFormField extends StatelessWidget {
       onTap: onTap,
       enabled: enabled,
       maxLines: maxLines,
+      autovalidateMode: autovalidateMode,
       textInputAction: textInputAction ?? TextInputAction.next,
       keyboardType: type,
       obscureText: obscureText,

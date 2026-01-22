@@ -26,6 +26,7 @@ class SignupForm extends StatefulWidget {
 class _SignupFormState extends State<SignupForm> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode _autovalidateMode;
+  late final ValueNotifier<AutovalidateMode> _confirmPasswordAutovalidateMode;
   late String _name;
   late String _email;
   late String _password;
@@ -36,6 +37,15 @@ class _SignupFormState extends State<SignupForm> {
     super.initState();
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
+    _confirmPasswordAutovalidateMode = ValueNotifier(AutovalidateMode.disabled);
+    _password = '';
+    _confirmPassword = '';
+  }
+
+  @override
+  void dispose() {
+    _confirmPasswordAutovalidateMode.dispose();
+    super.dispose();
   }
 
   @override
@@ -92,7 +102,13 @@ class _SignupFormState extends State<SignupForm> {
           PasswordField(
             hintText: "********",
             textInputAction: TextInputAction.next,
-            onChanged: (password) => _password = password!,
+            onChanged: (password) {
+              _password = password!;
+              if (_confirmPassword.isNotEmpty) {
+                _confirmPasswordAutovalidateMode.value =
+                    AutovalidateMode.always;
+              }
+            },
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -103,22 +119,32 @@ class _SignupFormState extends State<SignupForm> {
             ),
           ),
           const SizedBox(height: 8.0),
-          PasswordField(
-            hintText: "********",
-            textInputAction: TextInputAction.next,
-            onChanged: (confirmPassword) => _confirmPassword = confirmPassword!,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return LocaleKeys.passwordIsRequired;
-              }
+          ValueListenableBuilder<AutovalidateMode>(
+            valueListenable: _confirmPasswordAutovalidateMode,
+            builder: (context, autovalidateMode, _) {
+              return PasswordField(
+                autovalidateMode: autovalidateMode,
+                hintText: "********",
+                textInputAction: TextInputAction.next,
+                onChanged: (confirmPassword) {
+                  _confirmPassword = confirmPassword!;
+                  _confirmPasswordAutovalidateMode.value =
+                      AutovalidateMode.always;
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return LocaleKeys.passwordIsRequired;
+                  }
 
-              final minLength = value.length >= 6;
+                  final minLength = value.length >= 6;
 
-              if (!minLength) return LocaleKeys.passwordIsTooShort;
-              if (value != _password) {
-                return LocaleKeys.passwordsDoNotMatch;
-              }
-              return null;
+                  if (!minLength) return LocaleKeys.passwordIsTooShort;
+                  if (value != _password) {
+                    return LocaleKeys.passwordsDoNotMatch;
+                  }
+                  return null;
+                },
+              );
             },
           ),
           const SizedBox(height: 8.0),
@@ -134,7 +160,7 @@ class _SignupFormState extends State<SignupForm> {
             onChanged: (completeNumber, countryCode) {
               _phone = completeNumber;
             },
-            onSubmitted: (_)=>_onSubmit(context),
+            onSubmitted: (_) => _onSubmit(context),
           ),
 
           const SizedBox(height: 16.0),

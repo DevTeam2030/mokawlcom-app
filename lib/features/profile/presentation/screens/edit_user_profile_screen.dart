@@ -19,7 +19,7 @@ import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/prof
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
-class EditUserProfileScreen extends StatefulWidget implements AutoRouteWrapper{
+class EditUserProfileScreen extends StatefulWidget implements AutoRouteWrapper {
   const EditUserProfileScreen({super.key});
 
   @override
@@ -27,7 +27,10 @@ class EditUserProfileScreen extends StatefulWidget implements AutoRouteWrapper{
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (context) => getIt<ProfileCubit>(), child: this);
+    return BlocProvider(
+      create: (context) => getIt<ProfileCubit>(),
+      child: this,
+    );
   }
 }
 
@@ -157,7 +160,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                           ),
                           const SizedBox(height: 8.0),
                           CustomIntlPhoneField(
-                            initialCountryCode: phone?.countryISOCode ??"QA",
+                            initialCountryCode: phone?.countryISOCode ?? "QA",
                             controller: _phoneController,
                             onChanged: (completeNumber, countryCode) {
                               _completePhone = completeNumber;
