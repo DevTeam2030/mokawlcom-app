@@ -7,8 +7,8 @@ import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_state.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/search_cubit/search_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/search_cubit/search_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/home/home_filter_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -22,7 +22,7 @@ class HomeSearchSection extends StatefulWidget {
 
 class _HomeSearchSectionState extends State<HomeSearchSection> {
   final FocusNode _focusNode = FocusNode();
-  late final ValueNotifier<String> searchNotifier;
+  late ValueNotifier<String> searchNotifier;
 
   @override
   void initState() {
@@ -47,54 +47,35 @@ class _HomeSearchSectionState extends State<HomeSearchSection> {
         builder: (context, state) {
           return Skeletonizer(
             containersColor: ColorsManager.skeletonColor,
-            enabled: state.getBannersState.isLoading,
             child: Row(
               children: [
-                BlocListener<SearchBloc, SearchState>(
-                  listenWhen: (previous, current) =>
-                      previous.searchContractorsState !=
-                      current.searchContractorsState,
-                  listener: (context, state) {
-                    if (state.searchContractorsState.isLoading) {
-                      context.pushRoute(ContractorsRoute(fromSearch: true));
-                    }
-                  },
-                  child: Expanded(
-                    child: SizedBox(
-                      height: 54,
-                      child: TextField(
-                        focusNode: _focusNode,
-                        onTapOutside: (_) => _focusNode.unfocus(),
-                        onChanged: (value) {
-                          searchNotifier.value = value;
-                          if (value.isNotEmpty) {
-                            context.read<SearchBloc>().add(
-                              SearchContractorsEvent(query: value),
-                            );
-                          }
-                        },
-                        // style: widget.theme.textTheme.labelSmall!.copyWith(
-                        //   color: ColorsManager.primaryColor,
-                        //   fontSize: 12,
-                        //   fontWeight: FontWeight.w400,
-                        // ),
-                        decoration: InputDecoration(
-                          suffixIcon: const Icon(
-                            Icons.search,
+                Expanded(
+                  child: SizedBox(
+                    height: 54,
+                    child: TextField(
+                      focusNode: _focusNode,
+                      onTapOutside: (_) => _focusNode.unfocus(),
+                      onSubmitted: (value) {
+                        searchNotifier.value = value;
+                        context.pushRoute(
+                          ContractorsRoute(fromSearch: true, query: value),
+                        );
+                      },
+                      decoration: InputDecoration(
+                        suffixIcon: const Icon(
+                          Icons.search,
+                          color: ColorsManager.secondaryColor,
+                        ),
+                        hintText: LocaleKeys.searchForWordOrDepartment,
+                        hintStyle: widget.theme.textTheme.labelSmall!.copyWith(
+                          color: ColorsManager.primaryColor,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          borderSide: BorderSide(
                             color: ColorsManager.secondaryColor,
-                          ),
-                          hintText: LocaleKeys.searchForWordOrDepartment,
-                          hintStyle: widget.theme.textTheme.labelSmall!
-                              .copyWith(
-                                color: ColorsManager.primaryColor,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w400,
-                              ),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            borderSide: BorderSide(
-                              color: ColorsManager.secondaryColor,
-                            ),
                           ),
                         ),
                       ),

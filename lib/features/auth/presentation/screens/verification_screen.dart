@@ -72,6 +72,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 textDirection: TextDirection.ltr,
                 child: Pinput(
                   length: 5,
+                  onSubmitted: (_) {
+                    if (verificationCode.length == 5) {
+                      context.read<AuthCubit>().activateAccount(
+                        email: widget.email,
+                        verificationCode: verificationCode,
+                      );
+                  }
+                  },
                   onChanged: (value) => verificationCode = value,
                   defaultPinTheme: PinTheme(
                     width: 48,

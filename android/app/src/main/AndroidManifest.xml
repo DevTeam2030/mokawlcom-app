@@ -120,7 +120,9 @@
         android:enableOnBackInvokedCallback="true"
         android:hardwareAccelerated="true"
         android:largeHeap="false"
-        android:extractNativeLibs="true">
+        android:extractNativeLibs="true"
+        android:supportsRtl="true"
+        android:allowBackup="false">
 
         <activity
             android:name=".MainActivity"

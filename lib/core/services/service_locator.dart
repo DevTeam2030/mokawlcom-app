@@ -4,7 +4,6 @@ import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/local/shared_pref_helper.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
-import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/features/auth/data/data_source/contractor_auth_data_source.dart';
 import 'package:mokawlcom_app/features/auth/data/data_source/user_auth_data_source.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
@@ -22,7 +21,7 @@ import 'package:mokawlcom_app/features/home/data/repo/home_repo.dart';
 import 'package:mokawlcom_app/features/home/data/repo/home_repo_impl.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/data_source/notifications_data_source.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/repo/notifications_repo.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/repo/notificatons_repo_impl.dart';
@@ -42,61 +41,64 @@ class ServiceLocator {
     required SharedPrefHelper sharedPrefHelper,
     required CacheHelper cacheHelper,
   }) {
-    getIt.registerSingleton<AppRouter>(AppRouter());
-    getIt.registerLazySingleton<DioHelper>(() => DioHelper());
-
     getIt.registerSingleton<SharedPrefHelper>(sharedPrefHelper);
-
     getIt.registerSingleton<CacheHelper>(cacheHelper);
+    getIt.registerSingleton<AppRouter>(AppRouter());
 
+    getIt.registerLazySingleton<DioHelper>(() => DioHelper());
     getIt.registerLazySingleton<FilePickerService>(() => FilePickerService());
 
     getIt.registerLazySingleton<UserAuthDataSource>(
       () => UserAuthDataSourceImpl(dioHelper: getIt<DioHelper>()),
     );
-    getIt.registerLazySingleton<UserAuthRepo>(
-      () => UserAuthRepoImpl(userAuthDataSource: getIt<UserAuthDataSource>()),
-    );
     getIt.registerLazySingleton<ContractorAuthDataSource>(
       () => ContractorAuthDataSourceImpl(dioHelper: getIt<DioHelper>()),
+    );
+    getIt.registerLazySingleton<HomeDataSource>(
+      () => HomeDataSourceImpl(dioHelper: getIt<DioHelper>()),
+    );
+    getIt.registerLazySingleton<NotificationsDataSource>(
+      () => NotificationsDataSourceImpl(dioHelper: getIt<DioHelper>()),
+    );
+    getIt.registerLazySingleton<FavoriteDataSource>(
+      () => FavoriteDataSourceImpl(dioHelper: getIt<DioHelper>()),
+    );
+    getIt.registerLazySingleton<ProfileDataSource>(
+      () => ProfileDataSourceImpl(dioHelper: getIt<DioHelper>()),
+    );
+
+    getIt.registerLazySingleton<UserAuthRepo>(
+      () => UserAuthRepoImpl(userAuthDataSource: getIt<UserAuthDataSource>()),
     );
     getIt.registerLazySingleton<ContractorAuthRepo>(
       () => ContractorAuthRepoImpl(
         contractorAuthDataSource: getIt<ContractorAuthDataSource>(),
       ),
     );
-    getIt.registerLazySingleton<HomeDataSource>(
-      () => HomeDataSourceImpl(dioHelper: getIt<DioHelper>()),
-    );
     getIt.registerLazySingleton<HomeRepo>(
       () => HomeRepoImpl(homeDataSource: getIt<HomeDataSource>()),
     );
-    getIt.registerLazySingleton<NotificationsDataSource>(
-      () => NotificationsDataSourceImpl(dioHelper: getIt<DioHelper>()),
-    );
-
     getIt.registerLazySingleton<NotificationsRepo>(
       () => NotificationsRepoImpl(
         notificationsDataSource: getIt<NotificationsDataSource>(),
       ),
     );
+    getIt.registerLazySingleton<FavoriteRepo>(
+      () => FavoriteRepoImpl(favoriteDataSource: getIt<FavoriteDataSource>()),
+    );
+    getIt.registerLazySingleton<ProfileRepo>(
+      () => ProfileRepoImpl(profileDataSource: getIt<ProfileDataSource>()),
+    );
 
+    getIt.registerFactory<AppCubit>(
+      () => AppCubit(userAuthRepo: getIt<UserAuthRepo>()),
+    );
     getIt.registerFactory<AuthCubit>(
       () => AuthCubit(
         userAuthRepoImpl: getIt<UserAuthRepo>(),
         cacheHelper: getIt<CacheHelper>(),
         contractorAuthRepoImpl: getIt<ContractorAuthRepo>(),
-        fcmInitHelper: getIt<FcmInitHelper>(),
       ),
-    );
-    getIt.registerLazySingleton<FavoriteDataSource>(
-      () => FavoriteDataSourceImpl(dioHelper: getIt<DioHelper>()),
-    );
-    getIt.registerLazySingleton<FavoriteRepo>(
-      () => FavoriteRepoImpl(favoriteDataSource: getIt<FavoriteDataSource>()),
-    );
-    getIt.registerFactory<AppCubit>(
-      () => AppCubit(userAuthRepo: getIt<UserAuthRepo>()),
     );
     getIt.registerFactory<FilesCubit>(
       () => FilesCubit(contractorAuthRepoImpl: getIt<ContractorAuthRepo>()),
@@ -107,8 +109,8 @@ class ServiceLocator {
         homeRepoImpl: getIt<HomeRepo>(),
       ),
     );
-    getIt.registerFactory<SearchBloc>(
-      () => SearchBloc(homeRepoImpl: getIt<HomeRepo>()),
+    getIt.registerFactory<SearchCubit>(
+      () => SearchCubit(homeRepoImpl: getIt<HomeRepo>()),
     );
     getIt.registerFactory(
       () => ContractorInfoCubit(homeRepo: getIt<HomeRepo>()),
@@ -118,14 +120,6 @@ class ServiceLocator {
     );
     getIt.registerFactory<NotificationsCubit>(
       () => NotificationsCubit(notificationsRepo: getIt<NotificationsRepo>()),
-    );
-    getIt.registerLazySingleton<FcmInitHelper>(() => FcmInitHelper());
-
-    getIt.registerLazySingleton<ProfileDataSource>(
-      () => ProfileDataSourceImpl(dioHelper: getIt<DioHelper>()),
-    );
-    getIt.registerLazySingleton<ProfileRepo>(
-      () => ProfileRepoImpl(profileDataSource: getIt<ProfileDataSource>()),
     );
     getIt.registerFactory<ProfileCubit>(
       () => ProfileCubit(

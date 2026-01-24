@@ -99,7 +99,7 @@ class PriceOfferItem extends StatelessWidget {
                             style: theme.textTheme.labelSmall!.copyWith(
                               fontWeight: FontWeight.w400,
                               fontSize: 10,
-                              color: ColorsManager.secondaryColor,
+                              color: Colors.black54,
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -112,7 +112,7 @@ class PriceOfferItem extends StatelessWidget {
                             style: theme.textTheme.labelSmall!.copyWith(
                               fontWeight: FontWeight.w400,
                               fontSize: 10,
-                              color: ColorsManager.secondaryColor,
+                              color: Colors.black,
                             ),
                           ),
                         ],

@@ -9,7 +9,7 @@ import 'package:mokawlcom_app/core/widgets/custom_dropdown_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -120,7 +120,7 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
             builder: (context, state) {
               final services = state.servicesModel.services;
               if (services.isNotEmpty && selectedService.value == null) {
-                selectedService.value = services.first;
+                selectedService.value = services.firstOrNull;
               }
               if (state.getServicesState.isLoading) {
                 return const Center(child: LinearProgressIndicator());
@@ -147,7 +147,7 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                   }
 
                   if (selectedService.value == null) {
-                    selectedService.value = services.first;
+                    selectedService.value = services.firstOrNull;
                   }
                   return CustomDropdownField<ServiceModel>(
                     value: value,
@@ -173,12 +173,12 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
           PrimaryButton(
             text: LocaleKeys.applyFilter,
             onPressed: () {
-              context.read<SearchBloc>().add(
-                SearchContractorsEvent(
+              context.pushRoute(
+                ContractorsRoute(
+                  fromSearch: true,
                   query: widget.query,
-                  ignoreDebounce: true,
-                  classificationId: selectedClassification.value?.id ?? 0,
-                  serviceId: selectedService.value?.id ?? 0,
+                  classificationModel: selectedClassification.value,
+                  serviceModel: selectedService.value,
                 ),
               );
             },

@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mokawlcom_app/bloc_observer.dart';
@@ -11,20 +12,12 @@ import 'package:mokawlcom_app/firebase_options.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AppInitializer {
+  static bool _isFullyInitialized = false;
+
   static Future<void> init() async {
-    await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  Bloc.observer = MyBlocObserver();
-
- 
-    HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: HydratedStorageDirectory(
-        (await getTemporaryDirectory()).path,
-      ),
-    );
-
+    Bloc.observer = MyBlocObserver();
     final sharedPrefHelper = await SharedPrefHelper.init();
     final cacheHelper = CacheHelper(sharedPrefHelper);
 
@@ -35,14 +28,42 @@ class AppInitializer {
 
     AppConstants.token =
         await cacheHelper.readData(key: AppConstants.tokenKey) ?? "";
-
-    final fcm = getIt<FcmInitHelper>();
-    await fcm.initAwesomeNotification();
-    await fcm.setAwesomeNotificationListeners();
-    fcm.initFirebaseMessagingListeners();
-    await fcm.handleInitialMessage();
-     SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+    HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: HydratedStorageDirectory(
+        (await getTemporaryDirectory()).path,
+      ),
+    );
   }
+
+  static Future<void> initHeavyServices() async {
+    if (_isFullyInitialized) return;
+
+    await _initFirebase();
+    await _initNotifications();
+
+    _isFullyInitialized = true;
+  }
+
+  static Future<void> _initFirebase() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
+
+  static Future<void> _initNotifications() async {
+    try {
+      final fcm = FcmInitHelper();
+
+     await Future.wait([
+       fcm.initAwesomeNotification(),
+       fcm.setAwesomeNotificationListeners(),
+       fcm.initFirebaseMessagingListeners(),
+       fcm.handleInitialMessage(),
+     ]);
+    } catch (e) {
+      debugPrint('Notification initialization error: $e');
+    }
+  }
+
+  static bool get isFullyInitialized => _isFullyInitialized;
 }

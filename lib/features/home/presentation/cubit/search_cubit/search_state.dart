@@ -25,12 +25,12 @@ class SearchState extends Equatable {
     ContractorsModel? contractorsModel,
     String? errorMessage,
     int? currentPage,
-    Map<int, num>? oldRatings,
     bool? isConnected,
   }) {
     return SearchState(
       getContractorsState: getContractorsState ?? this.getContractorsState,
-      searchContractorsState: searchContractorsState ?? this.searchContractorsState,
+      searchContractorsState:
+          searchContractorsState ?? this.searchContractorsState,
       contractorsModel: contractorsModel ?? this.contractorsModel,
       errorMessage: errorMessage ?? this.errorMessage,
       currentPage: currentPage ?? this.currentPage,

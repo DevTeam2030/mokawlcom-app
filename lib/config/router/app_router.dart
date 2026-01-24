@@ -20,7 +20,7 @@ import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorit
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/company_details_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/home_screen.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/contractor_details_screen.dart';
@@ -100,7 +100,7 @@ class AppRouter extends RootStackRouter {
           children: [
             AutoRoute(
               initial: true,
-              
+
               page: HomeTabRoute.page,
               children: [
                 AutoRoute(initial: true, page: HomeRoute.page),
@@ -174,12 +174,8 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
     providers: [
       BlocProvider(create: (context) => getIt<HomeCubit>()),
-      BlocProvider(create: (context) => getIt<SearchBloc>()),
-      BlocProvider(
-        create: (context) => getIt<NotificationsCubit>(),
-      
-      ),
-     
+      BlocProvider(create: (context) => getIt<SearchCubit>()),
+      BlocProvider(create: (context) => getIt<NotificationsCubit>()),
     ],
     child: this,
   );

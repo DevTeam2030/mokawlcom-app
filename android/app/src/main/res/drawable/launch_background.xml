@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Modify this file to customize your launch splash screen -->
+<!-- Optimized launch splash screen with app logo/branding -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Solid background color for instant display -->
     <item android:drawable="@android:color/white" />
 
-    <!-- You can insert your own image assets here -->
-    <!-- <item>
+    <!-- Center logo - uncomment and add your launch image to mipmap folders -->
+    <!-- This provides instant visual feedback while Flutter initializes -->
+    <!-- 
+    <item>
         <bitmap
             android:gravity="center"
             android:src="@mipmap/launch_image" />
-    </item> -->
+    </item>
+    -->
 </layer-list>

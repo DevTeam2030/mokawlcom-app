@@ -151,7 +151,7 @@ class PublicNotificationItem extends StatelessWidget {
                       style: theme.textTheme.labelSmall!.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 10,
-                        color: ColorsManager.secondaryColor,
+                        color: Colors.black54,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -161,7 +161,10 @@ class PublicNotificationItem extends StatelessWidget {
                       notification.body,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.labelSmall!.copyWith(height: 1.5),
+                      style: theme.textTheme.labelSmall!.copyWith(
+                        height: 1.5,
+                        color: Colors.black,
+                      ),
                     ),
                   ],
                 ),

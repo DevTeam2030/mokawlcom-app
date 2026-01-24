@@ -11,8 +11,8 @@ import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_bloc.dart';
-import 'package:mokawlcom_app/features/home/presentation/cubit/search_bloc/search_state.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/search_cubit/search_cubit.dart';
+import 'package:mokawlcom_app/features/home/presentation/cubit/search_cubit/search_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor/contractor_item.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
@@ -26,11 +26,13 @@ class ContractorsScreen extends StatefulWidget {
     this.classificationModel,
     this.serviceModel,
     this.fromSearch = false,
+    this.query,
   });
 
   final ClassificationModel? classificationModel;
   final ServiceModel? serviceModel;
   final bool fromSearch;
+  final String? query;
 
   @override
   State<ContractorsScreen> createState() => _ContractorsScreenState();
@@ -47,13 +49,18 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
     _scrollController = ScrollController()..addListener(_onScroll);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.fromSearch) return;
-      context.read<SearchBloc>().add(
-        GetContractorsEvent(
+      if (widget.fromSearch) {
+        context.read<SearchCubit>().searchContractors(
+          query: widget.query ?? "",
           classificationId: widget.classificationModel?.id,
           serviceId: widget.serviceModel?.id,
-        ),
-      );
+        );
+      } else {
+        context.read<SearchCubit>().getContractors(
+          classificationId: widget.classificationModel?.id,
+          serviceId: widget.serviceModel?.id,
+        );
+      }
     });
   }
 
@@ -64,11 +71,9 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
         _scrollController.position.maxScrollExtent - 200) {
       _isLoadingMore = true;
 
-      context.read<SearchBloc>().add(
-        LoadMoreContractorsEvent(
-          classificationId: widget.classificationModel?.id,
-          serviceId: widget.serviceModel?.id,
-        ),
+      context.read<SearchCubit>().loadMoreContractors(
+        classificationId: widget.classificationModel?.id,
+        serviceId: widget.serviceModel?.id,
       );
     }
   }
@@ -109,11 +114,13 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
           horizontal: 16,
           vertical: 13,
         ),
-        child: BlocConsumer<SearchBloc, SearchState>(
+        child: BlocConsumer<SearchCubit, SearchState>(
           listenWhen: (previous, current) =>
-              previous.getContractorsState != current.getContractorsState,
+              previous.getContractorsState != current.getContractorsState ||
+              previous.searchContractorsState != current.searchContractorsState,
           buildWhen: (previous, current) =>
-              previous.getContractorsState != current.getContractorsState,
+              previous.getContractorsState != current.getContractorsState ||
+              previous.searchContractorsState != current.searchContractorsState,
           listener: (context, state) {
             if (state.getContractorsState.isError) {
               showDialog(
@@ -130,11 +137,9 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
                 errorMessage: state.errorMessage,
                 theme: theme,
                 onPressed: () {
-                  context.read<SearchBloc>().add(
-                    GetContractorsEvent(
-                      classificationId: widget.classificationModel?.id,
-                      serviceId: widget.serviceModel?.id,
-                    ),
+                  context.read<SearchCubit>().getContractors(
+                    classificationId: widget.classificationModel?.id,
+                    serviceId: widget.serviceModel?.id,
                   );
                 },
               );
@@ -145,7 +150,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
               theme: theme,
               errorMessage: state.errorMessage,
               onLoading: Skeletonizer(
-                enabled: state.getContractorsState.isLoading && !hasData,
+                enabled: state.getContractorsState.isLoading,
                 containersColor: ColorsManager.skeletonColor,
                 ignoreContainers: true,
                 child: _buildContractorsList(

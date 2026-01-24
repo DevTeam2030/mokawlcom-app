@@ -295,6 +295,7 @@ class ContractorsRoute extends PageRouteInfo<ContractorsRouteArgs> {
     ClassificationModel? classificationModel,
     ServiceModel? serviceModel,
     bool fromSearch = false,
+    String? query,
     List<PageRouteInfo>? children,
   }) : super(
          ContractorsRoute.name,
@@ -303,6 +304,7 @@ class ContractorsRoute extends PageRouteInfo<ContractorsRouteArgs> {
            classificationModel: classificationModel,
            serviceModel: serviceModel,
            fromSearch: fromSearch,
+           query: query,
          ),
          initialChildren: children,
        );
@@ -320,6 +322,7 @@ class ContractorsRoute extends PageRouteInfo<ContractorsRouteArgs> {
         classificationModel: args.classificationModel,
         serviceModel: args.serviceModel,
         fromSearch: args.fromSearch,
+        query: args.query,
       );
     },
   );
@@ -331,6 +334,7 @@ class ContractorsRouteArgs {
     this.classificationModel,
     this.serviceModel,
     this.fromSearch = false,
+    this.query,
   });
 
   final Key? key;
@@ -341,9 +345,11 @@ class ContractorsRouteArgs {
 
   final bool fromSearch;
 
+  final String? query;
+
   @override
   String toString() {
-    return 'ContractorsRouteArgs{key: $key, classificationModel: $classificationModel, serviceModel: $serviceModel, fromSearch: $fromSearch}';
+    return 'ContractorsRouteArgs{key: $key, classificationModel: $classificationModel, serviceModel: $serviceModel, fromSearch: $fromSearch, query: $query}';
   }
 
   @override
@@ -353,7 +359,8 @@ class ContractorsRouteArgs {
     return key == other.key &&
         classificationModel == other.classificationModel &&
         serviceModel == other.serviceModel &&
-        fromSearch == other.fromSearch;
+        fromSearch == other.fromSearch &&
+        query == other.query;
   }
 
   @override
@@ -361,7 +368,8 @@ class ContractorsRouteArgs {
       key.hashCode ^
       classificationModel.hashCode ^
       serviceModel.hashCode ^
-      fromSearch.hashCode;
+      fromSearch.hashCode ^
+      query.hashCode;
 }
 
 /// generated route for

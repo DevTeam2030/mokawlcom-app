@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mokawlcom_app/app_init.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
@@ -36,9 +37,15 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    Timer(const Duration(seconds: 2), () {
+    _initializeHeavyServices();
+
+    Timer(const Duration(milliseconds: 1500), () {
       _navigate();
     });
+  }
+
+  Future<void> _initializeHeavyServices() async {
+    await AppInitializer.initHeavyServices();
   }
 
   @override
