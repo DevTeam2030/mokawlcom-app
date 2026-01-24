@@ -87,14 +87,16 @@ class _EditContractorProfileScreenState
             return NoInternetWidget(
               errorMessage: state.errorMessage,
               theme: theme,
-              onPressed: () {
-                Future.wait([
+              onPressed: () async {
+                await Future.wait([
                   context.read<HomeCubit>().getClassifications(),
-                  context.read<HomeCubit>().getServices(
-                    classificationId: selectedClassification.value!.id,
-                  ),
                   context.read<ProfileCubit>().getContractorProfile(),
                 ]);
+                if (context.mounted) {
+                  await context.read<HomeCubit>().getServices(
+                    classificationId: selectedClassification.value?.id ?? 0,
+                  );
+                }
               },
             );
           }
@@ -162,6 +164,8 @@ class _EditContractorProfileScreenState
                                   .toList(),
                               onChanged: (newValue) {
                                 selectedClassification.value = newValue!;
+                                selectedServices.value =
+                                    []; 
                                 context.read<HomeCubit>().getServices(
                                   classificationId:
                                       selectedClassification.value!.id,
@@ -199,19 +203,16 @@ class _EditContractorProfileScreenState
                               current.servicesModel.services ||
                           previous.getServicesState != current.getServicesState,
                       builder: (context, state) {
-                        if (selectedServices.value.isEmpty) {
-                          selectedServices.value =
-                              state.servicesModel.services.isNotEmpty
-                              ? [state.servicesModel.services.first]
-                              : [];
-                        }
+                        final services = state.servicesModel.services;
+
                         if (state.getServicesState.isLoading) {
                           return const Center(child: LinearProgressIndicator());
                         }
+
                         return ValueListenableBuilder<List<ServiceModel>>(
                           valueListenable: selectedServices,
                           builder: (context, selectedList, _) {
-                            if (state.servicesModel.services.isEmpty) {
+                            if (services.isEmpty) {
                               selectedServices.value = [];
                               return Container(
                                 padding: const EdgeInsets.all(12),
@@ -229,18 +230,33 @@ class _EditContractorProfileScreenState
                                 ),
                               );
                             }
+
+                            final validSelectedServices = selectedList
+                                .where(
+                                  (selected) => services.any(
+                                    (service) => service.id == selected.id,
+                                  ),
+                                )
+                                .toList();
+
+                            if (validSelectedServices.isEmpty &&
+                                services.isNotEmpty) {
+                              selectedServices.value = [services.first];
+                            } else if (validSelectedServices.length !=
+                                selectedList.length) {
+                              selectedServices.value = validSelectedServices;
+                            }
+
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomDropdownField<ServiceModel>(
-                                  onTap: state.servicesModel.services.isEmpty
-                                      ? () {}
-                                      : null,
+                                  onTap: services.isEmpty ? () {} : null,
                                   theme: theme,
                                   hintText: LocaleKeys.chooseServices,
                                   multiSelect: true,
-                                  selectedValues: selectedList,
-                                  items: state.servicesModel.services
+                                  selectedValues: selectedServices.value,
+                                  items: services
                                       .map(
                                         (item) => DropdownMenuItem(
                                           value: item,
@@ -263,12 +279,14 @@ class _EditContractorProfileScreenState
                                       state.servicesPage <
                                       state.servicesTotalPages,
                                 ),
-                                if (selectedList.isNotEmpty) ...[
+                                if (selectedServices.value.isNotEmpty) ...[
                                   const SizedBox(height: 12),
                                   Wrap(
                                     spacing: 8,
                                     runSpacing: 8,
-                                    children: selectedList.map((service) {
+                                    children: selectedServices.value.map((
+                                      service,
+                                    ) {
                                       return Chip(
                                         label: Text(
                                           service.name,
@@ -281,7 +299,7 @@ class _EditContractorProfileScreenState
                                         onDeleted: () {
                                           final newList =
                                               List<ServiceModel>.from(
-                                                selectedList,
+                                                selectedServices.value,
                                               );
                                           newList.removeWhere(
                                             (s) => s.id == service.id,

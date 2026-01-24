@@ -317,12 +317,14 @@ class ContractorsRoute extends PageRouteInfo<ContractorsRouteArgs> {
       final args = data.argsAs<ContractorsRouteArgs>(
         orElse: () => const ContractorsRouteArgs(),
       );
-      return ContractorsScreen(
-        key: args.key,
-        classificationModel: args.classificationModel,
-        serviceModel: args.serviceModel,
-        fromSearch: args.fromSearch,
-        query: args.query,
+      return WrappedRoute(
+        child: ContractorsScreen(
+          key: args.key,
+          classificationModel: args.classificationModel,
+          serviceModel: args.serviceModel,
+          fromSearch: args.fromSearch,
+          query: args.query,
+        ),
       );
     },
   );

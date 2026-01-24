@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/no_data_widget.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
@@ -20,7 +21,7 @@ import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
-class ContractorsScreen extends StatefulWidget {
+class ContractorsScreen extends StatefulWidget implements AutoRouteWrapper {
   const ContractorsScreen({
     super.key,
     this.classificationModel,
@@ -36,6 +37,12 @@ class ContractorsScreen extends StatefulWidget {
 
   @override
   State<ContractorsScreen> createState() => _ContractorsScreenState();
+  
+  @override
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create: (context) => getIt<SearchCubit>(),
+    child: this,
+  );
 }
 
 class _ContractorsScreenState extends State<ContractorsScreen> {

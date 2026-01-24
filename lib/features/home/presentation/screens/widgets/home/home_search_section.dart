@@ -56,11 +56,15 @@ class _HomeSearchSectionState extends State<HomeSearchSection> {
                     child: TextField(
                       focusNode: _focusNode,
                       onTapOutside: (_) => _focusNode.unfocus(),
-                      onSubmitted: (value) {
+                      onChanged: (value) {
                         searchNotifier.value = value;
-                        context.pushRoute(
-                          ContractorsRoute(fromSearch: true, query: value),
-                        );
+                      },
+                      onSubmitted: (value) {
+                        if(value.isNotEmpty){
+                          context.pushRoute(
+                            ContractorsRoute(fromSearch: true, query: value),
+                          );
+                        }
                       },
                       decoration: InputDecoration(
                         suffixIcon: const Icon(

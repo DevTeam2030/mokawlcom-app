@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
-import 'package:mokawlcom_app/core/utils/isolate_parsers.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/complete_contractor_data_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
@@ -53,14 +52,7 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
       queryParameters: {"page": page},
     );
     if (response.statusCode == 200) {
-      // Parse JSON in isolate to avoid blocking UI thread
-      final Map<String, dynamic> jsonData = Map<String, dynamic>.from(
-        response.data,
-      );
-      return await compute<Map<String, dynamic>, ClassificationsModel>(
-        parseClassificationsModel,
-        jsonData,
-      );
+     return ClassificationsModel.fromJson(response.data??{});
     } else {
       throw ServerException(errorMessage: response.data["message"]);
     }
@@ -73,14 +65,7 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
       queryParameters: {"page": page, "category_id": classificationId},
     );
     if (response.statusCode == 200) {
-      // Parse JSON in isolate to avoid blocking UI thread
-      final Map<String, dynamic> jsonData = Map<String, dynamic>.from(
-        response.data,
-      );
-      return await compute<Map<String, dynamic>, ServicesModel>(
-        parseServicesModel,
-        jsonData,
-      );
+     return ServicesModel.fromJson(response.data??{});
     } else {
       throw ServerException(errorMessage: response.data["message"]??"");
     }

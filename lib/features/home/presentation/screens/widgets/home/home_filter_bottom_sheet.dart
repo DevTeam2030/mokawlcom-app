@@ -22,10 +22,15 @@ class HomeFilterBottomSheet extends StatefulWidget {
 }
 
 class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
-  final ValueNotifier<ClassificationModel?> selectedClassification =
-      ValueNotifier(null);
+  late final ValueNotifier<ClassificationModel?> selectedClassification;
+  late final ValueNotifier<ServiceModel?> selectedService;
 
-  final ValueNotifier<ServiceModel?> selectedService = ValueNotifier(null);
+  @override
+  void initState() {
+    super.initState();
+    selectedClassification = ValueNotifier(null);
+    selectedService = ValueNotifier(null);
+  }
 
   @override
   void dispose() {
@@ -37,153 +42,184 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: 20,
-        vertical: 40,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: AlignmentDirectional.center,
-            child: Text(
-              LocaleKeys.resultsFilter,
-              style: theme.textTheme.headlineSmall!.copyWith(
-                fontWeight: FontWeight.w700,
-                color: ColorsManager.primaryColor,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: 20,
+          vertical: 40,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(
+              alignment: AlignmentDirectional.center,
+              child: Text(
+                LocaleKeys.resultsFilter,
+                style: theme.textTheme.headlineSmall!.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: ColorsManager.primaryColor,
+                ),
               ),
             ),
-          ),
 
-          const SizedBox(height: 20),
-          Text(
-            LocaleKeys.classification,
-            style: theme.textTheme.labelMedium!.copyWith(
-              color: ColorsManager.primaryColor,
-              fontWeight: FontWeight.bold,
+            const SizedBox(height: 20),
+            Text(
+              LocaleKeys.classification,
+              style: theme.textTheme.labelMedium!.copyWith(
+                color: ColorsManager.primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
+            const SizedBox(height: 8),
 
-          BlocSelector<HomeCubit, HomeState, List<ClassificationModel>>(
-            selector: (state) => state.classificationsModel.classifications,
-            builder: (context, classifications) {
-              if (selectedClassification.value == null) {
-                selectedClassification.value = classifications.firstOrNull;
-                if (selectedClassification.value != null) {
-                  context.read<HomeCubit>().getServices(
-                    classificationId: selectedClassification.value!.id,
-                  );
-                }
-              }
-              return ValueListenableBuilder<ClassificationModel?>(
-                valueListenable: selectedClassification,
-                builder: (context, value, _) {
-                  return CustomDropdownField<ClassificationModel>(
-                    value: value,
-                    theme: theme,
-                    hintText: LocaleKeys.chooseClassification,
-                    items: classifications
-                        .map(
-                          (item) => DropdownMenuItem<ClassificationModel>(
-                            value: item,
-                            child: Text(item.name),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (newValue) {
-                      selectedClassification.value = newValue;
-                      context.read<HomeCubit>().getServices(
-                        classificationId: newValue?.id ?? 0,
-                      );
-                    },
-                  );
-                },
-              );
-            },
-          ),
-
-          const SizedBox(height: 22),
-          Text(
-            LocaleKeys.services,
-            style: theme.textTheme.labelMedium!.copyWith(
-              color: ColorsManager.primaryColor,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          BlocBuilder<HomeCubit, HomeState>(
-            buildWhen: (previous, current) =>
-                previous.getServicesState != current.getServicesState,
-            builder: (context, state) {
-              final services = state.servicesModel.services;
-              if (services.isNotEmpty && selectedService.value == null) {
-                selectedService.value = services.firstOrNull;
-              }
-              if (state.getServicesState.isLoading) {
-                return const Center(child: LinearProgressIndicator());
-              }
-
-              return ValueListenableBuilder<ServiceModel?>(
-                valueListenable: selectedService,
-                builder: (context, value, _) {
-                  if (services.isEmpty) {
-                    selectedService.value = null;
-                    return Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: ColorsManager.secondaryColor),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        LocaleKeys.noServicesAvailable,
-                        style: theme.textTheme.bodySmall!.copyWith(
-                          color: ColorsManager.secondaryColor,
-                        ),
-                      ),
+            BlocBuilder<HomeCubit, HomeState>(
+              buildWhen: (previous, current) =>
+                  previous.classificationsModel !=
+                      current.classificationsModel ||
+                  previous.getClassificationsState !=
+                      current.getClassificationsState,
+              builder: (context, state) {
+                final classifications =
+                    state.classificationsModel.classifications;
+                if (selectedClassification.value == null) {
+                  selectedClassification.value = classifications.firstOrNull;
+                  if (selectedClassification.value != null) {
+                    context.read<HomeCubit>().getServices(
+                      classificationId: selectedClassification.value!.id,
                     );
                   }
+                }
+                return ValueListenableBuilder<ClassificationModel?>(
+                  valueListenable: selectedClassification,
+                  builder: (context, value, _) {
+                    return CustomDropdownField<ClassificationModel>(
+                      value: value,
+                      theme: theme,
+                      hintText: LocaleKeys.chooseClassification,
+                      items: classifications
+                          .map(
+                            (item) => DropdownMenuItem<ClassificationModel>(
+                              value: item,
+                              child: Text(item.name),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (newValue) {
+                        selectedClassification.value = newValue;
+                        selectedService.value = null;
+                        context.read<HomeCubit>().getServices(
+                          classificationId: newValue?.id ?? 0,
+                        );
+                      },
+                      onLoadMore: () {
+                        context.read<HomeCubit>().loadMoreClassifications();
+                      },
+                      isLoadingMore:
+                          state.getClassificationsState.isLoadingMore,
+                      hasMoreData:
+                          state.classificationsPage <
+                          state.classificationsTotalPages,
+                    );
+                  },
+                );
+              },
+            ),
 
-                  if (selectedService.value == null) {
-                    selectedService.value = services.firstOrNull;
-                  }
-                  return CustomDropdownField<ServiceModel>(
-                    value: value,
-                    theme: theme,
-                    hintText: LocaleKeys.chooseServices,
-                    items: services
-                        .map(
-                          (item) => DropdownMenuItem<ServiceModel>(
-                            value: item,
-                            child: Text(item.name),
+            const SizedBox(height: 22),
+            Text(
+              LocaleKeys.services,
+              style: theme.textTheme.labelMedium!.copyWith(
+                color: ColorsManager.primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            BlocBuilder<HomeCubit, HomeState>(
+              buildWhen: (previous, current) =>
+                  previous.getServicesState != current.getServicesState,
+              builder: (context, state) {
+                final services = state.servicesModel.services;
+                if (services.isNotEmpty && selectedService.value == null) {
+                  selectedService.value = services.firstOrNull;
+                }
+                if (state.getServicesState.isLoading) {
+                  return const Center(child: LinearProgressIndicator());
+                }
+
+                return ValueListenableBuilder<ServiceModel?>(
+                  valueListenable: selectedService,
+                  builder: (context, value, _) {
+                    if (services.isEmpty) {
+                      selectedService.value = null;
+                      return Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: ColorsManager.secondaryColor,
                           ),
-                        )
-                        .toList(),
-                    onChanged: (newValue) {
-                      selectedService.value = newValue;
-                    },
-                  );
-                },
-              );
-            },
-          ),
-          const SizedBox(height: 30),
-          PrimaryButton(
-            text: LocaleKeys.applyFilter,
-            onPressed: () {
-              context.pushRoute(
-                ContractorsRoute(
-                  fromSearch: true,
-                  query: widget.query,
-                  classificationModel: selectedClassification.value,
-                  serviceModel: selectedService.value,
-                ),
-              );
-            },
-          ),
-        ],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          LocaleKeys.noServicesAvailable,
+                          style: theme.textTheme.bodySmall!.copyWith(
+                            color: ColorsManager.secondaryColor,
+                          ),
+                        ),
+                      );
+                    }
+                    final isValueValid =
+                        value != null &&
+                        services.any((service) => service.id == value.id);
+
+                    if (!isValueValid) {
+                      selectedService.value = services.firstOrNull;
+                    }
+
+                    return CustomDropdownField<ServiceModel>(
+                      value: selectedService.value,
+                      theme: theme,
+                      hintText: LocaleKeys.chooseServices,
+                      items: services
+                          .map(
+                            (item) => DropdownMenuItem<ServiceModel>(
+                              value: item,
+                              child: Text(item.name),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (newValue) {
+                        selectedService.value = newValue;
+                      },
+                      onLoadMore: () {
+                        context.read<HomeCubit>().loadMoreServices(
+                          classificationId: selectedClassification.value!.id,
+                        );
+                      },
+                      isLoadingMore: state.getServicesState.isLoadingMore,
+                      hasMoreData:
+                          state.servicesPage < state.servicesTotalPages,
+                    );
+                  },
+                );
+              },
+            ),
+            const SizedBox(height: 30),
+            PrimaryButton(
+              text: LocaleKeys.applyFilter,
+              onPressed: () {
+                context.pushRoute(
+                  ContractorsRoute(
+                    fromSearch: true,
+                    query: widget.query,
+                    classificationModel: selectedClassification.value,
+                    serviceModel: selectedService.value,
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
