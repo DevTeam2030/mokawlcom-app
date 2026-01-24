@@ -116,11 +116,9 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
         ),
         child: BlocConsumer<SearchCubit, SearchState>(
           listenWhen: (previous, current) =>
-              previous.getContractorsState != current.getContractorsState ||
-              previous.searchContractorsState != current.searchContractorsState,
+              previous.getContractorsState != current.getContractorsState,
           buildWhen: (previous, current) =>
-              previous.getContractorsState != current.getContractorsState ||
-              previous.searchContractorsState != current.searchContractorsState,
+              previous.getContractorsState != current.getContractorsState,
           listener: (context, state) {
             if (state.getContractorsState.isError) {
               showDialog(
@@ -150,12 +148,10 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
               theme: theme,
               errorMessage: state.errorMessage,
               onLoading: Skeletonizer(
-                enabled: state.getContractorsState.isLoading,
                 containersColor: ColorsManager.skeletonColor,
                 ignoreContainers: true,
                 child: _buildContractorsList(
-                  contractors: !hasData
-                      ? List.generate(
+                  contractors: List.generate(
                           4,
                           (_) => const ContractorModel(
                             id: 0,
@@ -168,8 +164,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
                             whatsApp: '',
                             category: '---',
                           ),
-                        )
-                      : state.contractorsModel.contractors,
+                        ),
                   theme: theme,
                   status: state.getContractorsState,
                 ),

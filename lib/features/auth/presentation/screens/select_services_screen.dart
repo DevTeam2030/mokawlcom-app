@@ -114,18 +114,16 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
             errorMessage: state.errorMessage,
             onLoading: Skeletonizer(
               containersColor: ColorsManager.skeletonColor,
-              enabled: state.getServicesState.isLoading && !hasData,
+              enabled: state.getServicesState.isLoading,
               child: _buildServices(
                 theme,
-                hasData
-                    ? state.servicesModel.services
-                    : List.generate(
+               List.generate(
                         6,
-                        (i) => ServiceModel(
-                          id: i,
+                        (i) => const ServiceModel(
+                          id: 0,
                           name: 'Loading',
                           image: '',
-                          number: i,
+                          number: 0,
                         ),
                       ),
                 state.getServicesState,

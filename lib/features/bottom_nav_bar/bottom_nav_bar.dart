@@ -22,12 +22,11 @@ class BottomNavBarScreen extends StatelessWidget {
       bottomNavigationBuilder: (context, tabsRouter) {
         return Container(
           height: 72,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: const BoxDecoration(
+            color: ColorsManager.surfaceColor,
             border: Border(
-              top: BorderSide(
-                color: ColorsManager.navBorderColor,
-                width: 1.5,
-              ),
+              top: BorderSide(color: ColorsManager.navBorderColor, width: 1.5),
             ),
             borderRadius: BorderRadiusDirectional.only(
               topStart: Radius.circular(16),
@@ -35,6 +34,7 @@ class BottomNavBarScreen extends StatelessWidget {
             ),
           ),
           child: ClipRRect(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
             borderRadius: const BorderRadiusDirectional.only(
               topStart: Radius.circular(16),
               topEnd: Radius.circular(16),

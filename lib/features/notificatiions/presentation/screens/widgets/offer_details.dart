@@ -94,7 +94,6 @@ class OfferDetails extends StatelessWidget {
                         ],
                       ),
                     ),
-
                     Expanded(
                       child: Column(
                         children: [
@@ -107,29 +106,22 @@ class OfferDetails extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Center(
-                                  child: Text(
-                                    "${offerNotificationModel.price}",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: theme.textTheme.bodySmall!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: ColorsManager.primaryColor,
-                                    ),
-                                  ),
-                                ),
+                          FittedBox(
+                            child: Text(
+                              "${offerNotificationModel.price}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: theme.textTheme.labelSmall!.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: ColorsManager.primaryColor,
                               ),
-                              Text(
-                                LocaleKeys.sar,
-                                style: theme.textTheme.bodySmall!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: ColorsManager.primaryColor,
-                                ),
-                              ),
-                            ],
+                            ),
+                          ),
+                          Text(
+                            LocaleKeys.sar,
+                            style: theme.textTheme.labelSmall!.copyWith(
+                              color: ColorsManager.primaryColor,
+                            ),
                           ),
                         ],
                       ),
@@ -155,10 +147,8 @@ class OfferDetails extends StatelessWidget {
                                 onError: (msg) {
                                   showDialog(
                                     context: context,
-                                    builder: (context) => ErrorDialog(
-                                      theme: theme,
-                                      message: msg,
-                                    ),
+                                    builder: (context) =>
+                                        ErrorDialog(theme: theme, message: msg),
                                   );
                                 },
                               );
@@ -178,10 +168,8 @@ class OfferDetails extends StatelessWidget {
                                 onError: (msg) {
                                   showDialog(
                                     context: context,
-                                    builder: (context) => ErrorDialog(
-                                      theme: theme,
-                                      message: msg,
-                                    ),
+                                    builder: (context) =>
+                                        ErrorDialog(theme: theme, message: msg),
                                   );
                                 },
                               );

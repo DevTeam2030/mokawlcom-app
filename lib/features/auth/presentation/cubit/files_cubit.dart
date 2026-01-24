@@ -17,6 +17,11 @@ class FilesCubit extends Cubit<FilesState> {
     : super(const FilesState());
 
   void clearOldFile() => emit(state.copyWith(clearSelectedFile: true));
+  void completeFile(int index) {
+    Set<int> completedFiles = {...state.completedFiles};
+    completedFiles.add(index);
+    emit(state.copyWith(completedFiles: completedFiles));
+  }
 
   Future<void> pickFile() async {
     emit(state.copyWith(isFileLoading: true));

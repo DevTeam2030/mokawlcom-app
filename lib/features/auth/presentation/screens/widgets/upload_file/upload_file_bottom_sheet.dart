@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/file_types.dart';
@@ -187,13 +188,12 @@ class _UploadFileBottomSheetState extends State<UploadFileBottomSheet> {
             ),
             const SizedBox(height: 8),
             UploadFileSection(theme: widget.theme),
-            const SizedBox(height: 10),
             BlocBuilder<FilesCubit, FilesState>(
               buildWhen: (previous, current) =>
                   previous.uploadFileState != current.uploadFileState,
               builder: (context, state) {
                 return PrimaryButton(
-                 // isLoading: state.uploadFileState.isLoading,
+                  // isLoading: state.uploadFileState.isLoading,
                   onPressed: () async {
                     if (!_formKey.currentState!.validate()) {
                       setState(() {

@@ -13,62 +13,69 @@ class UploadFileItem extends StatelessWidget {
     required this.text,
     required this.index,
     required this.userId,
+    required this.filesCubit,
   });
 
   final ThemeData theme;
   final String text;
   final int index;
   final int userId;
+  final FilesCubit filesCubit;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        context.read<FilesCubit>().clearOldFile();
-        await showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          backgroundColor: Colors.white,
-          builder: (bottomSheetContext) => UploadFileBottomSheet(
-            theme: theme,
-            text: text,
-            index: index,
-            userId: userId,
+    return BlocSelector<FilesCubit, FilesState, bool>(
+      selector: (state) {
+        return state.completedFiles.contains(index);
+      },
+      builder: (context, isCompleted) {
+        return InkWell(
+          onTap: isCompleted
+              ? null
+              : () async {
+                  context.read<FilesCubit>().clearOldFile();
+                  await showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.white,
+                    builder: (bottomSheetContext) => BlocProvider.value(
+                      value: filesCubit,
+                      child: UploadFileBottomSheet(
+                        theme: theme,
+                        text: text,
+                        index: index,
+                        userId: userId,
+                      ),
+                    ),
+                  );
+                },
+          child: Container(
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+            height: 48,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: ColorsManager.secondaryColor),
+            ),
+            child: Row(
+              children: [
+                const Icon(MyIcons.file, color: ColorsManager.primaryColor),
+                const SizedBox(width: 14),
+                Text(
+                  text,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    color: ColorsManager.primaryColor,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const Spacer(),
+                isCompleted
+                    ? const Icon(Icons.check, color: ColorsManager.primaryColor)
+                    : const Icon(Icons.add, color: ColorsManager.primaryColor),
+              ],
+            ),
           ),
         );
       },
-      child: Container(
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-        height: 48,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: ColorsManager.secondaryColor),
-        ),
-        child: Row(
-          children: [
-            const Icon(MyIcons.file, color: ColorsManager.primaryColor),
-            const SizedBox(width: 14),
-            Text(
-              text,
-              style: theme.textTheme.bodyLarge!.copyWith(
-                color: ColorsManager.primaryColor,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            const Spacer(),
-            BlocSelector<FilesCubit, FilesState, bool>(
-              selector: (state) {
-                return state.completedFiles.contains(index);
-              },
-              builder: (context, state) {
-                return state
-                    ? const Icon(Icons.check, color: ColorsManager.primaryColor)
-                    : const Icon(Icons.add, color: ColorsManager.primaryColor);
-              },
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

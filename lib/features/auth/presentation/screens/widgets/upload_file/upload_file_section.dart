@@ -77,7 +77,7 @@ class UploadFileSection extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(height: 80),
+        const SizedBox(height: 70),
         BlocSelector<FilesCubit, FilesState, double>(
           selector: (state) => state.progress,
           builder: (context, progress) {
@@ -114,6 +114,7 @@ class UploadFileSection extends StatelessWidget {
             }
           },
         ),
+        const SizedBox(height: 10),
       ],
     );
   }

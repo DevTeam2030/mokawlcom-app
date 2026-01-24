@@ -8,6 +8,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
 import 'package:mokawlcom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
+import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
@@ -21,15 +22,51 @@ import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
 @RoutePage()
-class UploadFilesScreen extends StatefulWidget {
-  const UploadFilesScreen({super.key, required this.contractorId});
+class UploadFilesScreen extends StatefulWidget implements AutoRouteWrapper {
+  const UploadFilesScreen({
+    super.key,
+    required this.contractorId,
+    this.userLoginResponseModel,
+  });
   final int contractorId;
+  final UserLoginResponseModel? userLoginResponseModel;
 
   @override
   State<UploadFilesScreen> createState() => _UploadFilesScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (context) => getIt<FilesCubit>(), child: this);
+  }
 }
 
 class _UploadFilesScreenState extends State<UploadFilesScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _completedFiles();
+  }
+
+  void _completedFiles() {
+    if (widget.userLoginResponseModel != null) {
+      if (widget.userLoginResponseModel?.commercialRegistry.isNotEmpty ??
+          false) {
+        context.read<FilesCubit>().completeFile(0);
+      }
+      if (widget.userLoginResponseModel?.tradeLicense.isNotEmpty ?? false) {
+        context.read<FilesCubit>().completeFile(1);
+      }
+      if (widget.userLoginResponseModel?.establishmentCertificate.isNotEmpty ??
+          false) {
+        context.read<FilesCubit>().completeFile(2);
+      }
+      if (widget.userLoginResponseModel?.authorizedSignature.isNotEmpty ??
+          false) {
+        context.read<FilesCubit>().completeFile(3);
+      }
+    }
+  }
+
   List<String> files = [
     LocaleKeys.commercialRegister,
     LocaleKeys.commercialLicense,
@@ -51,9 +88,16 @@ class _UploadFilesScreenState extends State<UploadFilesScreen> {
       body: BlocListener<FilesCubit, FilesState>(
         listenWhen: (previous, current) =>
             previous.uploadFileState != current.uploadFileState,
-        listener: (context, state) {
-          if (state.uploadFileState.isSuccess) {
+        listener: (context, state) async {
+          if (state.uploadFileState.isError) {
             showDialog(
+              context: context,
+              builder: (context) =>
+                  ErrorDialog(theme: theme, message: state.errorMessage),
+            );
+          }
+          if (state.uploadFileState.isSuccess) {
+            await showDialog(
               context: context,
               builder: (context) => SuccessDialog(
                 theme: theme,
@@ -61,16 +105,9 @@ class _UploadFilesScreenState extends State<UploadFilesScreen> {
                 text: LocaleKeys.continueKey,
               ),
             );
-            Navigator.pop(context);
-          }
-          if (state.uploadFileState.isError) {
-            showDialog(
-              context: context,
-              builder: (context) => ErrorDialog(
-                theme: theme,
-                message: state.errorMessage,
-              ),
-            );
+            if(context.mounted){
+              Navigator.pop(context);
+            }
           }
         },
         child: ListView.separated(
@@ -80,11 +117,12 @@ class _UploadFilesScreenState extends State<UploadFilesScreen> {
           ),
           itemCount: files.length,
           separatorBuilder: (_, _) => const SizedBox(height: 18.0),
-          itemBuilder: (context, index) => UploadFileItem(
+          itemBuilder: (_, index) => UploadFileItem(
             theme: theme,
             text: files[index],
             index: index,
             userId: widget.contractorId,
+            filesCubit: context.read<FilesCubit>(),
           ),
         ),
       ),

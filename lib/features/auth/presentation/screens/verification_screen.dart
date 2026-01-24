@@ -166,6 +166,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     context.replaceRoute(
                       UploadFilesRoute(
                         contractorId: state.activateAccountResponseModel.id,
+                        
                       ),
                     );
                   }

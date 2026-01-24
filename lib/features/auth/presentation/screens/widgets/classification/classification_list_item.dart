@@ -58,13 +58,17 @@ class ClassificationListItem extends StatelessWidget {
             ),
 
             const SizedBox(width: 16),
-            Text(
-              classificationModel.name,
-              style: theme.textTheme.bodyLarge!.copyWith(
-                color: isSelected ? ColorsManager.primaryColor : Colors.black,
+            Expanded(
+              child: Text(
+                classificationModel.name,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: theme.textTheme.bodyLarge!.copyWith(
+                  color: isSelected ? ColorsManager.primaryColor : Colors.black,
+                ),
               ),
             ),
-            const Spacer(),
+            const SizedBox(width: 10,),
             Container(
               width: 20,
               height: 20,

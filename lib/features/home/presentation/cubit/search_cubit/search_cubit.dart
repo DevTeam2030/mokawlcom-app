@@ -49,7 +49,7 @@ class SearchCubit extends Cubit<SearchState> {
   }) async {
     emit(
       state.copyWith(
-        searchContractorsState: RequestStatus.loading,
+        getContractorsState: RequestStatus.loading,
         isConnected: true,
       ),
     );
@@ -64,14 +64,14 @@ class SearchCubit extends Cubit<SearchState> {
     result.fold(
       (failure) => emit(
         state.copyWith(
-          searchContractorsState: RequestStatus.error,
+          getContractorsState: RequestStatus.error,
           errorMessage: failure.errorMessage,
           isConnected: failure.isConnected,
         ),
       ),
       (contractorsModel) => emit(
         state.copyWith(
-          searchContractorsState: RequestStatus.success,
+          getContractorsState: RequestStatus.success,
           contractorsModel: contractorsModel,
         ),
       ),

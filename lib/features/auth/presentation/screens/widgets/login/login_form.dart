@@ -97,18 +97,19 @@ class _LoginFormState extends State<LoginForm> {
 
             listener: (context, state)  {
               if (state.userLoginState.isSuccess) {
-                // await showDialog(
-                //   context: context,
-                //   builder: (context) => SuccessDialog(
-                //     theme: widget.theme,
-                //     message: state.userLoginResponseModel.message,
-                //     text: LocaleKeys.continueKey,
-                //   ),
-                // );
+                 showDialog(
+                  context: context,
+                  builder: (context) => SuccessDialog(
+                    theme: widget.theme,
+                    message: state.userLoginResponseModel.message,
+                    text: LocaleKeys.continueKey,
+                  ),
+                );
                 if (!state.userLoginResponseModel.filesUploaded) {
                   context.pushRoute(
                     UploadFilesRoute(
                       contractorId: state.userLoginResponseModel.userId,
+                      userLoginResponseModel: state.userLoginResponseModel,
                     ),
                   );
                   return;

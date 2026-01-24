@@ -180,5 +180,6 @@
   "invalid_email":"بريد إلكتروني غير صالح",
   "done":"تم",
   "no_services_available":"لا يوجد خدمات متاحة",
-  "please_select_classification":"من فضلك اختر التصنيف"
+  "please_select_classification":"من فضلك اختر التصنيف",
+  "search_country":"إبحث عن دولة"
 }

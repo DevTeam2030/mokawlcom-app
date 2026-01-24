@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
+import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/classification_screen.dart';
@@ -153,11 +154,8 @@ class Auth extends AutoRouter implements AutoRouteWrapper {
   const Auth({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (context) => getIt<AuthCubit>()),
-      BlocProvider(create: (context) => getIt<FilesCubit>()),
-    ],
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create: (context) => getIt<AuthCubit>(),
     child: this,
   );
 }

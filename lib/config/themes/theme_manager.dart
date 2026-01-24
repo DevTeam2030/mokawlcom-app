@@ -56,6 +56,7 @@ class ThemeManager {
         showSelectedLabels: true,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
+        elevation: 0,
         backgroundColor: ColorsManager.surfaceColor,
         selectedItemColor: ColorsManager.primaryColor,
         unselectedItemColor: ColorsManager.unselectedNavColor,

@@ -1099,10 +1099,15 @@ class UploadFilesRoute extends PageRouteInfo<UploadFilesRouteArgs> {
   UploadFilesRoute({
     Key? key,
     required int contractorId,
+    UserLoginResponseModel? userLoginResponseModel,
     List<PageRouteInfo>? children,
   }) : super(
          UploadFilesRoute.name,
-         args: UploadFilesRouteArgs(key: key, contractorId: contractorId),
+         args: UploadFilesRouteArgs(
+           key: key,
+           contractorId: contractorId,
+           userLoginResponseModel: userLoginResponseModel,
+         ),
          initialChildren: children,
        );
 
@@ -1112,32 +1117,47 @@ class UploadFilesRoute extends PageRouteInfo<UploadFilesRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<UploadFilesRouteArgs>();
-      return UploadFilesScreen(key: args.key, contractorId: args.contractorId);
+      return WrappedRoute(
+        child: UploadFilesScreen(
+          key: args.key,
+          contractorId: args.contractorId,
+          userLoginResponseModel: args.userLoginResponseModel,
+        ),
+      );
     },
   );
 }
 
 class UploadFilesRouteArgs {
-  const UploadFilesRouteArgs({this.key, required this.contractorId});
+  const UploadFilesRouteArgs({
+    this.key,
+    required this.contractorId,
+    this.userLoginResponseModel,
+  });
 
   final Key? key;
 
   final int contractorId;
 
+  final UserLoginResponseModel? userLoginResponseModel;
+
   @override
   String toString() {
-    return 'UploadFilesRouteArgs{key: $key, contractorId: $contractorId}';
+    return 'UploadFilesRouteArgs{key: $key, contractorId: $contractorId, userLoginResponseModel: $userLoginResponseModel}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! UploadFilesRouteArgs) return false;
-    return key == other.key && contractorId == other.contractorId;
+    return key == other.key &&
+        contractorId == other.contractorId &&
+        userLoginResponseModel == other.userLoginResponseModel;
   }
 
   @override
-  int get hashCode => key.hashCode ^ contractorId.hashCode;
+  int get hashCode =>
+      key.hashCode ^ contractorId.hashCode ^ userLoginResponseModel.hashCode;
 }
 
 /// generated route for

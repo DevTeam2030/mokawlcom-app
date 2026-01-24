@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_intl_phone_field/countries.dart';
+import 'package:flutter_intl_phone_field/country_picker_dialog.dart';
 import 'package:flutter_intl_phone_field/flutter_intl_phone_field.dart';
 import 'package:flutter_intl_phone_field/phone_number.dart';
 import 'package:mokawlcom_app/core/utils/app_constans.dart';
@@ -47,6 +48,12 @@ class CustomIntlPhoneField extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: IntlPhoneField(
+        pickerDialogStyle: PickerDialogStyle(
+          searchFieldInputDecoration: InputDecoration(
+            labelText: LocaleKeys.searchCountry,
+            hintText: LocaleKeys.searchCountry,
+          ),
+        ),
         languageCode: AppConstants.language,
         countries: getLocalizedCountries(context),
         controller: controller,

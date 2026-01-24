@@ -53,13 +53,17 @@ class ServicesListItem extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 16),
-            Text(
-              serviceModel.name,
-              style: theme.textTheme.bodyLarge!.copyWith(
-                color: ColorsManager.primaryColor,
+            Expanded(
+              child: Text(
+                serviceModel.name,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: theme.textTheme.bodyLarge!.copyWith(
+                  color: ColorsManager.primaryColor,
+                ),
               ),
             ),
-            const Spacer(),
+            const SizedBox(width: 10),
             Checkbox(
               value: isSelected,
               onChanged: (_) => onTap(),
