@@ -16,20 +16,9 @@ class NotificationsState extends Equatable {
   final OfferNotificationsModel offerNotifications;
   final String offerNotificationsErrorMessage;
   final int offerNotificationsCurrentPage;
-  final RequestStatus getOfferDetailsState;
-  final OfferDetailsModel offerDetails;
-  final String offerDetailsErrorMessage;
-  final int offerDetailsCurrentPage;
-  final Map<int, bool> publicNotificationsReadStatus;
-  final Map<int, bool> offerNotificationsReadStatus;
+  final Set<int> publicNotificationsReadStatus;
+  final Set<int> offerNotificationsReadStatus;
   final bool isConnected;
-  final String replayOnOfferPriceMessage;
-  final bool isFileLoading;
-  final double progress;
-  final RequestStatus replayOnOfferPriceState;
- 
-
-  final File? file;
 
   const NotificationsState({
     this.getPublicNotificationsState = RequestStatus.initial,
@@ -40,17 +29,8 @@ class NotificationsState extends Equatable {
     this.offerNotifications = const OfferNotificationsModel.empty(),
     this.offerNotificationsErrorMessage = "",
     this.offerNotificationsCurrentPage = 1,
-    this.getOfferDetailsState = RequestStatus.initial,
-    this.offerDetails = const OfferDetailsModel.empty(),
-    this.offerDetailsErrorMessage = "",
-    this.offerDetailsCurrentPage = 1,
     this.publicNotificationsReadStatus = const {},
     this.offerNotificationsReadStatus = const {},
-    this.replayOnOfferPriceMessage = "",
-    this.isFileLoading = false,
-    this.progress = 0,
-    this.file,
-    this.replayOnOfferPriceState = RequestStatus.initial,
     this.isConnected = true,
   });
 
@@ -63,18 +43,8 @@ class NotificationsState extends Equatable {
     OfferNotificationsModel? offerNotifications,
     String? offerNotificationsErrorMessage,
     int? offerNotificationsCurrentPage,
-    RequestStatus? getOfferDetailsState,
-    OfferDetailsModel? offerDetails,
-    String? offerDetailsErrorMessage,
-    int? offerDetailsCurrentPage,
-    Map<int, bool>? publicNotificationsReadStatus,
-    Map<int, bool>? offerNotificationsReadStatus,
-    String? replayOnOfferPriceMessage,
-    bool? isFileLoading,
-    double? progress,
-    File? file,
-    bool? clearFile,
-    RequestStatus? replayOnOfferPriceState,
+    Set<int>? publicNotificationsReadStatus,
+    Set<int>? offerNotificationsReadStatus,
     bool? isConnected,
   }) {
     return NotificationsState(
@@ -93,23 +63,10 @@ class NotificationsState extends Equatable {
           offerNotificationsErrorMessage ?? this.offerNotificationsErrorMessage,
       offerNotificationsCurrentPage:
           offerNotificationsCurrentPage ?? this.offerNotificationsCurrentPage,
-      getOfferDetailsState: getOfferDetailsState ?? this.getOfferDetailsState,
-      offerDetails: offerDetails ?? this.offerDetails,
-      offerDetailsErrorMessage:
-          offerDetailsErrorMessage ?? this.offerDetailsErrorMessage,
-      offerDetailsCurrentPage:
-          offerDetailsCurrentPage ?? this.offerDetailsCurrentPage,
       publicNotificationsReadStatus:
           publicNotificationsReadStatus ?? this.publicNotificationsReadStatus,
       offerNotificationsReadStatus:
           offerNotificationsReadStatus ?? this.offerNotificationsReadStatus,
-      replayOnOfferPriceMessage:
-          replayOnOfferPriceMessage ?? this.replayOnOfferPriceMessage,
-      isFileLoading: isFileLoading ?? this.isFileLoading,
-      progress: progress ?? this.progress,
-      file: clearFile == true ? null : file ?? this.file,
-      replayOnOfferPriceState:
-          replayOnOfferPriceState ?? this.replayOnOfferPriceState,
       isConnected: isConnected ?? this.isConnected,
     );
   }
@@ -124,17 +81,8 @@ class NotificationsState extends Equatable {
     offerNotifications,
     offerNotificationsErrorMessage,
     offerNotificationsCurrentPage,
-    getOfferDetailsState,
-    offerDetails,
-    offerDetailsErrorMessage,
-    offerDetailsCurrentPage,
     publicNotificationsReadStatus,
     offerNotificationsReadStatus,
-    replayOnOfferPriceMessage,
-    isFileLoading,
-    progress,
-    file,
-    replayOnOfferPriceState,
     isConnected,
   ];
 }

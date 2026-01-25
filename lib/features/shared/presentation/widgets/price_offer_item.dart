@@ -36,7 +36,7 @@ class PriceOfferItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: BlocSelector<NotificationsCubit, NotificationsState, bool>(
           selector: (state) {
-            return state.offerNotificationsReadStatus[offerModel.id] ?? false;
+            return state.offerNotificationsReadStatus.contains(offerModel.id);
           },
           builder: (context, isRead) {
             return ColoredBox(

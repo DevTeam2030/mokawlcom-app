@@ -41,6 +41,21 @@ class OfferModel extends Equatable {
       price: json["price"] ?? 0,
     );
   }
+  OfferModel copyWith({bool? status}) {
+    return OfferModel(
+      id: id,
+      offerId: offerId,
+      title: title,
+      message: message,
+      date: date,
+      time: time,
+      status: status ?? this.status,
+      offerUserName: offerUserName,
+      price: price,
+      isPdf: isPdf,
+      url: url,
+    );
+  }
   @override
   List<Object> get props => [
     id,

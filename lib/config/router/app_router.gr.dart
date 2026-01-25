@@ -738,9 +738,11 @@ class OfferDetailsRoute extends PageRouteInfo<OfferDetailsRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<OfferDetailsRouteArgs>();
-      return OfferDetailsScreen(
-        key: args.key,
-        offerNotificationModel: args.offerNotificationModel,
+      return WrappedRoute(
+        child: OfferDetailsScreen(
+          key: args.key,
+          offerNotificationModel: args.offerNotificationModel,
+        ),
       );
     },
   );

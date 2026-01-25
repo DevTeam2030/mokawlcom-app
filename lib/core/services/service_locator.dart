@@ -26,6 +26,7 @@ import 'package:mokawlcom_app/features/notificatiions/data/data_source/notificat
 import 'package:mokawlcom_app/features/notificatiions/data/repo/notifications_repo.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/repo/notificatons_repo_impl.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/offer_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/data/data_source/profile_data_source.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo_impl.dart';
@@ -126,6 +127,9 @@ class ServiceLocator {
         profileRepo: getIt<ProfileRepo>(),
         cacheHelper: getIt<CacheHelper>(),
       ),
+    );
+   getIt.registerFactory<OfferDetailsCubit>(
+      () => OfferDetailsCubit(notificationsRepo: getIt<NotificationsRepo>()),
     );
     getIt.registerFactory<UserDetailsCubit>(
       () => UserDetailsCubit(profileRepo: getIt<ProfileRepo>()),

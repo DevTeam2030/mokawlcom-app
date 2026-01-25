@@ -11,6 +11,8 @@ import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_s
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/price_offer_upload_file_section.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/offer_details_cubit.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/offer_details_state.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/reply_on_price_offer_upload_section.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
@@ -126,7 +128,7 @@ class _ReplyOnOfferBottomSheetState extends State<ReplyOnOfferBottomSheet> {
               const SizedBox(height: 8),
               const ReplyOnPriceOfferUploadFileSection(),
               const SizedBox(height: 30),
-              BlocConsumer<NotificationsCubit, NotificationsState>(
+              BlocConsumer<OfferDetailsCubit, OfferDetailsState>(
                 listenWhen: (previous, current) =>
                     previous.replayOnOfferPriceState != current.replayOnOfferPriceState,
                 buildWhen: (previous, current) =>
@@ -173,7 +175,7 @@ class _ReplyOnOfferBottomSheetState extends State<ReplyOnOfferBottomSheet> {
   Future<void> _submit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      await context.read<NotificationsCubit>().replyOnOfferPrice(
+      await context.read<OfferDetailsCubit>().replyOnOfferPrice(
         price: _price,
         title: _title,
         message: _message,

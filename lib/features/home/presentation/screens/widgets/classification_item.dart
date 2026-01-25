@@ -43,10 +43,12 @@ class ClassificationItem extends StatelessWidget {
                   ),
                 ),
                 child: ClipOval(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
                   child: CustomCachedNetworkImage(
                     imageUrl: classificationModel.image,
                     width: 100,
                     height: 100,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -57,7 +59,7 @@ class ClassificationItem extends StatelessWidget {
         Text(
           classificationModel.name,
           overflow: TextOverflow.ellipsis,
-          maxLines: 1,
+          maxLines: 2,
           style: theme.textTheme.labelSmall!.copyWith(
             fontWeight: FontWeight.w400,
             color: ColorsManager.textColor,

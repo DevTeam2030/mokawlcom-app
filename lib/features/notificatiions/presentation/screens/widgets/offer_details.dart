@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
@@ -7,6 +8,7 @@ import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/offer_price_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/offer_details_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/reply_on_offer_bottom_sheet.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
@@ -18,10 +20,12 @@ class OfferDetails extends StatelessWidget {
     required this.theme,
     this.isOffer = false,
     required this.offerNotificationModel,
+    required this.offerDetailsCubit,
   });
   final ThemeData theme;
   final bool isOffer;
   final OfferModel offerNotificationModel;
+  final OfferDetailsCubit offerDetailsCubit;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -192,10 +196,13 @@ class OfferDetails extends StatelessWidget {
                             context: context,
                             builder: (context) => FractionallySizedBox(
                               heightFactor: 1,
-                              child: ReplyOnOfferBottomSheet(
-                                address: LocaleKeys.replyToThePriceOffer,
-                                offerId: offerNotificationModel.offerId
-                                    .toString(),
+                              child: BlocProvider.value(
+                                value: offerDetailsCubit,
+                                child: ReplyOnOfferBottomSheet(
+                                  address: LocaleKeys.replyToThePriceOffer,
+                                  offerId: offerNotificationModel.offerId
+                                      .toString(),
+                                ),
                               ),
                             ),
                           );

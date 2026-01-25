@@ -70,14 +70,12 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
             enabled: state.getClassificationsState.isLoading && !hasData,
             child: _buildGrid(
               context,
-              classifications: hasData
-                  ? state.classificationsModel.classifications
-                  : List.generate(
-                      6,
-                      (i) => ClassificationModel(
-                        id: i,
-                        name: '******',
-                        image: '',
+              classifications: List.generate(
+                6,
+                (i) => ClassificationModel(
+                  id: i,
+                  name: '******',
+                  image: '',
                         numberOfServices: i,
                       ),
                     ),

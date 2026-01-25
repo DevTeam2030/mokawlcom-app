@@ -3,7 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/public_notificarion_model.dart';
 
-enum NotificationType { publicNotification, offerNotification }
+enum NotificationType { publicNotification, offerNotification, replyOnOffer }
 
 class NotificationData {
   final NotificationType type;
@@ -19,7 +19,9 @@ class NotificationData {
   factory NotificationData.fromRemoteMessage(RemoteMessage message) {
     final notificationType = message.data['type'] == 'public'
         ? NotificationType.publicNotification
-        : NotificationType.offerNotification;
+        : message.data['type'] == 'offer'
+        ? NotificationType.offerNotification
+        : NotificationType.replyOnOffer;
 
     if (notificationType == NotificationType.publicNotification) {
       return NotificationData(

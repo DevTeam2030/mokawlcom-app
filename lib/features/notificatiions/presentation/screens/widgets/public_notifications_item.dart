@@ -118,7 +118,7 @@ class PublicNotificationItem extends StatelessWidget {
       },
       child: BlocSelector<NotificationsCubit, NotificationsState, bool>(
         selector: (state) {
-          return state.publicNotificationsReadStatus[notification.id] ?? false;
+          return state.publicNotificationsReadStatus.contains(notification.id);
         },
         builder: (context, isRead) {
           return ClipRRect(

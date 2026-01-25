@@ -137,17 +137,15 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     enabled: state.getServicesState.isLoading,
                     child: _buildServices(
                       theme: theme,
-                      services: hasData
-                          ? state.servicesModel.services
-                          : List.generate(
-                              6,
-                              (i) => ServiceModel(
-                                id: i,
-                                name: '******',
-                                image: '',
-                                number: i,
-                              ),
-                            ),
+                      services: List.generate(
+                        9,
+                        (i) => ServiceModel(
+                          id: i,
+                          name: '******',
+                          image: '',
+                          number: i,
+                        ),
+                      ),
                       status: state.getServicesState,
                     ),
                   ),

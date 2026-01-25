@@ -34,9 +34,7 @@ class FcmInitHelper {
         channelKey: 'high_importance_channel',
         title: message.notification?.title ?? 'No title',
         body: message.notification?.body ?? 'No body',
-        payload: {
-          'type': message.data['type'] ?? 'unknown',
-        },
+        payload: {'type': message.data['type'] ?? 'unknown'},
       ),
     );
   }
@@ -52,44 +50,37 @@ class FcmInitHelper {
       debugPrint("📩 Foreground message: ${message.data}");
       final currentRoute = AppConstants.currentRoute;
 
-      // Parse notification data
       final notificationData = NotificationData.fromRemoteMessage(message);
 
-      // Add to stream for NotificationsCubit to handle
       _notificationService.addNotification(notificationData);
 
-      // If user is on notifications screen, don't show popup notification
       if (currentRoute == NotificationsRoute.name ||
           currentRoute == PublicNotificationsRoute.name ||
           currentRoute == PriceOffersRoute.name) {
-        debugPrint("📱 User is on notifications screen, skipping popup");
+        debugPrint("User is on notifications screen, skipping popup");
         return;
       }
 
-      // Show notification popup and navigate
       _showAwesomeNotification(message);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      debugPrint("📲 Notification opened (background): ${message.data}");
+      debugPrint("Notification opened (background): ${message.data}");
 
-      // Parse notification data
       final notificationData = NotificationData.fromRemoteMessage(message);
 
-      // Add to stream for NotificationsCubit to handle
       _notificationService.addNotification(notificationData);
 
-      // Navigate to notifications tab
       await _navigateToNotificationsTab(type: notificationData.type);
     });
   }
 
-  /// Navigate to notifications tab using proper AutoRoute navigation
   Future<void> _navigateToNotificationsTab({
     required NotificationType type,
   }) async {
     try {
-      if (type == NotificationType.offerNotification) {
+      if (type == NotificationType.offerNotification ||
+          type == NotificationType.replyOnOffer) {
         await _appRouter.navigate(
           const AuthenticatedRoute(
             children: [
@@ -123,16 +114,13 @@ class FcmInitHelper {
   Future<void> handleInitialMessage() async {
     final RemoteMessage? message = await firebaseMessaging.getInitialMessage();
     if (message != null) {
-      debugPrint("🚀 App opened from terminated state by notification");
+      debugPrint("App opened from terminated state by notification");
 
-      // Parse notification data
       final notificationData = NotificationData.fromRemoteMessage(message);
 
-      // Add to stream for NotificationsCubit to handle
       _notificationService.addNotification(notificationData);
-
-      // Navigate directly to notifications tab
-      if (notificationData.type == NotificationType.offerNotification) {
+      if (notificationData.type == NotificationType.offerNotification ||
+          notificationData.type == NotificationType.replyOnOffer) {
         await _appRouter.replaceAll([
           const AuthenticatedRoute(
             children: [
@@ -162,11 +150,11 @@ class FcmInitHelper {
     }
   }
 
-  Future<void> navigateToNotifications({
-    required bool isOffer,
-  }) async {
+  Future<void> navigateToNotifications({required bool isOffer}) async {
     await _navigateToNotificationsTab(
-      type: isOffer ? NotificationType.offerNotification : NotificationType.publicNotification,
+      type: isOffer
+          ? NotificationType.offerNotification
+          : NotificationType.publicNotification,
     );
   }
 

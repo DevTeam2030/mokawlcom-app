@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/no_data_widget.dart';
@@ -14,14 +15,22 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verific
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/offer_details_cubit.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/offer_details_state.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/offer_details.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
-class OfferDetailsScreen extends StatefulWidget {
+class OfferDetailsScreen extends StatefulWidget implements AutoRouteWrapper {
   const OfferDetailsScreen({super.key, required this.offerNotificationModel});
   final OfferModel offerNotificationModel;
+
+  @override
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create: (context) => getIt<OfferDetailsCubit>(),
+    child: this,
+  );
 
   @override
   State<OfferDetailsScreen> createState() => _OfferDetailsScreenState();
@@ -37,7 +46,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
     _scrollController = ScrollController()..addListener(_onScroll);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<NotificationsCubit>().getOfferDetails(
+      context.read<OfferDetailsCubit>().getOfferDetails(
         offerId: widget.offerNotificationModel.offerId,
       );
     });
@@ -49,7 +58,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
       _isLoadingMore = true;
-      context.read<NotificationsCubit>().loadMoreOfferDetails(
+      context.read<OfferDetailsCubit>().loadMoreOfferDetails(
         offerId: widget.offerNotificationModel.offerId,
       );
     }
@@ -89,6 +98,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
             theme: theme,
             isOffer: true,
             offerNotificationModel: widget.offerNotificationModel,
+            offerDetailsCubit: context.read<OfferDetailsCubit>(),
           ),
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 14),
@@ -103,7 +113,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
           const SizedBox(height: 16),
 
           Expanded(
-            child: BlocConsumer<NotificationsCubit, NotificationsState>(
+            child: BlocConsumer<OfferDetailsCubit, OfferDetailsState>(
               listenWhen: (previous, current) =>
                   previous.getOfferDetailsState != current.getOfferDetailsState,
               listener: (context, state) {
@@ -116,10 +126,10 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                     ),
                   );
                 }
-                
               },
               buildWhen: (previous, current) =>
-                  previous.getOfferDetailsState != current.getOfferDetailsState ||
+                  previous.getOfferDetailsState !=
+                      current.getOfferDetailsState ||
                   previous.offerDetails != current.offerDetails,
               builder: (context, state) {
                 final hasData = state.offerDetails.replies.isNotEmpty;
@@ -129,7 +139,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                     errorMessage: state.offerDetailsErrorMessage,
                     theme: theme,
                     onPressed: () {
-                      context.read<NotificationsCubit>().getOfferDetails(
+                      context.read<OfferDetailsCubit>().getOfferDetails(
                         offerId: widget.offerNotificationModel.offerId,
                       );
                     },
@@ -205,7 +215,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
       controller: _scrollController,
       itemCount: replies.length + (status.isLoadingMore ? 1 : 0),
       separatorBuilder: (_, __) => const SizedBox(height: 16),
-      itemBuilder: (context, index) {
+      itemBuilder: (_, index) {
         if (index == replies.length && status.isLoadingMore) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 16),
@@ -224,6 +234,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
         return OfferDetails(
           theme: theme,
           offerNotificationModel: replies[index],
+          offerDetailsCubit: context.read<OfferDetailsCubit>(),
         );
       },
     );

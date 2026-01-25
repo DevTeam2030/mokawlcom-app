@@ -6,8 +6,8 @@ import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart'
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
-import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
-import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/offer_details_cubit.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/offer_details_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -22,9 +22,9 @@ class ReplyOnPriceOfferUploadFileSection extends StatelessWidget {
       children: [
         InkWell(
           onTap: () async {
-            await context.read<NotificationsCubit>().pickFile();
+            await context.read<OfferDetailsCubit>().pickFile();
           },
-          child: BlocBuilder<NotificationsCubit, NotificationsState>(
+          child: BlocBuilder<OfferDetailsCubit, OfferDetailsState>(
             buildWhen: (previous, current) =>
                 previous.isFileLoading != current.isFileLoading ||
                 previous.file != current.file,
@@ -82,7 +82,7 @@ class ReplyOnPriceOfferUploadFileSection extends StatelessWidget {
             },
           ),
         ),
-        BlocBuilder<NotificationsCubit, NotificationsState>(
+        BlocBuilder<OfferDetailsCubit, OfferDetailsState>(
           buildWhen: (previous, current) =>
               previous.progress != current.progress ||
               previous.file != current.file,

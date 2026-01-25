@@ -37,21 +37,22 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    _initializeHeavyServices();
+    _startAppFlow();
 
     Timer(const Duration(milliseconds: 1500), () {
       _navigate();
     });
   }
 
-  Future<void> _initializeHeavyServices() async {
-    await AppInitializer.initHeavyServices();
-  }
-
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  Future<void> _startAppFlow() async {
+    await AppInitializer.initHeavyServices();
+    if (mounted) _navigate();
   }
 
   void _navigate() {

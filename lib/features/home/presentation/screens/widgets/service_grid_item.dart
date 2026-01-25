@@ -36,16 +36,19 @@ class ServiceGridItem extends StatelessWidget {
                 replacement: Container(
                   width: 100,
                   height: 100,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: ColorsManager.skeletonColor,
                   ),
                 ),
                 child: ClipOval(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
                   child: CustomCachedNetworkImage(
                     imageUrl: serviceModel.image,
                     width: 100,
                     height: 100,
+                    fit: BoxFit.cover,  
                   ),
                 ),
               ),
@@ -55,6 +58,9 @@ class ServiceGridItem extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           serviceModel.name,
+          maxLines: 2,
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
           style: theme.textTheme.labelSmall!.copyWith(
             fontWeight: FontWeight.w400,
             color: ColorsManager.textColor,
