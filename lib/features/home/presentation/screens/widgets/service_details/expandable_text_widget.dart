@@ -14,7 +14,7 @@ class ExpandableTextWidget extends StatefulWidget {
   const ExpandableTextWidget({
     super.key,
     required this.text,
-    this.trimLines = 2,
+    this.trimLines = 3,
     this.color = ColorsManager.primaryColor,
     this.navigateToDetails = false,
     this.contractorId = 0,

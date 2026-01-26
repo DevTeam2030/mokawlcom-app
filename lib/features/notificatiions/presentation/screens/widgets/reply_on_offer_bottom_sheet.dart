@@ -98,6 +98,7 @@ class _ReplyOnOfferBottomSheetState extends State<ReplyOnOfferBottomSheet> {
                 textInputAction: TextInputAction.next,
                 type: TextInputType.number,
                 fieldName: LocaleKeys.price,
+                isPrice: true,
                 onSaved: (value) => _price = value!,
               ),
               const SizedBox(height: 16),

@@ -52,6 +52,7 @@ import 'package:mokawlcom_app/features/favorite/presentation/screens/saved_compa
 import 'package:mokawlcom_app/features/profile/presentation/screens/submitted_price_offers_screen.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
+import 'package:mokawlcom_app/features/shared/presentation/screens/pdf_screen.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
 import 'package:mokawlcom_app/features/splash/splash_screen.dart';
 
@@ -139,6 +140,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SavedCompaniesRoute.page),
         AutoRoute(page: EditDealRoute.page),
         AutoRoute(page: EditServiceRoute.page),
+        AutoRoute(page: PdfRoute.page),
       ],
     ),
   ];

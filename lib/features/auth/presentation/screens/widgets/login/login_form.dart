@@ -95,34 +95,7 @@ class _LoginFormState extends State<LoginForm> {
             buildWhen: (previous, current) =>
                 previous.userLoginState != current.userLoginState,
 
-            listener: (context, state)  {
-              if (state.userLoginState.isSuccess) {
-                 showDialog(
-                  context: context,
-                  builder: (context) => SuccessDialog(
-                    theme: widget.theme,
-                    message: state.userLoginResponseModel.message,
-                    text: LocaleKeys.continueKey,
-                  ),
-                );
-                if (!state.userLoginResponseModel.filesUploaded) {
-                  context.pushRoute(
-                    UploadFilesRoute(
-                      contractorId: state.userLoginResponseModel.userId,
-                      userLoginResponseModel: state.userLoginResponseModel,
-                    ),
-                  );
-                  return;
-                } else if (!state.userLoginResponseModel.planCompleted) {
-                  context.pushRoute(const SubscriptionRoute());
-                  return;
-                } else if (!state.userLoginResponseModel.completeData) {
-                  context.pushRoute(const CompleteDataRoute());
-                  return;
-                } else if (state.userLoginResponseModel.userApproved == 1) {
-                  context.replaceRoute(const AuthenticatedRoute());
-                }
-              }
+            listener: (context, state) async {
               if (state.userLoginState.isError) {
                 showDialog(
                   context: context,
@@ -131,6 +104,37 @@ class _LoginFormState extends State<LoginForm> {
                     message: state.errorMessage,
                   ),
                 );
+              }
+              if (state.userLoginState.isSuccess) {
+                await showDialog(
+                  context: context,
+                  builder: (context) => SuccessDialog(
+                    theme: widget.theme,
+                    message: state.userLoginResponseModel.message,
+                    text: LocaleKeys.continueKey,
+                  ),
+                );
+                if (!state.userLoginResponseModel.filesUploaded &&
+                    context.mounted) {
+                  context.pushRoute(
+                    UploadFilesRoute(
+                      contractorId: state.userLoginResponseModel.userId,
+                      userLoginResponseModel: state.userLoginResponseModel,
+                    ),
+                  );
+                  return;
+                } else if (!state.userLoginResponseModel.planCompleted &&
+                    context.mounted) {
+                  context.pushRoute(const SubscriptionRoute());
+                  return;
+                } else if (!state.userLoginResponseModel.completeData &&
+                    context.mounted) {
+                  context.pushRoute(const CompleteDataRoute());
+                  return;
+                } else if (state.userLoginResponseModel.userApproved == 1 &&
+                    context.mounted) {
+                  context.replaceRoute(const AuthenticatedRoute());
+                }
               }
             },
             builder: (context, state) {

@@ -789,6 +789,50 @@ class OnBoardingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PdfScreen]
+class PdfRoute extends PageRouteInfo<PdfRouteArgs> {
+  PdfRoute({Key? key, required String pdfUrl, List<PageRouteInfo>? children})
+    : super(
+        PdfRoute.name,
+        args: PdfRouteArgs(key: key, pdfUrl: pdfUrl),
+        initialChildren: children,
+      );
+
+  static const String name = 'PdfRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PdfRouteArgs>();
+      return PdfScreen(key: args.key, pdfUrl: args.pdfUrl);
+    },
+  );
+}
+
+class PdfRouteArgs {
+  const PdfRouteArgs({this.key, required this.pdfUrl});
+
+  final Key? key;
+
+  final String pdfUrl;
+
+  @override
+  String toString() {
+    return 'PdfRouteArgs{key: $key, pdfUrl: $pdfUrl}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! PdfRouteArgs) return false;
+    return key == other.key && pdfUrl == other.pdfUrl;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ pdfUrl.hashCode;
+}
+
+/// generated route for
 /// [PriceOffersScreen]
 class PriceOffersRoute extends PageRouteInfo<void> {
   const PriceOffersRoute({List<PageRouteInfo>? children})

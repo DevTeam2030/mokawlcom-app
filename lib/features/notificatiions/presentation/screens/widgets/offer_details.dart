@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
@@ -147,15 +149,8 @@ class OfferDetails extends StatelessWidget {
                     offerNotificationModel.isPdf
                         ? InkWell(
                             onTap: () {
-                              LaunchUtils.open(
-                                url: offerNotificationModel.url,
-                                onError: (msg) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        ErrorDialog(theme: theme, message: msg),
-                                  );
-                                },
+                              context.pushRoute(
+                                PdfRoute(pdfUrl: offerNotificationModel.url),
                               );
                             },
                             child: const VectorGraphic(
