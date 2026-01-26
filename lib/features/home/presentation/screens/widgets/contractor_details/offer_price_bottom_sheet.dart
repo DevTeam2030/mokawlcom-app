@@ -118,7 +118,7 @@ class _OfferPriceBottomSheetState extends State<OfferPriceBottomSheet> {
                   maxLines: 5,
                   fieldName: LocaleKeys.message,
                   onSaved: (value) => _message = value!,
-                  onSubmit: (_) => _submit(context),
+                  onSubmit: (_) => _submit(),
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -162,7 +162,7 @@ class _OfferPriceBottomSheetState extends State<OfferPriceBottomSheet> {
                     return PrimaryButton(
                       isLoading: state.addOfferPriceState.isLoading && state.file ==null,
                       onPressed: () async {
-                        await _submit(context);
+                        await _submit();
                       },
                       text: LocaleKeys.send,
                     );
@@ -176,10 +176,10 @@ class _OfferPriceBottomSheetState extends State<OfferPriceBottomSheet> {
     );
   }
 
-  Future<void> _submit(BuildContext context) async {
+  Future<void> _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      await context.read<ContractorInfoCubit>().addOfferPrice(
+      await widget.contractorInfoCubit.addOfferPrice(
         title: _title,
         price: _price,
         message: _message,

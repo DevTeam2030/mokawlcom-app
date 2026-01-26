@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/enums/user_type.dart';
+import 'package:mokawlcom_app/core/utils/app_constans.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -23,7 +25,7 @@ class NotificationsScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: AutoTabsRouter.tabBar(
+        child:AppConstants.userType == UserType.contractor ? AutoTabsRouter.tabBar(
           routes: const [PublicNotificationsRoute(), PriceOffersRoute()],
           builder: (context, child, controller) {
             final tabsRouter = AutoTabsRouter.of(context);
@@ -58,6 +60,16 @@ class NotificationsScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 16),
+                Expanded(child: child),
+                const SizedBox(height: 24),
+              ],
+            );
+          },
+        ) : AutoTabsRouter.tabBar(
+          routes: const [PublicNotificationsRoute()],
+          builder: (context, child, controller) {
+            return Column(
+              children: [
                 Expanded(child: child),
                 const SizedBox(height: 24),
               ],

@@ -3,110 +3,100 @@
 
     <!-- ================= PERMISSIONS ================= -->
 
-    <!-- Internet -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Notifications (Android 13+) -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <!-- Media access (Android 13+) -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
-
-    <!-- Documents access (Android 13+) for PDFs -->
-    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED"/>
+    <!-- Media (Android 13+) -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
 
     <!-- Storage (Android 12 and below) -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32"/>
+        android:maxSdkVersion="32" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29"/>
+        android:maxSdkVersion="29" />
 
-    <!-- ================= QUERIES (Android 11+) ================= -->
+    <!-- ================= QUERIES ================= -->
 
     <queries>
 
-        <!-- Process text -->
+        <!-- Required by Flutter -->
         <intent>
-            <action android:name="android.intent.action.PROCESS_TEXT"/>
-            <data android:mimeType="text/plain"/>
+            <action android:name="android.intent.action.PROCESS_TEXT" />
+            <data android:mimeType="text/plain" />
         </intent>
 
-        <!-- Phone Dialer -->
+        <!-- Phone -->
         <intent>
-            <action android:name="android.intent.action.VIEW"/>
-            <data android:scheme="tel"/>
-        </intent>
-
-        <!-- Facebook -->
-        <intent>
-            <action android:name="android.intent.action.VIEW"/>
-            <data android:scheme="fb"/>
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.VIEW"/>
-            <data android:scheme="https"/>
-            <data android:host="www.facebook.com"/>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="tel" />
         </intent>
 
         <!-- SMS -->
         <intent>
-            <action android:name="android.intent.action.VIEW"/>
-            <data android:scheme="sms"/>
-        </intent>
-
-        <!-- WhatsApp -->
-        <intent>
-            <action android:name="android.intent.action.VIEW"/>
-            <data android:scheme="whatsapp"/>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="sms" />
         </intent>
 
         <!-- Email -->
         <intent>
-            <action android:name="android.intent.action.VIEW"/>
-            <data android:scheme="mailto"/>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="mailto" />
         </intent>
 
-        <!-- Instagram -->
+        <!-- WhatsApp -->
         <intent>
-            <action android:name="android.intent.action.VIEW"/>
-            <data android:scheme="instagram"/>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="whatsapp" />
         </intent>
 
-        <!-- Twitter / X -->
+        <!-- Social -->
         <intent>
-            <action android:name="android.intent.action.VIEW"/>
-            <data android:scheme="twitter"/>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="fb" />
         </intent>
 
-        <!-- Snapchat -->
         <intent>
-            <action android:name="android.intent.action.VIEW"/>
-            <data android:scheme="snapchat"/>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="instagram" />
+        </intent>
+
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="twitter" />
+        </intent>
+
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="snapchat" />
+        </intent>
+
+        <!-- Browser -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="http" />
+        </intent>
+
+        <!-- PDF / File picker -->
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
         </intent>
 
         <!-- Custom Tabs -->
         <intent>
-            <action android:name="android.support.customtabs.action.CustomTabsService"/>
-        </intent>
-
-        <!-- Browser intents -->
-        <intent>
-            <action android:name="android.intent.action.VIEW"/>
-            <category android:name="android.intent.category.BROWSABLE"/>
-            <data android:scheme="https"/>
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.VIEW"/>
-            <category android:name="android.intent.category.BROWSABLE"/>
-            <data android:scheme="http"/>
-        </intent>
-
-        <!-- Document providers (for PDF picking) -->
-        <intent>
-            <action android:name="android.intent.action.GET_CONTENT"/>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
         </intent>
 
     </queries>
@@ -117,18 +107,15 @@
         android:label="Mokawlcom"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:enableOnBackInvokedCallback="true"
         android:hardwareAccelerated="true"
-        android:largeHeap="false"
-        android:extractNativeLibs="true"
-        android:supportsRtl="true"
-        android:allowBackup="false">
+        android:extractNativeLibs="false"
+        android:allowBackup="false"
+        android:supportsRtl="true">
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:taskAffinity=""
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
@@ -136,18 +123,18 @@
 
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
-                android:resource="@style/NormalTheme"/>
+                android:resource="@style/NormalTheme" />
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>
 
         <meta-data
             android:name="flutterEmbedding"
-            android:value="2"/>
+            android:value="2" />
 
     </application>
 

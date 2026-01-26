@@ -40,7 +40,9 @@ class PriceOfferItem extends StatelessWidget {
           },
           builder: (context, isRead) {
             return ColoredBox(
-              color: isRead
+              color: isUser
+                  ? ColorsManager.surfaceColor
+                  : isRead
                   ? ColorsManager.surfaceColor
                   : ColorsManager.lightBlueBg,
               child: Padding(
@@ -105,7 +107,7 @@ class PriceOfferItem extends StatelessWidget {
                           const SizedBox(height: 5),
                           Text(
                             isUser
-                                ? "${LocaleKeys.submittedTo} :  محمد احمد"
+                                ? "${LocaleKeys.submittedTo} : ${offerModel.offerUserName}"
                                 : "${LocaleKeys.offeredBy} :  ${offerModel.offerUserName}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,

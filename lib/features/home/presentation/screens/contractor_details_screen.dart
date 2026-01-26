@@ -61,7 +61,7 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
     super.initState();
     if (widget.isOfferPrice) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showBottomSheet(context: context, contractorId: widget.contractorId);
+        _showBottomSheet(context: context, contractorId: widget.contractorId, contractorInfoCubit: context.read<ContractorInfoCubit>());
       });
     }
   }
@@ -166,9 +166,9 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
       onLoading: Skeletonizer(
         containersColor: ColorsManager.skeletonColor,
         enabled: state.getContractorDetailsState.isLoading,
-        child: _buildContractorDetails(state, theme),
+        child: _buildContractorDetails(state, theme, context.read<ContractorInfoCubit>()),
       ),
-      onSuccess: _buildContractorDetails(state, theme),
+      onSuccess: _buildContractorDetails(state, theme, context.read<ContractorInfoCubit>()),
       errorMessage: state.errorMessage,
       theme: theme,
     );
@@ -177,6 +177,7 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
   CustomScrollView _buildContractorDetails(
     ContractorInfoState state,
     ThemeData theme,
+    ContractorInfoCubit contractorInfoCubit,
   ) {
     return CustomScrollView(
       slivers: [
@@ -230,6 +231,7 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
                           await _showBottomSheet(
                             context: context,
                             contractorId: widget.contractorId,
+                            contractorInfoCubit: contractorInfoCubit,
                           );
                         },
                       );
@@ -247,6 +249,7 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
   Future<void> _showBottomSheet({
     required BuildContext context,
     required int contractorId,
+    required ContractorInfoCubit contractorInfoCubit,
   }) async {
     if (!context.mounted) return;
 
@@ -259,7 +262,7 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
         return FractionallySizedBox(
           heightFactor: 1,
           child: OfferPriceBottomSheet(
-            contractorInfoCubit: context.read<ContractorInfoCubit>(),
+            contractorInfoCubit: contractorInfoCubit,
             address: LocaleKeys.offerPrice,
             contractorId: contractorId,
           ),

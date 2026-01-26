@@ -2,6 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/services/notifications/notification_controller.dart';
 import 'package:mokawlcom_app/core/services/notifications/notification_service.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
@@ -81,7 +82,8 @@ class FcmInitHelper {
     try {
       if (type == NotificationType.offerNotification ||
           type == NotificationType.replyOnOffer) {
-        await _appRouter.navigate(
+        if (AppConstants.userType == UserType.contractor) {
+           await _appRouter.navigate(
           const AuthenticatedRoute(
             children: [
               BottomNavBarRoute(
@@ -92,6 +94,16 @@ class FcmInitHelper {
             ],
           ),
         );
+        } else {
+          await _appRouter.navigate(
+            const AuthenticatedRoute(
+              children: [
+               SubmittedPriceOffersRoute(),
+              ],
+            ),
+          );
+        }
+       
       } else {
         await _appRouter.navigate(
           const AuthenticatedRoute(
@@ -121,17 +133,23 @@ class FcmInitHelper {
       _notificationService.addNotification(notificationData);
       if (notificationData.type == NotificationType.offerNotification ||
           notificationData.type == NotificationType.replyOnOffer) {
-        await _appRouter.replaceAll([
-          const AuthenticatedRoute(
-            children: [
-              BottomNavBarRoute(
-                children: [
-                  NotificationsRoute(children: [PriceOffersRoute()]),
-                ],
-              ),
-            ],
-          ),
-        ]);
+        if (AppConstants.userType == UserType.contractor) {
+          await _appRouter.replaceAll([
+            const AuthenticatedRoute(
+              children: [
+                BottomNavBarRoute(children: [NotificationsRoute(children: [PriceOffersRoute()])]),
+              ],
+            ),
+          ]);
+        } else {
+          await _appRouter.replaceAll([
+            const AuthenticatedRoute(
+              children: [
+                SubmittedPriceOffersRoute(),
+              ],
+            ),
+          ]);
+        }
       } else {
         await _appRouter.replaceAll([
           const AuthenticatedRoute(

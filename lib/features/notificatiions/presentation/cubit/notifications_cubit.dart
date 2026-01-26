@@ -250,9 +250,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
   void markOfferNotificationAsRead({required int notificationId}) {
-    final updatedReadStatus = Set<int>.from(
-      state.offerNotificationsReadStatus,
-    );
+    final updatedReadStatus = Set<int>.from(state.offerNotificationsReadStatus);
     updatedReadStatus.add(notificationId);
     emit(state.copyWith(offerNotificationsReadStatus: updatedReadStatus));
   }
@@ -264,15 +262,11 @@ class NotificationsCubit extends Cubit<NotificationsState> {
       state.publicNotifications.notifications,
     );
 
-    final index = currentList.indexWhere((e) => e.id == publicNotification.id);
-
-    if (index != -1) {
-      currentList[index] = currentList[index].copyWith(
-        status: publicNotification.status,
-      );
-    } else {
-      currentList.insert(0, publicNotification);
+    if (currentList.contains(publicNotification)) {
+      return;
     }
+
+    currentList.insert(0, publicNotification);
 
     emit(
       state.copyWith(
@@ -334,11 +328,11 @@ class NotificationsCubit extends Cubit<NotificationsState> {
       );
 
       debugPrint(
-        "✅ Marked offer ${currentList[index].id} as unread due to new reply on offer ${offerNotification.offerId}",
+        "Marked offer ${currentList[index].id} as unread due to new reply on offer ${offerNotification.offerId}",
       );
     } else {
       debugPrint(
-        "⚠️ Parent offer with offerId ${offerNotification.offerId} not found in current list",
+        "Parent offer with offerId ${offerNotification.offerId} not found in current list",
       );
     }
   }

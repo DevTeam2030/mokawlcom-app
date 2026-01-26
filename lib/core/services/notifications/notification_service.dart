@@ -19,9 +19,9 @@ class NotificationData {
   factory NotificationData.fromRemoteMessage(RemoteMessage message) {
     final notificationType = message.data['type'] == 'public'
         ? NotificationType.publicNotification
-        : message.data['type'] == 'offer'
-        ? NotificationType.offerNotification
-        : NotificationType.replyOnOffer;
+        : message.data['type'] == 'replay'
+        ? NotificationType.replyOnOffer
+        : NotificationType.offerNotification;
 
     if (notificationType == NotificationType.publicNotification) {
       return NotificationData(
@@ -36,9 +36,27 @@ class NotificationData {
         ),
         originalMessage: message,
       );
-    } else {
+    } else if (notificationType == NotificationType.offerNotification) {
       return NotificationData(
         type: NotificationType.offerNotification,
+        notification: OfferModel(
+          id: int.tryParse(message.data['id'] ?? "") ?? 0,
+          title: message.notification?.title ?? 'No title',
+          message: message.notification?.body ?? 'No body',
+          date: message.data['date'] ?? "",
+          time: message.data['time'] ?? "",
+          status: bool.tryParse(message.data['status'] ?? "") ?? false,
+          isPdf: bool.tryParse(message.data['is_pdf'] ?? "") ?? false,
+          price: num.tryParse(message.data['price'] ?? "") ?? 0,
+          offerUserName: message.data['offer_user_name'] ?? "",
+          url: message.data['file'] ?? "",
+          offerId: int.tryParse(message.data['offer_id'] ?? "") ?? 0,
+        ),
+        originalMessage: message,
+      );
+    } else {
+      return NotificationData(
+        type: NotificationType.replyOnOffer,
         notification: OfferModel(
           id: int.tryParse(message.data['id'] ?? "") ?? 0,
           title: message.notification?.title ?? 'No title',
