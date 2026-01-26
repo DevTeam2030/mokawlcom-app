@@ -45,6 +45,7 @@ class _EditContractorProfileScreenState
   );
 
   ValueNotifier<List<ServiceModel>> selectedServices = ValueNotifier([]);
+
   @override
   void initState() {
     super.initState();
@@ -92,11 +93,6 @@ class _EditContractorProfileScreenState
                   context.read<HomeCubit>().getClassifications(),
                   context.read<ProfileCubit>().getContractorProfile(),
                 ]);
-                if (context.mounted) {
-                  await context.read<HomeCubit>().getServices(
-                    classificationId: selectedClassification.value?.id ?? 0,
-                  );
-                }
               },
             );
           }
@@ -127,25 +123,34 @@ class _EditContractorProfileScreenState
                               current.classificationsModel ||
                           previous.getClassificationsState !=
                               current.getClassificationsState,
-                      builder: (context, state) {
+                      builder: (context, homeState) {
                         if (selectedClassification.value == null) {
-                          selectedClassification.value = state
+                          final userClassificationId = state.userModel.classificationId;
+                          selectedClassification.value = homeState
                               .classificationsModel
                               .classifications
-                              .firstOrNull;
-                          if (selectedClassification.value != null) {
-                            context.read<HomeCubit>().getServices(
-                              classificationId:
-                                  selectedClassification.value!.id,
-                            );
-                          }
+                              .firstWhere(
+                                (classification) => classification.id == userClassificationId,
+                                orElse: () => homeState
+                                    .classificationsModel
+                                    .classifications
+                                    .firstOrNull ?? const ClassificationModel(
+                                      id: 0, 
+                                      name: '', 
+                                      numberOfServices: 0, 
+                                      image: '',
+                                    ),
+                              );
+                          
+                          selectedServices.value = state.userModel.userServices;
+                          
                         }
                         return ValueListenableBuilder<ClassificationModel?>(
                           valueListenable: selectedClassification,
                           builder: (context, value, _) {
                             return CustomDropdownField<ClassificationModel>(
                               onTap:
-                                  state
+                                  homeState
                                       .classificationsModel
                                       .classifications
                                       .isEmpty
@@ -154,7 +159,7 @@ class _EditContractorProfileScreenState
                               value: value,
                               theme: theme,
                               hintText: LocaleKeys.chooseClassification,
-                              items: state.classificationsModel.classifications
+                              items: homeState.classificationsModel.classifications
                                   .map(
                                     (item) => DropdownMenuItem(
                                       value: item,
@@ -164,8 +169,7 @@ class _EditContractorProfileScreenState
                                   .toList(),
                               onChanged: (newValue) {
                                 selectedClassification.value = newValue!;
-                                selectedServices.value =
-                                    []; 
+                                selectedServices.value = [];
                                 context.read<HomeCubit>().getServices(
                                   classificationId:
                                       selectedClassification.value!.id,
@@ -177,10 +181,10 @@ class _EditContractorProfileScreenState
                                     .loadMoreClassifications();
                               },
                               isLoadingMore:
-                                  state.getClassificationsState.isLoadingMore,
+                                  homeState.getClassificationsState.isLoadingMore,
                               hasMoreData:
-                                  state.classificationsPage <
-                                  state.classificationsTotalPages,
+                                  homeState.classificationsPage <
+                                  homeState.classificationsTotalPages,
                             );
                           },
                         );
@@ -202,60 +206,86 @@ class _EditContractorProfileScreenState
                           previous.servicesModel.services !=
                               current.servicesModel.services ||
                           previous.getServicesState != current.getServicesState,
-                      builder: (context, state) {
-                        final services = state.servicesModel.services;
+                      builder: (context, homeState) {
+                        final services = homeState.servicesModel.services;
 
-                        if (state.getServicesState.isLoading) {
-                          return const Center(child: LinearProgressIndicator());
+                        // Loading state
+                        if (homeState.getServicesState.isLoading) {
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
                         }
 
+                        // Initial state - services not loaded yet
+                        if (homeState.getServicesState.isInitial && services.isEmpty) {
+                          return CustomDropdownField<ServiceModel>(
+                            onTap: () {
+                              if (selectedClassification.value != null) {
+                                context.read<HomeCubit>().getServices(
+                                  classificationId: selectedClassification.value!.id,
+                                );
+                              }
+                            },
+                            theme: theme,
+                            hintText: LocaleKeys.chooseServices,
+                            multiSelect: true,
+                            selectedValues: const [],
+                            items: const [],
+                            onMultiChanged: (newList) {},
+                          );
+                        }
+
+                        // Error state
+                        if (homeState.getServicesState.isError) {
+                          return Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.red),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              homeState.servicesErrorMessage,
+                              style: theme.textTheme.bodySmall!.copyWith(
+                                color: Colors.red,
+                              ),
+                            ),
+                          );
+                        }
+
+                        // Success but empty
+                        if (services.isEmpty) {
+                          return Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: ColorsManager.secondaryColor,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              LocaleKeys.noServicesAvailable,
+                              style: theme.textTheme.bodySmall!.copyWith(
+                                color: ColorsManager.secondaryColor,
+                              ),
+                            ),
+                          );
+                        }
+
+                        // Success with services
                         return ValueListenableBuilder<List<ServiceModel>>(
                           valueListenable: selectedServices,
                           builder: (context, selectedList, _) {
-                            if (services.isEmpty) {
-                              selectedServices.value = [];
-                              return Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: ColorsManager.secondaryColor,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  LocaleKeys.noServicesAvailable,
-                                  style: theme.textTheme.bodySmall!.copyWith(
-                                    color: ColorsManager.secondaryColor,
-                                  ),
-                                ),
-                              );
-                            }
-
-                            final validSelectedServices = selectedList
-                                .where(
-                                  (selected) => services.any(
-                                    (service) => service.id == selected.id,
-                                  ),
-                                )
-                                .toList();
-
-                            if (validSelectedServices.isEmpty &&
-                                services.isNotEmpty) {
-                              selectedServices.value = [services.first];
-                            } else if (validSelectedServices.length !=
-                                selectedList.length) {
-                              selectedServices.value = validSelectedServices;
-                            }
-
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomDropdownField<ServiceModel>(
-                                  onTap: services.isEmpty ? () {} : null,
                                   theme: theme,
                                   hintText: LocaleKeys.chooseServices,
                                   multiSelect: true,
-                                  selectedValues: selectedServices.value,
+                                  selectedValues: selectedList,
                                   items: services
                                       .map(
                                         (item) => DropdownMenuItem(
@@ -274,19 +304,17 @@ class _EditContractorProfileScreenState
                                     );
                                   },
                                   isLoadingMore:
-                                      state.getServicesState.isLoadingMore,
+                                      homeState.getServicesState.isLoadingMore,
                                   hasMoreData:
-                                      state.servicesPage <
-                                      state.servicesTotalPages,
+                                      homeState.servicesPage <
+                                      homeState.servicesTotalPages,
                                 ),
-                                if (selectedServices.value.isNotEmpty) ...[
+                                if (selectedList.isNotEmpty) ...[
                                   const SizedBox(height: 12),
                                   Wrap(
                                     spacing: 8,
                                     runSpacing: 8,
-                                    children: selectedServices.value.map((
-                                      service,
-                                    ) {
+                                    children: selectedList.map((service) {
                                       return Chip(
                                         label: Text(
                                           service.name,

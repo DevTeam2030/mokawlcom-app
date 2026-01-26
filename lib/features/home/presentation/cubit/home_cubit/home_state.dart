@@ -32,7 +32,7 @@ class HomeState extends Equatable {
     this.classificationsErrorMessage = '',
     this.classificationsPage = 1,
     this.classificationsTotalPages = 1,
-    this.getServicesState = RequestStatus.loading,
+    this.getServicesState = RequestStatus.initial,
     this.servicesModel = const ServicesModel.empty(),
     this.servicesErrorMessage = '',
     this.servicesPage = 1,

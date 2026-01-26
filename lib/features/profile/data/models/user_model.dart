@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
 
 class UserModel extends Equatable {
   final int id;
@@ -13,6 +14,9 @@ class UserModel extends Equatable {
   final String snapchat;
   final String whatsapp;
   final String hintAboutComppany;
+  final int classificationId;
+  final List<int> services;
+  final List<ServiceModel> userServices;
 
   const UserModel({
     required this.id,
@@ -27,9 +31,14 @@ class UserModel extends Equatable {
     required this.snapchat,
     required this.whatsapp,
     required this.hintAboutComppany,
+    required this.classificationId,
+    required this.services,
+    required this.userServices,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
+    final subCategories = json['sub_categories'] as List<dynamic>? ?? [];
+    
     return UserModel(
       id: json['id'] ?? 0,
       name: json['name'] ?? '',
@@ -43,6 +52,18 @@ class UserModel extends Equatable {
       snapchat: json['spanchat'] ?? '',
       whatsapp: json['whatsapp'] ?? '',
       hintAboutComppany: json['store_description'] ?? '',
+      classificationId: json['category_id'] ?? 0,
+      services: subCategories
+          .map((x) => (x['id'] as int?) ?? 0)
+          .toList(),
+      userServices: subCategories
+          .map((x) => ServiceModel(
+                id: x['id'] ?? 0,
+                name: x['name'] ?? '',
+                number: 0,
+                image: '',
+              ))
+          .toList(),
     );
   }
   const UserModel.empty()
@@ -59,6 +80,9 @@ class UserModel extends Equatable {
         snapchat: '',
         whatsapp: '',
         hintAboutComppany: '',
+        classificationId: 0,
+        services: const [],
+        userServices: const [],
       );
 
   @override
@@ -75,5 +99,8 @@ class UserModel extends Equatable {
     snapchat,
     whatsapp,
     hintAboutComppany,
+    classificationId,
+    services,
+    userServices,
   ];
 }

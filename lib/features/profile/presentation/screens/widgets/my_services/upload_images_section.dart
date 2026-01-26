@@ -196,9 +196,9 @@ class _ImageCard extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
+        PositionedDirectional(
           top: 4,
-          right: 4,
+          start: 4,
           child: InkWell(
             onTap: () {
               context.read<UserDetailsCubit>().removeImage(index);

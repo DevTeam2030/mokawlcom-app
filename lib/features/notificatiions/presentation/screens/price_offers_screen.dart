@@ -136,7 +136,7 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
                 )
               : NoDataWidget(
                   theme: theme,
-                  text: LocaleKeys.noNotificationsExist,
+                  text: LocaleKeys.noOffersExist,
                 ),
           onError: hasData
               ? _buildOffersList(
@@ -146,7 +146,7 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
                 )
               : NoDataWidget(
                   theme: theme,
-                  text: LocaleKeys.noNotificationsExist,
+                  text: LocaleKeys.noOffersExist,
                 ),
         );
       },

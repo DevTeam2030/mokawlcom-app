@@ -54,8 +54,110 @@ class AvailableDealsItem extends StatelessWidget {
               const Spacer(),
               InkWell(
                 onTap: () {
-                  context.read<UserDetailsCubit>().deleteDeal(
-                    dealId: deal.id,
+                  showDialog(
+                    context: context,
+                    builder: (dialogContext) => Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: ColorsManager.errorLight.withValues(
+                                  alpha: 0.1,
+                                ),
+                              ),
+                              child: const Icon(
+                                MyIcons.trash,
+                                color: ColorsManager.errorLight,
+                                size: 32,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              LocaleKeys.deleteDeal,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: ColorsManager.primaryColor,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              LocaleKeys.deleteDealMessage,
+                              textAlign: TextAlign.center,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: ColorsManager.grayText,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: OutlinedButton(
+                                    onPressed: () =>
+                                        Navigator.pop(dialogContext),
+                                    style: OutlinedButton.styleFrom(
+                                      side: const BorderSide(
+                                        color: ColorsManager.primaryColor,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 12,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      LocaleKeys.cancel,
+                                      style: theme.textTheme.labelLarge!
+                                          .copyWith(
+                                            color: ColorsManager.primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      context
+                                          .read<UserDetailsCubit>()
+                                          .deleteDeal(dealId: deal.id);
+                                      Navigator.pop(dialogContext);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: ColorsManager.errorLight,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 12,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      LocaleKeys.deleteDeal,
+                                      style: theme.textTheme.labelLarge!
+                                          .copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   );
                 },
                 child: const Icon(
@@ -67,14 +169,14 @@ class AvailableDealsItem extends StatelessWidget {
               const SizedBox(width: 16),
               InkWell(
                 onTap: () {
-                      context.pushRoute(
-                        EditDealRoute(
-                          userDetailsCubit: context.read<UserDetailsCubit>(),
-                          deal: deal,
-                          dealIndex: index,
-                        ),
-                      );
-                    },
+                  context.pushRoute(
+                    EditDealRoute(
+                      userDetailsCubit: context.read<UserDetailsCubit>(),
+                      deal: deal,
+                      dealIndex: index,
+                    ),
+                  );
+                },
                 child: const Icon(
                   MyIcons.editsolid,
                   color: ColorsManager.primaryColor,

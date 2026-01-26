@@ -262,4 +262,9 @@ class LocaleKeys {
   static String get noServicesAvailable => 'no_services_available'.tr();
   static String get pleaseSelectClassification => 'please_select_classification'.tr();
   static String get searchCountry => 'search_country'.tr();
+  static String get deleteService => 'delete_service'.tr();
+  static String get deleteServiceMessage => 'delete_service_message'.tr();
+  static String get deleteDeal => 'delete_deal'.tr();
+  static String get deleteDealMessage => 'delete_deal_message'.tr();
+  static String get noOffersExist => 'no_offers_exist'.tr();
 }

@@ -181,5 +181,10 @@
   "done":"تم",
   "no_services_available":"لا يوجد خدمات متاحة",
   "please_select_classification":"من فضلك اختر التصنيف",
-  "search_country":"إبحث عن دولة"
+  "search_country":"إبحث عن دولة",
+  "delete_service":"حذف الخدمة",
+  "delete_service_message":"هل أنت متأكد من حذف هذه الخدمة؟",
+  "delete_deal":"حذف الصفقة",
+  "delete_deal_message":"هل أنت متأكد من حذف هذه الصفقة؟",
+  "no_offers_exist":"لا يوجد عروض"
 }

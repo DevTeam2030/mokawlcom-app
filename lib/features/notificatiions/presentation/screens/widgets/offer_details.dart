@@ -4,6 +4,7 @@ import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
+import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/offer_price_bottom_sheet.dart';
@@ -167,21 +168,71 @@ class OfferDetails extends StatelessWidget {
                             offerNotificationModel.url.isNotEmpty
                         ? InkWell(
                             onTap: () {
-                              LaunchUtils.open(
-                                url: offerNotificationModel.url,
-                                onError: (msg) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        ErrorDialog(theme: theme, message: msg),
-                                  );
-                                },
+                              showDialog(
+                                context: context,
+                                builder: (dialogContext) => Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  child: AspectRatio(
+                                    aspectRatio: 3 / 4,
+                                    child: Stack(
+                                      children: [
+                                        InteractiveViewer(
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                            child: CustomCachedNetworkImage(
+                                              height: 350,
+                                              width: double.infinity,
+                                              imageUrl:
+                                                  offerNotificationModel.url,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        PositionedDirectional(
+                                          top: 10,
+                                          start: 10,
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.pop(dialogContext);
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                color: Colors.red,
+                                                shape: BoxShape.circle,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withValues(alpha: .2),
+                                                    blurRadius: 4,
+                                                    offset: const Offset(0, 2),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: const Icon(
+                                                Icons.close,
+                                                color: Colors.white,
+                                                size: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               );
                             },
-                            child: const Icon(
-                              Icons.image_outlined,
-                              size: 50,
-                              color: ColorsManager.primaryColor,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: CustomCachedNetworkImage(
+                                width: 300,
+                                height: 300,
+                                imageUrl: offerNotificationModel.url,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           )
                         : const SizedBox.shrink(),

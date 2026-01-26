@@ -1,30 +1,27 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
-Future<void> showLanguageBottomSheet(BuildContext context)async {
+Future<void> showLanguageBottomSheet(BuildContext context) async {
   await showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        top: Radius.circular(20),
-      ),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (context) {
-      final isArabic =
-          context.select((AppCubit cubit) => cubit.state.isArabic);
+      final isArabic = context.select((AppCubit cubit) => cubit.state.isArabic);
 
       return Container(
         width: double.infinity,
         padding: const EdgeInsets.all(20),
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(20),
-          ),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -60,11 +57,11 @@ Future<void> showLanguageBottomSheet(BuildContext context)async {
               onTap: () {
                 context.read<AppCubit>().changeLanguage(isArabic: false);
                 Navigator.pop(context);
+                context.router.replaceAll([const SplashTabRoute()]);
               },
             ),
 
             const Divider(),
-
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: Text(LocaleKeys.arabic),
@@ -77,6 +74,7 @@ Future<void> showLanguageBottomSheet(BuildContext context)async {
               onTap: () {
                 context.read<AppCubit>().changeLanguage(isArabic: true);
                 Navigator.pop(context);
+                context.router.replaceAll([const SplashTabRoute()]);
               },
             ),
 

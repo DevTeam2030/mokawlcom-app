@@ -181,7 +181,12 @@
   "done":"Done",
   "no_services_available":"No services available",
   "please_select_classification":"Please select classification",
-  "search_country":"Search Country"
+  "search_country":"Search Country",
+  "delete_service":"Delete Service",
+  "delete_service_message":"Are you sure you want to delete this service?",
+  "delete_deal":"Delete Deal",
+  "delete_deal_message":"Are you sure you want to delete this deal?",
+  "no_offers_exist":"No offers exist"
 
   
 

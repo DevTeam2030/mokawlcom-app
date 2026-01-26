@@ -6,6 +6,7 @@ import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/lanuch_utils.dart';
 import 'package:mokawlcom_app/core/utils/show_toast.dart';
+import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
@@ -53,10 +54,114 @@ class MyServiceItem extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () => context.read<UserDetailsCubit>().deleteService(
-                  serviceId: service.id,
-                  index: index,
-                ),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (dialogContext) => Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: ColorsManager.errorLight.withValues(
+                                  alpha: 0.1,
+                                ),
+                              ),
+                              child: const Icon(
+                                MyIcons.trash,
+                                color: ColorsManager.errorLight,
+                                size: 32,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              LocaleKeys.deleteService,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: ColorsManager.primaryColor,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              LocaleKeys.deleteServiceMessage,
+                              textAlign: TextAlign.center,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: ColorsManager.grayText,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: OutlinedButton(
+                                    onPressed: () => Navigator.pop(dialogContext),
+                                    style: OutlinedButton.styleFrom(
+                                      side: const BorderSide(
+                                        color: ColorsManager.primaryColor,
+                                       
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 12,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      LocaleKeys.cancel,
+                                      style: theme.textTheme.labelLarge!.copyWith(
+                                        color: ColorsManager.primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      context
+                                          .read<UserDetailsCubit>()
+                                          .deleteService(
+                                            serviceId: service.id,
+                                            index: index,
+                                          );
+                                      Navigator.pop(dialogContext);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: ColorsManager.errorLight,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 12,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      LocaleKeys.deleteService,
+                                      style: theme.textTheme.labelLarge!.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
                 child: const Icon(
                   MyIcons.trash,
                   color: ColorsManager.primaryColor,
@@ -97,32 +202,84 @@ class MyServiceItem extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Wrap(
-            spacing: 5,
-            runSpacing: 10,
-            children: List<Widget>.generate(service.images.length, (index) {
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+            ),
+            itemCount: service.images.length,
+            itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  LaunchUtils.open(
-                    url: service.images[index],
-                    onError: (msg) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => ErrorDialog(
-                          theme: theme,
-                          message: msg,
+                  showDialog(
+                    context: context,
+                    builder: (dialogContext) => Dialog(
+                      backgroundColor: Colors.transparent,
+                      child: AspectRatio(
+                        aspectRatio: 3 / 4,
+                        child: Stack(
+                          children: [
+                            InteractiveViewer(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: CustomCachedNetworkImage(
+                                  height: 350,
+                                  width: double.infinity,
+                                  imageUrl: service.images[index],
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            PositionedDirectional(
+                              top: 10,
+                              start: 10,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pop(dialogContext);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withValues(
+                                          alpha: .2,
+                                        ),
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: const Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   );
                 },
-                child: const Icon(
-                  Icons.image_outlined,
-                  size: 35,
-                  color: ColorsManager.primaryColor,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: CustomCachedNetworkImage(
+                    width: 300,
+                    height: 300,
+                    imageUrl: service.images[index],
+                    fit: BoxFit.cover,
+                  ),
                 ),
               );
-            }),
+            },
           ),
         ],
       ),

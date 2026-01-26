@@ -29,7 +29,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.fieldName,
     this.onChanged,
     this.autovalidateMode,
-    this.suffix = false,
+    this.isPrice = false,
   });
 
   final TextEditingController? controller;
@@ -56,7 +56,7 @@ class CustomTextFormField extends StatelessWidget {
   final int maxLines;
   final String fieldName;
   final AutovalidateMode? autovalidateMode;
-  final bool suffix;
+  final bool isPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +133,7 @@ class CustomTextFormField extends StatelessWidget {
                 return null;
               },
         ),
-        if (suffix)
+        if (isPrice)
           Padding(
             padding: const EdgeInsetsDirectional.only(end: 16),
             child: Text(

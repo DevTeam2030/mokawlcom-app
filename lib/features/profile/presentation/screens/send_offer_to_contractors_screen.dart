@@ -148,7 +148,7 @@ class _SendOfferToContractorsScreenState
                   builder: (context, state) {
                     return PrimaryButton(
                       onPressed: _submit,
-                      text: LocaleKeys.save,
+                      text: LocaleKeys.send,
                       isLoading: state.addDealState.isLoading,
                     );
                   },

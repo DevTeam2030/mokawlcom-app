@@ -27,7 +27,7 @@ class EditServiceScreen extends StatefulWidget implements AutoRouteWrapper {
     required this.service,
     required this.serviceIndex,
   });
-  
+
   final ThemeData theme;
   final UserDetailsCubit userDetailsCubit;
   final ContractorServiceModel service;
@@ -60,7 +60,9 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
     _selectedClassification = ValueNotifier<ClassificationModel?>(null);
     _serviceNameController = TextEditingController(text: widget.service.title);
     _servicePriceController = TextEditingController(text: widget.service.price);
-    _serviceDetailsController = TextEditingController(text: widget.service.description);
+    _serviceDetailsController = TextEditingController(
+      text: widget.service.description,
+    );
   }
 
   @override
@@ -166,7 +168,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                   textInputAction: TextInputAction.next,
                   type: TextInputType.number,
                   fieldName: LocaleKeys.priceAverage,
-                  suffix: true,
+                  isPrice: true,
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -193,37 +195,6 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                
-                if (widget.service.images.isNotEmpty) ...[
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: widget.service.images.map((imageUrl) {
-                      return Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: CustomCachedNetworkImage(
-                              imageUrl: imageUrl,
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ],
-                      );
-                    }).toList(),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    LocaleKeys.servicePhotos, // New photos to add
-                    style: widget.theme.textTheme.bodySmall!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: ColorsManager.primaryColor,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                ],
                 UploadImagesSection(theme: widget.theme),
                 const SizedBox(height: 24),
                 BlocConsumer<UserDetailsCubit, UserDetailsState>(
@@ -257,7 +228,9 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                   },
                   builder: (context, state) {
                     return PrimaryButton(
-                      isLoading: state.editServiceState.isLoading && state.selectedImages.isEmpty,
+                      isLoading:
+                          state.editServiceState.isLoading &&
+                          state.selectedImages.isEmpty,
                       text: LocaleKeys.editService,
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {

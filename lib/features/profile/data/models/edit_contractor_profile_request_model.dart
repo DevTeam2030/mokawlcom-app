@@ -6,7 +6,6 @@ class EditContractorProfileRequestModel extends Equatable {
   final List<int> serviceIds;
   final String phone;
   final String? whatsapp;
-  final String? address;
   final String? facebook;
   final String? twitter;
   final String? instagram;
@@ -19,7 +18,6 @@ class EditContractorProfileRequestModel extends Equatable {
     required this.serviceIds,
     required this.phone,
     this.whatsapp,
-    this.address,
     this.facebook,
     this.twitter,
     this.instagram,
@@ -33,7 +31,6 @@ class EditContractorProfileRequestModel extends Equatable {
     "sub_category_id": List<int>.from(serviceIds.map((x) => x)),
     "phone": phone,
     "whatsapp": whatsapp ?? "",
-    "address": address??"",
     "facebook": facebook??"",
     "twitter": twitter??"",
     "instagram": instagram??"",
@@ -50,7 +47,6 @@ class EditContractorProfileRequestModel extends Equatable {
     serviceIds,
     phone,
     whatsapp,
-    address,
     facebook,
     twitter,
     instagram,
