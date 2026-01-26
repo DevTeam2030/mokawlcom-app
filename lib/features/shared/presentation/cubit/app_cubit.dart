@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
-import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/visitor_access_dialog.dart';

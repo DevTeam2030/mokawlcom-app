@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/dio_helper.dart';
-import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/error/server_exception.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/complete_contractor_data_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';

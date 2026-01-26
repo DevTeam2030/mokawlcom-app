@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/core/utils/app_constants.dart';
 
 class CustomInterceptors extends Interceptor {
   @override

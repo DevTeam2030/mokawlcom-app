@@ -34,7 +34,6 @@ class _EditContractorFormState extends State<EditContractorForm> {
   late AutovalidateMode _autoValidatorMode;
   late TextEditingController _phoneController;
   late TextEditingController _whatsAppController;
-  late TextEditingController _addressController;
   late TextEditingController _snapChatController;
   late TextEditingController _twitterController;
   late TextEditingController _facebookController;
@@ -52,7 +51,6 @@ class _EditContractorFormState extends State<EditContractorForm> {
     _autoValidatorMode = AutovalidateMode.disabled;
     _phoneController = TextEditingController(text: widget.userModel.phone);
     _whatsAppController = TextEditingController(text: widget.userModel.phone);
-    _addressController = TextEditingController(text: widget.userModel.address);
     _snapChatController = TextEditingController(
       text: widget.userModel.snapchat,
     );
@@ -70,7 +68,6 @@ class _EditContractorFormState extends State<EditContractorForm> {
   void dispose() {
     _phoneController.dispose();
     _whatsAppController.dispose();
-    _addressController.dispose();
     _snapChatController.dispose();
     _twitterController.dispose();
     _facebookController.dispose();
@@ -155,24 +152,6 @@ class _EditContractorFormState extends State<EditContractorForm> {
               _whatsapp = completeNumber;
             },
             controller: _whatsAppController,
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            LocaleKeys.address,
-            style: theme.textTheme.bodyLarge!.copyWith(
-              color: ColorsManager.primaryColor,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          const SizedBox(height: 8.0),
-          CustomTextFormField(
-            type: TextInputType.streetAddress,
-            hintText: "الخليج الغربي - الدوحة",
-            autofillHints: const [AutofillHints.addressCityAndState],
-            textInputAction: TextInputAction.next,
-            fieldName: LocaleKeys.address,
-            validator: (_) => null,
-            controller: _addressController,
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -303,7 +282,6 @@ class _EditContractorFormState extends State<EditContractorForm> {
           name: _nameController.text.trim(),
           phone: _phone.replaceAll(" ", ""),
           whatsapp: _whatsapp.replaceAll(" ", ""),
-          address: _addressController.text.trim(),
           spanchat: _snapChatController.text.trim(),
           twitter: _twitterController.text.trim(),
           facebook: _facebookController.text.trim(),

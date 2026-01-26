@@ -6,7 +6,7 @@ import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
-import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
@@ -52,7 +52,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _startAppFlow() async {
     await AppInitializer.initHeavyServices();
-    if (mounted) _navigate();
   }
 
   void _navigate() {

@@ -6,7 +6,7 @@ import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
 import 'package:mokawlcom_app/core/services/pick_image_service.dart';
-import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/plan/plan_model.dart';

@@ -6,7 +6,7 @@ import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
 import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/core/services/pick_image_service.dart';
-import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/complete_contractor_data_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/contractor_sign_up_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/contractor/upload_file_model.dart';

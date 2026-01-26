@@ -6,7 +6,7 @@ import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/services/notifications/notification_controller.dart';
 import 'package:mokawlcom_app/core/services/notifications/notification_service.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
-import 'package:mokawlcom_app/core/utils/app_constans.dart';
+import 'package:mokawlcom_app/core/utils/app_constants.dart';
 
 class FcmInitHelper {
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;

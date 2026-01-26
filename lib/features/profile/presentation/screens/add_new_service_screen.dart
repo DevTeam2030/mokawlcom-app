@@ -152,6 +152,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                   type: TextInputType.number,
                   fieldName: LocaleKeys.priceAverage,
                   onSaved: (value) => servicePrice = value!,
+                  suffix: true,
                 ),
                 const SizedBox(height: 16),
                 Text(

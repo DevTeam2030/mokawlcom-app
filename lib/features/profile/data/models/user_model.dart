@@ -40,7 +40,7 @@ class UserModel extends Equatable {
       facabook: json['facebook'] ?? '',
       twitter: json['twitter'] ?? '',
       instagram: json['instagram'] ?? '',
-      snapchat: json['snapchat'] ?? '',
+      snapchat: json['spanchat'] ?? '',
       whatsapp: json['whatsapp'] ?? '',
       hintAboutComppany: json['store_description'] ?? '',
     );

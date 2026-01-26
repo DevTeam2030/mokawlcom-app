@@ -166,6 +166,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                   textInputAction: TextInputAction.next,
                   type: TextInputType.number,
                   fieldName: LocaleKeys.priceAverage,
+                  suffix: true,
                 ),
                 const SizedBox(height: 16),
                 Text(

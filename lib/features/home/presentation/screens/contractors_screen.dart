@@ -106,7 +106,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
       appBar: AppBar(
         title: Text(
           widget.classificationModel != null && widget.serviceModel != null
-              ? '${widget.classificationModel!.name} - ${widget.serviceModel!.name}'
+              ? widget.serviceModel!.name
               : LocaleKeys.searchResults,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

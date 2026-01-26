@@ -29,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.fieldName,
     this.onChanged,
     this.autovalidateMode,
+    this.suffix = false,
   });
 
   final TextEditingController? controller;
@@ -55,75 +56,95 @@ class CustomTextFormField extends StatelessWidget {
   final int maxLines;
   final String fieldName;
   final AutovalidateMode? autovalidateMode;
+  final bool suffix;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      readOnly: readOnly,
-      onTap: onTap,
-      enabled: enabled,
-      maxLines: maxLines,
-      autovalidateMode: autovalidateMode,
-      textInputAction: textInputAction ?? TextInputAction.next,
-      keyboardType: type,
-      obscureText: obscureText,
-      onSaved: onSaved,
-      onChanged: onChanged,
-      autofillHints: autofillHints,
-      onFieldSubmitted: onSubmit,
-      onTapOutside: (event) => FocusScope.of(context).unfocus(),
-      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-        color: Theme.of(context).colorScheme.onSurfaceVariant,
-        fontWeight: FontWeight.bold,
-      ),
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: fillColor ?? Colors.transparent,
-        errorStyle: Theme.of(context).textTheme.bodySmall,
-        hintText: hintText,
-        hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-          color: ColorsManager.secondaryColor,
-          fontWeight: FontWeight.w400,
-        ),
-        errorMaxLines: 1,
-        prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon,
-        labelText: label,
-        labelStyle: Theme.of(context).textTheme.bodySmall,
-        contentPadding: EdgeInsets.all(contentPadding),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
-          borderSide: BorderSide(
-            color: enableBorderColor ?? ColorsManager.secondaryColor,
+    return Stack(
+      alignment: AlignmentDirectional.centerEnd,
+      children: [
+        TextFormField(
+          controller: controller,
+          readOnly: readOnly,
+          onTap: onTap,
+          enabled: enabled,
+          maxLines: maxLines,
+          autovalidateMode: autovalidateMode,
+          textInputAction: textInputAction ?? TextInputAction.next,
+          keyboardType: type,
+          obscureText: obscureText,
+          onSaved: onSaved,
+          onChanged: onChanged,
+          autofillHints: autofillHints,
+          onFieldSubmitted: onSubmit,
+          onTapOutside: (event) => FocusScope.of(context).unfocus(),
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+            fontWeight: FontWeight.bold,
           ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
-          borderSide: const BorderSide(
-            color: ColorsManager.primaryColor,
-            width: 2,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: fillColor ?? Colors.transparent,
+            errorStyle: Theme.of(context).textTheme.bodySmall,
+            hintText: hintText,
+            hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+              color: ColorsManager.secondaryColor,
+              fontWeight: FontWeight.w400,
+            ),
+            errorMaxLines: 1,
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
+            labelText: label,
+            labelStyle: Theme.of(context).textTheme.bodySmall,
+            contentPadding: EdgeInsets.all(contentPadding),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
+              borderSide: BorderSide(
+                color: enableBorderColor ?? ColorsManager.secondaryColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
+              borderSide: const BorderSide(
+                color: ColorsManager.primaryColor,
+                width: 2,
+              ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.error,
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
+              borderSide: BorderSide(
+                color:
+                    enableBorderColor ?? Theme.of(context).colorScheme.outline,
+              ),
+            ),
           ),
+          validator:
+              validator ??
+              (value) {
+                if (value!.isEmpty) {
+                  return '$fieldName ${LocaleKeys.required}';
+                }
+                return null;
+              },
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.error),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
-          borderSide: BorderSide(
-            color: enableBorderColor ?? Theme.of(context).colorScheme.outline,
+        if (suffix)
+          Padding(
+            padding: const EdgeInsetsDirectional.only(end: 16),
+            child: Text(
+              LocaleKeys.sar,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: ColorsManager.primaryColor,
+              ),
+            ),
           ),
-        ),
-      ),
-      validator:
-          validator ??
-          (value) {
-            if (value!.isEmpty) {
-              return '$fieldName ${LocaleKeys.required}';
-            }
-            return null;
-          },
+      ],
     );
   }
 }
