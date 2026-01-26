@@ -125,41 +125,38 @@ class _EditContractorProfileScreenState
                               current.getClassificationsState,
                       builder: (context, homeState) {
                         if (selectedClassification.value == null) {
-                          final userClassificationId = state.userModel.classificationId;
+                          final userClassificationId =
+                              state.userModel.classificationId;
                           selectedClassification.value = homeState
                               .classificationsModel
                               .classifications
                               .firstWhere(
-                                (classification) => classification.id == userClassificationId,
-                                orElse: () => homeState
-                                    .classificationsModel
-                                    .classifications
-                                    .firstOrNull ?? const ClassificationModel(
-                                      id: 0, 
-                                      name: '', 
-                                      numberOfServices: 0, 
+                                (classification) =>
+                                    classification.id == userClassificationId,
+                                orElse: () =>
+                                    homeState
+                                        .classificationsModel
+                                        .classifications
+                                        .firstOrNull ??
+                                    const ClassificationModel(
+                                      id: 0,
+                                      name: '',
+                                      numberOfServices: 0,
                                       image: '',
                                     ),
                               );
-                          
                           selectedServices.value = state.userModel.userServices;
-                          
                         }
                         return ValueListenableBuilder<ClassificationModel?>(
                           valueListenable: selectedClassification,
                           builder: (context, value, _) {
                             return CustomDropdownField<ClassificationModel>(
-                              onTap:
-                                  homeState
-                                      .classificationsModel
-                                      .classifications
-                                      .isEmpty
-                                  ? () {}
-                                  : null,
                               value: value,
                               theme: theme,
                               hintText: LocaleKeys.chooseClassification,
-                              items: homeState.classificationsModel.classifications
+                              items: homeState
+                                  .classificationsModel
+                                  .classifications
                                   .map(
                                     (item) => DropdownMenuItem(
                                       value: item,
@@ -180,8 +177,9 @@ class _EditContractorProfileScreenState
                                     .read<HomeCubit>()
                                     .loadMoreClassifications();
                               },
-                              isLoadingMore:
-                                  homeState.getClassificationsState.isLoadingMore,
+                              isLoadingMore: homeState
+                                  .getClassificationsState
+                                  .isLoadingMore,
                               hasMoreData:
                                   homeState.classificationsPage <
                                   homeState.classificationsTotalPages,
@@ -203,13 +201,11 @@ class _EditContractorProfileScreenState
 
                     BlocBuilder<HomeCubit, HomeState>(
                       buildWhen: (previous, current) =>
-                          previous.servicesModel.services !=
-                              current.servicesModel.services ||
+                          previous.servicesModel != current.servicesModel ||
                           previous.getServicesState != current.getServicesState,
                       builder: (context, homeState) {
                         final services = homeState.servicesModel.services;
 
-                        // Loading state
                         if (homeState.getServicesState.isLoading) {
                           return const Center(
                             child: Padding(
@@ -219,26 +215,6 @@ class _EditContractorProfileScreenState
                           );
                         }
 
-                        // Initial state - services not loaded yet
-                        if (homeState.getServicesState.isInitial && services.isEmpty) {
-                          return CustomDropdownField<ServiceModel>(
-                            onTap: () {
-                              if (selectedClassification.value != null) {
-                                context.read<HomeCubit>().getServices(
-                                  classificationId: selectedClassification.value!.id,
-                                );
-                              }
-                            },
-                            theme: theme,
-                            hintText: LocaleKeys.chooseServices,
-                            multiSelect: true,
-                            selectedValues: const [],
-                            items: const [],
-                            onMultiChanged: (newList) {},
-                          );
-                        }
-
-                        // Error state
                         if (homeState.getServicesState.isError) {
                           return Container(
                             padding: const EdgeInsets.all(12),
@@ -255,7 +231,6 @@ class _EditContractorProfileScreenState
                           );
                         }
 
-                        // Success but empty
                         if (services.isEmpty) {
                           return Container(
                             padding: const EdgeInsets.all(12),
@@ -274,7 +249,6 @@ class _EditContractorProfileScreenState
                           );
                         }
 
-                        // Success with services
                         return ValueListenableBuilder<List<ServiceModel>>(
                           valueListenable: selectedServices,
                           builder: (context, selectedList, _) {
@@ -345,12 +319,16 @@ class _EditContractorProfileScreenState
                       },
                     ),
                     const SizedBox(height: 24),
-                    EditContractorForm(
-                      classificationId: selectedClassification.value?.id ?? 0,
-                      serviceIds: selectedServices.value
-                          .map((s) => s.id)
-                          .toList(),
-                      userModel: state.userModel,
+                    ValueListenableBuilder<List<ServiceModel>>(
+                      valueListenable: selectedServices,
+                      builder: (context, services, _) {
+                        return EditContractorForm(
+                          classificationId:
+                              selectedClassification.value?.id ?? 0,
+                          serviceIds: services.map((s) => s.id).toList(),
+                          userModel: state.userModel,
+                        );
+                      },
                     ),
 
                     const SizedBox(height: 40),

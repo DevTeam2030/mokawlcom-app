@@ -50,7 +50,7 @@ class _EditContractorFormState extends State<EditContractorForm> {
     _formKey = GlobalKey<FormState>();
     _autoValidatorMode = AutovalidateMode.disabled;
     _phoneController = TextEditingController(text: widget.userModel.phone);
-    _whatsAppController = TextEditingController(text: widget.userModel.phone);
+    _whatsAppController = TextEditingController(text: widget.userModel.whatsapp);
     _snapChatController = TextEditingController(
       text: widget.userModel.snapchat,
     );
