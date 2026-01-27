@@ -15,6 +15,7 @@ class UserLoginResponseModel extends Equatable {
   final String tradeLicense;
   final String establishmentCertificate;
   final String authorizedSignature  ;
+  final String classification  ;
 
   const UserLoginResponseModel({
     required this.message,
@@ -31,6 +32,7 @@ class UserLoginResponseModel extends Equatable {
     required this.tradeLicense,
     required this.establishmentCertificate,
     required this.authorizedSignature,
+    required this.classification,
   });
 
   factory UserLoginResponseModel.fromJson(Map<String, dynamic> json) {
@@ -50,6 +52,7 @@ class UserLoginResponseModel extends Equatable {
       tradeLicense: data?['trade_license'] ?? "",
       establishmentCertificate: data?['establishment_certificate'] ?? "",
       authorizedSignature: data?['authorized_signature'] ?? "",
+      classification: data?['category'] ?? "",
     );
   }
   const UserLoginResponseModel.empty()
@@ -68,6 +71,7 @@ class UserLoginResponseModel extends Equatable {
         tradeLicense: "",
         establishmentCertificate: "",
         authorizedSignature: "",
+        classification: "",
       );
   @override
   List<Object> get props => [
@@ -85,5 +89,6 @@ class UserLoginResponseModel extends Equatable {
     tradeLicense,
     establishmentCertificate,
     authorizedSignature,
+    classification,
   ];
 }

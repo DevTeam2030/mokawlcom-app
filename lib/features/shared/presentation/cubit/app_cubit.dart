@@ -41,8 +41,6 @@ class AppCubit extends HydratedCubit<AppState> {
     onAllowed();
   }
 
- 
-
   Future<void> checkNotificationPermission() async {
     var status = await Permission.notification.status;
 
@@ -62,6 +60,10 @@ class AppCubit extends HydratedCubit<AppState> {
     emit(state.copyWith(areNotificationsEnabled: granted));
   }
 
+  void changeClassification({required String classification}) {
+    emit(state.copyWith(classification: classification));
+  }
+
   @override
   AppState? fromJson(Map<String, dynamic> json) {
     return AppState(
@@ -69,6 +71,7 @@ class AppCubit extends HydratedCubit<AppState> {
       isArabic: json['is_arabic'] as bool? ?? true,
       areNotificationsEnabled:
           json['are_notifications_enabled'] as bool? ?? false,
+      classification: json['classification'] as String? ?? '',
     );
   }
 
@@ -78,6 +81,7 @@ class AppCubit extends HydratedCubit<AppState> {
       'user_type': _userTypeToString(state.userType),
       'is_arabic': state.isArabic,
       'are_notifications_enabled': state.areNotificationsEnabled,
+      'classification': state.classification,
     };
   }
 

@@ -12,6 +12,7 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verific
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class EditContractorForm extends StatefulWidget {
@@ -50,7 +51,9 @@ class _EditContractorFormState extends State<EditContractorForm> {
     _formKey = GlobalKey<FormState>();
     _autoValidatorMode = AutovalidateMode.disabled;
     _phoneController = TextEditingController(text: widget.userModel.phone);
-    _whatsAppController = TextEditingController(text: widget.userModel.whatsapp);
+    _whatsAppController = TextEditingController(
+      text: widget.userModel.whatsapp,
+    );
     _snapChatController = TextEditingController(
       text: widget.userModel.snapchat,
     );
@@ -129,7 +132,7 @@ class _EditContractorFormState extends State<EditContractorForm> {
           ),
           const SizedBox(height: 8.0),
           CustomIntlPhoneField(
-            initialCountryCode: phone?.countryISOCode??"QA",
+            initialCountryCode: phone?.countryISOCode ?? "QA",
             onChanged: (completeNumber, countryCode) {
               _phone = completeNumber;
             },
@@ -146,7 +149,7 @@ class _EditContractorFormState extends State<EditContractorForm> {
           ),
           const SizedBox(height: 8.0),
           CustomIntlPhoneField(
-            initialCountryCode: whatsapp?.countryISOCode??"QA",
+            initialCountryCode: whatsapp?.countryISOCode ?? "QA",
             validator: (_) => null,
             onChanged: (completeNumber, countryCode) {
               _whatsapp = completeNumber;
@@ -246,6 +249,9 @@ class _EditContractorFormState extends State<EditContractorForm> {
                 );
               }
               if (state.updateUserProfileRequestStatus.isSuccess) {
+                context.read<AppCubit>().changeClassification(
+                  classification: state.userModel.classification,
+                );
                 showDialog(
                   context: context,
                   builder: (context) => SuccessDialog(

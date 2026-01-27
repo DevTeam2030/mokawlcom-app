@@ -27,7 +27,7 @@ abstract class ProfileDataSource {
     required ChangePasswordRequestModel changePasswordRequestModel,
   });
   Future<String> deleteAccount();
-  Future<String> editContractorProfile({
+  Future<UserModel> editContractorProfile({
     required EditContractorProfileRequestModel
     editContractorProfileRequestModel,
   });
@@ -47,10 +47,7 @@ abstract class ProfileDataSource {
   });
   Future<DealsModel> getDeals({required int page});
 
-  Future<String> addDeal({
-    required String title,
-    required String description,
-  });
+  Future<String> addDeal({required String title, required String description});
   Future<String> deleteDeal({required int dealId});
 
   Future<String> editDeal({
@@ -130,7 +127,7 @@ class ProfileDataSourceImpl implements ProfileDataSource {
   }
 
   @override
-  Future<String> editContractorProfile({
+  Future<UserModel> editContractorProfile({
     required EditContractorProfileRequestModel
     editContractorProfileRequestModel,
   }) async {
@@ -140,7 +137,7 @@ class ProfileDataSourceImpl implements ProfileDataSource {
       data: editContractorProfileRequestModel.toJson(),
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return response.data["message"] ?? "";
+      return UserModel.fromJson(response.data ?? {});
     } else {
       throw ServerException(errorMessage: response.data["message"] ?? "");
     }
@@ -166,7 +163,7 @@ class ProfileDataSourceImpl implements ProfileDataSource {
       headers: {"Authorization": "Bearer ${AppConstants.token}"},
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return UserModel.fromJson(response.data["data"] ?? {});
+      return UserModel.fromJson(response.data ?? {});
     } else {
       throw ServerException(errorMessage: response.data["message"] ?? "");
     }
@@ -209,93 +206,91 @@ class ProfileDataSourceImpl implements ProfileDataSource {
       headers: {"Authorization": "Bearer ${AppConstants.token}"},
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return UserModel.fromJson(response.data["data"] ?? {});
+      return UserModel.fromJson(response.data ?? {});
     } else {
       throw ServerException(errorMessage: response.data["message"] ?? "");
     }
   }
 
- @override
-Future<ServiceResponseModel> addService({
-  required AddServiceRequestModel addServiceRequestModel,
-  required void Function(int, int)? onSendProgress,
-}) async {
-  final Map<String, dynamic> formDataMap = {
-    ...addServiceRequestModel.toJson(),
-  };
+  @override
+  Future<ServiceResponseModel> addService({
+    required AddServiceRequestModel addServiceRequestModel,
+    required void Function(int, int)? onSendProgress,
+  }) async {
+    final Map<String, dynamic> formDataMap = {
+      ...addServiceRequestModel.toJson(),
+    };
 
-  if (addServiceRequestModel.images != null &&
-      addServiceRequestModel.images!.isNotEmpty) {
-    final List<MultipartFile> imageFiles = [];
+    if (addServiceRequestModel.images != null &&
+        addServiceRequestModel.images!.isNotEmpty) {
+      final List<MultipartFile> imageFiles = [];
 
-    for (final image in addServiceRequestModel.images!) {
-      imageFiles.add(
-        await MultipartFile.fromFile(
-          image.path,
-          filename: image.path.split('/').last,
-        ),
-      );
+      for (final image in addServiceRequestModel.images!) {
+        imageFiles.add(
+          await MultipartFile.fromFile(
+            image.path,
+            filename: image.path.split('/').last,
+          ),
+        );
+      }
+      formDataMap['images[]'] = imageFiles;
     }
-    formDataMap['images[]'] = imageFiles;
+
+    final formData = FormData.fromMap(formDataMap);
+
+    final response = await dioHelper.post(
+      url: ApiConstants.addService,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      data: formData,
+      onSendProgress: onSendProgress,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return ServiceResponseModel.fromJson(response.data ?? {});
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
   }
-
-  final formData = FormData.fromMap(formDataMap);
-
-  final response = await dioHelper.post(
-    url: ApiConstants.addService,
-    headers: {"Authorization": "Bearer ${AppConstants.token}"},
-    data: formData,
-    onSendProgress: onSendProgress,
-  );
-
-  if (response.statusCode == 200 || response.statusCode == 201) {
-    return ServiceResponseModel.fromJson(response.data ?? {});
-  } else {
-    throw ServerException(errorMessage: response.data["message"] ?? "");
-  }
-}
-
 
   @override
-Future<ServiceResponseModel> editService({
-  required EditServiceRequestModel editServiceRequestModel,
-  required void Function(int, int)? onSendProgress,
-}) async {
-  final Map<String, dynamic> formDataMap = {
-    ...editServiceRequestModel.toJson(),
-  };
+  Future<ServiceResponseModel> editService({
+    required EditServiceRequestModel editServiceRequestModel,
+    required void Function(int, int)? onSendProgress,
+  }) async {
+    final Map<String, dynamic> formDataMap = {
+      ...editServiceRequestModel.toJson(),
+    };
 
-  if (editServiceRequestModel.images != null &&
-      editServiceRequestModel.images!.isNotEmpty) {
-    final List<MultipartFile> imageFiles = [];
+    if (editServiceRequestModel.images != null &&
+        editServiceRequestModel.images!.isNotEmpty) {
+      final List<MultipartFile> imageFiles = [];
 
-    for (final image in editServiceRequestModel.images!) {
-      imageFiles.add(
-        await MultipartFile.fromFile(
-          image.path,
-          filename: image.path.split('/').last,
-        ),
-      );
+      for (final image in editServiceRequestModel.images!) {
+        imageFiles.add(
+          await MultipartFile.fromFile(
+            image.path,
+            filename: image.path.split('/').last,
+          ),
+        );
+      }
+      formDataMap['images[]'] = imageFiles;
     }
-    formDataMap['images[]'] = imageFiles;
+
+    final formData = FormData.fromMap(formDataMap);
+
+    final response = await dioHelper.post(
+      url: ApiConstants.editService,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      data: formData,
+      onSendProgress: onSendProgress,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return ServiceResponseModel.fromJson(response.data ?? {});
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
   }
-
-  final formData = FormData.fromMap(formDataMap);
-
-  final response = await dioHelper.post(
-    url: ApiConstants.editService,
-    headers: {"Authorization": "Bearer ${AppConstants.token}"},
-    data: formData,
-    onSendProgress: onSendProgress,
-  );
-
-  if (response.statusCode == 200 || response.statusCode == 201) {
-    return ServiceResponseModel.fromJson(response.data ?? {});
-  } else {
-    throw ServerException(errorMessage: response.data["message"] ?? "");
-  }
-}
-
 
   @override
   Future<DealsModel> getDeals({required int page}) async {

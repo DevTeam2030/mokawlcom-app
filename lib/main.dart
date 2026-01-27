@@ -13,15 +13,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:mokawlcom_app/firebase_options.dart';
 import 'package:path_provider/path_provider.dart';
 
-late SharedPrefHelper sharedPrefHelper;
-late CacheHelper cacheHelper;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  
-   await AppInitializer.init();
+  await AppInitializer.init();
 
   runApp(const MyApp());
 }
-

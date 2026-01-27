@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _startAppFlow();
 
-    Timer(const Duration(milliseconds: 1500), () {
+    Timer(const Duration(seconds: 2), () {
       _navigate();
     });
   }

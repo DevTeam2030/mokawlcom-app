@@ -53,10 +53,10 @@ class ProfileRepoImpl implements ProfileRepo {
       safeApiCall<String>(() => profileDataSource.deleteAccount());
 
   @override
-  Future<Either<Failure, String>> editContractorProfile({
+  Future<Either<Failure, UserModel>> editContractorProfile({
     required EditContractorProfileRequestModel
     editContractorProfileRequestModel,
-  }) async => safeApiCall<String>(
+  }) async => safeApiCall<UserModel>(
     () => profileDataSource.editContractorProfile(
       editContractorProfileRequestModel: editContractorProfileRequestModel,
     ),

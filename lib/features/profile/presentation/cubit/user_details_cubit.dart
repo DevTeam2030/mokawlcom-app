@@ -221,7 +221,6 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
   }
 
   Future<void> addService({
-    required String classificationId,
     required String name,
     required String description,
     required String price,
@@ -233,7 +232,6 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
         description: description,
         price: price,
         images: state.selectedImages,
-        classificationId: classificationId,
       ),
       onSendProgress: (sent, total) {
         emit(state.copyWith(imageUploadProgress: sent / total));

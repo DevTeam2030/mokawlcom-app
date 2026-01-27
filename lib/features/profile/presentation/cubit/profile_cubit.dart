@@ -150,10 +150,11 @@ class ProfileCubit extends Cubit<ProfileState> {
           errorMessage: failure.errorMessage,
         ),
       ),
-      (successMessage) => emit(
+      (userModel) => emit(
         state.copyWith(
           updateUserProfileRequestStatus: RequestStatus.success,
-          successMessage: successMessage,
+          successMessage: userModel.message,
+          userModel: userModel,
         ),
       ),
     );

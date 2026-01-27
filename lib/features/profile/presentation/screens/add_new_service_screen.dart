@@ -11,10 +11,13 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verific
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
+import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/my_services/upload_images_section.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
@@ -39,7 +42,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode _autovalidateMode;
 
-  late final ValueNotifier<ClassificationModel?> _selectedClassification;
+
 
   String serviceName = '';
   String serviceDetails = '';
@@ -51,12 +54,11 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
     widget.userDetailsCubit.clearImages();
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
-    _selectedClassification = ValueNotifier<ClassificationModel?>(null);
+
   }
 
   @override
   void dispose() {
-    _selectedClassification.dispose();
     _formKey.currentState?.dispose();
     super.dispose();
   }
@@ -108,33 +110,15 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-
-                BlocSelector<HomeCubit, HomeState, List<ClassificationModel>>(
+                BlocSelector<AppCubit, AppState, String>(
                   selector: (state) =>
-                      state.classificationsModel.classifications,
-                  builder: (context, classifications) {
-                    if (classifications.isEmpty) {
-                      return const SizedBox();
-                    }
-                    _selectedClassification.value = classifications.first;
-                    return ValueListenableBuilder<ClassificationModel?>(
-                      valueListenable: _selectedClassification,
-                      builder: (context, selectedValue, _) {
-                        return CustomDropdownField<ClassificationModel>(
-                          theme: widget.theme,
-                          hintText: LocaleKeys.chooseClassification,
-                          value: selectedValue,
-                          items: classifications.map((item) {
-                            return DropdownMenuItem<ClassificationModel>(
-                              value: item,
-                              child: Text(item.name),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            _selectedClassification.value = value;
-                          },
-                        );
-                      },
+                      state.classification,
+                  builder: (context, classification) {
+                    return CustomDropdownField<String>(
+                      theme: widget.theme,
+                     hintText: classification,
+                      items: const [],
+                      readOnly: true,
                     );
                   },
                 ),
@@ -222,8 +206,6 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                             name: serviceName,
                             description: serviceDetails,
                             price: servicePrice,
-                            classificationId: _selectedClassification.value!.id
-                                .toString(),
                           );
                         } else {
                           setState(() {

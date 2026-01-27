@@ -25,8 +25,10 @@ class NotificationsScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child:AppConstants.userType == UserType.contractor ? AutoTabsRouter.tabBar(
-          routes: const [PublicNotificationsRoute(), PriceOffersRoute()],
+        child: AutoTabsRouter.tabBar(
+          routes: AppConstants.userType == UserType.contractor
+              ? const [PublicNotificationsRoute(), PriceOffersRoute()]
+              : const [PublicNotificationsRoute(), SubmittedPriceOffersRoute()],
           builder: (context, child, controller) {
             final tabsRouter = AutoTabsRouter.of(context);
 
@@ -53,23 +55,18 @@ class NotificationsScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   onTap: tabsRouter.setActiveIndex,
-                  tabs: [
-                    Tab(text: LocaleKeys.publicNotifications),
-                    Tab(text: LocaleKeys.pricesOffers),
-                  ],
+                  tabs: AppConstants.userType == UserType.contractor
+                      ? [
+                          Tab(text: LocaleKeys.publicNotifications),
+                          Tab(text: LocaleKeys.pricesOffers),
+                        ]
+                      : [
+                          Tab(text: LocaleKeys.publicNotifications),
+                          Tab(text: LocaleKeys.submittedPriceOffers),
+                        ],
                 ),
 
                 const SizedBox(height: 16),
-                Expanded(child: child),
-                const SizedBox(height: 24),
-              ],
-            );
-          },
-        ) : AutoTabsRouter.tabBar(
-          routes: const [PublicNotificationsRoute()],
-          builder: (context, child, controller) {
-            return Column(
-              children: [
                 Expanded(child: child),
                 const SizedBox(height: 24),
               ],

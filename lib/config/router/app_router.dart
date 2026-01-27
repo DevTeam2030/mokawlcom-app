@@ -115,6 +115,7 @@ class AppRouter extends RootStackRouter {
               children: [
                 AutoRoute(initial: true, page: PublicNotificationsRoute.page),
                 AutoRoute(page: PriceOffersRoute.page),
+                AutoRoute(page: SubmittedPriceOffersRoute.page),
               ],
             ),
             AutoRoute(page: ProfileRoute.page),
@@ -136,7 +137,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: MyCurrentPackageRoute.page),
         AutoRoute(page: AvailableDealsRoute.page),
         AutoRoute(page: SendOfferToContractorsRoute.page),
-        AutoRoute(page: SubmittedPriceOffersRoute.page),
         AutoRoute(page: SavedCompaniesRoute.page),
         AutoRoute(page: EditDealRoute.page),
         AutoRoute(page: EditServiceRoute.page),

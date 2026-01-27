@@ -18,6 +18,7 @@ class CustomDropdownField<T> extends StatelessWidget {
     this.onLoadMore,
     this.isLoadingMore = false,
     this.hasMoreData = false,
+    this.readOnly = false,
   });
 
   final T? value;
@@ -33,11 +34,14 @@ class CustomDropdownField<T> extends StatelessWidget {
   final VoidCallback? onLoadMore;
   final bool isLoadingMore;
   final bool hasMoreData;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap ?? () => _openBottomSheet(context, theme),
+      onTap: readOnly
+          ? null
+          : (onTap ?? () => _openBottomSheet(context, theme)),
       borderRadius: BorderRadius.circular(8),
       child: InputDecorator(
         decoration: InputDecoration(
@@ -79,7 +83,7 @@ class CustomDropdownField<T> extends StatelessWidget {
         ),
       );
     } else {
-      if (value == null) {
+      if (value == null || items.isEmpty) {
         return Text(
           hintText ?? '',
           style: theme.textTheme.labelLarge!.copyWith(
@@ -87,7 +91,19 @@ class CustomDropdownField<T> extends StatelessWidget {
           ),
         );
       }
-      return items.firstWhere((e) => e.value == value).child;
+      final matchedItem = items.firstWhere(
+        (e) => e.value == value,
+        orElse: () => DropdownMenuItem<T>(
+          value: value,
+          child: Text(
+            hintText ?? '',
+            style: theme.textTheme.labelLarge!.copyWith(
+              color: ColorsManager.secondaryColor,
+            ),
+          ),
+        ),
+      );
+      return matchedItem.child;
     }
   }
 
@@ -282,7 +298,9 @@ class _MultiSelectSheetState<T> extends State<_MultiSelectSheet<T>> {
   }
 
   void _onScroll() {
-    if (_isLoadingMore || !_scrollController.hasClients || !widget.hasMoreData) {
+    if (_isLoadingMore ||
+        !_scrollController.hasClients ||
+        !widget.hasMoreData) {
       return;
     }
 
@@ -375,8 +393,9 @@ class _MultiSelectSheetState<T> extends State<_MultiSelectSheet<T>> {
                       color: selected
                           ? ColorsManager.primaryColor
                           : Colors.black87,
-                      fontWeight:
-                          selected ? FontWeight.bold : FontWeight.normal,
+                      fontWeight: selected
+                          ? FontWeight.bold
+                          : FontWeight.normal,
                     ),
                     child: item.child,
                   ),
@@ -385,10 +404,7 @@ class _MultiSelectSheetState<T> extends State<_MultiSelectSheet<T>> {
                           Icons.check_circle,
                           color: ColorsManager.primaryColor,
                         )
-                      : const Icon(
-                          Icons.circle_outlined,
-                          color: Colors.grey,
-                        ),
+                      : const Icon(Icons.circle_outlined, color: Colors.grey),
                   onTap: () {
                     setState(() {
                       if (selected) {

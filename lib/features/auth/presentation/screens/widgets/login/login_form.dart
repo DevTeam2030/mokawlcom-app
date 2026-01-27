@@ -12,6 +12,7 @@ import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class LoginForm extends StatefulWidget {
@@ -106,6 +107,9 @@ class _LoginFormState extends State<LoginForm> {
                 );
               }
               if (state.userLoginState.isSuccess) {
+                context.read<AppCubit>().changeClassification(
+                  classification: state.userLoginResponseModel.classification,
+                );
                 await showDialog(
                   context: context,
                   builder: (context) => SuccessDialog(

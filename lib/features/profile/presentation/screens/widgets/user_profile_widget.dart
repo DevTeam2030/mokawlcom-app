@@ -53,7 +53,11 @@ class UserProfileWidget extends StatelessWidget {
             title: LocaleKeys.presentedOffers,
             icon: MyIcons.list,
             onTap: () {
-              context.pushRoute(const SubmittedPriceOffersRoute());
+              context.navigateTo(
+                const NotificationsRoute(
+                  children: [SubmittedPriceOffersRoute()],
+                ),
+              );
             },
             iconSize: 16.0,
           ),

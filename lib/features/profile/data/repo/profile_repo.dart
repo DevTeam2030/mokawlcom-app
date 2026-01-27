@@ -24,7 +24,7 @@ abstract class ProfileRepo {
     required ChangePasswordRequestModel changePasswordRequestModel,
   });
   Future<Either<Failure, String>> deleteAccount();
-  Future<Either<Failure, String>> editContractorProfile({
+  Future<Either<Failure, UserModel>> editContractorProfile({
     required EditContractorProfileRequestModel
     editContractorProfileRequestModel,
   });

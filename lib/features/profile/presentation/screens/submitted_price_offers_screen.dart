@@ -29,7 +29,7 @@ class SubmittedPriceOffersScreen extends StatefulWidget
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<UserDetailsCubit>() ..getUserOffers(),
+      create: (context) => getIt<UserDetailsCubit>()..getUserOffers(),
       child: this,
     );
   }
@@ -74,15 +74,15 @@ class _SubmittedPriceOffersScreenState
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          LocaleKeys.submittedPriceOffers,
-          style: theme.textTheme.headlineSmall!.copyWith(
-            color: ColorsManager.primaryColor,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //         title: Text(
+      //           LocaleKeys.submittedPriceOffers,
+      //           style: theme.textTheme.headlineSmall!.copyWith(
+      //             color: ColorsManager.primaryColor,
+      //             fontWeight: FontWeight.bold,
+      //           ),
+      //         ),
+      //       ),
       body: BlocConsumer<UserDetailsCubit, UserDetailsState>(
         listenWhen: (previous, current) =>
             previous.getUserOffersState != current.getUserOffersState,
@@ -90,10 +90,8 @@ class _SubmittedPriceOffersScreenState
           if (state.getUserOffersState.isError) {
             showDialog(
               context: context,
-              builder: (context) => ErrorDialog(
-                theme: theme,
-                message: state.errorMessage,
-              ),
+              builder: (context) =>
+                  ErrorDialog(theme: theme, message: state.errorMessage),
             );
           }
         },

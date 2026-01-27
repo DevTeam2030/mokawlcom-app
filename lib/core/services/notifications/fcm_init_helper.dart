@@ -83,27 +83,30 @@ class FcmInitHelper {
       if (type == NotificationType.offerNotification ||
           type == NotificationType.replyOnOffer) {
         if (AppConstants.userType == UserType.contractor) {
-           await _appRouter.navigate(
-          const AuthenticatedRoute(
-            children: [
-              BottomNavBarRoute(
-                children: [
-                  NotificationsRoute(children: [PriceOffersRoute()]),
-                ],
-              ),
-            ],
-          ),
-        );
+          await _appRouter.navigate(
+            const AuthenticatedRoute(
+              children: [
+                BottomNavBarRoute(
+                  children: [
+                    NotificationsRoute(children: [PriceOffersRoute()]),
+                  ],
+                ),
+              ],
+            ),
+          );
         } else {
           await _appRouter.navigate(
             const AuthenticatedRoute(
               children: [
-               SubmittedPriceOffersRoute(),
+                BottomNavBarRoute(
+                  children: [
+                    NotificationsRoute(children: [SubmittedPriceOffersRoute()]),
+                  ],
+                ),
               ],
             ),
           );
         }
-       
       } else {
         await _appRouter.navigate(
           const AuthenticatedRoute(
@@ -137,7 +140,11 @@ class FcmInitHelper {
           await _appRouter.replaceAll([
             const AuthenticatedRoute(
               children: [
-                BottomNavBarRoute(children: [NotificationsRoute(children: [PriceOffersRoute()])]),
+                BottomNavBarRoute(
+                  children: [
+                    NotificationsRoute(children: [PriceOffersRoute()]),
+                  ],
+                ),
               ],
             ),
           ]);
@@ -145,7 +152,11 @@ class FcmInitHelper {
           await _appRouter.replaceAll([
             const AuthenticatedRoute(
               children: [
-                SubmittedPriceOffersRoute(),
+                BottomNavBarRoute(
+                  children: [
+                    NotificationsRoute(children: [SubmittedPriceOffersRoute()]),
+                  ],
+                ),
               ],
             ),
           ]);

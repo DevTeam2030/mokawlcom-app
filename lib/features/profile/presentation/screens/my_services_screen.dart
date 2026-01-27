@@ -12,6 +12,7 @@ import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
+import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/my_services/my_service_item.dart';
@@ -91,7 +92,6 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                 AddNewServiceRoute(
                   theme: theme,
                   userDetailsCubit: context.read<UserDetailsCubit>(),
-                  
                 ),
               ),
               child: Text(
@@ -221,7 +221,11 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
           );
         }
 
-        return MyServiceItem(theme: theme, service: services[index], index: index,);
+        return MyServiceItem(
+          theme: theme,
+          service: services[index],
+          index: index,
+        );
       },
     );
   }

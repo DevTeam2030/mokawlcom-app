@@ -16,6 +16,8 @@ class UserModel extends Equatable {
   final String hintAboutComppany;
   final int classificationId;
   final List<ServiceModel> userServices;
+  final String classification;
+  final String message;
 
   const UserModel({
     required this.id,
@@ -32,25 +34,30 @@ class UserModel extends Equatable {
     required this.hintAboutComppany,
     required this.classificationId,
     required this.userServices,
+    required this.classification,
+    required this.message,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    final subCategories = json['sub_categories'] as List<dynamic>? ?? [];
+    final data = json['data'] as Map<String, dynamic>? ?? {};
+    final subCategories = data['sub_categories'] as List<dynamic>? ?? [];
 
     return UserModel(
-      id: json['id'] ?? 0,
-      name: json['name'] ?? '',
-      phone: json['phone'] ?? '',
-      email: json['email'] ?? '',
-      address: json['address'] ?? '',
-      logo: json['logo'] ?? '',
-      facabook: json['facebook'] ?? '',
-      twitter: json['twitter'] ?? '',
-      instagram: json['instagram'] ?? '',
-      snapchat: json['spanchat'] ?? '',
-      whatsapp: json['whatsapp'] ?? '',
-      hintAboutComppany: json['store_description'] ?? '',
-      classificationId: json['category_id'] ?? 0,
+      id: data['id'] ?? 0,
+      message: json['message'] ?? '',
+      name: data['name'] ?? '',
+      phone: data['phone'] ?? '',
+      email: data['email'] ?? '',
+      address: data['address'] ?? '',
+      logo: data['logo'] ?? '',
+      facabook: data['facebook'] ?? '',
+      twitter: data['twitter'] ?? '',
+      instagram: data['instagram'] ?? '',
+      snapchat: data['spanchat'] ?? '',
+      whatsapp: data['whatsapp'] ?? '',
+      hintAboutComppany: data['store_description'] ?? '',
+      classificationId: data['category_id'] ?? 0,
+      classification: data['category'] ?? '',
       userServices: subCategories
           .map(
             (x) => ServiceModel(
@@ -72,6 +79,7 @@ class UserModel extends Equatable {
         address: '',
         logo: '',
         facabook: '',
+        message: '',
         twitter: '',
         instagram: '',
         snapchat: '',
@@ -79,6 +87,7 @@ class UserModel extends Equatable {
         hintAboutComppany: '',
         classificationId: 0,
         userServices: const [],
+        classification: '',
       );
 
   @override
@@ -97,5 +106,7 @@ class UserModel extends Equatable {
     hintAboutComppany,
     classificationId,
     userServices,
+    classification,
+    message,
   ];
 }

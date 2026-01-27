@@ -18,6 +18,7 @@ import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/edt_
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/profile_image.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 
 @RoutePage()
@@ -116,7 +117,7 @@ class _EditContractorProfileScreenState
                       ),
                     ),
                     const SizedBox(height: 8),
-
+                
                     BlocBuilder<HomeCubit, HomeState>(
                       buildWhen: (previous, current) =>
                           previous.classificationsModel !=
@@ -132,7 +133,8 @@ class _EditContractorProfileScreenState
                               .classifications
                               .firstWhere(
                                 (classification) =>
-                                    classification.id == userClassificationId,
+                                    classification.id ==
+                                    userClassificationId,
                                 orElse: () =>
                                     homeState
                                         .classificationsModel
@@ -145,7 +147,8 @@ class _EditContractorProfileScreenState
                                       image: '',
                                     ),
                               );
-                          selectedServices.value = state.userModel.userServices;
+                          selectedServices.value =
+                              state.userModel.userServices;
                         }
                         return ValueListenableBuilder<ClassificationModel?>(
                           valueListenable: selectedClassification,
@@ -188,7 +191,7 @@ class _EditContractorProfileScreenState
                         );
                       },
                     ),
-
+                
                     const SizedBox(height: 16),
                     Text(
                       LocaleKeys.subcategory,
@@ -198,14 +201,15 @@ class _EditContractorProfileScreenState
                       ),
                     ),
                     const SizedBox(height: 8),
-
+                
                     BlocBuilder<HomeCubit, HomeState>(
                       buildWhen: (previous, current) =>
                           previous.servicesModel != current.servicesModel ||
-                          previous.getServicesState != current.getServicesState,
+                          previous.getServicesState !=
+                              current.getServicesState,
                       builder: (context, homeState) {
                         final services = homeState.servicesModel.services;
-
+                
                         if (homeState.getServicesState.isLoading) {
                           return const Center(
                             child: Padding(
@@ -214,7 +218,7 @@ class _EditContractorProfileScreenState
                             ),
                           );
                         }
-
+                
                         if (homeState.getServicesState.isError) {
                           return Container(
                             padding: const EdgeInsets.all(12),
@@ -230,8 +234,9 @@ class _EditContractorProfileScreenState
                             ),
                           );
                         }
-
-                        if (services.isEmpty) {
+                
+                        if (services.isEmpty &&
+                            selectedServices.value.isEmpty) {
                           return Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
@@ -248,7 +253,7 @@ class _EditContractorProfileScreenState
                             ),
                           );
                         }
-
+                
                         return ValueListenableBuilder<List<ServiceModel>>(
                           valueListenable: selectedServices,
                           builder: (context, selectedList, _) {
@@ -272,13 +277,18 @@ class _EditContractorProfileScreenState
                                     selectedServices.value = newList;
                                   },
                                   onLoadMore: () {
-                                    context.read<HomeCubit>().loadMoreServices(
-                                      classificationId:
-                                          selectedClassification.value!.id,
-                                    );
+                                    context
+                                        .read<HomeCubit>()
+                                        .loadMoreServices(
+                                          classificationId:
+                                              selectedClassification
+                                                  .value!
+                                                  .id,
+                                        );
                                   },
-                                  isLoadingMore:
-                                      homeState.getServicesState.isLoadingMore,
+                                  isLoadingMore: homeState
+                                      .getServicesState
+                                      .isLoadingMore,
                                   hasMoreData:
                                       homeState.servicesPage <
                                       homeState.servicesTotalPages,
@@ -293,7 +303,9 @@ class _EditContractorProfileScreenState
                                         label: Text(
                                           service.name,
                                           style: theme.textTheme.bodySmall!
-                                              .copyWith(color: Colors.white),
+                                              .copyWith(
+                                                color: Colors.white,
+                                              ),
                                         ),
                                         backgroundColor:
                                             ColorsManager.primaryColor,
@@ -330,7 +342,7 @@ class _EditContractorProfileScreenState
                         );
                       },
                     ),
-
+                
                     const SizedBox(height: 40),
                   ],
                 ),
