@@ -9,6 +9,10 @@ import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/app_constants.dart';
 
 class FcmInitHelper {
+  static final FcmInitHelper _instance = FcmInitHelper._internal();
+  factory FcmInitHelper() => _instance;
+  FcmInitHelper._internal();
+
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   final AwesomeNotifications _awesomeNotifications = AwesomeNotifications();
   final NotificationService _notificationService = NotificationService();
@@ -50,6 +54,8 @@ class FcmInitHelper {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       debugPrint("📩 Foreground message: ${message.data}");
       final currentRoute = AppConstants.currentRoute;
+      debugPrint(">>>>>>>>>>>>> Current route: $currentRoute");
+      debugPrint(">>>>>>>>>>>>> Current route: ${_appRouter.currentChild?.name ?? 'messi'}");
 
       final notificationData = NotificationData.fromRemoteMessage(message);
 
@@ -57,7 +63,8 @@ class FcmInitHelper {
 
       if (currentRoute == NotificationsRoute.name ||
           currentRoute == PublicNotificationsRoute.name ||
-          currentRoute == PriceOffersRoute.name) {
+          currentRoute == PriceOffersRoute.name ||
+          currentRoute == SubmittedPriceOffersRoute.name) {
         debugPrint("User is on notifications screen, skipping popup");
         return;
       }
@@ -126,6 +133,14 @@ class FcmInitHelper {
     }
   }
 
+  Future<void> navigateToNotifications({required bool isOffer}) async {
+    await _navigateToNotificationsTab(
+      type: isOffer
+          ? NotificationType.offerNotification
+          : NotificationType.publicNotification,
+    );
+  }
+
   Future<void> handleInitialMessage() async {
     final RemoteMessage? message = await firebaseMessaging.getInitialMessage();
     if (message != null) {
@@ -133,7 +148,6 @@ class FcmInitHelper {
 
       final notificationData = NotificationData.fromRemoteMessage(message);
 
-      _notificationService.addNotification(notificationData);
       if (notificationData.type == NotificationType.offerNotification ||
           notificationData.type == NotificationType.replyOnOffer) {
         if (AppConstants.userType == UserType.contractor) {
@@ -177,14 +191,6 @@ class FcmInitHelper {
 
       debugPrint("✅ App initialized with notification route");
     }
-  }
-
-  Future<void> navigateToNotifications({required bool isOffer}) async {
-    await _navigateToNotificationsTab(
-      type: isOffer
-          ? NotificationType.offerNotification
-          : NotificationType.publicNotification,
-    );
   }
 
   Future<String?> getFcmToken() async {

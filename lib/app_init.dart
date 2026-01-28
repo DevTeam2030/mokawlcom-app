@@ -33,13 +33,15 @@ class AppInitializer {
         (await getTemporaryDirectory()).path,
       ),
     );
+    await _initFirebase();
   }
 
   static Future<void> initHeavyServices() async {
     if (_isFullyInitialized) return;
 
-    await _initFirebase();
     await _initNotifications();
+    
+    await FcmInitHelper().handleInitialMessage();
 
     _isFullyInitialized = true;
   }
@@ -54,12 +56,11 @@ class AppInitializer {
     try {
       final fcm = FcmInitHelper();
 
-     await Future.wait([
-       fcm.initAwesomeNotification(),
-       fcm.setAwesomeNotificationListeners(),
-       fcm.initFirebaseMessagingListeners(),
-       fcm.handleInitialMessage(),
-     ]);
+      await Future.wait([
+        fcm.initAwesomeNotification(),
+        fcm.setAwesomeNotificationListeners(),
+        fcm.initFirebaseMessagingListeners(),
+      ]);
     } catch (e) {
       debugPrint('Notification initialization error: $e');
     }

@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
 import 'package:mokawlcom_app/core/services/notifications/notification_service.dart';
+import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_details_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/public_notificarion_model.dart';
@@ -34,7 +36,8 @@ class NotificationsCubit extends Cubit<NotificationsState> {
                 notificationData.notification as PublicNotificationModel,
           );
         } else if (notificationData.type ==
-            NotificationType.offerNotification) {
+                NotificationType.offerNotification &&
+            AppConstants.userType == UserType.contractor) {
           addOfferNotification(
             offerNotification: notificationData.notification as OfferModel,
           );
@@ -282,15 +285,11 @@ class NotificationsCubit extends Cubit<NotificationsState> {
       state.offerNotifications.notifications,
     );
 
-    final index = currentList.indexWhere((e) => e.id == offerNotification.id);
-
-    if (index != -1) {
-      currentList[index] = currentList[index].copyWith(
-        status: offerNotification.status,
-      );
-    } else {
-      currentList.insert(0, offerNotification);
+    if (currentList.contains(offerNotification)) {
+      return;
     }
+
+    currentList.insert(0, offerNotification);
 
     emit(
       state.copyWith(
@@ -302,10 +301,14 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
   void markOfferAsUnreadByOfferId({required OfferModel offerNotification}) {
-    final currentList = List<OfferModel>.from(
-      state.offerNotifications.notifications,
-    );
-
+    List<OfferModel> currentList;
+    if (AppConstants.userType == UserType.contractor) {
+      currentList = List<OfferModel>.from(
+        state.offerNotifications.notifications,
+      );
+    } else {
+      currentList = List<OfferModel>.from(state.userOffersModel.offers);
+    }
     final index = currentList.indexWhere(
       (e) => e.offerId == offerNotification.offerId,
     );

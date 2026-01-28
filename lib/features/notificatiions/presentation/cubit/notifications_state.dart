@@ -84,6 +84,7 @@ class NotificationsState extends Equatable {
       userOffersCurrentPage: userOffersCurrentPage ?? this.userOffersCurrentPage,
       getUserOffersState: getUserOffersState ?? this.getUserOffersState,
       getUserOffersErrorMessage: getUserOffersErrorMessage ?? this.getUserOffersErrorMessage,
+     
       isConnected: isConnected ?? this.isConnected,
     );
   }
