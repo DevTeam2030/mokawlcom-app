@@ -51,13 +51,11 @@ class AppCubit extends HydratedCubit<AppState> {
     if (status.isPermanentlyDenied) {
       // debugPrint("Notification permission permanently denied.");
       // openAppSettings();
-      emit(state.copyWith(areNotificationsEnabled: false));
       return;
     }
 
     bool granted = status.isGranted;
     debugPrint("Permission granted: $granted");
-    emit(state.copyWith(areNotificationsEnabled: granted));
   }
 
   void changeClassification({required String classification}) {
@@ -69,8 +67,6 @@ class AppCubit extends HydratedCubit<AppState> {
     return AppState(
       userType: _userTypeFromString(json['user_type'] as String?),
       isArabic: json['is_arabic'] as bool? ?? true,
-      areNotificationsEnabled:
-          json['are_notifications_enabled'] as bool? ?? false,
       classification: json['classification'] as String? ?? '',
     );
   }
@@ -80,7 +76,6 @@ class AppCubit extends HydratedCubit<AppState> {
     return {
       'user_type': _userTypeToString(state.userType),
       'is_arabic': state.isArabic,
-      'are_notifications_enabled': state.areNotificationsEnabled,
       'classification': state.classification,
     };
   }

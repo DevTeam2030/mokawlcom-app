@@ -12,8 +12,6 @@ import 'package:mokawlcom_app/firebase_options.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AppInitializer {
-  static bool _isFullyInitialized = false;
-
   static Future<void> init() async {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
@@ -37,19 +35,14 @@ class AppInitializer {
   }
 
   static Future<void> initHeavyServices() async {
-    if (_isFullyInitialized) return;
-
     await _initNotifications();
-    
-    await FcmInitHelper().handleInitialMessage();
-
-    _isFullyInitialized = true;
   }
 
   static Future<void> _initFirebase() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    await FcmInitHelper().handleInitialMessage();
   }
 
   static Future<void> _initNotifications() async {
@@ -65,6 +58,4 @@ class AppInitializer {
       debugPrint('Notification initialization error: $e');
     }
   }
-
-  static bool get isFullyInitialized => _isFullyInitialized;
 }

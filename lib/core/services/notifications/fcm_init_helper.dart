@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/services/notifications/notification_controller.dart';
@@ -148,9 +149,13 @@ class FcmInitHelper {
 
       final notificationData = NotificationData.fromRemoteMessage(message);
 
+      // Read user type from HydratedStorage instead of AppConstants
+      UserType userType = await _getUserTypeFromStorage();
+      debugPrint("📱 User type from storage: $userType");
+
       if (notificationData.type == NotificationType.offerNotification ||
           notificationData.type == NotificationType.replyOnOffer) {
-        if (AppConstants.userType == UserType.contractor) {
+        if (userType == UserType.contractor) {
           await _appRouter.replaceAll([
             const AuthenticatedRoute(
               children: [
@@ -191,6 +196,32 @@ class FcmInitHelper {
 
       debugPrint("✅ App initialized with notification route");
     }
+  }
+
+  Future<UserType> _getUserTypeFromStorage() async {
+    try {
+      // Read from HydratedStorage box
+      final box = HydratedBloc.storage.read('AppCubit');
+      if (box != null && box is Map) {
+        final userTypeString = box['user_type'] as String?;
+        debugPrint("📦 Stored user_type: $userTypeString");
+        
+        switch (userTypeString) {
+          case 'user':
+            return UserType.user;
+          case 'contractor':
+            return UserType.contractor;
+          case 'visitor':
+          default:
+            return UserType.visitor;
+        }
+      }
+    } catch (e) {
+      debugPrint("❌ Error reading user type from storage: $e");
+    }
+    
+    // Fallback to visitor if not found
+    return UserType.visitor;
   }
 
   Future<String?> getFcmToken() async {

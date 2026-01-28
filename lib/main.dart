@@ -10,23 +10,11 @@ import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/my_app.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mokawlcom_app/firebase_options.dart';
 import 'package:path_provider/path_provider.dart';
 
-/// Background message handler - MUST be a top-level function
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  debugPrint("📩 Background message received: ${message.messageId}");
-  debugPrint("📩 Background message data: ${message.data}");
-}
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Register background message handler BEFORE app initialization
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await AppInitializer.init();
 
