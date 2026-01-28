@@ -11,6 +11,8 @@ import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/price_offer_item.dart';
@@ -18,21 +20,12 @@ import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
-class SubmittedPriceOffersScreen extends StatefulWidget
-    implements AutoRouteWrapper {
+class SubmittedPriceOffersScreen extends StatefulWidget {
   const SubmittedPriceOffersScreen({super.key});
 
   @override
   State<SubmittedPriceOffersScreen> createState() =>
       _SubmittedPriceOffersScreenState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<UserDetailsCubit>()..getUserOffers(),
-      child: this,
-    );
-  }
 }
 
 class _SubmittedPriceOffersScreenState
@@ -44,6 +37,9 @@ class _SubmittedPriceOffersScreenState
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NotificationsCubit>().getUserOffers();
+    });
   }
 
   void _onScroll() {
@@ -52,7 +48,7 @@ class _SubmittedPriceOffersScreenState
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
       _isLoadingMore = true;
-      context.read<UserDetailsCubit>().loadMoreUserOffers();
+      context.read<NotificationsCubit>().loadMoreUserOffers();
     }
   }
 
@@ -83,15 +79,17 @@ class _SubmittedPriceOffersScreenState
       //           ),
       //         ),
       //       ),
-      body: BlocConsumer<UserDetailsCubit, UserDetailsState>(
+      body: BlocConsumer<NotificationsCubit, NotificationsState>(
         listenWhen: (previous, current) =>
             previous.getUserOffersState != current.getUserOffersState,
         listener: (context, state) {
           if (state.getUserOffersState.isError) {
             showDialog(
               context: context,
-              builder: (context) =>
-                  ErrorDialog(theme: theme, message: state.errorMessage),
+              builder: (context) => ErrorDialog(
+                theme: theme,
+                message: state.getUserOffersErrorMessage,
+              ),
             );
           }
         },
@@ -103,9 +101,9 @@ class _SubmittedPriceOffersScreenState
           if (!state.isConnected && !hasData) {
             return NoInternetWidget(
               theme: theme,
-              errorMessage: state.errorMessage,
+              errorMessage: state.getUserOffersErrorMessage,
               onPressed: () {
-                context.read<UserDetailsCubit>().getUserOffers();
+                context.read<NotificationsCubit>().getUserOffers();
               },
             );
           }
@@ -113,7 +111,7 @@ class _SubmittedPriceOffersScreenState
           return UiStateBuilder(
             theme: theme,
             state: state.getUserOffersState,
-            errorMessage: state.errorMessage,
+            errorMessage: state.getUserOffersErrorMessage,
             onLoading: Skeletonizer(
               enabled: state.getUserOffersState.isLoading && !hasData,
               containersColor: ColorsManager.skeletonColor,
@@ -121,26 +119,24 @@ class _SubmittedPriceOffersScreenState
               child: _buildList(
                 theme: theme,
                 status: state.getUserOffersState,
-                offers: hasData
-                    ? state.userOffersModel.offers
-                    : List<OfferModel>.generate(
-                        6,
-                        (_) => const OfferModel(
-                          id: 0,
-                          title:
-                              "lorem ipsum dolor sit amet consectetur adipiscing elit",
-                          offerUserName: "lionel messi",
-                          date: "22/12/2022",
-                          time: "10:00",
-                          price: 100,
-                          isPdf: false,
-                          message:
-                              "lorem ipsum dolor sit amet consectetur adipiscing elit",
-                          offerId: 0,
-                          status: false,
-                          url: "https://www.google.com",
-                        ),
-                      ),
+                offers: List<OfferModel>.generate(
+                  6,
+                  (_) => const OfferModel(
+                    id: 0,
+                    title:
+                        "lorem ipsum dolor sit amet consectetur adipiscing elit",
+                    offerUserName: "lionel messi",
+                    date: "22/12/2022",
+                    time: "10:00",
+                    price: 100,
+                    isPdf: false,
+                    message:
+                        "lorem ipsum dolor sit amet consectetur adipiscing elit",
+                    offerId: 0,
+                    status: false,
+                    url: "https://www.google.com",
+                  ),
+                ),
               ),
             ),
             onSuccess: hasData

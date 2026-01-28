@@ -6,10 +6,15 @@ import 'package:mokawlcom_app/features/notificatiions/data/models/offer_details_
 import 'package:mokawlcom_app/features/notificatiions/data/models/public_notifications_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notifications_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/public_notifications_item.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/user_offers_model.dart';
 
 class NotificationsState extends Equatable {
   final RequestStatus getPublicNotificationsState;
   final PublicNotificationsModel publicNotifications;
+  final RequestStatus getUserOffersState;
+  final String getUserOffersErrorMessage;
+  final UserOffersModel userOffersModel;
+  final int userOffersCurrentPage;
   final String publicNotificationsErrorMessage;
   final int publicNotificationsCurrentPage;
   final RequestStatus getOfferNotificationsState;
@@ -31,6 +36,10 @@ class NotificationsState extends Equatable {
     this.offerNotificationsCurrentPage = 1,
     this.publicNotificationsReadStatus = const {},
     this.offerNotificationsReadStatus = const {},
+    this.userOffersModel = const UserOffersModel.empty(),
+    this.userOffersCurrentPage = 1,
+    this.getUserOffersState = RequestStatus.initial,
+    this.getUserOffersErrorMessage = "",
     this.isConnected = true,
   });
 
@@ -45,6 +54,10 @@ class NotificationsState extends Equatable {
     int? offerNotificationsCurrentPage,
     Set<int>? publicNotificationsReadStatus,
     Set<int>? offerNotificationsReadStatus,
+    UserOffersModel? userOffersModel,
+    int? userOffersCurrentPage,
+    RequestStatus? getUserOffersState,
+    String? getUserOffersErrorMessage,
     bool? isConnected,
   }) {
     return NotificationsState(
@@ -67,6 +80,10 @@ class NotificationsState extends Equatable {
           publicNotificationsReadStatus ?? this.publicNotificationsReadStatus,
       offerNotificationsReadStatus:
           offerNotificationsReadStatus ?? this.offerNotificationsReadStatus,
+      userOffersModel: userOffersModel ?? this.userOffersModel,
+      userOffersCurrentPage: userOffersCurrentPage ?? this.userOffersCurrentPage,
+      getUserOffersState: getUserOffersState ?? this.getUserOffersState,
+      getUserOffersErrorMessage: getUserOffersErrorMessage ?? this.getUserOffersErrorMessage,
       isConnected: isConnected ?? this.isConnected,
     );
   }
@@ -83,6 +100,10 @@ class NotificationsState extends Equatable {
     offerNotificationsCurrentPage,
     publicNotificationsReadStatus,
     offerNotificationsReadStatus,
+    userOffersModel,
+    userOffersCurrentPage,
+    getUserOffersState,
+    getUserOffersErrorMessage,
     isConnected,
   ];
 }

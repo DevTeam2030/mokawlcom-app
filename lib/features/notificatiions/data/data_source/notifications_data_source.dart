@@ -8,6 +8,7 @@ import 'package:mokawlcom_app/features/notificatiions/data/models/offer_details_
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notifications_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/reply_offer_price_request_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/reply_on_offer_response_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/user_offers_model.dart';
 
 abstract class NotificationsDataSource {
   Future<PublicNotificationsModel> getPublicNotifications({required int page});
@@ -20,6 +21,7 @@ abstract class NotificationsDataSource {
     required ReplyOfferPriceRequestModel replyOfferPriceRequestModel,
     required void Function(double progress) onProgress,
   });
+   Future<UserOffersModel> getUserOffers({required int page});
 }
 
 class NotificationsDataSourceImpl implements NotificationsDataSource {
@@ -42,7 +44,19 @@ class NotificationsDataSourceImpl implements NotificationsDataSource {
       throw ServerException(errorMessage: response.data["message"] ?? "");
     }
   }
-
+ @override
+  Future<UserOffersModel> getUserOffers({required int page}) async {
+    final response = await dioHelper.get(
+      url: ApiConstants.userOffers,
+      headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      queryParameters: {"page": page},
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return UserOffersModel.fromJson(response.data["data"] ?? {});
+    } else {
+      throw ServerException(errorMessage: response.data["message"] ?? "");
+    }
+  }
   @override
   Future<OfferNotificationsModel> getOfferNotifications({
     required int page,

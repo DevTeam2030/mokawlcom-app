@@ -16,7 +16,7 @@ import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profi
 import 'package:mokawlcom_app/features/profile/data/models/service/service_response_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
-import 'package:mokawlcom_app/features/profile/data/models/user_offers_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/user_offers_model.dart';
 
 abstract class ProfileDataSource {
   Future<String> updateProfile({
@@ -35,7 +35,6 @@ abstract class ProfileDataSource {
   Future<UserModel> getUserProfile();
   Future<UserModel> getContractorProfile();
 
-  Future<UserOffersModel> getUserOffers({required int page});
   Future<ContractorServicesModel> getContractorServices({required int page});
   Future<ServiceResponseModel> addService({
     required AddServiceRequestModel addServiceRequestModel,
@@ -164,20 +163,6 @@ class ProfileDataSourceImpl implements ProfileDataSource {
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return UserModel.fromJson(response.data ?? {});
-    } else {
-      throw ServerException(errorMessage: response.data["message"] ?? "");
-    }
-  }
-
-  @override
-  Future<UserOffersModel> getUserOffers({required int page}) async {
-    final response = await dioHelper.get(
-      url: ApiConstants.userOffers,
-      headers: {"Authorization": "Bearer ${AppConstants.token}"},
-      queryParameters: {"page": page},
-    );
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return UserOffersModel.fromJson(response.data["data"] ?? {});
     } else {
       throw ServerException(errorMessage: response.data["message"] ?? "");
     }

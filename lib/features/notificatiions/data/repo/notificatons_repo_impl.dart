@@ -8,6 +8,7 @@ import 'package:mokawlcom_app/features/notificatiions/data/models/reply_on_offer
 import 'package:mokawlcom_app/features/notificatiions/data/repo/notifications_repo.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/public_notifications_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_notifications_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/user_offers_model.dart';
 
 class NotificationsRepoImpl implements NotificationsRepo {
   final NotificationsDataSource notificationsDataSource;
@@ -39,7 +40,12 @@ class NotificationsRepoImpl implements NotificationsRepo {
       offerId: offerId,
     ),
   );
-
+  @override
+  Future<Either<Failure, UserOffersModel>> getUserOffers({
+    required int page,
+  }) async => safeApiCall<UserOffersModel>(
+    () => notificationsDataSource.getUserOffers(page: page),
+  );
   @override
   Future<Either<Failure, ReplyOnOfferResponseModel>> replyOnOfferPrice({
     required ReplyOfferPriceRequestModel replyOfferPriceRequestModel,

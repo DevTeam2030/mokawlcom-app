@@ -18,65 +18,6 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
   UserDetailsCubit({required this.profileRepo})
       : super(const UserDetailsState());
 
-  Future<void> getUserOffers() async {
-    emit(
-      state.copyWith(
-        getUserOffersState: RequestStatus.loading,
-        isConnected: true,
-      ),
-    );
-    final result = await profileRepo.getUserOffers(
-      page: state.userOffersCurrentPage,
-    );
-    result.fold(
-      (failure) => emit(
-        state.copyWith(
-          getUserOffersState: RequestStatus.error,
-          errorMessage: failure.errorMessage,
-          isConnected: state.isConnected,
-        ),
-      ),
-      (userOffersModel) => emit(
-        state.copyWith(
-          getUserOffersState: RequestStatus.success,
-          userOffersModel: userOffersModel,
-        ),
-      ),
-    );
-  }
-
-  Future<void> loadMoreUserOffers() async {
-    if (state.userOffersCurrentPage >= state.userOffersModel.totalPages ||
-        state.getUserOffersState.isLoadingMore) {
-      return;
-    }
-    emit(state.copyWith(getUserOffersState: RequestStatus.loadingMore));
-    final result = await profileRepo.getUserOffers(
-      page: state.userOffersCurrentPage + 1,
-    );
-    result.fold(
-      (failure) => emit(
-        state.copyWith(
-          getUserOffersState: RequestStatus.error,
-          errorMessage: failure.errorMessage,
-          isConnected: state.isConnected,
-        ),
-      ),
-      (userOffersModel) => emit(
-        state.copyWith(
-          getUserOffersState: RequestStatus.success,
-          userOffersModel: userOffersModel.copyWith(
-            offers: [
-              ...state.userOffersModel.offers,
-              ...userOffersModel.offers,
-            ],
-          ),
-          userOffersCurrentPage: userOffersModel.currentPage,
-        ),
-      ),
-    );
-  }
-
   Future<void> getContractorServices() async {
     emit(
       state.copyWith(

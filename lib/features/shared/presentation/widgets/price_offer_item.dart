@@ -40,9 +40,7 @@ class PriceOfferItem extends StatelessWidget {
           },
           builder: (context, isRead) {
             return ColoredBox(
-              color: isUser
-                  ? ColorsManager.surfaceColor
-                  : isRead
+              color: isRead
                   ? ColorsManager.surfaceColor
                   : ColorsManager.lightBlueBg,
               child: Padding(

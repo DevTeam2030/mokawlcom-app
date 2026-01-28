@@ -4,10 +4,10 @@ import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/deal/deals_model.dart';
-import 'package:mokawlcom_app/features/profile/data/models/user_offers_model.dart';
+import 'package:mokawlcom_app/features/notificatiions/data/models/user_offers_model.dart';
 
 class UserDetailsState extends Equatable {
-  final RequestStatus getUserOffersState;
+ 
   final RequestStatus addNewServiceState;
   final RequestStatus editServiceState;
   final RequestStatus getDealsState;
@@ -17,10 +17,8 @@ class UserDetailsState extends Equatable {
   final RequestStatus deleteServiceState;
   final DealsModel dealsModel;
   final int dealsCurrentPage;
-  final UserOffersModel userOffersModel;
   final String errorMessage;
   final String successMessage;
-  final int userOffersCurrentPage;
   final int contractorServicesCurrentPage;
   final bool isConnected;
   final RequestStatus getContractorServicesState;
@@ -33,13 +31,10 @@ class UserDetailsState extends Equatable {
   final int maxSizeInMB;
 
   const UserDetailsState({
-    this.getUserOffersState = RequestStatus.initial,
     this.addNewServiceState = RequestStatus.initial,
     this.editServiceState = RequestStatus.initial,
-    this.userOffersModel = const UserOffersModel.empty(),
     this.errorMessage = '',
     this.successMessage = '',
-    this.userOffersCurrentPage = 1,
     this.contractorServicesCurrentPage = 1,
     this.isConnected = true,
     this.getContractorServicesState = RequestStatus.initial,
@@ -63,13 +58,10 @@ class UserDetailsState extends Equatable {
   bool get hasImages => selectedImages.isNotEmpty;
 
   UserDetailsState copyWith({
-    RequestStatus? getUserOffersState,
     RequestStatus? addNewServiceState,
     RequestStatus? editServiceState,
-    UserOffersModel? userOffersModel,
     String? errorMessage,
     String? successMessage,
-    int? userOffersCurrentPage,
     bool? isConnected,
     RequestStatus? getContractorServicesState,
     int? contractorServicesCurrentPage,
@@ -89,14 +81,10 @@ class UserDetailsState extends Equatable {
     RequestStatus? deleteServiceState,
   }) {
     return UserDetailsState(
-      getUserOffersState: getUserOffersState ?? this.getUserOffersState,
       addNewServiceState: addNewServiceState ?? this.addNewServiceState,
       editServiceState: editServiceState ?? this.editServiceState,
-      userOffersModel: userOffersModel ?? this.userOffersModel,
       errorMessage: errorMessage ?? this.errorMessage,
       successMessage: successMessage ?? this.successMessage,
-      userOffersCurrentPage:
-          userOffersCurrentPage ?? this.userOffersCurrentPage,
       isConnected: isConnected ?? this.isConnected,
       getContractorServicesState:
           getContractorServicesState ?? this.getContractorServicesState,
@@ -122,13 +110,10 @@ class UserDetailsState extends Equatable {
 
   @override
   List<Object?> get props => [
-    getUserOffersState,
     addNewServiceState,
     editServiceState,
-    userOffersModel,
     errorMessage,
     successMessage,
-    userOffersCurrentPage,
     isConnected,
     getContractorServicesState,
     contractorServicesCurrentPage,
