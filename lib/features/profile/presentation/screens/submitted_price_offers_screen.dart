@@ -113,7 +113,7 @@ class _SubmittedPriceOffersScreenState
             state: state.getUserOffersState,
             errorMessage: state.getUserOffersErrorMessage,
             onLoading: Skeletonizer(
-              enabled: state.getUserOffersState.isLoading && !hasData,
+              enabled: state.getUserOffersState.isLoading,
               containersColor: ColorsManager.skeletonColor,
               ignoreContainers: true,
               child: _buildList(

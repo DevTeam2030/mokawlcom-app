@@ -34,15 +34,11 @@ class AppInitializer {
     await _initFirebase();
   }
 
-  static Future<void> initHeavyServices() async {
-    await _initNotifications();
-  }
-
   static Future<void> _initFirebase() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    await FcmInitHelper().handleInitialMessage();
+    await _initNotifications();
   }
 
   static Future<void> _initNotifications() async {
@@ -53,6 +49,7 @@ class AppInitializer {
         fcm.initAwesomeNotification(),
         fcm.setAwesomeNotificationListeners(),
         fcm.initFirebaseMessagingListeners(),
+        fcm.handleInitialMessage(),
       ]);
     } catch (e) {
       debugPrint('Notification initialization error: $e');
