@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
@@ -37,23 +38,23 @@ class ContractorsScreen extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   State<ContractorsScreen> createState() => _ContractorsScreenState();
-  
+
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(
-    create: (context) => getIt<SearchCubit>(),
-    child: this,
-  );
+  Widget wrappedRoute(BuildContext context) =>
+      BlocProvider(create: (context) => getIt<SearchCubit>(), child: this);
 }
 
 class _ContractorsScreenState extends State<ContractorsScreen> {
   late final ScrollController _scrollController;
   bool _isLoadingMore = false;
+  String _previousRoute = "";
 
   @override
   void initState() {
     super.initState();
 
     _scrollController = ScrollController()..addListener(_onScroll);
+    AppConstants.currentRoute.addListener(_onRouteChange);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.fromSearch) {
@@ -69,6 +70,42 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
         );
       }
     });
+  }
+
+  void _onRouteChange() {
+    final currentRoute = AppConstants.currentRoute.value;
+    debugPrint('[INFO] Route changed from $_previousRoute to $currentRoute');
+
+    // Check if we're returning from ContractorDetailsRoute or its children
+    // When popping from ContractorDetailsRoute, the route changes to BottomNavBarRoute
+    final wasOnDetailsScreen =
+        _previousRoute == 'ContractorDetailsRoute' ||
+        _previousRoute == 'CompanyDetailsRoute' ||
+        _previousRoute == 'ServicesDetailsRoute';
+
+    if (wasOnDetailsScreen && currentRoute == 'BottomNavBarRoute') {
+      debugPrint(
+        '[INFO] Returned from ContractorDetailsRoute, refreshing list',
+      );
+      _refreshContractorsList();
+    }
+
+    _previousRoute = currentRoute;
+  }
+
+  void _refreshContractorsList() {
+    if (widget.fromSearch) {
+      context.read<SearchCubit>().searchContractors(
+        query: widget.query ?? "",
+        classificationId: widget.classificationModel?.id,
+        serviceId: widget.serviceModel?.id,
+      );
+    } else {
+      context.read<SearchCubit>().getContractors(
+        classificationId: widget.classificationModel?.id,
+        serviceId: widget.serviceModel?.id,
+      );
+    }
   }
 
   void _onScroll() {
@@ -94,6 +131,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
 
   @override
   void dispose() {
+    AppConstants.currentRoute.removeListener(_onRouteChange);
     _scrollController.dispose();
     super.dispose();
   }
@@ -159,19 +197,19 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
                 ignoreContainers: true,
                 child: _buildContractorsList(
                   contractors: List.generate(
-                          4,
-                          (_) => const ContractorModel(
-                            id: 0,
-                            name: 'Contractor',
-                            image: '',
-                            address: 'Address',
-                            rating: 5,
-                            description: 'Description',
-                            phone: '',
-                            whatsApp: '',
-                            category: '---',
-                          ),
-                        ),
+                    4,
+                    (_) => const ContractorModel(
+                      id: 0,
+                      name: 'Contractor',
+                      image: '',
+                      address: 'Address',
+                      rating: 5,
+                      description: 'Description',
+                      phone: '',
+                      whatsApp: '',
+                      category: '---',
+                    ),
+                  ),
                   theme: theme,
                   status: state.getContractorsState,
                 ),

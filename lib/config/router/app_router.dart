@@ -141,6 +141,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: EditDealRoute.page),
         AutoRoute(page: EditServiceRoute.page),
         AutoRoute(page: PdfRoute.page),
+        
       ],
     ),
   ];
