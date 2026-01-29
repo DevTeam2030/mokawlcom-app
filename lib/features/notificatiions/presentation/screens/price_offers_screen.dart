@@ -33,6 +33,9 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NotificationsCubit>().getOfferNotifications();
+    });
 
   }
 

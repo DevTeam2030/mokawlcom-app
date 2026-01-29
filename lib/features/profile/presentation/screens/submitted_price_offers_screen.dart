@@ -37,6 +37,9 @@ class _SubmittedPriceOffersScreenState
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NotificationsCubit>().getUserOffers();
+    });
   }
 
   void _onScroll() {

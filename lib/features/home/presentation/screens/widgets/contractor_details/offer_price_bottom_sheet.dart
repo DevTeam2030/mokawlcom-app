@@ -10,6 +10,7 @@ import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_c
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/price_offer_upload_file_section.dart';
+import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/locale_keys.dart';
 import 'package:mokawlcom_app/my_icons.dart';
 
@@ -157,6 +158,7 @@ class _OfferPriceBottomSheetState extends State<OfferPriceBottomSheet> {
                           message: state.addOfferPriceMessage,
                         ),
                       );
+                      context.read<NotificationsCubit>().getUserOffers();
                     }
                   },
                   builder: (context, state) {
