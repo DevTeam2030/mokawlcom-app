@@ -36,13 +36,13 @@ class PriceOfferItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: BlocSelector<NotificationsCubit, NotificationsState, bool>(
           selector: (state) {
-            return state.offerNotificationsReadStatus.contains(offerModel.id);
+            return state.unReadOfferNotifications.contains(offerModel.id);
           },
-          builder: (context, isRead) {
+          builder: (context, unRead) {
             return ColoredBox(
-              color: isRead
-                  ? ColorsManager.surfaceColor
-                  : ColorsManager.lightBlueBg,
+              color: unRead
+                  ? ColorsManager.lightBlueBg
+                  : ColorsManager.surfaceColor,
               child: Padding(
                 padding: const EdgeInsetsDirectional.symmetric(
                   horizontal: 14,

@@ -54,21 +54,10 @@ class FcmInitHelper {
   Future<void> initFirebaseMessagingListeners() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       debugPrint("📩 Foreground message: ${message.data}");
-      final currentRoute = AppConstants.currentRoute;
-      debugPrint(">>>>>>>>>>>>> Current route: $currentRoute");
-      debugPrint(">>>>>>>>>>>>> Current route: ${_appRouter.currentChild?.name ?? 'messi'}");
 
       final notificationData = NotificationData.fromRemoteMessage(message);
 
       _notificationService.addNotification(notificationData);
-
-      if (currentRoute == NotificationsRoute.name ||
-          currentRoute == PublicNotificationsRoute.name ||
-          currentRoute == PriceOffersRoute.name ||
-          currentRoute == SubmittedPriceOffersRoute.name) {
-        debugPrint("User is on notifications screen, skipping popup");
-        return;
-      }
 
       _showAwesomeNotification(message);
     });
@@ -149,9 +138,7 @@ class FcmInitHelper {
 
       final notificationData = NotificationData.fromRemoteMessage(message);
 
-      // Read user type from HydratedStorage instead of AppConstants
       UserType userType = await _getUserTypeFromStorage();
-      debugPrint("📱 User type from storage: $userType");
 
       if (notificationData.type == NotificationType.offerNotification ||
           notificationData.type == NotificationType.replyOnOffer) {
@@ -205,7 +192,7 @@ class FcmInitHelper {
       if (box != null && box is Map) {
         final userTypeString = box['user_type'] as String?;
         debugPrint("📦 Stored user_type: $userTypeString");
-        
+
         switch (userTypeString) {
           case 'user':
             return UserType.user;
@@ -219,8 +206,7 @@ class FcmInitHelper {
     } catch (e) {
       debugPrint("❌ Error reading user type from storage: $e");
     }
-    
-    // Fallback to visitor if not found
+
     return UserType.visitor;
   }
 

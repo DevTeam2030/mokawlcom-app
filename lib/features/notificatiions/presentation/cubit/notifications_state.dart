@@ -21,8 +21,8 @@ class NotificationsState extends Equatable {
   final OfferNotificationsModel offerNotifications;
   final String offerNotificationsErrorMessage;
   final int offerNotificationsCurrentPage;
-  final Set<int> publicNotificationsReadStatus;
-  final Set<int> offerNotificationsReadStatus;
+  final Set<int> unReadPublicNotifications;
+  final Set<int> unReadOfferNotifications;
   final bool isConnected;
 
   const NotificationsState({
@@ -34,8 +34,8 @@ class NotificationsState extends Equatable {
     this.offerNotifications = const OfferNotificationsModel.empty(),
     this.offerNotificationsErrorMessage = "",
     this.offerNotificationsCurrentPage = 1,
-    this.publicNotificationsReadStatus = const {},
-    this.offerNotificationsReadStatus = const {},
+    this.unReadPublicNotifications = const {},
+    this.unReadOfferNotifications = const {},
     this.userOffersModel = const UserOffersModel.empty(),
     this.userOffersCurrentPage = 1,
     this.getUserOffersState = RequestStatus.initial,
@@ -52,8 +52,8 @@ class NotificationsState extends Equatable {
     OfferNotificationsModel? offerNotifications,
     String? offerNotificationsErrorMessage,
     int? offerNotificationsCurrentPage,
-    Set<int>? publicNotificationsReadStatus,
-    Set<int>? offerNotificationsReadStatus,
+    Set<int>? unReadPublicNotifications,
+    Set<int>? unReadOfferNotifications,
     UserOffersModel? userOffersModel,
     int? userOffersCurrentPage,
     RequestStatus? getUserOffersState,
@@ -76,15 +76,17 @@ class NotificationsState extends Equatable {
           offerNotificationsErrorMessage ?? this.offerNotificationsErrorMessage,
       offerNotificationsCurrentPage:
           offerNotificationsCurrentPage ?? this.offerNotificationsCurrentPage,
-      publicNotificationsReadStatus:
-          publicNotificationsReadStatus ?? this.publicNotificationsReadStatus,
-      offerNotificationsReadStatus:
-          offerNotificationsReadStatus ?? this.offerNotificationsReadStatus,
+      unReadPublicNotifications:
+          unReadPublicNotifications ?? this.unReadPublicNotifications,
+      unReadOfferNotifications:
+          unReadOfferNotifications ?? this.unReadOfferNotifications,
       userOffersModel: userOffersModel ?? this.userOffersModel,
-      userOffersCurrentPage: userOffersCurrentPage ?? this.userOffersCurrentPage,
+      userOffersCurrentPage:
+          userOffersCurrentPage ?? this.userOffersCurrentPage,
       getUserOffersState: getUserOffersState ?? this.getUserOffersState,
-      getUserOffersErrorMessage: getUserOffersErrorMessage ?? this.getUserOffersErrorMessage,
-     
+      getUserOffersErrorMessage:
+          getUserOffersErrorMessage ?? this.getUserOffersErrorMessage,
+
       isConnected: isConnected ?? this.isConnected,
     );
   }
@@ -99,8 +101,8 @@ class NotificationsState extends Equatable {
     offerNotifications,
     offerNotificationsErrorMessage,
     offerNotificationsCurrentPage,
-    publicNotificationsReadStatus,
-    offerNotificationsReadStatus,
+    unReadPublicNotifications,
+    unReadOfferNotifications,
     userOffersModel,
     userOffersCurrentPage,
     getUserOffersState,

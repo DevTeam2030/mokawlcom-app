@@ -65,7 +65,7 @@ class AppCubit extends HydratedCubit<AppState> {
   @override
   AppState? fromJson(Map<String, dynamic> json) {
     return AppState(
-      userType: _userTypeFromString(json['user_type'] as String?),
+      userType: _userTypeFromString(json['user_type'] as String? ?? 'visitor'),
       isArabic: json['is_arabic'] as bool? ?? true,
       classification: json['classification'] as String? ?? '',
     );

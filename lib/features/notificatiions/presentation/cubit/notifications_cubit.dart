@@ -80,19 +80,19 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         );
       },
       (publicNotifications) {
-        final updatedPublicNotificationsReadStatus = Set<int>.from(
-          state.publicNotificationsReadStatus,
+        final unReadPublicNotifications = Set<int>.from(
+          state.unReadPublicNotifications,
         );
         for (var notification in publicNotifications.notifications) {
-          if (notification.status) {
-            updatedPublicNotificationsReadStatus.add(notification.id);
+          if (!notification.status) {
+            unReadPublicNotifications.add(notification.id);
           }
         }
         emit(
           state.copyWith(
             getPublicNotificationsState: RequestStatus.success,
             publicNotifications: publicNotifications,
-            publicNotificationsReadStatus: updatedPublicNotificationsReadStatus,
+            unReadPublicNotifications: unReadPublicNotifications,
           ),
         );
       },
@@ -131,12 +131,12 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             ...publicNotifications.notifications,
           ],
         );
-        final updatedPublicNotificationsReadStatus = Set<int>.from(
-          state.publicNotificationsReadStatus,
+        final unReadPublicNotifications = Set<int>.from(
+          state.unReadPublicNotifications,
         );
         for (var notification in publicNotifications.notifications) {
-          if (notification.status) {
-            updatedPublicNotificationsReadStatus.add(notification.id);
+          if (!notification.status) {
+            unReadPublicNotifications.add(notification.id);
           }
         }
         emit(
@@ -144,7 +144,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             getPublicNotificationsState: RequestStatus.success,
             publicNotifications: updatedPublicNotifications,
             publicNotificationsCurrentPage: publicNotifications.currentPage,
-            publicNotificationsReadStatus: updatedPublicNotificationsReadStatus,
+            unReadPublicNotifications: unReadPublicNotifications,
           ),
         );
       },
@@ -172,12 +172,12 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         );
       },
       (offerNotifications) {
-        final updatedOfferNotificationsReadStatus = Set<int>.from(
-          state.offerNotificationsReadStatus,
+        final unReadOfferNotifications = Set<int>.from(
+          state.unReadOfferNotifications,
         );
         for (var notification in offerNotifications.notifications) {
-          if (notification.status) {
-            updatedOfferNotificationsReadStatus.add(notification.id);
+          if (!notification.status) {
+            unReadOfferNotifications.add(notification.id);
           }
         }
         emit(
@@ -185,7 +185,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             getOfferNotificationsState: RequestStatus.success,
             offerNotifications: offerNotifications,
             offerNotificationsCurrentPage: offerNotifications.currentPage,
-            offerNotificationsReadStatus: updatedOfferNotificationsReadStatus,
+            unReadOfferNotifications: unReadOfferNotifications,
           ),
         );
       },
@@ -224,12 +224,12 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             ...offerNotifications.notifications,
           ],
         );
-        final updatedOfferNotificationsReadStatus = Set<int>.from(
-          state.offerNotificationsReadStatus,
+        final unReadOfferNotifications = Set<int>.from(
+          state.unReadOfferNotifications,
         );
         for (var notification in offerNotifications.notifications) {
-          if (notification.status) {
-            updatedOfferNotificationsReadStatus.add(notification.id);
+          if (!notification.status) {
+            unReadOfferNotifications.add(notification.id);
           }
         }
         emit(
@@ -237,7 +237,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             getOfferNotificationsState: RequestStatus.success,
             offerNotifications: updatedOfferNotifications,
             offerNotificationsCurrentPage: offerNotifications.currentPage,
-            offerNotificationsReadStatus: updatedOfferNotificationsReadStatus,
+            unReadOfferNotifications: unReadOfferNotifications,
           ),
         );
       },
@@ -245,17 +245,19 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
   void markPublicNotificationAsRead({required int notificationId}) {
-    final updatedReadStatus = Set<int>.from(
-      state.publicNotificationsReadStatus,
+    final unReadPublicNotifications = Set<int>.from(
+      state.unReadPublicNotifications,
     );
-    updatedReadStatus.add(notificationId);
-    emit(state.copyWith(publicNotificationsReadStatus: updatedReadStatus));
+    unReadPublicNotifications.add(notificationId);
+    emit(state.copyWith(unReadPublicNotifications: unReadPublicNotifications));
   }
 
   void markOfferNotificationAsRead({required int notificationId}) {
-    final updatedReadStatus = Set<int>.from(state.offerNotificationsReadStatus);
-    updatedReadStatus.add(notificationId);
-    emit(state.copyWith(offerNotificationsReadStatus: updatedReadStatus));
+    final unReadOfferNotifications = Set<int>.from(
+      state.unReadOfferNotifications,
+    );
+    unReadOfferNotifications.add(notificationId);
+    emit(state.copyWith(unReadOfferNotifications: unReadOfferNotifications));
   }
 
   void addPublicNotification({
@@ -301,43 +303,17 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
   void markOfferAsUnreadByOfferId({required OfferModel offerNotification}) {
-    List<OfferModel> currentList;
-    if (AppConstants.userType == UserType.contractor) {
-      currentList = List<OfferModel>.from(
-        state.offerNotifications.notifications,
-      );
-    } else {
-      currentList = List<OfferModel>.from(state.userOffersModel.offers);
-    }
-    final index = currentList.indexWhere(
-      (e) => e.offerId == offerNotification.offerId,
+    Set<int> unReadOfferNotifications = Set<int>.from(
+      state.unReadOfferNotifications,
     );
-
-    if (index != -1) {
-      currentList[index] = currentList[index].copyWith(status: false);
-
-      final updatedReadStatus = Set<int>.from(
-        state.offerNotificationsReadStatus,
-      );
-      updatedReadStatus.remove(currentList[index].id);
-
-      emit(
-        state.copyWith(
-          offerNotifications: state.offerNotifications.copyWith(
-            notifications: currentList,
-          ),
-          offerNotificationsReadStatus: updatedReadStatus,
-        ),
-      );
-
-      debugPrint(
-        "Marked offer ${currentList[index].id} as unread due to new reply on offer ${offerNotification.offerId}",
-      );
-    } else {
-      debugPrint(
-        "Parent offer with offerId ${offerNotification.offerId} not found in current list",
-      );
+    if (AppConstants.userType == UserType.contractor &&
+        unReadOfferNotifications.contains(offerNotification.id)) {
+      unReadOfferNotifications.remove(offerNotification.id);
+    } else if (AppConstants.userType == UserType.user &&
+        unReadOfferNotifications.contains(offerNotification.id)) {
+      unReadOfferNotifications.remove(offerNotification.id);
     }
+    emit(state.copyWith(unReadOfferNotifications: unReadOfferNotifications));
   }
 
   Future<void> getUserOffers() async {
@@ -359,19 +335,19 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         ),
       ),
       (userOffersModel) {
-        final updatedOfferNotificationsReadStatus = Set<int>.from(
-          state.offerNotificationsReadStatus,
+        final unReadOfferNotifications = Set<int>.from(
+          state.unReadOfferNotifications,
         );
         for (var notification in userOffersModel.offers) {
-          if (notification.status) {
-            updatedOfferNotificationsReadStatus.add(notification.id);
+          if (!notification.status) {
+            unReadOfferNotifications.add(notification.id);
           }
         }
         emit(
           state.copyWith(
             getUserOffersState: RequestStatus.success,
             userOffersModel: userOffersModel,
-            offerNotificationsReadStatus: updatedOfferNotificationsReadStatus,
+            unReadOfferNotifications: unReadOfferNotifications,
           ),
         );
       },
@@ -396,12 +372,12 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         ),
       ),
       (userOffersModel) {
-        final updatedOfferNotificationsReadStatus = Set<int>.from(
-          state.offerNotificationsReadStatus,
+        final unReadOfferNotifications = Set<int>.from(
+          state.unReadOfferNotifications,
         );
         for (var notification in userOffersModel.offers) {
-          if (notification.status) {
-            updatedOfferNotificationsReadStatus.add(notification.id);
+          if (!notification.status) {
+            unReadOfferNotifications.add(notification.id);
           }
         }
         emit(
@@ -413,7 +389,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
                 ...userOffersModel.offers,
               ],
             ),
-            offerNotificationsReadStatus: updatedOfferNotificationsReadStatus,
+            unReadOfferNotifications: unReadOfferNotifications,
             userOffersCurrentPage: userOffersModel.currentPage,
           ),
         );

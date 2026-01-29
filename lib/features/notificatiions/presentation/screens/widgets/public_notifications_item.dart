@@ -118,15 +118,15 @@ class PublicNotificationItem extends StatelessWidget {
       },
       child: BlocSelector<NotificationsCubit, NotificationsState, bool>(
         selector: (state) {
-          return state.publicNotificationsReadStatus.contains(notification.id);
+          return state.unReadPublicNotifications.contains(notification.id);
         },
-        builder: (context, isRead) {
+        builder: (context, unRead) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: ColoredBox(
-              color: isRead
-                  ? ColorsManager.surfaceColor
-                  : ColorsManager.lightBlueBg,
+              color: unRead
+                  ? ColorsManager.lightBlueBg
+                  : ColorsManager.surfaceColor,
               child: Padding(
                 padding: const EdgeInsetsDirectional.symmetric(
                   vertical: 12,
