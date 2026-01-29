@@ -65,6 +65,7 @@ class OfferModel extends Equatable {
     date,
     time,
     offerUserName,
+    status,
     isPdf,
     url,
     price,

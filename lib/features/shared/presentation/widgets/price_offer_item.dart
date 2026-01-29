@@ -29,14 +29,14 @@ class PriceOfferItem extends StatelessWidget {
           OfferDetailsRoute(offerNotificationModel: offerModel),
         );
         context.read<NotificationsCubit>().markOfferNotificationAsRead(
-          notificationId: offerModel.id,
+          offerId: offerModel.offerId,
         );
-      },
+    },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: BlocSelector<NotificationsCubit, NotificationsState, bool>(
           selector: (state) {
-            return state.unReadOfferNotifications.contains(offerModel.id);
+            return state.unReadOfferNotifications.contains(offerModel.offerId);
           },
           builder: (context, unRead) {
             return ColoredBox(

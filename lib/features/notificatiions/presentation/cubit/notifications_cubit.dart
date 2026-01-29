@@ -39,11 +39,11 @@ class NotificationsCubit extends Cubit<NotificationsState> {
                 NotificationType.offerNotification &&
             AppConstants.userType == UserType.contractor) {
           addOfferNotification(
-            offerNotification: notificationData.notification as OfferModel,
+            offerModel: notificationData.notification as OfferModel,
           );
         } else if (notificationData.type == NotificationType.replyOnOffer) {
           markOfferAsUnreadByOfferId(
-            offerNotification: notificationData.notification as OfferModel,
+            offerModel: notificationData.notification as OfferModel,
           );
         }
       },
@@ -177,7 +177,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         );
         for (var notification in offerNotifications.notifications) {
           if (!notification.status) {
-            unReadOfferNotifications.add(notification.id);
+            unReadOfferNotifications.add(notification.offerId);
           }
         }
         emit(
@@ -229,7 +229,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         );
         for (var notification in offerNotifications.notifications) {
           if (!notification.status) {
-            unReadOfferNotifications.add(notification.id);
+            unReadOfferNotifications.add(notification.offerId);
           }
         }
         emit(
@@ -248,15 +248,15 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     final unReadPublicNotifications = Set<int>.from(
       state.unReadPublicNotifications,
     );
-    unReadPublicNotifications.add(notificationId);
+    unReadPublicNotifications.remove(notificationId);
     emit(state.copyWith(unReadPublicNotifications: unReadPublicNotifications));
   }
 
-  void markOfferNotificationAsRead({required int notificationId}) {
+  void markOfferNotificationAsRead({required int offerId}) {
     final unReadOfferNotifications = Set<int>.from(
       state.unReadOfferNotifications,
     );
-    unReadOfferNotifications.add(notificationId);
+    unReadOfferNotifications.remove(offerId);
     emit(state.copyWith(unReadOfferNotifications: unReadOfferNotifications));
   }
 
@@ -266,6 +266,11 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     final currentList = List<PublicNotificationModel>.from(
       state.publicNotifications.notifications,
     );
+    final unReadPublicNotifications = Set<int>.from(
+      state.unReadPublicNotifications,
+    );
+    unReadPublicNotifications.add(publicNotification.id);
+    emit(state.copyWith(unReadPublicNotifications: unReadPublicNotifications));
 
     if (currentList.contains(publicNotification)) {
       return;
@@ -282,16 +287,20 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     );
   }
 
-  void addOfferNotification({required OfferModel offerNotification}) {
+  void addOfferNotification({required OfferModel offerModel}) {
     final currentList = List<OfferModel>.from(
       state.offerNotifications.notifications,
     );
-
-    if (currentList.contains(offerNotification)) {
+    final unReadOfferNotifications = Set<int>.from(
+      state.unReadOfferNotifications,
+    );
+    unReadOfferNotifications.add(offerModel.offerId);
+    emit(state.copyWith(unReadOfferNotifications: unReadOfferNotifications));
+    if (currentList.contains(offerModel)) {
       return;
     }
 
-    currentList.insert(0, offerNotification);
+    currentList.insert(0, offerModel);
 
     emit(
       state.copyWith(
@@ -302,17 +311,11 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     );
   }
 
-  void markOfferAsUnreadByOfferId({required OfferModel offerNotification}) {
+  void markOfferAsUnreadByOfferId({required OfferModel offerModel}) {
     Set<int> unReadOfferNotifications = Set<int>.from(
       state.unReadOfferNotifications,
     );
-    if (AppConstants.userType == UserType.contractor &&
-        unReadOfferNotifications.contains(offerNotification.id)) {
-      unReadOfferNotifications.remove(offerNotification.id);
-    } else if (AppConstants.userType == UserType.user &&
-        unReadOfferNotifications.contains(offerNotification.id)) {
-      unReadOfferNotifications.remove(offerNotification.id);
-    }
+    unReadOfferNotifications.add(offerModel.offerId);
     emit(state.copyWith(unReadOfferNotifications: unReadOfferNotifications));
   }
 
@@ -340,7 +343,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         );
         for (var notification in userOffersModel.offers) {
           if (!notification.status) {
-            unReadOfferNotifications.add(notification.id);
+            unReadOfferNotifications.add(notification.offerId);
           }
         }
         emit(
@@ -377,7 +380,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         );
         for (var notification in userOffersModel.offers) {
           if (!notification.status) {
-            unReadOfferNotifications.add(notification.id);
+            unReadOfferNotifications.add(notification.offerId);
           }
         }
         emit(
