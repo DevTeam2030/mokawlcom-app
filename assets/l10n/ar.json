@@ -176,6 +176,7 @@
   "months":"شهور",
   "edit_service":"تعديل الخدمة",
   "google_sign_in_not_supported_on_this_platform":"تسجيل الدخول بواسطة الجوجل غير مدعوم على هذه المنصة",
+  "apple_sign_in_failed":"فشل تسجيل الدخول بواسطة آبل",
   "cannot_open_email_app":"لا يمكن فتح تطبيق البريد الإلكتروني",
   "invalid_email":"بريد إلكتروني غير صالح",
   "done":"تم",

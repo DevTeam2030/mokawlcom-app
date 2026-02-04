@@ -18,6 +18,7 @@ class AuthState extends Equatable {
   final ActivateAccountResponseModel activateAccountResponseModel;
   final RequestStatus userLoginState;
   final RequestStatus googleLoginState;
+  final RequestStatus appleLoginState;
   final UserLoginResponseModel userLoginResponseModel;
   // contractor sign up
   final RequestStatus getClassificationsState;
@@ -47,6 +48,7 @@ class AuthState extends Equatable {
         const ActivateAccountResponseModel.empty(),
     this.userLoginState = RequestStatus.initial,
     this.googleLoginState = RequestStatus.initial,
+    this.appleLoginState = RequestStatus.initial,
     this.userLoginResponseModel = const UserLoginResponseModel.empty(),
     this.classificiationId = 0,
     this.servicesIds = const [],
@@ -75,6 +77,7 @@ class AuthState extends Equatable {
     ActivateAccountResponseModel? activateAccountResponseModel,
     RequestStatus? userLoginState,
     RequestStatus? googleLoginState,
+    RequestStatus? appleLoginState,
     UserLoginResponseModel? userLoginResponseModel,
     ServicesModel? servicesModel,
     ClassificationsModel? classificationsModel,
@@ -104,6 +107,7 @@ class AuthState extends Equatable {
           activateAccountResponseModel ?? this.activateAccountResponseModel,
       userLoginState: userLoginState ?? this.userLoginState,
       googleLoginState: googleLoginState ?? this.googleLoginState,
+      appleLoginState: appleLoginState ?? this.appleLoginState,
       userLoginResponseModel:
           userLoginResponseModel ?? this.userLoginResponseModel,
       classificationsModel: classificationsModel ?? this.classificationsModel,
@@ -145,6 +149,7 @@ class AuthState extends Equatable {
     classificationsModel,
     servicesModel,
     getServicesState,
+    appleLoginState,
     getClassificationsState,
     classificiationId,
     servicesIds,

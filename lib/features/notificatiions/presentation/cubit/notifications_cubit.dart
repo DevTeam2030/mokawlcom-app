@@ -302,6 +302,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     );
     unReadOfferNotifications.add(offerModel.offerId);
     emit(state.copyWith(unReadOfferNotifications: unReadOfferNotifications));
+    
     if (currentList.contains(offerModel)) {
       return;
     }

@@ -256,6 +256,7 @@ class LocaleKeys {
   static String get months => 'months'.tr();
   static String get editService => 'edit_service'.tr();
   static String get googleSignInNotSupportedOnThisPlatform => 'google_sign_in_not_supported_on_this_platform'.tr();
+  static String get appleSignInFailed => 'apple_sign_in_failed'.tr();
   static String get cannotOpenEmailApp => 'cannot_open_email_app'.tr();
   static String get invalidEmail => 'invalid_email'.tr();
   static String get done => 'done'.tr();

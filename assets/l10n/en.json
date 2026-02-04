@@ -176,6 +176,7 @@
   "months": "months",
   "edit_service": "Edit Service",
   "google_sign_in_not_supported_on_this_platform":"Google Sign-In not supported on this platform",
+  "apple_sign_in_failed":"Apple Sign-In failed",
   "cannot_open_email_app":"Cannot open email app",
   "invalid_email":"Invalid email",
   "done":"Done",

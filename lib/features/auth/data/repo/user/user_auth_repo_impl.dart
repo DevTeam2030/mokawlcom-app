@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
+import 'package:mokawlcom_app/core/services/apple_sign_in_service.dart';
 import 'package:mokawlcom_app/core/services/google_sign_in_service.dart';
 import 'package:mokawlcom_app/core/services/notifications/fcm_init_helper.dart';
 import 'package:mokawlcom_app/core/utils/safe_api_call.dart';
@@ -11,6 +12,7 @@ import 'package:mokawlcom_app/features/auth/data/models/activate_account_respons
 import 'package:mokawlcom_app/features/auth/data/data_source/user_auth_data_source.dart';
 import 'package:mokawlcom_app/features/auth/data/models/google_signin_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/login_request_model.dart';
+import 'package:mokawlcom_app/features/auth/data/models/user/apple_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_login_response_model.dart';
 import 'package:mokawlcom_app/features/auth/data/models/user/user_signup_request_model.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
@@ -72,6 +74,26 @@ class UserAuthRepoImpl implements UserAuthRepo {
           );
       return userAuthDataSource.googleLogin(
         googleSignInRequestModel: googleSignInRequestModel,
+      );
+    });
+    result.fold((l) {}, (userLoginResponseModel) {
+      _userTypeController.add(UserType.user);
+    });
+    return result;
+  }
+
+  @override
+  Future<Either<Failure, UserLoginResponseModel>> appleLogin() async {
+    final result = await safeApiCall<UserLoginResponseModel>(() async {
+      final userAppleLoginModel = await AppleSignInService().signInWithApple();
+      AppleRequestModel appleRequestModel = AppleRequestModel(
+        idToken: userAppleLoginModel.idToken,
+        name: userAppleLoginModel.name,
+        fcmToken: await FcmInitHelper().getFcmToken() ?? "",
+      );
+
+      return userAuthDataSource.appleLogin(
+        appleRequestModel: appleRequestModel,
       );
     });
     result.fold((l) {}, (userLoginResponseModel) {

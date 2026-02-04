@@ -163,7 +163,34 @@ class AuthCubit extends Cubit<AuthState> {
           state.copyWith(
             googleLoginState: RequestStatus.success,
             userLoginResponseModel: userLoginResponseModel,
-            phone: userLoginResponseModel.phone,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> appleLogin() async {
+    if (state.appleLoginState.isLoading) return;
+    emit(state.copyWith(appleLoginState: RequestStatus.loading));
+
+    final result = await userAuthRepoImpl.appleLogin();
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          appleLoginState: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      ),
+      (userLoginResponseModel) async {
+        AppConstants.token = userLoginResponseModel.token;
+        await cacheHelper.saveData(
+          key: AppConstants.tokenKey,
+          value: userLoginResponseModel.token,
+        );
+        emit(
+          state.copyWith(
+            appleLoginState: RequestStatus.success,
+            userLoginResponseModel: userLoginResponseModel,
           ),
         );
       },

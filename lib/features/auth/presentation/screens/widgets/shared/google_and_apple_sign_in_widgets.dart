@@ -15,8 +15,13 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verific
 import 'package:mokawlcom_app/locale_keys.dart';
 
 class GoogleAndAppleSignInWidgets extends StatelessWidget {
-  const GoogleAndAppleSignInWidgets({super.key, required this.onGoogleTap});
+  const GoogleAndAppleSignInWidgets({
+    super.key,
+    required this.onGoogleTap,
+    required this.onAppleTap,
+  });
   final void Function() onGoogleTap;
+  final void Function() onAppleTap;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -25,14 +30,13 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
         BlocConsumer<AuthCubit, AuthState>(
           listenWhen: (previous, current) =>
               previous.googleLoginState != current.googleLoginState,
-          listener: (context, state) async{
-             if (state.googleLoginState.isError && state.errorMessage.isNotEmpty) {
+          listener: (context, state) async {
+            if (state.googleLoginState.isError &&
+                state.errorMessage.isNotEmpty) {
               showDialog(
                 context: context,
-                builder: (context) => ErrorDialog(
-                  theme: theme,
-                  message: state.errorMessage,
-                ),
+                builder: (context) =>
+                    ErrorDialog(theme: theme, message: state.errorMessage),
               );
             }
             if (state.googleLoginState.isSuccess) {
@@ -44,14 +48,13 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
                   text: LocaleKeys.continueKey,
                 ),
               );
-              if(context.mounted){
-              context.replaceRoute(const AuthenticatedRoute());
+              if (context.mounted) {
+                context.replaceRoute(const AuthenticatedRoute());
               }
             }
-           
           },
           buildWhen: (previous, current) =>
-              previous.googleLoginState != current.googleLoginState,  
+              previous.googleLoginState != current.googleLoginState,
           builder: (context, state) {
             return InkWell(
               onTap: onGoogleTap,
@@ -77,7 +80,9 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 24.0),
-                          const Image(image: AssetImage(AssetsManager.googleIcon)),
+                          const Image(
+                            image: AssetImage(AssetsManager.googleIcon),
+                          ),
                         ],
                       ),
               ),
@@ -86,26 +91,68 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
         ),
         Platform.isIOS ? const SizedBox(height: 8.0) : const SizedBox.shrink(),
         Platform.isIOS
-            ? Container(
-                height: 48.0,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Sign in with Apple",
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
+            ? BlocConsumer<AuthCubit, AuthState>(
+                listenWhen: (previous, current) =>
+                    previous.appleLoginState != current.appleLoginState,
+                listener: (context, state) {
+                  if (state.appleLoginState.isError &&
+                      state.errorMessage.isNotEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (context) =>
+                          ErrorDialog(theme: theme, message: state.errorMessage),
+                    );
+                  }
+                  if (state.appleLoginState.isSuccess) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => SuccessDialog(
+                        theme: theme,
+                        message: state.userLoginResponseModel.message,
+                        text: LocaleKeys.continueKey,
+                      ),
+                    );
+                    if (context.mounted) {
+                      context.replaceRoute(const AuthenticatedRoute());
+                    }
+                  }
+                },
+                buildWhen: (previous, current) =>
+                    previous.appleLoginState != current.appleLoginState,
+                builder: (context, state) {
+                  return InkWell(
+                    onTap: onAppleTap,
+                    child: Container(
+                      height: 48.0,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: state.appleLoginState.isLoading
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                color: ColorsManager.primaryColor,
+                              ),
+                            )
+                          : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Sign in with Apple",
+                            style: theme.textTheme.bodyMedium!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 24.0),
+                          const Image(
+                            image: AssetImage(AssetsManager.appleIcon),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 24.0),
-                    const Image(image: AssetImage(AssetsManager.appleIcon)),
-                  ],
-                ),
+                  );
+                },
               )
             : const SizedBox.shrink(),
       ],

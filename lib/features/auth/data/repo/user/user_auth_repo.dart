@@ -19,6 +19,7 @@ abstract class UserAuthRepo {
     required LoginRequestModel loginRequestModel,
   });
   Future<Either<Failure, UserLoginResponseModel>> googleLogin();
+  Future<Either<Failure, UserLoginResponseModel>> appleLogin();
   Future<Either<Failure, String>> forgetPassword({required String email});
   Stream<UserType> get userTypeStream;
 }

@@ -110,6 +110,21 @@
 
     </array>
 
+    <!-- ===============================
+         image_picker permissions
+         =============================== -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app needs access to your photo library to select images.</string>
+    
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>This app needs access to save photos to your library.</string>
+
+    <!-- ===============================
+         file_picker permissions
+         =============================== -->
+    <key>NSDocumentsFolderUsageDescription</key>
+    <string>This app needs access to select files from your documents.</string>
+
     <!-- Performance -->
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>

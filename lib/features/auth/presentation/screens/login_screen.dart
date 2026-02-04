@@ -75,6 +75,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   onGoogleTap: () async {
                     await context.read<AuthCubit>().googleLogin();
                   },
+                  onAppleTap: () async {
+                    await context.read<AuthCubit>().appleLogin();
+                  },
                 ),
                 const SizedBox(height: 16.0),
                 Row(
