@@ -42,20 +42,18 @@ class AppCubit extends HydratedCubit<AppState> {
   }
 
   Future<void> checkNotificationPermission() async {
+    if (state.userType == UserType.visitor) {
+      return;
+    }
     var status = await Permission.notification.status;
+    // if (status.isPermanentlyDenied) {
+    //   // openAppSettings();
+    //   return;
+    // }
 
     if (status.isDenied) {
       status = await Permission.notification.request();
     }
-
-    if (status.isPermanentlyDenied) {
-      // debugPrint("Notification permission permanently denied.");
-      // openAppSettings();
-      return;
-    }
-
-    bool granted = status.isGranted;
-    debugPrint("Permission granted: $granted");
   }
 
   void changeClassification({required String classification}) {

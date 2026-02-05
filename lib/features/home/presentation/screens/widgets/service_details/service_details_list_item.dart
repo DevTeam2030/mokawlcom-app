@@ -68,7 +68,9 @@ class ServiceDetailsListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    LocaleKeys.serviceName,
+                    contractorServiceModel.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodySmall!.copyWith(
                       fontWeight: FontWeight.w700,
                       color: ColorsManager.accentTextColor,
@@ -118,9 +120,7 @@ class ImageLightBox extends StatelessWidget {
         child: FractionallySizedBox(
           heightFactor: 0.4,
           child: PageView.builder(
-            controller: PageController(
-              initialPage: initialIndex,
-            ),
+            controller: PageController(initialPage: initialIndex),
             itemCount: images.length,
             itemBuilder: (context, index) {
               return Padding(

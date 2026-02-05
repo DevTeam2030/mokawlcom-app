@@ -49,12 +49,12 @@ dependencies:
   firebase_core: ^4.3.0
   google_sign_in: ^7.2.0
   dio: ^5.9.0
-  equatable: ^2.0.7
+  equatable: ^2.0.8 
   sign_in_with_apple: ^7.0.1
   crypto: ^3.0.7
   pretty_dio_logger: ^1.4.0
   dartz: ^0.10.1
-  bloc: ^9.1.0
+  bloc: ^9.2.0
   flutter_bloc: ^9.1.1
   firebase_messaging: ^16.1.0
   awesome_notifications: ^0.10.1
@@ -71,6 +71,7 @@ dependencies:
   flutter_intl_phone_field: ^0.0.7
   image_picker: ^1.1.2
   syncfusion_flutter_pdfviewer: ^32.1.24
+  upgrader: ^12.5.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
