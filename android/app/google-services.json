@@ -39,10 +39,10 @@
               "client_type": 3
             },
             {
-              "client_id": "200274876402-kl2a21a19avpnvjtm2vpdv10kpgt7pob.apps.googleusercontent.com",
+              "client_id": "200274876402-gjh4s7d0h7709nb4sb6qj4sv868i3p4f.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.mokawlcomApp"
+                "bundle_id": "com.mokawlcomapp.mokawlcom"
               }
             }
           ]

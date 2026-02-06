@@ -63,6 +63,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '200274876402',
     projectId: 'mokawlcom-app',
     storageBucket: 'mokawlcom-app.firebasestorage.app',
-    iosBundleId: 'com.example.mokawlcomApp',
+    iosBundleId: 'com.mokawlcomapp.mokawlcom',
   );
 }

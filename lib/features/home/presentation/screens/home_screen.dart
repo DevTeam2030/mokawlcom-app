@@ -37,12 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _loadData();
     });
-    _checkNotificationPermission();
   }
 
-  Future<void> _checkNotificationPermission() async {
-    if (mounted) await context.read<AppCubit>().checkNotificationPermission();
-  }
+  
 
   Future<void> _loadData() async {
     if (mounted && AppConstants.userType == .contractor) {

@@ -31,6 +31,16 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   @override
+  void initState() {
+    super.initState();
+    _checkNotificationPermission();
+  }
+
+  Future<void> _checkNotificationPermission() async {
+    await context.read<AppCubit>().checkNotificationPermission();
+  }
+
+  @override
   void dispose() {
     GoogleSignInService.instance.dispose();
     super.dispose();
