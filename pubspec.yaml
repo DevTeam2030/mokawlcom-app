@@ -67,12 +67,12 @@ dependencies:
   shared_preferences: ^2.5.4
   collection: ^1.19.1
   url_launcher: ^6.3.2
-  permission_handler: ^12.0.1
   flutter_intl_phone_field: ^0.0.7
   image_picker: ^1.1.2
   syncfusion_flutter_pdfviewer: ^32.1.24
   upgrader: ^12.5.0
 dev_dependencies:
+  flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
   auto_route_generator: ^10.4.0
@@ -132,3 +132,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app_logo.png"
+  remove_alpha_ios: true

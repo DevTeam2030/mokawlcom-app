@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
@@ -7,7 +8,6 @@ import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/visitor_access_dialog.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class AppCubit extends HydratedCubit<AppState> {
   final UserAuthRepo userAuthRepo;
@@ -45,15 +45,10 @@ class AppCubit extends HydratedCubit<AppState> {
     if (state.userType == UserType.visitor) {
       return;
     }
-    var status = await Permission.notification.status;
-    // if (status.isPermanentlyDenied) {
-    //   // openAppSettings();
-    //   return;
-    // }
+    final settings = await FirebaseMessaging.instance.requestPermission();
 
-    if (status.isDenied) {
-      status = await Permission.notification.request();
-    }
+    debugPrint('User granted permission: ${settings.authorizationStatus}');
+  
   }
 
   void changeClassification({required String classification}) {

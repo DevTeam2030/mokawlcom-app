@@ -45,7 +45,8 @@ class AppleSignInService {
         name: appleCredential.givenName ?? "",
       );
     } on SignInWithAppleAuthorizationException catch (e) {
-      if (e.code == AuthorizationErrorCode.canceled) {
+      if (e.code == AuthorizationErrorCode.canceled ||
+          e.code == AuthorizationErrorCode.unknown) {
         debugPrint("User cancelled Apple Sign-In");
         throw const ServerException(errorMessage: "");
       }

@@ -131,7 +131,7 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
                       child: state.appleLoginState.isLoading
                           ? const Center(
                               child: CircularProgressIndicator(
-                                color: ColorsManager.primaryColor,
+                                color: Colors.white,
                               ),
                             )
                           : Row(

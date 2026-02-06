@@ -49,7 +49,8 @@
             <string>Editor</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>com.googleusercontent.apps.861823949799-vc35cprkp249096uujjn0vvnmcvjppkn</string>
+                <string>com.googleusercontent.apps.200274876402-kl2a21a19avpnvjtm2vpdv10kpgt7pob</string>
+
             </array>
         </dict>
     </array>
@@ -124,6 +125,15 @@
          =============================== -->
     <key>NSDocumentsFolderUsageDescription</key>
     <string>This app needs access to select files from your documents.</string>
+    
+    <!-- Notifications -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>remote-notification</string>
+    </array>
+    <key>NSUserNotificationUsageDescription</key>
+    <string>We use notifications to keep you updated with important messages.</string>
+
 
     <!-- Performance -->
     <key>CADisableMinimumFrameDurationOnPhone</key>
