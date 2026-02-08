@@ -42,7 +42,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             offerModel: notificationData.notification as OfferModel,
           );
         } else if (notificationData.type == NotificationType.replyOnOffer) {
-          markOfferAsUnreadByOfferId(
+          _markOfferAsUnreadByOfferId(
             offerModel: notificationData.notification as OfferModel,
           );
         }
@@ -318,7 +318,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     );
   }
 
-  void markOfferAsUnreadByOfferId({required OfferModel offerModel}) {
+  void _markOfferAsUnreadByOfferId({required OfferModel offerModel}) {
     Set<int> unReadOfferNotifications = Set<int>.from(
       state.unReadOfferNotifications,
     );

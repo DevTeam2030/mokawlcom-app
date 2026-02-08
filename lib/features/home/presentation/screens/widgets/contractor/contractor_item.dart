@@ -61,71 +61,76 @@ class ContractorItem extends StatelessWidget {
                     ),
                     clipBehavior: .antiAliasWithSaveLayer,
                     child: ClipOval(
+                      clipBehavior: .antiAliasWithSaveLayer,
                       child: CustomCachedNetworkImage(
                         imageUrl: contractorModel.image,
                         width: 50,
                         height: 50,
+                        fit: .cover,
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 14),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        context.pushRoute(
-                          ContractorDetailsRoute(
-                            contractorId: contractorModel.id,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          context.pushRoute(
+                            ContractorDetailsRoute(
+                              contractorId: contractorModel.id,
+                            ),
+                          );
+                        },
+                        child: Text(
+                          contractorModel.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                      },
-                      child: Text(
-                        contractorModel.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodySmall!.copyWith(
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    contractorModel.address.isNotEmpty
-                        ? Row(
-                            children: [
-                              const Icon(
-                                Icons.location_on_outlined,
-                                size: 18,
-                                color: Colors.green,
-                              ),
-                              Text(
-                                contractorModel.address,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: theme.textTheme.labelSmall!.copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 10,
-                                  color: ColorsManager.textColor,
+                      const SizedBox(height: 4),
+                      contractorModel.address.isNotEmpty
+                          ? Row(
+                              children: [
+                                const Icon(
+                                  Icons.location_on_outlined,
+                                  size: 18,
+                                  color: Colors.green,
                                 ),
-                              ),
-                            ],
-                          )
-                        : const SizedBox(),
-                    const SizedBox(height: 4),
-                    RatingBar.builder(
-                      initialRating: contractorModel.rating.toDouble(),
-                      ignoreGestures: true,
-                      itemSize: 16,
-                      itemBuilder: (context, index) {
-                        return const Icon(MyIcons.star, color: Colors.amber);
-                      },
-                      unratedColor: ColorsManager.borderLightBlue,
-                      onRatingUpdate: (rating) {},
-                    ),
-                  ],
+                                Expanded(
+                                  child: Text(
+                                    contractorModel.address,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: theme.textTheme.labelSmall!.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 10,
+                                      color: ColorsManager.textColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
+                      const SizedBox(height: 4),
+                      RatingBar.builder(
+                        initialRating: contractorModel.rating.toDouble(),
+                        ignoreGestures: true,
+                        itemSize: 16,
+                        itemBuilder: (context, index) {
+                          return const Icon(MyIcons.star, color: Colors.amber);
+                        },
+                        unratedColor: ColorsManager.borderLightBlue,
+                        onRatingUpdate: (rating) {},
+                      ),
+                    ],
+                  ),
                 ),
-                const Spacer(),
                 Container(
                   alignment: AlignmentDirectional.center,
                   padding: const EdgeInsetsDirectional.symmetric(
@@ -249,10 +254,8 @@ class ContractorItem extends StatelessWidget {
                             onError: (msg) {
                               showDialog(
                                 context: context,
-                                builder: (context) => ErrorDialog(
-                                  theme: theme,
-                                  message: msg,
-                                ),
+                                builder: (context) =>
+                                    ErrorDialog(theme: theme, message: msg),
                               );
                             },
                           );
@@ -282,10 +285,8 @@ class ContractorItem extends StatelessWidget {
                             onError: (msg) {
                               showDialog(
                                 context: context,
-                                builder: (context) => ErrorDialog(
-                                  theme: theme,
-                                  message: msg,
-                                ),
+                                builder: (context) =>
+                                    ErrorDialog(theme: theme, message: msg),
                               );
                             },
                           );
