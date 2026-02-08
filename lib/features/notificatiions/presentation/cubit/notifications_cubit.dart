@@ -327,6 +327,9 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
   Future<void> getUserOffers() async {
+    if(state.userOffersModel.offers.isNotEmpty){
+      return;
+    }
     emit(
       state.copyWith(
         getUserOffersState: RequestStatus.loading,

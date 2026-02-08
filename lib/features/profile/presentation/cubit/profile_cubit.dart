@@ -26,6 +26,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> updateUserProfile({
     required UpdateUserProfileRequestModel updateUserProfileRequestModel,
   }) async {
+    if(state.updateUserProfileRequestStatus.isLoading){
+      return;
+    }
     emit(state.copyWith(updateUserProfileRequestStatus: RequestStatus.loading));
     final result = await profileRepo.updateProfile(
       updateUserProfileRequestModel: updateUserProfileRequestModel,
@@ -92,6 +95,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> changePassword({
     required ChangePasswordRequestModel changePasswordRequestModel,
   }) async {
+    if(state.changePasswordRequestState.isLoading){
+      return;
+    }
     emit(state.copyWith(changePasswordRequestState: RequestStatus.loading));
     final result = await profileRepo.changePassword(
       changePasswordRequestModel: changePasswordRequestModel,
@@ -113,6 +119,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> deleteAccount() async {
+    if(state.deleteAccountRequestState.isLoading){
+      return;
+    }
     emit(state.copyWith(deleteAccountRequestState: RequestStatus.loading));
     final result = await profileRepo.deleteAccount();
     result.fold(
@@ -139,6 +148,9 @@ class ProfileCubit extends Cubit<ProfileState> {
     required EditContractorProfileRequestModel
     editContractorProfileRequestModel,
   }) async {
+    if(state.updateUserProfileRequestStatus.isLoading){
+      return;
+    }
     emit(state.copyWith(updateUserProfileRequestStatus: RequestStatus.loading));
     final result = await profileRepo.editContractorProfile(
       editContractorProfileRequestModel: editContractorProfileRequestModel,
@@ -161,6 +173,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> logout() async {
+    if(state.logoutRequestState.isLoading){
+      return;
+    }
     emit(state.copyWith(logoutRequestState: RequestStatus.loading));
     final result = await profileRepo.logout();
     result.fold(

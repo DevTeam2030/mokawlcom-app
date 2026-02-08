@@ -106,6 +106,7 @@ class ContractorInfoCubit extends Cubit<ContractorInfoState> {
     required String title,
     required String message,
   }) async {
+    if (state.addOfferPriceState.isLoading) return;
     emit(state.copyWith(addOfferPriceState: RequestStatus.loading));
     final result = await homeRepo.addOfferPrice(
       addOfferPriceRequestModel: AddOfferPriceRequestModel(

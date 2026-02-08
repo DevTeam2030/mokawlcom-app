@@ -67,7 +67,7 @@ class ClassificationItem extends StatelessWidget {
           ),
         ),
         Text(
-          "(${classificationModel.numberOfServices })",
+          "(${classificationModel.numberOfServices})",
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
           style: theme.textTheme.labelSmall!.copyWith(

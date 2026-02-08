@@ -39,6 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String confirmPassword,
     required String phone,
   }) async {
+    if (state.userSignupState.isLoading) return;
     emit(state.copyWith(userSignupState: RequestStatus.loading));
     UserSignupRequestModel userSignupRequestModel = UserSignupRequestModel(
       name: name,
@@ -104,6 +105,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String password,
   }) async {
+    if (state.userLoginState.isLoading) return;
     emit(state.copyWith(userLoginState: RequestStatus.loading));
     final result = await userAuthRepoImpl.userLogin(
       loginRequestModel: LoginRequestModel(
@@ -358,6 +360,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String confirmPassword,
     required String phone,
   }) async {
+    if (state.contractorSignUpState.isLoading) return;
     emit(state.copyWith(contractorSignUpState: RequestStatus.loading));
     final result = await contractorAuthRepoImpl.contractorSignUp(
       contractorSignUpRequestModel: ContractorSignUpRequestModel(
@@ -414,6 +417,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String? twitter,
     required String? snapChat,
   }) async {
+    if (state.completeContractorDataState.isLoading) return;
     if (state.logo == null) {
       emit(
         state.copyWith(
@@ -456,6 +460,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> subscibePlan() async {
+    if (state.subscibePlanState.isLoading) return;  
     emit(state.copyWith(subscibePlanState: RequestStatus.loading));
     final result = await contractorAuthRepoImpl.subscibePlan();
     result.fold(
@@ -477,6 +482,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> forgetPassword({required String email}) async {
+    if (state.forgetPasswordState.isLoading) return;  
     emit(state.copyWith(forgetPasswordState: RequestStatus.loading));
     final result = await userAuthRepoImpl.forgetPassword(email: email);
     result.fold(

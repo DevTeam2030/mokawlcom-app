@@ -166,6 +166,9 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
     required String description,
     required String price,
   }) async {
+    if(state.addNewServiceState.isLoading){
+      return;
+    } 
     emit(state.copyWith(addNewServiceState: RequestStatus.loading));
     final result = await profileRepo.addService(
       addServiceRequestModel: AddServiceRequestModel(
@@ -214,6 +217,9 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
     required String description,
     required String price,
   }) async {
+    if(state.editServiceState.isLoading){
+      return;
+    } 
     emit(state.copyWith(editServiceState: RequestStatus.loading));
     final result = await profileRepo.editService(
       editServiceRequestModel: EditServiceRequestModel(
@@ -344,6 +350,9 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
     required String title,
     required String description,
   }) async {
+    if(state.addDealState.isLoading){
+      return;
+    } 
     emit(state.copyWith(addDealState: RequestStatus.loading));
     final result = await profileRepo.addDeal(
       title: title,
@@ -398,6 +407,9 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
     required String title,
     required String description,
   }) async {
+    if(state.editDealState.isLoading){
+      return;
+    } 
     emit(state.copyWith(editDealState: RequestStatus.loading));
     final result = await profileRepo.editDeal(
       dealId: dealId,

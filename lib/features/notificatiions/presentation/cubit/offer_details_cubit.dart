@@ -112,6 +112,9 @@ class OfferDetailsCubit extends Cubit<OfferDetailsState> {
     required String title,
     required String message,
   }) async {
+    if(state.replayOnOfferPriceState.isLoading){
+      return;
+    }
     emit(state.copyWith(replayOnOfferPriceState: RequestStatus.loading));
     final result = await notificationsRepo.replyOnOfferPrice(
       replyOfferPriceRequestModel: ReplyOfferPriceRequestModel(
