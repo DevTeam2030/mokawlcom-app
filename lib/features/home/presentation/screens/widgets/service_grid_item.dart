@@ -48,7 +48,8 @@ class ServiceGridItem extends StatelessWidget {
                     imageUrl: serviceModel.image,
                     width: 100,
                     height: 100,
-                    fit: BoxFit.cover,  
+
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -58,7 +59,6 @@ class ServiceGridItem extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           serviceModel.name,
-          maxLines: 2,
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
           style: theme.textTheme.labelSmall!.copyWith(

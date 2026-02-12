@@ -73,6 +73,7 @@ class ContractorItem extends StatelessWidget {
                 ),
                 const SizedBox(width: 14),
                 Expanded(
+                  flex: 2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -126,29 +127,30 @@ class ContractorItem extends StatelessWidget {
                           return const Icon(MyIcons.star, color: Colors.amber);
                         },
                         unratedColor: ColorsManager.borderLightBlue,
-                        onRatingUpdate: (rating) {},
+                        onRatingUpdate: (_) {},
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  alignment: AlignmentDirectional.center,
-                  padding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: 20,
-                  ),
-                  height: 26,
-                  decoration: BoxDecoration(
-                    color: ColorsManager.lightBlueBg,
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(
-                      color: ColorsManager.borderLightBlue,
-                      width: 1.2,
+                const SizedBox(width: 5),
+                Expanded(
+                  child: Container(
+                    alignment: AlignmentDirectional.center,
+                    padding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: 20,
+                      vertical: 5,
                     ),
-                  ),
-                  child: FittedBox(
+                    decoration: BoxDecoration(
+                      color: ColorsManager.lightBlueBg,
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(
+                        color: ColorsManager.borderLightBlue,
+                        width: 1.2,
+                      ),
+                    ),
                     child: Text(
                       contractorModel.category,
-                      maxLines: 1,
+                      maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodySmall!.copyWith(
                         color: ColorsManager.labelColor,
