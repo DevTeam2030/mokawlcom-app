@@ -43,7 +43,7 @@ class UserLoginResponseModel extends Equatable {
       type: data?['type'] ?? "",
       name: data?['name'] ?? "",
       phone: data?['phone'] ?? "",
-      userApproved: data?['user_approved'] ?? 0,
+      userApproved: int.tryParse(data?['user_approved']?.toString() ?? '0') ?? 0,
       filesUploaded: data?['files_uploaded'] ?? true,
       planCompleted: data?['plan_completed'] ?? true,
       completeData: data?['complete_data'] ?? true,

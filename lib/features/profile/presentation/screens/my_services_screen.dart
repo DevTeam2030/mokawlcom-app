@@ -203,6 +203,7 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
 
     return ListView.separated(
       controller: _scrollController,
+      
       itemCount: services.length + (status.isLoadingMore ? 1 : 0),
       separatorBuilder: (_, __) => const SizedBox(height: 20),
       itemBuilder: (context, index) {

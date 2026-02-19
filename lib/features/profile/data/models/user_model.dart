@@ -43,26 +43,27 @@ class UserModel extends Equatable {
     final subCategories = data['sub_categories'] as List<dynamic>? ?? [];
 
     return UserModel(
-      id: data['id'] ?? 0,
+      id: int.tryParse(data['id']?.toString() ?? '0') ?? 0,
       message: json['message'] ?? '',
-      name: data['name'] ?? '',
-      phone: data['phone'] ?? '',
-      email: data['email'] ?? '',
-      address: data['address'] ?? '',
-      logo: data['logo'] ?? '',
-      facabook: data['facebook'] ?? '',
-      twitter: data['twitter'] ?? '',
-      instagram: data['instagram'] ?? '',
-      snapchat: data['spanchat'] ?? '',
-      whatsapp: data['whatsapp'] ?? '',
-      hintAboutComppany: data['store_description'] ?? '',
-      classificationId: data['category_id'] ?? 0,
-      classification: data['category'] ?? '',
+      name: data['name']?.toString() ?? '',
+      phone: data['phone']?.toString() ?? '',
+      email: data['email']?.toString() ?? '',
+      address: data['address']?.toString() ?? '',
+      logo: data['logo']?.toString() ?? '',
+      facabook: data['facebook']?.toString() ?? '',
+      twitter: data['twitter']?.toString() ?? '',
+      instagram: data['instagram']?.toString() ?? '',
+      snapchat: data['spanchat']?.toString() ?? '',
+      whatsapp: data['whatsapp']?.toString() ?? '',
+      hintAboutComppany: data['store_description']?.toString() ?? '',
+      classificationId:
+          int.tryParse(data['category_id']?.toString() ?? '0') ?? 0,
+      classification: data['category']?.toString() ?? '',
       userServices: subCategories
           .map(
             (x) => ServiceModel(
-              id: x['id'] ?? 0,
-              name: x['name'] ?? '',
+              id: int.tryParse(x['id']?.toString() ?? '0') ?? 0,
+              name: x['name']?.toString() ?? '',
               number: 0,
               image: '',
             ),
@@ -70,6 +71,7 @@ class UserModel extends Equatable {
           .toList(),
     );
   }
+
   const UserModel.empty()
     : this(
         id: 0,

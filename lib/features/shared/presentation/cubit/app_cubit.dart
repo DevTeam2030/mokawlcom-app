@@ -42,9 +42,6 @@ class AppCubit extends HydratedCubit<AppState> {
   }
 
   Future<void> checkNotificationPermission() async {
-    if (state.userType == UserType.visitor) {
-      return;
-    }
     final settings = await FirebaseMessaging.instance.requestPermission();
 
     debugPrint('User granted permission: ${settings.authorizationStatus}');
