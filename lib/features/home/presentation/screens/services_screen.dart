@@ -143,7 +143,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           id: i,
                           name: '******',
                           image: '',
-                          number: i,
+                          numberOfContractors: i,
                         ),
                       ),
                       status: state.getServicesState,

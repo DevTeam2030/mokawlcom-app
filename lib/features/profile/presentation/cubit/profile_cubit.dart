@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/local/cache_helper.dart';
 import 'package:mokawlcom_app/core/services/file_picker_service.dart';
@@ -26,7 +27,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> updateUserProfile({
     required UpdateUserProfileRequestModel updateUserProfileRequestModel,
   }) async {
-    if(state.updateUserProfileRequestStatus.isLoading){
+    if (state.updateUserProfileRequestStatus.isLoading) {
       return;
     }
     emit(state.copyWith(updateUserProfileRequestStatus: RequestStatus.loading));
@@ -95,7 +96,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> changePassword({
     required ChangePasswordRequestModel changePasswordRequestModel,
   }) async {
-    if(state.changePasswordRequestState.isLoading){
+    if (state.changePasswordRequestState.isLoading) {
       return;
     }
     emit(state.copyWith(changePasswordRequestState: RequestStatus.loading));
@@ -119,7 +120,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> deleteAccount() async {
-    if(state.deleteAccountRequestState.isLoading){
+    if (state.deleteAccountRequestState.isLoading) {
       return;
     }
     emit(state.copyWith(deleteAccountRequestState: RequestStatus.loading));
@@ -148,7 +149,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     required EditContractorProfileRequestModel
     editContractorProfileRequestModel,
   }) async {
-    if(state.updateUserProfileRequestStatus.isLoading){
+    if (state.updateUserProfileRequestStatus.isLoading) {
       return;
     }
     emit(state.copyWith(updateUserProfileRequestStatus: RequestStatus.loading));
@@ -173,29 +174,10 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> logout() async {
-    if(state.logoutRequestState.isLoading){
-      return;
-    }
-    emit(state.copyWith(logoutRequestState: RequestStatus.loading));
-    final result = await profileRepo.logout();
-    result.fold(
-      (failure) => emit(
-        state.copyWith(
-          logoutRequestState: RequestStatus.error,
-          errorMessage: failure.errorMessage,
-        ),
-      ),
-      (successMessage) {
-        cacheHelper.deleteAll();
-        AppConstants.token = "";
-        emit(
-          state.copyWith(
-            logoutRequestState: RequestStatus.success,
-            successMessage: successMessage,
-          ),
-        );
-      },
-    );
+    await FirebaseMessaging.instance.deleteToken();
+    await profileRepo.logout();
+    cacheHelper.deleteAll();
+    AppConstants.token = "";
   }
 
   Future<void> getUserProfile() async {

@@ -117,15 +117,15 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
               enabled: state.getServicesState.isLoading,
               child: _buildServices(
                 theme,
-               List.generate(
-                        6,
-                        (i) => const ServiceModel(
-                          id: 0,
-                          name: 'Loading',
-                          image: '',
-                          number: 0,
-                        ),
-                      ),
+                List.generate(
+                  6,
+                  (i) => const ServiceModel(
+                    id: 0,
+                    name: 'Loading',
+                    image: '',
+                    numberOfContractors: 0,
+                  ),
+                ),
                 state.getServicesState,
               ),
             ),

@@ -68,7 +68,7 @@ class ServiceGridItem extends StatelessWidget {
           ),
         ),
         Text(
-          "(${serviceModel.number})",
+          "(${serviceModel.numberOfContractors})",
           style: theme.textTheme.labelSmall!.copyWith(
             fontWeight: FontWeight.w400,
             color: ColorsManager.textColor,

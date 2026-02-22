@@ -165,7 +165,7 @@
   "cannot_open_call_app": "Cannot open call app",
   "invalid_number": "Invalid number",
   "please_select_file": "Please select a file first",
-  "file_size_must_be_less_than": "File size must be less than {}MB",
+  "file_size_must_be_less_than": "File size must be less than {} MB",
   "please_select_logo": "Please select a logo first",
   "max_images_reached": "Maximum images reached",
   "image_size_exceeded": "Image size exceeded. Maximum size is",

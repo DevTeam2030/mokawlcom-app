@@ -19,8 +19,8 @@ import 'package:mokawlcom_app/my_app.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 
 Future<void> showLogoutBottomSheet({
-  required context,
-  required theme,
+  required BuildContext context,
+  required ThemeData theme,
   required ProfileCubit profileCubit,
 }) async {
   await showModalBottomSheet(
@@ -30,7 +30,7 @@ Future<void> showLogoutBottomSheet({
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
-    builder: (context) {
+    builder: (_) {
       return BlocProvider.value(
         value: profileCubit,
         child: Padding(
@@ -69,45 +69,14 @@ Future<void> showLogoutBottomSheet({
                 ),
               ),
               const SizedBox(height: 8),
-              BlocConsumer<ProfileCubit, ProfileState>(
-                listenWhen: (previous, current) =>
-                    previous.logoutRequestState != current.logoutRequestState,
-                listener: (context, state) async {
-                  if (state.logoutRequestState.isError) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => ErrorDialog(
-                        message: state.errorMessage,
-                        theme: theme,
-                      ),
-                    );
-                  }
-                  if (state.logoutRequestState.isSuccess) {
-                    await showDialog(
-                      context: context,
-                      builder: (context) => SuccessDialog(
-                        message: state.successMessage,
-                        onPressed: () => context.pop(),
-                        text: LocaleKeys.exit,
-                        theme: theme,
-                      ),
-                    );
-                    if (context.mounted) {
-                      context.replaceRoute(const AuthRoute());
-                    }
-                  }
+              PrimaryButton(
+                backgroundColor: ColorsManager.errorLight,
+                textColor: Colors.white,
+                onPressed: () {
+                  profileCubit.logout();
+                  context.replaceRoute(const AuthRoute());
                 },
-                builder: (context, state) {
-                  return PrimaryButton(
-                    isLoading: state.logoutRequestState.isLoading,
-                    backgroundColor: ColorsManager.errorLight,
-                    textColor: Colors.white,
-                    onPressed: () async {
-                      await context.read<ProfileCubit>().logout();
-                    },
-                    text: LocaleKeys.exit,
-                  );
-                },
+                text: LocaleKeys.exit,
               ),
               const SizedBox(height: 8),
             ],

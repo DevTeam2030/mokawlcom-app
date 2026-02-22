@@ -22,7 +22,7 @@ class FilePickerService {
     final sizeInMB = file.lengthSync() / (1024 * 1024);
 
     if (sizeInMB > maxFileSizeInMB) {
-      throw Exception(
+      throw FileSizeException(
         LocaleKeys.fileSizeMustBeLessThan.replaceAll(
           '{}',
           maxFileSizeInMB.toString(),
@@ -33,4 +33,13 @@ class FilePickerService {
     return file;
   }
 
+}
+
+class FileSizeException implements Exception {
+  final String message;
+
+  FileSizeException(this.message);
+
+  @override
+  String toString() => message;
 }

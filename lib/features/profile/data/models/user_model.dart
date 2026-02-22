@@ -64,7 +64,7 @@ class UserModel extends Equatable {
             (x) => ServiceModel(
               id: int.tryParse(x['id']?.toString() ?? '0') ?? 0,
               name: x['name']?.toString() ?? '',
-              number: 0,
+              numberOfContractors: 0,
               image: '',
             ),
           )
