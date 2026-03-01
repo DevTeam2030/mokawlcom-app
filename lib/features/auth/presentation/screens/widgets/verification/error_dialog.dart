@@ -10,9 +10,11 @@ class ErrorDialog extends StatelessWidget {
     super.key,
     required this.theme,
     required this.message,
+    this.buttonText = "",
   });
   final ThemeData theme;
   final String message;
+  final String buttonText;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -46,7 +48,7 @@ class ErrorDialog extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              text: LocaleKeys.tryAgain,
+              text: buttonText == "" ? LocaleKeys.tryAgain : buttonText,
             ),
           ],
         ),

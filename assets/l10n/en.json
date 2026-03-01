@@ -187,8 +187,6 @@
   "delete_service_message":"Are you sure you want to delete this service?",
   "delete_deal":"Delete Deal",
   "delete_deal_message":"Are you sure you want to delete this deal?",
-  "no_offers_exist":"No offers exist"
-
-  
-
+  "no_offers_exist":"No offers exist",
+  "please_login_again":"Please login again"
 }

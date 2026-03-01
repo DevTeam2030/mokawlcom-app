@@ -187,5 +187,6 @@
   "delete_service_message":"هل أنت متأكد من حذف هذه الخدمة؟",
   "delete_deal":"حذف الصفقة",
   "delete_deal_message":"هل أنت متأكد من حذف هذه الصفقة؟",
-  "no_offers_exist":"لا يوجد عروض"
+  "no_offers_exist":"لا يوجد عروض",
+  "please_login_again":"الرجاء تسجيل الدخول مرة أخرى"
 }

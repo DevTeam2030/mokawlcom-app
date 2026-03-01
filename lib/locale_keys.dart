@@ -268,4 +268,5 @@ class LocaleKeys {
   static String get deleteDeal => 'delete_deal'.tr();
   static String get deleteDealMessage => 'delete_deal_message'.tr();
   static String get noOffersExist => 'no_offers_exist'.tr();
+  static String get pleaseLoginAgain => 'please_login_again'.tr();
 }
