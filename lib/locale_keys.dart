@@ -251,17 +251,19 @@ class LocaleKeys {
 
   static String get errorPickingImages => 'error_picking_images'.tr();
   static String get noDealsYet => 'no_deals_yet'.tr();
-  static String get editDeal => 'edit_deal'.tr(); 
+  static String get editDeal => 'edit_deal'.tr();
   static String get packageIsValidFor => 'package_is_valid_for'.tr();
   static String get months => 'months'.tr();
   static String get editService => 'edit_service'.tr();
-  static String get googleSignInNotSupportedOnThisPlatform => 'google_sign_in_not_supported_on_this_platform'.tr();
+  static String get googleSignInNotSupportedOnThisPlatform =>
+      'google_sign_in_not_supported_on_this_platform'.tr();
   static String get appleSignInFailed => 'apple_sign_in_failed'.tr();
   static String get cannotOpenEmailApp => 'cannot_open_email_app'.tr();
   static String get invalidEmail => 'invalid_email'.tr();
   static String get done => 'done'.tr();
   static String get noServicesAvailable => 'no_services_available'.tr();
-  static String get pleaseSelectClassification => 'please_select_classification'.tr();
+  static String get pleaseSelectClassification =>
+      'please_select_classification'.tr();
   static String get searchCountry => 'search_country'.tr();
   static String get deleteService => 'delete_service'.tr();
   static String get deleteServiceMessage => 'delete_service_message'.tr();
@@ -269,4 +271,7 @@ class LocaleKeys {
   static String get deleteDealMessage => 'delete_deal_message'.tr();
   static String get noOffersExist => 'no_offers_exist'.tr();
   static String get pleaseLoginAgain => 'please_login_again'.tr();
+  static String get oopsTitle => 'oops_title'.tr();
+  static String get oopsSubtitle => 'oops_subtitle'.tr();
+  static String get oopsRetry => 'oops_retry'.tr();
 }

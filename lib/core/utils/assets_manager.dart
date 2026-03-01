@@ -14,4 +14,5 @@ class AssetsManager {
   static const String userImage = "assets/images/user.png";
   static const String pdf = "assets/svgs/pdf.svg";
   static const String noDataImage = "assets/images/no_data_image.png";
+  static const String oopsImage = "assets/images/oops.png";
 }

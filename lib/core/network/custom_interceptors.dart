@@ -56,7 +56,6 @@ class CustomInterceptors extends Interceptor {
         final cacheHelper = getIt<CacheHelper>();
         cacheHelper.deleteAll();
         AppConstants.token = '';
-
         WidgetsBinding.instance.addPostFrameCallback((_) async {
           final context = AppRouter.rootNavigatorKey.currentContext;
           if (context != null && context.mounted) {
