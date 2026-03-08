@@ -203,7 +203,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
             return Container(
               decoration: BoxDecoration(
                 color: ColorsManager.skeletonColor,
-                borderRadius: BorderRadius.circular(12),
+                shape: BoxShape.circle,
               ),
             );
           }

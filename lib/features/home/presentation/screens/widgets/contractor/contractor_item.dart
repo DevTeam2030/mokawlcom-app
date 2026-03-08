@@ -132,7 +132,6 @@ class ContractorItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 5),
                 Expanded(
                   child: Container(
                     alignment: AlignmentDirectional.center,
@@ -150,6 +149,7 @@ class ContractorItem extends StatelessWidget {
                     ),
                     child: Text(
                       contractorModel.category,
+                      textAlign: TextAlign.center,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodySmall!.copyWith(

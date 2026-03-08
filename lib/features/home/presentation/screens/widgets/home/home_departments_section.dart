@@ -141,7 +141,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
                 return Container(
                   decoration: BoxDecoration(
                     color: ColorsManager.skeletonColor,
-                    borderRadius: BorderRadius.circular(12),
+                    shape: BoxShape.circle,
                   ),
                 );
               }
