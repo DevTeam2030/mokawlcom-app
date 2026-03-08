@@ -45,7 +45,6 @@ class _AppErrorScreenState extends State<AppErrorScreen>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       backgroundColor: ColorsManager.surfaceColor,
@@ -95,8 +94,8 @@ class _AppErrorScreenState extends State<AppErrorScreen>
                           ),
                           child: Image.asset(
                             AssetsManager.oopsImage,
-                            width: size.width * 0.58,
-                            fit: BoxFit.contain,
+                            width: 300,
+                            fit: BoxFit.cover,
                           ),
                         ),
 

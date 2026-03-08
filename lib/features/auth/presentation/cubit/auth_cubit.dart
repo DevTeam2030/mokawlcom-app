@@ -279,7 +279,7 @@ class AuthCubit extends Cubit<AuthState> {
       ),
     );
     final result = await contractorAuthRepoImpl.getServices(
-      page: state.servicesCurrentPage,
+      page: 1,
       classificationId: classificationId,
     );
     result.fold(

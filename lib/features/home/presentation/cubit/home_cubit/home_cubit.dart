@@ -122,7 +122,7 @@ class HomeCubit extends Cubit<HomeState> {
       ),
     );
     final result = await contractorAuthRepoImpl.getServices(
-      page: state.servicesPage,
+      page: 1,
       classificationId: classificationId,
     );
     result.fold(

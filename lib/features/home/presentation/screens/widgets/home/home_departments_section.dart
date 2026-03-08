@@ -49,6 +49,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
 
   @override
   void dispose() {
+    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
   }
@@ -76,9 +77,9 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
                   id: i,
                   name: '******',
                   image: '',
-                        numberOfServices: i,
-                      ),
-                    ),
+                  numberOfServices: i,
+                ),
+              ),
               status: state.getClassificationsState,
             ),
           ),

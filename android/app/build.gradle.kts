@@ -8,8 +8,12 @@ plugins {
 android {
     namespace = "com.example.mokawlcom_app"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
-
+    ndkVersion = "28.0.12674087"
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
