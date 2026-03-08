@@ -82,13 +82,17 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
               builder: (context, state) {
                 final classifications =
                     state.classificationsModel.classifications;
-                if (selectedClassification.value == null) {
-                  selectedClassification.value = classifications.firstOrNull;
-                  if (selectedClassification.value != null) {
-                    context.read<HomeCubit>().getServices(
-                      classificationId: selectedClassification.value!.id,
-                    );
-                  }
+                if (selectedClassification.value == null &&
+                    classifications.isNotEmpty) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (!mounted) return;
+                    selectedClassification.value = classifications.firstOrNull;
+                    if (selectedClassification.value != null) {
+                      context.read<HomeCubit>().getServices(
+                        classificationId: selectedClassification.value!.id,
+                      );
+                    }
+                  });
                 }
                 return ValueListenableBuilder<ClassificationModel?>(
                   valueListenable: selectedClassification,
@@ -137,11 +141,16 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
             const SizedBox(height: 8),
             BlocBuilder<HomeCubit, HomeState>(
               buildWhen: (previous, current) =>
-                  previous.getServicesState != current.getServicesState,
+                  previous.getServicesState != current.getServicesState ||
+                  previous.servicesModel != current.servicesModel ||
+                  previous.servicesPage != current.servicesPage,
               builder: (context, state) {
                 final services = state.servicesModel.services;
                 if (services.isNotEmpty && selectedService.value == null) {
-                  selectedService.value = services.firstOrNull;
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (!mounted) return;
+                    selectedService.value = services.firstOrNull;
+                  });
                 }
                 if (state.getServicesState.isLoading) {
                   return const Center(child: LinearProgressIndicator());
@@ -151,7 +160,10 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                   valueListenable: selectedService,
                   builder: (context, value, _) {
                     if (services.isEmpty) {
-                      selectedService.value = null;
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (!mounted) return;
+                        selectedService.value = null;
+                      });
                       return Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
@@ -173,7 +185,10 @@ class _HomeFilterBottomSheetState extends State<HomeFilterBottomSheet> {
                         services.any((service) => service.id == value.id);
 
                     if (!isValueValid) {
-                      selectedService.value = services.firstOrNull;
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (!mounted) return;
+                        selectedService.value = services.firstOrNull;
+                      });
                     }
 
                     return CustomDropdownField<ServiceModel>(

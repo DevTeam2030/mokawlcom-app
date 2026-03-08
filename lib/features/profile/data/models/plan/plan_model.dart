@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 class PlanModel extends Equatable {
   final int numberOfMonths;
   final String startDate;
-
   final String endDate;
 
   const PlanModel({required this.numberOfMonths, required this.startDate, required this.endDate});

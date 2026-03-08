@@ -117,7 +117,7 @@ class _EditContractorProfileScreenState
                       ),
                     ),
                     const SizedBox(height: 8),
-                
+
                     BlocBuilder<HomeCubit, HomeState>(
                       buildWhen: (previous, current) =>
                           previous.classificationsModel !=
@@ -125,30 +125,42 @@ class _EditContractorProfileScreenState
                           previous.getClassificationsState !=
                               current.getClassificationsState,
                       builder: (context, homeState) {
-                        if (selectedClassification.value == null) {
-                          final userClassificationId =
-                              state.userModel.classificationId;
-                          selectedClassification.value = homeState
-                              .classificationsModel
-                              .classifications
-                              .firstWhere(
-                                (classification) =>
-                                    classification.id ==
-                                    userClassificationId,
-                                orElse: () =>
-                                    homeState
-                                        .classificationsModel
-                                        .classifications
-                                        .firstOrNull ??
-                                    const ClassificationModel(
-                                      id: 0,
-                                      name: '',
-                                      numberOfServices: 0,
-                                      image: '',
-                                    ),
+                        if (selectedClassification.value == null &&
+                            homeState
+                                .classificationsModel
+                                .classifications
+                                .isNotEmpty) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            if (!mounted) return;
+                            final userClassificationId =
+                                state.userModel.classificationId;
+                            selectedClassification.value = homeState
+                                .classificationsModel
+                                .classifications
+                                .firstWhere(
+                                  (c) => c.id == userClassificationId,
+                                  orElse: () =>
+                                      homeState
+                                          .classificationsModel
+                                          .classifications
+                                          .firstOrNull ??
+                                      const ClassificationModel(
+                                        id: 0,
+                                        name: '',
+                                        numberOfServices: 0,
+                                        image: '',
+                                      ),
+                                );
+                            selectedServices.value =
+                                state.userModel.userServices;
+                            // Auto-load services for the pre-selected classification.
+                            if (selectedClassification.value!.id != 0) {
+                              context.read<HomeCubit>().getServices(
+                                classificationId:
+                                    selectedClassification.value!.id,
                               );
-                          selectedServices.value =
-                              state.userModel.userServices;
+                            }
+                          });
                         }
                         return ValueListenableBuilder<ClassificationModel?>(
                           valueListenable: selectedClassification,
@@ -191,7 +203,7 @@ class _EditContractorProfileScreenState
                         );
                       },
                     ),
-                
+
                     const SizedBox(height: 16),
                     Text(
                       LocaleKeys.subcategory,
@@ -201,15 +213,14 @@ class _EditContractorProfileScreenState
                       ),
                     ),
                     const SizedBox(height: 8),
-                
+
                     BlocBuilder<HomeCubit, HomeState>(
                       buildWhen: (previous, current) =>
                           previous.servicesModel != current.servicesModel ||
-                          previous.getServicesState !=
-                              current.getServicesState,
+                          previous.getServicesState != current.getServicesState,
                       builder: (context, homeState) {
                         final services = homeState.servicesModel.services;
-                
+
                         if (homeState.getServicesState.isLoading) {
                           return const Center(
                             child: Padding(
@@ -218,7 +229,7 @@ class _EditContractorProfileScreenState
                             ),
                           );
                         }
-                
+
                         if (homeState.getServicesState.isError) {
                           return Container(
                             padding: const EdgeInsets.all(12),
@@ -234,7 +245,7 @@ class _EditContractorProfileScreenState
                             ),
                           );
                         }
-                
+
                         if (services.isEmpty &&
                             selectedServices.value.isEmpty) {
                           return Container(
@@ -253,7 +264,7 @@ class _EditContractorProfileScreenState
                             ),
                           );
                         }
-                
+
                         return ValueListenableBuilder<List<ServiceModel>>(
                           valueListenable: selectedServices,
                           builder: (context, selectedList, _) {
@@ -277,18 +288,13 @@ class _EditContractorProfileScreenState
                                     selectedServices.value = newList;
                                   },
                                   onLoadMore: () {
-                                    context
-                                        .read<HomeCubit>()
-                                        .loadMoreServices(
-                                          classificationId:
-                                              selectedClassification
-                                                  .value!
-                                                  .id,
-                                        );
+                                    context.read<HomeCubit>().loadMoreServices(
+                                      classificationId:
+                                          selectedClassification.value!.id,
+                                    );
                                   },
-                                  isLoadingMore: homeState
-                                      .getServicesState
-                                      .isLoadingMore,
+                                  isLoadingMore:
+                                      homeState.getServicesState.isLoadingMore,
                                   hasMoreData:
                                       homeState.servicesPage <
                                       homeState.servicesTotalPages,
@@ -303,9 +309,7 @@ class _EditContractorProfileScreenState
                                         label: Text(
                                           service.name,
                                           style: theme.textTheme.bodySmall!
-                                              .copyWith(
-                                                color: Colors.white,
-                                              ),
+                                              .copyWith(color: Colors.white),
                                         ),
                                         backgroundColor:
                                             ColorsManager.primaryColor,
@@ -342,7 +346,7 @@ class _EditContractorProfileScreenState
                         );
                       },
                     ),
-                
+
                     const SizedBox(height: 40),
                   ],
                 ),
