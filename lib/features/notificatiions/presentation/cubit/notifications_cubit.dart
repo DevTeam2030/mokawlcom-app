@@ -27,30 +27,32 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
   void _subscribeToNotifications() {
     _notificationSubscription = _notificationService.notificationStream.listen(
-      (notificationData) {
-        debugPrint("Received notification in cubit: ${notificationData.type}");
-
-        if (notificationData.type == NotificationType.publicNotification) {
-          addPublicNotification(
-            publicNotification:
-                notificationData.notification as PublicNotificationModel,
-          );
-        } else if (notificationData.type ==
-                NotificationType.offerNotification &&
-            AppConstants.userType == UserType.contractor) {
-          addOfferNotification(
-            offerModel: notificationData.notification as OfferModel,
-          );
-        } else if (notificationData.type == NotificationType.replyOnOffer) {
-          _markOfferAsUnreadByOfferId(
-            offerModel: notificationData.notification as OfferModel,
-          );
-        }
-      },
+      _processNotification,
       onError: (error) {
         debugPrint("Error in notification stream: $error");
       },
     );
+  }
+
+  void _processNotification(NotificationData notificationData) {
+    debugPrint("Received notification in cubit: ${notificationData.type}");
+
+    if (notificationData.type == NotificationType.publicNotification) {
+      addPublicNotification(
+        publicNotification:
+            notificationData.notification as PublicNotificationModel,
+      );
+    } else if (notificationData.type ==
+            NotificationType.offerNotification &&
+        AppConstants.userType == UserType.contractor) {
+      addOfferNotification(
+        offerModel: notificationData.notification as OfferModel,
+      );
+    } else if (notificationData.type == NotificationType.replyOnOffer) {
+      _markOfferAsUnreadByOfferId(
+        offerModel: notificationData.notification as OfferModel,
+      );
+    }
   }
 
   @override

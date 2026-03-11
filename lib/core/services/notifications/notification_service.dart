@@ -81,16 +81,33 @@ class NotificationService {
   factory NotificationService() => _instance;
   NotificationService._internal();
 
-  final StreamController<NotificationData> _notificationController =
-      StreamController<NotificationData>.broadcast();
+  final List<NotificationData> _pendingNotifications = [];
+
+  late final StreamController<NotificationData> _notificationController =
+      StreamController<NotificationData>.broadcast(
+    onListen: _flushPendingNotifications,
+  );
 
   Stream<NotificationData> get notificationStream =>
       _notificationController.stream;
 
   void addNotification(NotificationData notification) {
-    if (!_notificationController.isClosed) {
-      _notificationController.add(notification);
+    if (_notificationController.hasListener) {
+      if (!_notificationController.isClosed) {
+        _notificationController.add(notification);
+      }
+    } else {
+      _pendingNotifications.add(notification);
     }
+  }
+
+  void _flushPendingNotifications() {
+    for (final notification in _pendingNotifications) {
+      if (!_notificationController.isClosed) {
+        _notificationController.add(notification);
+      }
+    }
+    _pendingNotifications.clear();
   }
 
   void dispose() {
