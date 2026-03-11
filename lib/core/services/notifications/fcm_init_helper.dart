@@ -117,9 +117,9 @@ class FcmInitHelper {
           ),
         );
       }
-      debugPrint("✅ Navigation to notifications tab completed");
+      debugPrint("Navigation to notifications tab completed");
     } catch (e) {
-      debugPrint("❌ Error navigating to notifications: $e");
+      debugPrint("Error navigating to notifications: $e");
     }
   }
 
@@ -139,7 +139,7 @@ class FcmInitHelper {
       final notificationData = NotificationData.fromRemoteMessage(message);
 
       UserType userType = await _getUserTypeFromStorage();
-
+      _notificationService.addNotification(notificationData);
       if (notificationData.type == NotificationType.offerNotification ||
           notificationData.type == NotificationType.replyOnOffer) {
         if (userType == UserType.contractor) {
