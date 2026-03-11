@@ -174,6 +174,7 @@ class _SubmittedPriceOffersScreenState
 
     return ListView.separated(
       controller: _scrollController,
+      reverse: true,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: offers.length + (status.isLoadingMore ? 1 : 0),
       separatorBuilder: (_, __) =>
