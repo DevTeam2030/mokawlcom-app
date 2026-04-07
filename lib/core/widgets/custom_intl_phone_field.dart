@@ -9,7 +9,7 @@ import 'package:flutter_intl_phone_field/phone_number.dart';
 import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/core/utils/arabic_countries.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 class CustomIntlPhoneField extends StatelessWidget {
   const CustomIntlPhoneField({

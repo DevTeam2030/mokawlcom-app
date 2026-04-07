@@ -13,8 +13,8 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verific
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 import 'package:mokawlcom_app/my_app.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 

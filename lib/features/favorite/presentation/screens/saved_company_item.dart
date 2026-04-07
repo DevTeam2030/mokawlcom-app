@@ -8,7 +8,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/features/favorite/data/models/favorite_model.dart';
 import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_cubit.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 class SavedCompanyItem extends StatelessWidget {
   const SavedCompanyItem({

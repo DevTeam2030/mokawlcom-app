@@ -6,7 +6,7 @@ import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 Future<void> showLanguageBottomSheet(BuildContext context) async {
   await showModalBottomSheet(

@@ -16,7 +16,7 @@ import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notific
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/price_offer_item.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
@@ -168,13 +168,12 @@ class _SubmittedPriceOffersScreenState
   Widget _buildList({
     required ThemeData theme,
     required RequestStatus status,
-    required List offers,
+    required List<OfferModel> offers,
   }) {
     _resetLoading(status);
 
     return ListView.separated(
       controller: _scrollController,
-      reverse: true,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: offers.length + (status.isLoadingMore ? 1 : 0),
       separatorBuilder: (_, __) =>

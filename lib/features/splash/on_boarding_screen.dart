@@ -9,7 +9,7 @@ import 'package:mokawlcom_app/core/services/service_locator.dart';
 import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 @RoutePage()
 class OnBoardingScreen extends StatefulWidget {

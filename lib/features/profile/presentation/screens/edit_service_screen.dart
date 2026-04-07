@@ -16,7 +16,7 @@ import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_c
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/my_services/upload_images_section.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 @RoutePage()
 class EditServiceScreen extends StatefulWidget implements AutoRouteWrapper {

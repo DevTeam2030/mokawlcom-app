@@ -11,8 +11,8 @@ import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/user
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/visitor_profile_widget.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 @RoutePage()
 class ProfileScreen extends StatelessWidget implements AutoRouteWrapper {
@@ -45,9 +45,9 @@ class ProfileScreen extends StatelessWidget implements AutoRouteWrapper {
           selector: (state) {
             return state.userType;
           },
-          builder: (context, state) {
+          builder: (context, userType) {
             return SingleChildScrollView(
-              child: switch (state) {
+              child: switch (userType) {
                 UserType.user => UserProfileWidget(
                   theme: theme,
                   profileCubit: context.read<ProfileCubit>(),

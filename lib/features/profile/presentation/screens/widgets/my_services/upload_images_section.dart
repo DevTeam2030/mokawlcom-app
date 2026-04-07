@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 class UploadImagesSection extends StatelessWidget {
   const UploadImagesSection({super.key, required this.theme});

@@ -10,7 +10,7 @@ import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_s
 import 'package:mokawlcom_app/features/home/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/search_cubit/search_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/home/home_filter_bottom_sheet.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeSearchSection extends StatefulWidget {

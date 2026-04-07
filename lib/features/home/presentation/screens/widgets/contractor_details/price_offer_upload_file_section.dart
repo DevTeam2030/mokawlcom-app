@@ -7,8 +7,8 @@ import 'package:mokawlcom_app/features/auth/presentation/cubit/files_state.dart'
 import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 class PriceOfferUploadFileSection extends StatelessWidget {
   const PriceOfferUploadFileSection({super.key, required this.theme});

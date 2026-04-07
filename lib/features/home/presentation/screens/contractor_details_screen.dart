@@ -21,8 +21,8 @@ import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contrac
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/offer_price_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/service_item.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()

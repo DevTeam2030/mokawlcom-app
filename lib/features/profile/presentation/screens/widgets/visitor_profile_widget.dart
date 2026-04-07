@@ -6,8 +6,8 @@ import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/profile_item.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/show_language_bottom_sheet.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 class VisitorProfileWidget extends StatelessWidget {
   const VisitorProfileWidget({super.key, required this.theme});

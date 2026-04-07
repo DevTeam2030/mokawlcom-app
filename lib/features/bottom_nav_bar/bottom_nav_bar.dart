@@ -10,8 +10,8 @@ import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notific
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/visitor_access_dialog.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 @RoutePage()
 class BottomNavBarScreen extends StatelessWidget {

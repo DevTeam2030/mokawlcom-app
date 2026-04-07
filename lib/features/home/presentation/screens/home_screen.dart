@@ -17,8 +17,8 @@ import 'package:mokawlcom_app/features/home/presentation/screens/widgets/home/ho
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/home/home_search_section.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 import 'package:upgrader/upgrader.dart';
 
 @RoutePage()

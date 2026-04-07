@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:mokawlcom_app/core/enums/notification_type.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/public_notificarion_model.dart';
-
-enum NotificationType { publicNotification, offerNotification, replyOnOffer }
 
 class NotificationData {
   final NotificationType type;

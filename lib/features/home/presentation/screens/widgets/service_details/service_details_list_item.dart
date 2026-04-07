@@ -4,7 +4,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/custom_cached_network_image.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/service_details/expandable_text_widget.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 class ServiceDetailsListItem extends StatelessWidget {
   const ServiceDetailsListItem({

@@ -12,7 +12,7 @@ import 'package:mokawlcom_app/features/favorite/data/models/favorite_model.dart'
 import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_cubit.dart';
 import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_state.dart';
 import 'package:mokawlcom_app/features/favorite/presentation/screens/saved_company_item.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 

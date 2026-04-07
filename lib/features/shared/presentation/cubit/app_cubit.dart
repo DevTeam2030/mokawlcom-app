@@ -13,7 +13,7 @@ class AppCubit extends HydratedCubit<AppState> {
   final UserAuthRepo userAuthRepo;
 
   AppCubit({required this.userAuthRepo}) : super(const AppState()) {
-    _userTypeSubscription = userAuthRepo.userTypeStream.listen((userType) {
+    _userTypeSubscription = userAuthRepo.userTypeStream.listen((UserType userType) {
       changeUserType(userType: userType);
     });
   }

@@ -14,7 +14,7 @@ import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/classification/classification_list_item.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()

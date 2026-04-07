@@ -14,7 +14,7 @@ import 'package:mokawlcom_app/features/home/data/models/contractor_details_model
 import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/service_item.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ContractorDetailsTopSection extends StatelessWidget {

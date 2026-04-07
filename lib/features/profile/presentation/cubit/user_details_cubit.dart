@@ -10,7 +10,7 @@ import 'package:mokawlcom_app/features/profile/data/models/service/edit_service_
 import 'package:mokawlcom_app/features/profile/data/models/service/contractor_services_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 class UserDetailsCubit extends Cubit<UserDetailsState> {
   final ProfileRepo profileRepo;

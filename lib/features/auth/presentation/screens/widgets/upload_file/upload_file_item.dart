@@ -4,7 +4,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/upload_file/upload_file_bottom_sheet.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 class UploadFileItem extends StatelessWidget {
   const UploadFileItem({

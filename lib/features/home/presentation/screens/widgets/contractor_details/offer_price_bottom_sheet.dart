@@ -11,8 +11,8 @@ import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_c
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_state.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor_details/price_offer_upload_file_section.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 class OfferPriceBottomSheet extends StatefulWidget {
   const OfferPriceBottomSheet({

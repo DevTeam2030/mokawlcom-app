@@ -16,7 +16,7 @@ import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_r
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/complete_contractor_data/auth_user_image.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/profile_image.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 @RoutePage()
 class EditUserProfileScreen extends StatefulWidget implements AutoRouteWrapper {

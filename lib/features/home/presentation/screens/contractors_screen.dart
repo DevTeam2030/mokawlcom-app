@@ -18,7 +18,7 @@ import 'package:mokawlcom_app/features/home/presentation/cubit/search_cubit/sear
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contractor/contractor_item.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()

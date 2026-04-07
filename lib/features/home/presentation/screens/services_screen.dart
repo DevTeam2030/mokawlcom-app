@@ -15,7 +15,7 @@ import 'package:mokawlcom_app/features/home/presentation/screens/widgets/service
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/classification_item.dart';
 import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()

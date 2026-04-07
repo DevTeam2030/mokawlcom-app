@@ -16,8 +16,8 @@ import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/upload_file/upload_file_section.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 class UploadFileBottomSheet extends StatefulWidget {
   const UploadFileBottomSheet({

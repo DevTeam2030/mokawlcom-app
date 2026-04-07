@@ -14,7 +14,7 @@ import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.da
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
 import 'package:mokawlcom_app/features/shared/presentation/widgets/price_offer_item.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()

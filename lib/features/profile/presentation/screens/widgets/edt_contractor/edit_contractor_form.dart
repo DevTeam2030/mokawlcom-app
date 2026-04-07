@@ -13,7 +13,7 @@ import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profi
 import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 class EditContractorForm extends StatefulWidget {
   const EditContractorForm({

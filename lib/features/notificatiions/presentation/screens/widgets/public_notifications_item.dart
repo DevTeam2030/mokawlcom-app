@@ -5,7 +5,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/notificatiions/data/models/public_notificarion_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 class PublicNotificationItem extends StatelessWidget {
   const PublicNotificationItem({

@@ -11,8 +11,8 @@ import 'package:mokawlcom_app/features/shared/presentation/widgets/visitor_acces
 import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/utils/assets_manager.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});

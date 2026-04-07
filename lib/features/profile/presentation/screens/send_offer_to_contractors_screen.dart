@@ -9,7 +9,7 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verific
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 @RoutePage()
 class SendOfferToContractorsScreen extends StatefulWidget

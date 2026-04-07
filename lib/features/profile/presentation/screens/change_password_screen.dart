@@ -10,7 +10,7 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verific
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 @RoutePage()
 class ChangePasswordScreen extends StatefulWidget implements AutoRouteWrapper {

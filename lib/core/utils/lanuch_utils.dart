@@ -1,7 +1,7 @@
 import 'package:localingo/localingo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../locale_keys.dart';
+import 'locale_keys.dart';
 
 class LaunchUtils {
   LaunchUtils._();

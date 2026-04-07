@@ -13,7 +13,7 @@ import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key, required this.theme});

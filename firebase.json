@@ -1,1 +1,22 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"mokawlcom-app","appId":"1:200274876402:android:d9cd4c8ee3a43d5dacbd6b","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"mokawlcom-app","configurations":{"android":"1:200274876402:android:d9cd4c8ee3a43d5dacbd6b","ios":"1:200274876402:ios:edcd267cbb1305bdacbd6b"}}}}}}
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "mokawlcom-app",
+                    "appId": "1:200274876402:android:d9cd4c8ee3a43d5dacbd6b",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "mokawlcom-app",
+                    "configurations": {
+                        "android": "1:200274876402:android:d9cd4c8ee3a43d5dacbd6b",
+                        "ios": "1:200274876402:ios:edcd267cbb1305bdacbd6b"
+                    }
+                }
+            }
+        }
+    }
+}

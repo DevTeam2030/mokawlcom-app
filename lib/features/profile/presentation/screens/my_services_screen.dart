@@ -16,7 +16,7 @@ import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_state.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/my_services/my_service_item.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()

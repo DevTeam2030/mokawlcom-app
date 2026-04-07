@@ -9,7 +9,7 @@ import 'package:mokawlcom_app/features/auth/data/models/contractor/upload_file_m
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/contractor/contractor_auth_repo_impl.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_state.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 class FilesCubit extends Cubit<FilesState> {
   final ContractorAuthRepo contractorAuthRepoImpl;

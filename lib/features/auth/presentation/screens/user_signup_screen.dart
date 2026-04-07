@@ -16,7 +16,7 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/shared/
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/signup/signup_form.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/error_dialog.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verification/success_dialog.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 @RoutePage()
 class UserSignupScreen extends StatefulWidget {

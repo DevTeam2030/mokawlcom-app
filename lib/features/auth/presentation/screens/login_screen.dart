@@ -19,7 +19,7 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/shared/
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/shared/google_and_apple_sign_in_widgets.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/login/login_form.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {

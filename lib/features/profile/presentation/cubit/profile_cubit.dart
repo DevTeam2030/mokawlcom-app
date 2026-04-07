@@ -14,7 +14,7 @@ import 'package:mokawlcom_app/features/profile/data/models/plan/plan_model.dart'
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 part 'profile_state.dart';
 

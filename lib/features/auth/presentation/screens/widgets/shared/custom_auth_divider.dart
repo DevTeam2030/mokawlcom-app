@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 class CustomAuthDivider extends StatelessWidget {
   const CustomAuthDivider({super.key});

@@ -7,7 +7,7 @@ import 'package:mokawlcom_app/core/utils/no_data_widget.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/service_details/service_details_list_item.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/contractor_info_cubit/contractor_info_cubit.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 @RoutePage()
 class ServicesDetailsScreen extends StatelessWidget {

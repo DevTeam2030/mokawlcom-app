@@ -13,8 +13,8 @@ import 'package:mokawlcom_app/features/home/presentation/screens/widgets/contrac
 import 'package:mokawlcom_app/features/notificatiions/data/models/offer_model.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/offer_details_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/screens/widgets/reply_on_offer_bottom_sheet.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
 class OfferDetails extends StatelessWidget {

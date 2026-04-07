@@ -6,7 +6,7 @@ import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/core/widgets/custom_divider.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 @RoutePage()
 class MyCurrentPackageScreen extends StatefulWidget implements AutoRouteWrapper {

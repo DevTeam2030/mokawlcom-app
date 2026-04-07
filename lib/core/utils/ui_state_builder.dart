@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/widgets/primary_button.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 class UiStateBuilder extends StatelessWidget {
   final RequestStatus state;

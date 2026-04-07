@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
+import 'package:mokawlcom_app/core/enums/notification_type.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/services/notifications/notification_controller.dart';
 import 'package:mokawlcom_app/core/services/notifications/notification_service.dart';

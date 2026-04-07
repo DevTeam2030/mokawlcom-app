@@ -12,8 +12,8 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/widgets/verific
 import 'package:mokawlcom_app/features/home/data/models/contractor_model.dart';
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/service_details/expandable_text_widget.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
-import 'package:mokawlcom_app/locale_keys.dart';
-import 'package:mokawlcom_app/my_icons.dart';
+import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 class ContractorItem extends StatelessWidget {
   const ContractorItem({

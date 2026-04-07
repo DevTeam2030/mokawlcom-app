@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
-import '../locale_keys.dart';
+import '../core/utils/locale_keys.dart';
 
 abstract class Failure extends Equatable {
   final String errorMessage;
