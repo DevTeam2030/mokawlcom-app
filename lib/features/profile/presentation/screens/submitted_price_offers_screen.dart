@@ -32,6 +32,7 @@ class _SubmittedPriceOffersScreenState
     extends State<SubmittedPriceOffersScreen> {
   late final ScrollController _scrollController;
   bool _isLoadingMore = false;
+  
 
   @override
   void initState() {
@@ -94,7 +95,7 @@ class _SubmittedPriceOffersScreenState
           }
         },
         buildWhen: (previous, current) =>
-            previous.getUserOffersState != current.getUserOffersState,
+            previous.getUserOffersState != current.getUserOffersState ,
         builder: (context, state) {
           final hasData = state.userOffersModel.offers.isNotEmpty;
 

@@ -188,7 +188,6 @@ class FcmInitHelper {
 
   Future<UserType> _getUserTypeFromStorage() async {
     try {
-      // Read from HydratedStorage box
       final box = HydratedBloc.storage.read('AppCubit');
       if (box != null && box is Map) {
         final userTypeString = box['user_type'] as String?;
