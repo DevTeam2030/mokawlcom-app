@@ -1,6 +1,7 @@
 class ApiConstants {
   ////base url
   static const String baseUrl = "https://mokawlcom.com/m/public/api";
+  static const String appVerionEndpoint = "/app-version";
   
   // user auth
   static const String userSignup = "/auth/register-user";

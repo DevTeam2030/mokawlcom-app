@@ -72,6 +72,7 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
                       )
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        textDirection: TextDirection.rtl,
                         children: [
                           Text(
                             "Sign in with Google",
@@ -136,6 +137,7 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
                             )
                           : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        textDirection: TextDirection.rtl,
                         children: [
                           Text(
                             "Sign in with Apple",

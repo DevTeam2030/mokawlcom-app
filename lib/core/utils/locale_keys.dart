@@ -274,4 +274,8 @@ class LocaleKeys {
   static String get oopsTitle => 'oops_title'.tr();
   static String get oopsSubtitle => 'oops_subtitle'.tr();
   static String get oopsRetry => 'oops_retry'.tr();
+  static String get updateRequired => 'update_required'.tr();
+  static String get updateAvailable => 'update_available'.tr();
+  static String get updateNow => 'update_now'.tr();
+  static String get later => 'later'.tr();
 }

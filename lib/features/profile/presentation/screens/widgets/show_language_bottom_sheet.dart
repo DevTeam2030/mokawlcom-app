@@ -44,9 +44,12 @@ Future<void> showLanguageBottomSheet(BuildContext context) async {
                   ),
                 ),
 
-                Text(
-                  LocaleKeys.language,
-                  style: Theme.of(context).textTheme.titleLarge,
+                Align(
+                  alignment: AlignmentDirectional.center,
+                  child: Text(
+                    LocaleKeys.language,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
                 ),
                 const SizedBox(height: 20),
 

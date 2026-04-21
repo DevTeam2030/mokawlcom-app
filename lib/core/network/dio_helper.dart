@@ -15,7 +15,7 @@ class DioHelper {
           connectTimeout: const Duration(seconds: 20),
           receiveTimeout: const Duration(seconds: 20),
           receiveDataWhenStatusError: true,
-          //queryParameters: {"lang": AppConstans.language},
+          queryParameters: {"lang": AppConstants.language},
         ),
       ) {
     _dio.interceptors.addAll([

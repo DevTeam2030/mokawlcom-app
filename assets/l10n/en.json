@@ -191,5 +191,9 @@
   "please_login_again": "Please login again",
   "oops_title": "Oops!",
   "oops_subtitle": "Something went wrong.\nWe're working on fixing it.",
-  "oops_retry": "Try Again"
+  "oops_retry": "Try Again",
+  "update_required": "Update Required",
+  "update_available": "Update Available",
+  "update_now": "Update Now",
+  "later": "Later"
 }

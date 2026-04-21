@@ -32,6 +32,10 @@ class AppInitializer {
       ),
     );
     await _initFirebase();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   static Future<void> _initFirebase() async {

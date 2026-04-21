@@ -33,6 +33,9 @@ import 'package:mokawlcom_app/features/profile/data/repo/profile_repo_impl.dart'
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
+import 'package:mokawlcom_app/features/shared/data/data_source/app_data_source.dart';
+import 'package:mokawlcom_app/features/shared/data/repo/app_repo.dart';
+import 'package:mokawlcom_app/features/shared/data/repo/app_repo_impl.dart';
 
 // dependency injection
 final GetIt getIt = GetIt.instance;
@@ -67,6 +70,9 @@ class ServiceLocator {
     getIt.registerLazySingleton<ProfileDataSource>(
       () => ProfileDataSourceImpl(dioHelper: getIt<DioHelper>()),
     );
+    getIt.registerLazySingleton<AppDataSource>(
+      () => AppDataSourceImpl(dioHelper: getIt<DioHelper>()),
+    );
 
     getIt.registerLazySingleton<UserAuthRepo>(
       () => UserAuthRepoImpl(userAuthDataSource: getIt<UserAuthDataSource>()),
@@ -90,9 +96,15 @@ class ServiceLocator {
     getIt.registerLazySingleton<ProfileRepo>(
       () => ProfileRepoImpl(profileDataSource: getIt<ProfileDataSource>()),
     );
+    getIt.registerLazySingleton<AppRepo>(
+      () => AppRepoImpl(appDataSource: getIt<AppDataSource>()),
+    );
 
     getIt.registerFactory<AppCubit>(
-      () => AppCubit(userAuthRepo: getIt<UserAuthRepo>()),
+      () => AppCubit(
+        userAuthRepo: getIt<UserAuthRepo>(),
+        appRepo: getIt<AppRepo>(),
+      ),
     );
     getIt.registerFactory<AuthCubit>(
       () => AuthCubit(
