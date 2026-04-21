@@ -1,4 +1,4 @@
-package com.example.mokawlcom_app
+package com.mokawlcom
 
 import io.flutter.embedding.android.FlutterActivity
 

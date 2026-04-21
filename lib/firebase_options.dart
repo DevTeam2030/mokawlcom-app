@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC8JzxKpOMGXmvC0ADDiWLf5WKKTg01i6U',
-    appId: '1:200274876402:android:d9cd4c8ee3a43d5dacbd6b',
+    appId: '1:200274876402:android:2576bff35d2ab97cacbd6b',
     messagingSenderId: '200274876402',
     projectId: 'mokawlcom-app',
     storageBucket: 'mokawlcom-app.firebasestorage.app',
@@ -59,10 +59,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCe3GBbmSBfzbOjkLKm9PFIUEIkDZ9l7So',
-    appId: '1:200274876402:ios:edcd267cbb1305bdacbd6b',
+    appId: '1:200274876402:ios:ebbcf8e109f1aef1acbd6b',
     messagingSenderId: '200274876402',
     projectId: 'mokawlcom-app',
     storageBucket: 'mokawlcom-app.firebasestorage.app',
+    androidClientId: '200274876402-q9f1ido2dvotit0uaqunr3jeoe908ofj.apps.googleusercontent.com',
+    iosClientId: '200274876402-cmmluti6dskuq8shqk0qnphr9bc45agd.apps.googleusercontent.com',
     iosBundleId: 'com.mokawlcomapp.mokawlcom',
   );
+
 }
