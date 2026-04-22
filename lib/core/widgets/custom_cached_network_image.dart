@@ -32,7 +32,6 @@ class CustomCachedNetworkImage extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imageUrl,
       width: width,
-      
       height: height,
       fit: fit,
       memCacheWidth: cacheWidth,
