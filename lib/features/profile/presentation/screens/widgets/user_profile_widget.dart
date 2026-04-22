@@ -100,7 +100,7 @@ class UserProfileWidget extends StatelessWidget {
         ProfileItem(
           theme: theme,
           title: LocaleKeys.connectUs,
-          icon: Icons.email_outlined,
+          icon: Icons.connect_without_contact,
           onTap: () => context.pushRoute(const ConnectUsRoute()),
         ),
           const SizedBox(height: 16.0),
