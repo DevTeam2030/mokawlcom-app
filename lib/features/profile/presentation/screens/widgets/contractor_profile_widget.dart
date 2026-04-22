@@ -116,6 +116,13 @@ class ContractorProfileWidget extends StatelessWidget {
         const SizedBox(height: 16.0),
         ProfileItem(
           theme: theme,
+          title: LocaleKeys.connectUs,
+          icon: Icons.connect_without_contact,
+          onTap: () => context.pushRoute(const ConnectUsRoute()),
+        ),
+        const SizedBox(height: 16.0),
+        ProfileItem(
+          theme: theme,
           title: LocaleKeys.deleteAccount,
           icon: MyIcons.trash,
           onTap: () {

@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/widgets/profile_item.dart';
@@ -58,6 +57,13 @@ class VisitorProfileWidget extends StatelessWidget {
           title: LocaleKeys.termsAndConditions,
           icon: Icons.rule,
           onTap: () => context.pushRoute(const TermsAndConditionsRoute()),
+        ),
+        const SizedBox(height: 16.0),
+        ProfileItem(
+          theme: theme,
+          title: LocaleKeys.connectUs,
+          icon: Icons.email_outlined,
+          onTap: () => context.pushRoute(const ConnectUsRoute()),
         ),
       ],
     );

@@ -96,6 +96,13 @@ class UserProfileWidget extends StatelessWidget {
           icon: Icons.rule,
           onTap: () => context.pushRoute(const TermsAndConditionsRoute()),
         ),
+        const SizedBox(height: 16.0),
+        ProfileItem(
+          theme: theme,
+          title: LocaleKeys.connectUs,
+          icon: Icons.email_outlined,
+          onTap: () => context.pushRoute(const ConnectUsRoute()),
+        ),
           const SizedBox(height: 16.0),
           ProfileItem(
             theme: theme,

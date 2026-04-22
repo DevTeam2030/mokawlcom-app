@@ -14,7 +14,7 @@ class SettingsModel extends Equatable {
   factory SettingsModel.fromJson(Map<String, dynamic> json) {
     return SettingsModel(
       privacyPolicy: json['privacy_policy'] ?? '',
-      termsAndConditions: json['about_us'] ?? '',
+      termsAndConditions: json['terms_conditions'] ?? '',
       email: json['contact_us_email'] ?? '',
     );
   }

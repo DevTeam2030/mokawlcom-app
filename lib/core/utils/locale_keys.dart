@@ -280,4 +280,5 @@ class LocaleKeys {
   static String get later => 'later'.tr();
   static String get privacyPolicy => 'privacy_policy'.tr();
   static String get termsAndConditions => 'terms_and_conditions'.tr();
+  static String get connectUs => 'connect_us'.tr();
 }

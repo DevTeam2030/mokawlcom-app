@@ -205,6 +205,22 @@ class CompleteDataRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ConnectUsScreen]
+class ConnectUsRoute extends PageRouteInfo<void> {
+  const ConnectUsRoute({List<PageRouteInfo>? children})
+    : super(ConnectUsRoute.name, initialChildren: children);
+
+  static const String name = 'ConnectUsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const ConnectUsScreen());
+    },
+  );
+}
+
+/// generated route for
 /// [ContractorDetailsScreen]
 class ContractorDetailsRoute extends PageRouteInfo<ContractorDetailsRouteArgs> {
   ContractorDetailsRoute({

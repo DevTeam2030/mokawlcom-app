@@ -40,6 +40,7 @@ import 'package:mokawlcom_app/features/profile/presentation/cubit/user_details_c
 import 'package:mokawlcom_app/features/profile/presentation/screens/add_new_service_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/available_deals_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/change_password_screen.dart';
+import 'package:mokawlcom_app/features/profile/presentation/screens/connect_us_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/edit_contractor_profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/edit_deal_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/edit_service_screen.dart';
@@ -144,6 +145,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: PdfRoute.page),
         AutoRoute(page: PrivacyPolicyRoute.page),
         AutoRoute(page: TermsAndConditionsRoute.page),
+        AutoRoute(page: ConnectUsRoute.page),
       ],
     ),
   ];
