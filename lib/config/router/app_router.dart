@@ -46,10 +46,12 @@ import 'package:mokawlcom_app/features/profile/presentation/screens/edit_service
 import 'package:mokawlcom_app/features/profile/presentation/screens/edit_user_profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/my_current_package_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/my_services_screen.dart';
+import 'package:mokawlcom_app/features/profile/presentation/screens/privacy_policy_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/profile_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/send_offer_to_contractors_screen.dart';
 import 'package:mokawlcom_app/features/favorite/presentation/screens/saved_companies_screen.dart';
 import 'package:mokawlcom_app/features/profile/presentation/screens/submitted_price_offers_screen.dart';
+import 'package:mokawlcom_app/features/profile/presentation/screens/terms_and_conditions_screen.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
 import 'package:mokawlcom_app/features/shared/presentation/screens/pdf_screen.dart';
@@ -102,7 +104,6 @@ class AppRouter extends RootStackRouter {
           children: [
             AutoRoute(
               initial: true,
-
               page: HomeTabRoute.page,
               children: [
                 AutoRoute(initial: true, page: HomeRoute.page),
@@ -141,7 +142,8 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: EditDealRoute.page),
         AutoRoute(page: EditServiceRoute.page),
         AutoRoute(page: PdfRoute.page),
-        
+        AutoRoute(page: PrivacyPolicyRoute.page),
+        AutoRoute(page: TermsAndConditionsRoute.page),
       ],
     ),
   ];

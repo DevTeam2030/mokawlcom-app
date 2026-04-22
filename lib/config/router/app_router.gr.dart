@@ -849,6 +849,22 @@ class PriceOffersRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PrivacyPolicyScreen]
+class PrivacyPolicyRoute extends PageRouteInfo<void> {
+  const PrivacyPolicyRoute({List<PageRouteInfo>? children})
+    : super(PrivacyPolicyRoute.name, initialChildren: children);
+
+  static const String name = 'PrivacyPolicyRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const PrivacyPolicyScreen());
+    },
+  );
+}
+
+/// generated route for
 /// [ProfileScreen]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})
@@ -1137,6 +1153,22 @@ class SubscriptionRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const SubscriptionScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [TermsAndConditionsScreen]
+class TermsAndConditionsRoute extends PageRouteInfo<void> {
+  const TermsAndConditionsRoute({List<PageRouteInfo>? children})
+    : super(TermsAndConditionsRoute.name, initialChildren: children);
+
+  static const String name = 'TermsAndConditionsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const TermsAndConditionsScreen());
     },
   );
 }

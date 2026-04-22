@@ -11,6 +11,7 @@ import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/features/profile/data/models/change_password_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/plan/plan_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/settings_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
@@ -244,6 +245,31 @@ class ProfileCubit extends Cubit<ProfileState> {
         state.copyWith(
           getPlanRequestStatus: RequestStatus.success,
           planModel: planModel,
+        ),
+      ),
+    );
+  }
+
+  Future<void> getSettings() async {
+    emit(
+      state.copyWith(
+        getSettingsRequestStatus: RequestStatus.loading,
+        isConnected: true,
+      ),
+    );
+    final result = await profileRepo.getSettings();
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          getSettingsRequestStatus: RequestStatus.error,
+          errorMessage: failure.errorMessage,
+          isConnected: failure.isConnected,
+        ),
+      ),
+      (settingsModel) => emit(
+        state.copyWith(
+          getSettingsRequestStatus: RequestStatus.success,
+          settingsModel: settingsModel,
         ),
       ),
     );

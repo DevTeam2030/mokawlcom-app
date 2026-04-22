@@ -195,5 +195,7 @@
   "update_required": "Update Required",
   "update_available": "Update Available",
   "update_now": "Update Now",
-  "later": "Later"
+  "later": "Later",
+  "privacy_policy": "Privacy Policy",
+  "terms_and_conditions": "Terms and Conditions"
 }

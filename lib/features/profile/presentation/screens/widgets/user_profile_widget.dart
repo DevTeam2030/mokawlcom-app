@@ -82,6 +82,20 @@ class UserProfileWidget extends StatelessWidget {
             },
             iconSize: 18.0,
           ),
+           const SizedBox(height: 16.0),
+        ProfileItem(
+          theme: theme,
+          title: LocaleKeys.privacyPolicy,
+          icon: Icons.privacy_tip_outlined,
+          onTap: () => context.pushRoute(const PrivacyPolicyRoute()),
+        ),
+        const SizedBox(height: 16.0),
+        ProfileItem(
+          theme: theme,
+          title: LocaleKeys.termsAndConditions,
+          icon: Icons.rule,
+          onTap: () => context.pushRoute(const TermsAndConditionsRoute()),
+        ),
           const SizedBox(height: 16.0),
           ProfileItem(
             theme: theme,

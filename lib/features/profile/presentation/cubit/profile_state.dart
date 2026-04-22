@@ -3,6 +3,8 @@ part of 'profile_cubit.dart';
 class ProfileState extends Equatable {
   final RequestStatus updateUserProfileRequestStatus;
   final RequestStatus getPlanRequestStatus;
+  final RequestStatus getSettingsRequestStatus;
+  final SettingsModel settingsModel;
   final PlanModel planModel;
   final String errorMessage;
   final String successMessage;
@@ -25,6 +27,8 @@ class ProfileState extends Equatable {
     this.isConnected = true,
     this.getPlanRequestStatus = RequestStatus.initial,
     this.planModel = const PlanModel.empty(), 
+    this.getSettingsRequestStatus = RequestStatus.loading,
+    this.settingsModel = const SettingsModel.empty(),
   });
 
   ProfileState copyWith({
@@ -40,6 +44,8 @@ class ProfileState extends Equatable {
     bool? clearProfileImage,
     RequestStatus? getPlanRequestStatus,
     PlanModel? planModel,
+    RequestStatus? getSettingsRequestStatus,
+    SettingsModel? settingsModel,
   }) {
     return ProfileState(
       updateUserProfileRequestStatus:
@@ -59,6 +65,8 @@ class ProfileState extends Equatable {
       isConnected: isConnected ?? this.isConnected,
       getPlanRequestStatus: getPlanRequestStatus ?? this.getPlanRequestStatus,
       planModel: planModel ?? this.planModel,
+      getSettingsRequestStatus: getSettingsRequestStatus ?? this.getSettingsRequestStatus,
+      settingsModel: settingsModel ?? this.settingsModel,
     );
   }
 
@@ -74,5 +82,7 @@ class ProfileState extends Equatable {
     isConnected,
     getPlanRequestStatus,
     planModel,
+    getSettingsRequestStatus,
+    settingsModel,
   ];
 }

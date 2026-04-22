@@ -49,4 +49,5 @@ class ApiConstants {
   static const String editDeal = "/update-deal";
   static const String getPlan = "/my-plan";
   static const String deleteService = "/delete-service";
+  static const String getSettings = "/settings";
 }

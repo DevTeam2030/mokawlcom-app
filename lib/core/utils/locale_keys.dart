@@ -278,4 +278,6 @@ class LocaleKeys {
   static String get updateAvailable => 'update_available'.tr();
   static String get updateNow => 'update_now'.tr();
   static String get later => 'later'.tr();
+  static String get privacyPolicy => 'privacy_policy'.tr();
+  static String get termsAndConditions => 'terms_and_conditions'.tr();
 }

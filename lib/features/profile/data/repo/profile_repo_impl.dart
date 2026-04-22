@@ -13,9 +13,9 @@ import 'package:mokawlcom_app/features/profile/data/models/service/contractor_se
 import 'package:mokawlcom_app/features/profile/data/models/deal/deals_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/edit_contractor_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/service/service_response_model.dart';
+import 'package:mokawlcom_app/features/profile/data/models/settings_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/update_user_profile_request_model.dart';
 import 'package:mokawlcom_app/features/profile/data/models/user_model.dart';
-import 'package:mokawlcom_app/features/notificatiions/data/models/user_offers_model.dart';
 import 'package:mokawlcom_app/features/profile/data/repo/profile_repo.dart';
 
 class ProfileRepoImpl implements ProfileRepo {
@@ -141,4 +141,8 @@ class ProfileRepoImpl implements ProfileRepo {
   }) async => safeApiCall<String>(
     () => profileDataSource.deleteService(serviceId: serviceId),
   );
+
+  @override
+  Future<Either<Failure, SettingsModel>> getSettings() async =>
+      safeApiCall<SettingsModel>(() => profileDataSource.getSettings());
 }

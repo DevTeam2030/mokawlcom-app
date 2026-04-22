@@ -14,8 +14,8 @@ class UserLoginResponseModel extends Equatable {
   final String commercialRegistry;
   final String tradeLicense;
   final String establishmentCertificate;
-  final String authorizedSignature  ;
-  final String classification  ;
+  final String authorizedSignature;
+  final String classification;
 
   const UserLoginResponseModel({
     required this.message,
@@ -43,11 +43,11 @@ class UserLoginResponseModel extends Equatable {
       type: data?['type'] ?? "",
       name: data?['name'] ?? "",
       phone: data?['phone'] ?? "",
-      userApproved: int.tryParse(data?['user_approved']?.toString() ?? '0') ?? 0,
+      userApproved: data?['user_approved'] ?? 0,
       filesUploaded: data?['files_uploaded'] ?? true,
       planCompleted: data?['plan_completed'] ?? true,
       completeData: data?['complete_data'] ?? true,
-      userId: data?['id'] ?? 0,
+      userId: data?['id'] as int? ?? 0,
       commercialRegistry: data?['commercial_registry'] ?? "",
       tradeLicense: data?['trade_license'] ?? "",
       establishmentCertificate: data?['establishment_certificate'] ?? "",
