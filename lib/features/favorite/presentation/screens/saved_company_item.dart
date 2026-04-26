@@ -42,10 +42,12 @@ class SavedCompanyItem extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               child: CustomCachedNetworkImage(
                 imageUrl: favoriteModel.logo,
                 height: 60,
                 width: 60,
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(width: 16),

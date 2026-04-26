@@ -18,6 +18,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ErrorWidget.builder = (FlutterErrorDetails details) =>
       AppErrorScreen(details: details);
+  debugInvertOversizedImages = true;
 
   await AppInitializer.init();
 

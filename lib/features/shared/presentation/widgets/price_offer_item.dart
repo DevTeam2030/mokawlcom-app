@@ -72,7 +72,11 @@ class PriceOfferItem extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(8),
                           image: const DecorationImage(
-                            image: AssetImage(AssetsManager.appLogo),
+                            image: ResizeImage(
+                              AssetImage(AssetsManager.appLogo),
+                              width: 100,
+                              height: 100,
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),

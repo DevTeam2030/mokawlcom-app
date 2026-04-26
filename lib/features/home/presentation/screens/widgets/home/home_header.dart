@@ -29,8 +29,11 @@ class HomeHeader extends StatelessWidget {
             backgroundColor: ColorsManager.primaryColor,
             child: CircleAvatar(
               radius: 25,
-              backgroundColor: ColorsManager.secondaryColor,
-              backgroundImage: AssetImage(AssetsManager.appLogo),
+              backgroundImage: ResizeImage(
+                AssetImage(AssetsManager.appLogo),
+                width: 100,
+                height: 100,
+              ),
             ),
           ),
           const SizedBox(width: 5),
