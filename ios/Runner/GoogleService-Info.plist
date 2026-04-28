@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>200274876402-gjh4s7d0h7709nb4sb6qj4sv868i3p4f.apps.googleusercontent.com</string>
+	<string>200274876402-e2pcep92d0smc2ma37avl3145tbng7ug.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.200274876402-gjh4s7d0h7709nb4sb6qj4sv868i3p4f</string>
+	<string>com.googleusercontent.apps.200274876402-e2pcep92d0smc2ma37avl3145tbng7ug</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>200274876402-uga52lfgmhll1qicct2gcgloi9pf98qp.apps.googleusercontent.com</string>
+	<string>200274876402-6fk17fu9gnqurct1g4oc1l91r6ijpi3l.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCe3GBbmSBfzbOjkLKm9PFIUEIkDZ9l7So</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mokawlcomapp.mokawlcom</string>
+	<string>com.mokawlcom.app</string>
 	<key>PROJECT_ID</key>
 	<string>mokawlcom-app</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:200274876402:ios:ebbcf8e109f1aef1acbd6b</string>
+	<string>1:200274876402:ios:25cd61b68583ee02acbd6b</string>
 </dict>
 </plist>
