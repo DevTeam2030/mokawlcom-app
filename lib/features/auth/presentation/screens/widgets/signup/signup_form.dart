@@ -163,6 +163,7 @@ class _SignupFormState extends State<SignupForm> {
               _phone = completeNumber;
             },
             onSubmitted: (_) => _onSubmit(context),
+            validator: (_) => null,
           ),
 
           const SizedBox(height: 16.0),

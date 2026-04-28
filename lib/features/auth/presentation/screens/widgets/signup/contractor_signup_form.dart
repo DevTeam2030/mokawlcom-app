@@ -163,6 +163,7 @@ class _ContractorSignupFormState extends State<ContractorSignupForm> {
               _phone = completeNumber;
             },
             onSubmitted: (_) => _onSubmit(context),
+            validator: (_) => null,
           ),
           const SizedBox(height: 90.0),
           BlocConsumer<AuthCubit, AuthState>(

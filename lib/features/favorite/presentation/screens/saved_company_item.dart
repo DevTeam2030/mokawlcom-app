@@ -82,7 +82,7 @@ class SavedCompanyItem extends StatelessWidget {
                         return const Icon(MyIcons.star, color: Colors.amber);
                       },
                       unratedColor: ColorsManager.borderLightBlue,
-                      onRatingUpdate: (rating) {},
+                      onRatingUpdate: (_) {},
                     ),
                 ],
               ),

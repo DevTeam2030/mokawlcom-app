@@ -100,6 +100,7 @@ class _CompleteContractorDataFormState
               _completePhone = completeNumber;
             },
             onSubmitted: (_) async => await _submit(context),
+            validator: (_) => null,
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -115,6 +116,7 @@ class _CompleteContractorDataFormState
               whatsApp = completeNumber;
             },
             onSubmitted: (_) async => await _submit(context),
+            validator: (_) => null,
           ),
           const SizedBox(height: 8.0),
           Text(
