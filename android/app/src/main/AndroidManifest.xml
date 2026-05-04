@@ -7,18 +7,10 @@
     <!-- Notifications (Android 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <!-- Media (Android 13+) -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
-
-    <!-- Storage (Android 12 and below) -->
+    <!-- Storage (Android 12 and below فقط لو محتاج تقرأ ملفات) -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29" />
 
     <!-- ================= QUERIES ================= -->
 
@@ -88,7 +80,7 @@
             <data android:scheme="http" />
         </intent>
 
-        <!-- PDF / File picker -->
+        <!-- File picker -->
         <intent>
             <action android:name="android.intent.action.GET_CONTENT" />
         </intent>
@@ -129,7 +121,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- Intent filter for FCM notifications -->
+            <!-- FCM -->
             <intent-filter>
                 <action android:name="FLUTTER_NOTIFICATION_CLICK" />
                 <category android:name="android.intent.category.DEFAULT" />

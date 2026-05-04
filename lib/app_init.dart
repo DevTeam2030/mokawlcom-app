@@ -28,7 +28,7 @@ class AppInitializer {
         await cacheHelper.readData(key: AppConstants.tokenKey) ?? "";
     HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: HydratedStorageDirectory(
-        (await getTemporaryDirectory()).path,
+        (await getApplicationDocumentsDirectory()).path,
       ),
     );
     await _initFirebase();
@@ -49,12 +49,14 @@ class AppInitializer {
     try {
       final fcm = FcmInitHelper();
 
-      await Future.wait([
-        fcm.initAwesomeNotification(),
-        fcm.setAwesomeNotificationListeners(),
-        fcm.initFirebaseMessagingListeners(),
-        fcm.handleInitialMessage(),
-      ]);
+      await fcm.initAwesomeNotification();
+      await fcm.setAwesomeNotificationListeners();
+      await fcm.initFirebaseMessagingListeners();
+      
+      // Delay navigation logic to avoid crashing the unmounted AppRouter
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        fcm.handleInitialMessage();
+      });
     } catch (e) {
       debugPrint('Notification initialization error: $e');
     }

@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -16,11 +19,31 @@ import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    debugPrint("FLUTTER ERROR: ${details.exception}");
+  };
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    debugPrint("PLATFORM ERROR: $error");
+    return true;
+  };
+
   ErrorWidget.builder = (FlutterErrorDetails details) =>
       AppErrorScreen(details: details);
-  debugInvertOversizedImages = true;
 
-  await AppInitializer.init();
+  try {
+    await AppInitializer.init();
+    runApp(const MyApp());
+  } catch (e, stack) {
+    debugPrint("INIT ERROR: $e");
+    debugPrintStack(stackTrace: stack);
 
-  runApp(const MyApp());
+    runApp(
+      const MaterialApp(
+        home: Scaffold(body: Center(child: Text('Initialization failed'))),
+      ),
+    );
+  }
 }

@@ -189,6 +189,7 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
         ),
         const SliverToBoxAdapter(child: SizedBox(height: 10)),
         SliverFillRemaining(
+          
           child: AutoTabsRouter.tabBar(
             routes: const [CompanyDetailsRoute(), ServicesDetailsRoute()],
             builder: (context, child, controller) {
