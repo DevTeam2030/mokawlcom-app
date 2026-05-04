@@ -56,7 +56,12 @@ class OfferDetails extends StatelessWidget {
                         ),
                         borderRadius: BorderRadius.circular(8),
                         image: const DecorationImage(
-                          image: AssetImage(AssetsManager.appLogo),
+                          image: ResizeImage(
+                            AssetImage(AssetsManager.appLogo),
+                            width: 48,
+                            height: 48,
+                          ),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
