@@ -33,7 +33,7 @@ class AppInitializer {
     );
     await _initFirebase();
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
   }
