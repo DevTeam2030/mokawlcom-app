@@ -26,92 +26,95 @@ Future<void> showDeleteAccountBottomSheet({
   await showModalBottomSheet(
     context: context,
     isScrollControlled: true,
+    useSafeArea: true,
     backgroundColor: Colors.white,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
     builder: (context) {
-      return BlocProvider.value(
-        value: profileCubit,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(2),
+      return SafeArea(
+        child: BlocProvider.value(
+          value: profileCubit,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 40),
-              Text(
-                LocaleKeys.doYouWantToDeleteYourAccount,
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.w400,
+                const SizedBox(height: 40),
+                Text(
+                  LocaleKeys.doYouWantToDeleteYourAccount,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 50),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: ColorsManager.errorLight),
-                ),
-                child: PrimaryButton(
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  text: LocaleKeys.cancel,
-                ),
-              ),
-              const SizedBox(height: 8),
-              BlocConsumer<ProfileCubit, ProfileState>(
-                listenWhen: (previous, current) =>
-                    previous.deleteAccountRequestState !=
-                    current.deleteAccountRequestState,
-                listener: (context, state) async {
-                  if (state.deleteAccountRequestState.isError) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => ErrorDialog(
-                        message: state.errorMessage,
-                        theme: theme,
-                      ),
-                    );
-                  }
-                  if (state.deleteAccountRequestState.isSuccess) {
-                    await showDialog(
-                      context: context,
-                      builder: (context) => SuccessDialog(
-                        message: state.successMessage,
-                        theme: theme,
-                        onPressed: () => context.pop(),
-                        text: LocaleKeys.exit,
-                      ),
-                    );
-                    if (context.mounted) {
-                      context.replaceRoute(const AuthRoute());
-                    }
-                  }
-                },
-                builder: (context, state) {
-                  return PrimaryButton(
-                    isLoading: state.deleteAccountRequestState.isLoading,
-                    backgroundColor: ColorsManager.errorLight,
-                    textColor: Colors.white,
-                    onPressed: () async {
-                      await context.read<ProfileCubit>().deleteAccount();
+                const SizedBox(height: 50),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: ColorsManager.errorLight),
+                  ),
+                  child: PrimaryButton(
+                    backgroundColor: Colors.white,
+                    textColor: Colors.black,
+                    onPressed: () {
+                      Navigator.pop(context);
                     },
-                    text: LocaleKeys.deleteAccount,
-                  );
-                },
-              ),
-              const SizedBox(height: 8),
-            ],
+                    text: LocaleKeys.cancel,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                BlocConsumer<ProfileCubit, ProfileState>(
+                  listenWhen: (previous, current) =>
+                      previous.deleteAccountRequestState !=
+                      current.deleteAccountRequestState,
+                  listener: (context, state) async {
+                    if (state.deleteAccountRequestState.isError) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorDialog(
+                          message: state.errorMessage,
+                          theme: theme,
+                        ),
+                      );
+                    }
+                    if (state.deleteAccountRequestState.isSuccess) {
+                      await showDialog(
+                        context: context,
+                        builder: (context) => SuccessDialog(
+                          message: state.successMessage,
+                          theme: theme,
+                          onPressed: () => context.pop(),
+                          text: LocaleKeys.exit,
+                        ),
+                      );
+                      if (context.mounted) {
+                        context.replaceRoute(const AuthRoute());
+                      }
+                    }
+                  },
+                  builder: (context, state) {
+                    return PrimaryButton(
+                      isLoading: state.deleteAccountRequestState.isLoading,
+                      backgroundColor: ColorsManager.errorLight,
+                      textColor: Colors.white,
+                      onPressed: () async {
+                        await context.read<ProfileCubit>().deleteAccount();
+                      },
+                      text: LocaleKeys.deleteAccount,
+                    );
+                  },
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
           ),
         ),
       );

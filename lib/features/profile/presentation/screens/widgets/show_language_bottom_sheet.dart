@@ -16,85 +16,87 @@ Future<void> showLanguageBottomSheet(BuildContext context) async {
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (context) {
-      return Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: BlocSelector<AppCubit, AppState, bool>(
-          selector: (state) {
-            return state.isArabic;
-          },
-          builder: (context, isArabic) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 4,
-                    margin: const EdgeInsets.only(bottom: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(2),
+      return SafeArea(
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: BlocSelector<AppCubit, AppState, bool>(
+            selector: (state) {
+              return state.isArabic;
+            },
+            builder: (context, isArabic) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 40,
+                      height: 4,
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
                     ),
                   ),
-                ),
-
-                Align(
-                  alignment: AlignmentDirectional.center,
-                  child: Text(
-                    LocaleKeys.language,
-                    style: Theme.of(context).textTheme.titleLarge,
+        
+                  Align(
+                    alignment: AlignmentDirectional.center,
+                    child: Text(
+                      LocaleKeys.language,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(LocaleKeys.english),
-                  trailing: !isArabic
-                      ? const Icon(
-                          Icons.check_circle,
-                          color: ColorsManager.primaryColor,
-                        )
-                      : null,
-                  onTap: () {
-                    if (AppConstants.language == "en") {
-                      return;
-                    }
-                    context.read<AppCubit>().changeLanguage(isArabic: false);
-                    context.router.replaceAll([const SplashTabRoute()]);
-                  },
-                ),
-
-                const Divider(),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(LocaleKeys.arabic),
-                  trailing: isArabic
-                      ? const Icon(
-                          Icons.check_circle,
-                          color: ColorsManager.primaryColor,
-                        )
-                      : null,
-                  onTap: () {
-                    if (AppConstants.language == "ar") {
-                      return;
-                    }
-                    context.read<AppCubit>().changeLanguage(isArabic: true);
-
-                    context.router.replaceAll([const SplashTabRoute()]);
-                  },
-                ),
-
-                const SizedBox(height: 10),
-              ],
-            );
-          },
+                  const SizedBox(height: 20),
+        
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(LocaleKeys.english),
+                    trailing: !isArabic
+                        ? const Icon(
+                            Icons.check_circle,
+                            color: ColorsManager.primaryColor,
+                          )
+                        : null,
+                    onTap: () {
+                      if (AppConstants.language == "en") {
+                        return;
+                      }
+                      context.read<AppCubit>().changeLanguage(isArabic: false);
+                      context.router.replaceAll([const SplashTabRoute()]);
+                    },
+                  ),
+        
+                  const Divider(),
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(LocaleKeys.arabic),
+                    trailing: isArabic
+                        ? const Icon(
+                            Icons.check_circle,
+                            color: ColorsManager.primaryColor,
+                          )
+                        : null,
+                    onTap: () {
+                      if (AppConstants.language == "ar") {
+                        return;
+                      }
+                      context.read<AppCubit>().changeLanguage(isArabic: true);
+        
+                      context.router.replaceAll([const SplashTabRoute()]);
+                    },
+                  ),
+        
+                  const SizedBox(height: 10),
+                ],
+              );
+            },
+          ),
         ),
       );
     },

@@ -85,44 +85,46 @@ class _UploadFilesScreenState extends State<UploadFilesScreen> {
           ),
         ),
       ),
-      body: BlocListener<FilesCubit, FilesState>(
-        listenWhen: (previous, current) =>
-            previous.uploadFileState != current.uploadFileState,
-        listener: (context, state) async {
-          if (state.uploadFileState.isError) {
-            showDialog(
-              context: context,
-              builder: (context) =>
-                  ErrorDialog(theme: theme, message: state.errorMessage),
-            );
-          }
-          if (state.uploadFileState.isSuccess) {
-            await showDialog(
-              context: context,
-              builder: (context) => SuccessDialog(
-                theme: theme,
-                message: state.successMessage,
-                text: LocaleKeys.continueKey,
-              ),
-            );
-            if(context.mounted){
-              Navigator.pop(context);
+      body: SafeArea(
+        child: BlocListener<FilesCubit, FilesState>(
+          listenWhen: (previous, current) =>
+              previous.uploadFileState != current.uploadFileState,
+          listener: (context, state) async {
+            if (state.uploadFileState.isError) {
+              showDialog(
+                context: context,
+                builder: (context) =>
+                    ErrorDialog(theme: theme, message: state.errorMessage),
+              );
             }
-          }
-        },
-        child: ListView.separated(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: 20,
-            vertical: 10,
-          ),
-          itemCount: files.length,
-          separatorBuilder: (_, _) => const SizedBox(height: 18.0),
-          itemBuilder: (_, index) => UploadFileItem(
-            theme: theme,
-            text: files[index],
-            index: index,
-            userId: widget.contractorId,
-            filesCubit: context.read<FilesCubit>(),
+            if (state.uploadFileState.isSuccess) {
+              await showDialog(
+                context: context,
+                builder: (context) => SuccessDialog(
+                  theme: theme,
+                  message: state.successMessage,
+                  text: LocaleKeys.continueKey,
+                ),
+              );
+              if(context.mounted){
+                Navigator.pop(context);
+              }
+            }
+          },
+          child: ListView.separated(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: 20,
+              vertical: 10,
+            ),
+            itemCount: files.length,
+            separatorBuilder: (_, _) => const SizedBox(height: 18.0),
+            itemBuilder: (_, index) => UploadFileItem(
+              theme: theme,
+              text: files[index],
+              index: index,
+              userId: widget.contractorId,
+              filesCubit: context.read<FilesCubit>(),
+            ),
           ),
         ),
       ),
@@ -130,13 +132,15 @@ class _UploadFilesScreenState extends State<UploadFilesScreen> {
           context.select(
             (FilesCubit cubit) => cubit.state.completedFiles.length == 4,
           )
-          ? Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
-              child: PrimaryButton(
-                onPressed: () => context.pushRoute(const SubscriptionRoute()),
-                text: LocaleKeys.next,
+          ? SafeArea(
+            child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
+                child: PrimaryButton(
+                  onPressed: () => context.pushRoute(const SubscriptionRoute()),
+                  text: LocaleKeys.next,
+                ),
               ),
-            )
+          )
           : const SizedBox.shrink(),
     );
   }

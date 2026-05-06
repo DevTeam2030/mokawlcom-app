@@ -22,41 +22,43 @@ class ContractorSignupScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-               ContractorSignupForm(
-                theme:theme,
-               ),
-              const SizedBox(height: 16.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    LocaleKeys.alreadyHaveAnAccount,
-                    style: theme.textTheme.bodyMedium!.copyWith(
-                      color: ColorsManager.primaryColor,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      context.navigateTo(const LoginRoute());
-                    },
-                    child: Text(
-                      LocaleKeys.login,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.all(20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                 ContractorSignupForm(
+                  theme:theme,
+                 ),
+                const SizedBox(height: 16.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      LocaleKeys.alreadyHaveAnAccount,
                       style: theme.textTheme.bodyMedium!.copyWith(
                         color: ColorsManager.primaryColor,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    InkWell(
+                      onTap: () {
+                        context.navigateTo(const LoginRoute());
+                      },
+                      child: Text(
+                        LocaleKeys.login,
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: ColorsManager.primaryColor,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

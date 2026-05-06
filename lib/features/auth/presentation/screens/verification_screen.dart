@@ -49,85 +49,87 @@ class _VerificationScreenState extends State<VerificationScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 12),
-            Align(
-              alignment: AlignmentDirectional.center,
-              child: Text(
-                LocaleKeys.verificationCodeSent,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium!.copyWith(
-                  color: ColorsManager.unselectedNavColor,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 12),
+              Align(
+                alignment: AlignmentDirectional.center,
+                child: Text(
+                  LocaleKeys.verificationCodeSent,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium!.copyWith(
+                    color: ColorsManager.unselectedNavColor,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 40),
-            Align(
-              alignment: AlignmentDirectional.center,
-              child: Directionality(
-                textDirection: TextDirection.ltr,
-                child: Pinput(
-                  length: 5,
-                  onSubmitted: (_) {
-                    if (verificationCode.length == 5) {
-                      context.read<AuthCubit>().activateAccount(
-                        email: widget.email,
-                        verificationCode: verificationCode,
-                      );
-                  }
-                  },
-                  onChanged: (value) => verificationCode = value,
-                  defaultPinTheme: PinTheme(
-                    width: 48,
-                    height: 48,
-                    textStyle: theme.textTheme.titleLarge!.copyWith(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: ColorsManager.secondaryColor,
-                        width: 1.5,
+              const SizedBox(height: 40),
+              Align(
+                alignment: AlignmentDirectional.center,
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Pinput(
+                    length: 5,
+                    onSubmitted: (_) {
+                      if (verificationCode.length == 5) {
+                        context.read<AuthCubit>().activateAccount(
+                          email: widget.email,
+                          verificationCode: verificationCode,
+                        );
+                    }
+                    },
+                    onChanged: (value) => verificationCode = value,
+                    defaultPinTheme: PinTheme(
+                      width: 48,
+                      height: 48,
+                      textStyle: theme.textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: ColorsManager.secondaryColor,
+                          width: 1.5,
+                        ),
                       ),
                     ),
-                  ),
-                  focusedPinTheme: PinTheme(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: ColorsManager.secondaryColor,
-                        width: 4,
+                    focusedPinTheme: PinTheme(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: ColorsManager.secondaryColor,
+                          width: 4,
+                        ),
                       ),
                     ),
-                  ),
-                  submittedPinTheme: PinTheme(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: ColorsManager.primaryColor,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
+                    submittedPinTheme: PinTheme(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
                         color: ColorsManager.primaryColor,
-                        width: 1.5,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: ColorsManager.primaryColor,
+                          width: 1.5,
+                        ),
                       ),
-                    ),
-                    textStyle: theme.textTheme.titleLarge!.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
+                      textStyle: theme.textTheme.titleLarge!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
 

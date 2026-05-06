@@ -31,7 +31,7 @@ class _ContractorSignupFormState extends State<ContractorSignupForm> {
   late String _email;
   late String _password;
   late String _confirmPassword;
-  late String _phone;
+   String _phone = "";
 
   @override
   void initState() {

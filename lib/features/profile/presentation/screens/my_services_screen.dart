@@ -79,116 +79,118 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: 16,
-          vertical: 20,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextButton(
-              onPressed: () => context.pushRoute(
-                AddNewServiceRoute(
-                  theme: theme,
-                  userDetailsCubit: context.read<UserDetailsCubit>(),
-                ),
-              ),
-              child: Text(
-                LocaleKeys.addNewService,
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  color: ColorsManager.primaryColor,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            Expanded(
-              child: BlocConsumer<UserDetailsCubit, UserDetailsState>(
-                listenWhen: (previous, current) =>
-                    previous.getContractorServicesState !=
-                    current.getContractorServicesState,
-                listener: (context, state) {
-                  if (state.getContractorServicesState.isError) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => ErrorDialog(
-                        theme: theme,
-                        message: state.errorMessage,
-                      ),
-                    );
-                  }
-                },
-                buildWhen: (previous, current) =>
-                    previous.getContractorServicesState !=
-                        current.getContractorServicesState ||
-                    previous.contractorServicesModel !=
-                        current.contractorServicesModel,
-                builder: (context, state) {
-                  final hasData =
-                      state.contractorServicesModel.services.isNotEmpty;
-
-                  if (!state.isConnected && !hasData) {
-                    return NoInternetWidget(
-                      errorMessage: state.errorMessage,
-                      theme: theme,
-                      onPressed: () {
-                        context
-                            .read<UserDetailsCubit>()
-                            .getContractorServices();
-                      },
-                    );
-                  }
-
-                  return UiStateBuilder(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: 16,
+            vertical: 20,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextButton(
+                onPressed: () => context.pushRoute(
+                  AddNewServiceRoute(
                     theme: theme,
-                    state: state.getContractorServicesState,
-                    errorMessage: state.errorMessage,
-                    onLoading: Skeletonizer(
-                      containersColor: ColorsManager.skeletonColor,
-                      enabled:
-                          state.getContractorServicesState.isLoading &&
-                          !hasData,
-                      child: _buildServicesList(
-                        theme: theme,
-                        services: List.generate(
-                          5,
-                          (index) => const ContractorServiceModel(
-                            id: 0,
-                            title: 'Loading...',
-                            description: 'Loading description...',
-                            price: '0',
-                            images: [],
-                          ),
-                        ),
-                        status: state.getContractorServicesState,
-                      ),
-                    ),
-                    onSuccess: hasData
-                        ? _buildServicesList(
-                            services: state.contractorServicesModel.services,
-                            status: state.getContractorServicesState,
-                            theme: theme,
-                          )
-                        : NoDataWidget(
-                            theme: theme,
-                            text: LocaleKeys.noServicesYet,
-                          ),
-                    onError: hasData
-                        ? _buildServicesList(
-                            services: state.contractorServicesModel.services,
-                            status: state.getContractorServicesState,
-                            theme: theme,
-                          )
-                        : NoDataWidget(
-                            theme: theme,
-                            text: LocaleKeys.noServicesYet,
-                          ),
-                  );
-                },
+                    userDetailsCubit: context.read<UserDetailsCubit>(),
+                  ),
+                ),
+                child: Text(
+                  LocaleKeys.addNewService,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    color: ColorsManager.primaryColor,
+                  ),
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+        
+              Expanded(
+                child: BlocConsumer<UserDetailsCubit, UserDetailsState>(
+                  listenWhen: (previous, current) =>
+                      previous.getContractorServicesState !=
+                      current.getContractorServicesState,
+                  listener: (context, state) {
+                    if (state.getContractorServicesState.isError) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorDialog(
+                          theme: theme,
+                          message: state.errorMessage,
+                        ),
+                      );
+                    }
+                  },
+                  buildWhen: (previous, current) =>
+                      previous.getContractorServicesState !=
+                          current.getContractorServicesState ||
+                      previous.contractorServicesModel !=
+                          current.contractorServicesModel,
+                  builder: (context, state) {
+                    final hasData =
+                        state.contractorServicesModel.services.isNotEmpty;
+        
+                    if (!state.isConnected && !hasData) {
+                      return NoInternetWidget(
+                        errorMessage: state.errorMessage,
+                        theme: theme,
+                        onPressed: () {
+                          context
+                              .read<UserDetailsCubit>()
+                              .getContractorServices();
+                        },
+                      );
+                    }
+        
+                    return UiStateBuilder(
+                      theme: theme,
+                      state: state.getContractorServicesState,
+                      errorMessage: state.errorMessage,
+                      onLoading: Skeletonizer(
+                        containersColor: ColorsManager.skeletonColor,
+                        enabled:
+                            state.getContractorServicesState.isLoading &&
+                            !hasData,
+                        child: _buildServicesList(
+                          theme: theme,
+                          services: List.generate(
+                            5,
+                            (index) => const ContractorServiceModel(
+                              id: 0,
+                              title: 'Loading...',
+                              description: 'Loading description...',
+                              price: '0',
+                              images: [],
+                            ),
+                          ),
+                          status: state.getContractorServicesState,
+                        ),
+                      ),
+                      onSuccess: hasData
+                          ? _buildServicesList(
+                              services: state.contractorServicesModel.services,
+                              status: state.getContractorServicesState,
+                              theme: theme,
+                            )
+                          : NoDataWidget(
+                              theme: theme,
+                              text: LocaleKeys.noServicesYet,
+                            ),
+                      onError: hasData
+                          ? _buildServicesList(
+                              services: state.contractorServicesModel.services,
+                              status: state.getContractorServicesState,
+                              theme: theme,
+                            )
+                          : NoDataWidget(
+                              theme: theme,
+                              text: LocaleKeys.noServicesYet,
+                            ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

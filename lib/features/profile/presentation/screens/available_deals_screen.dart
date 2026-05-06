@@ -78,126 +78,128 @@ class _AvailableDealsScreenState extends State<AvailableDealsScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: 16,
-          vertical: 20,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextButton(
-              onPressed: () {
-                context.router.push(
-                  SendOfferToContractorsRoute(
-                    userDetailsCubit: context.read<UserDetailsCubit>(),
-                  ),
-                );
-              },
-              child: Text(
-                LocaleKeys.addNewOffer,
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  color: ColorsManager.primaryColor,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: BlocConsumer<UserDetailsCubit, UserDetailsState>(
-                listenWhen: (previous, current) =>
-                    previous.getDealsState != current.getDealsState ||
-                    previous.deleteDealState != current.deleteDealState,
-                listener: (context, state) {
-                  if (state.getDealsState.isError) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => ErrorDialog(
-                        theme: theme,
-                        message: state.errorMessage,
-                      ),
-                    );
-                  }
-                  if (state.deleteDealState.isError) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => ErrorDialog(
-                        theme: theme,
-                        message: state.errorMessage,
-                      ),
-                    );
-                  }
-                  if (state.deleteDealState.isSuccess) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => SuccessDialog(
-                        theme: theme,
-                        message: state.successMessage,
-                        text: LocaleKeys.continueKey,
-                      ),
-                    );
-                  }
-                },
-                buildWhen: (previous, current) =>
-                    previous.getDealsState != current.getDealsState ||
-                    previous.dealsModel != current.dealsModel,
-                builder: (context, state) {
-                  final hasData = state.dealsModel.deals.isNotEmpty;
-
-                  if (!state.isConnected && !hasData) {
-                    return NoInternetWidget(
-                      errorMessage: state.errorMessage,
-                      theme: theme,
-                      onPressed: () {
-                        context.read<UserDetailsCubit>().getDeals();
-                      },
-                    );
-                  }
-
-                  return UiStateBuilder(
-                    theme: theme,
-                    state: state.getDealsState,
-                    errorMessage: state.errorMessage,
-                    onLoading: Skeletonizer(
-                      containersColor: ColorsManager.skeletonColor,
-                      enabled: state.getDealsState.isLoading && !hasData,
-                      child: _buildDealsList(
-                        theme: theme,
-                        deals: List.generate(
-                          5,
-                          (index) => const DealModel(
-                            id: 0,
-                            title: 'Loading...',
-                            description: 'Loading description...',
-                          ),
-                        ),
-                        status: state.getDealsState,
-                      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: 16,
+            vertical: 20,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextButton(
+                onPressed: () {
+                  context.router.push(
+                    SendOfferToContractorsRoute(
+                      userDetailsCubit: context.read<UserDetailsCubit>(),
                     ),
-                    onSuccess: hasData
-                        ? _buildDealsList(
-                            deals: state.dealsModel.deals,
-                            status: state.getDealsState,
-                            theme: theme,
-                          )
-                        : NoDataWidget(
-                            theme: theme,
-                            text: LocaleKeys.noDealsYet,
-                          ),
-                    onError: hasData
-                        ? _buildDealsList(
-                            deals: state.dealsModel.deals,
-                            status: state.getDealsState,
-                            theme: theme,
-                          )
-                        : NoDataWidget(
-                            theme: theme,
-                            text: LocaleKeys.noDealsYet,
-                          ),
                   );
                 },
+                child: Text(
+                  LocaleKeys.addNewOffer,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    color: ColorsManager.primaryColor,
+                  ),
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              Expanded(
+                child: BlocConsumer<UserDetailsCubit, UserDetailsState>(
+                  listenWhen: (previous, current) =>
+                      previous.getDealsState != current.getDealsState ||
+                      previous.deleteDealState != current.deleteDealState,
+                  listener: (context, state) {
+                    if (state.getDealsState.isError) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorDialog(
+                          theme: theme,
+                          message: state.errorMessage,
+                        ),
+                      );
+                    }
+                    if (state.deleteDealState.isError) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorDialog(
+                          theme: theme,
+                          message: state.errorMessage,
+                        ),
+                      );
+                    }
+                    if (state.deleteDealState.isSuccess) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => SuccessDialog(
+                          theme: theme,
+                          message: state.successMessage,
+                          text: LocaleKeys.continueKey,
+                        ),
+                      );
+                    }
+                  },
+                  buildWhen: (previous, current) =>
+                      previous.getDealsState != current.getDealsState ||
+                      previous.dealsModel != current.dealsModel,
+                  builder: (context, state) {
+                    final hasData = state.dealsModel.deals.isNotEmpty;
+        
+                    if (!state.isConnected && !hasData) {
+                      return NoInternetWidget(
+                        errorMessage: state.errorMessage,
+                        theme: theme,
+                        onPressed: () {
+                          context.read<UserDetailsCubit>().getDeals();
+                        },
+                      );
+                    }
+        
+                    return UiStateBuilder(
+                      theme: theme,
+                      state: state.getDealsState,
+                      errorMessage: state.errorMessage,
+                      onLoading: Skeletonizer(
+                        containersColor: ColorsManager.skeletonColor,
+                        enabled: state.getDealsState.isLoading && !hasData,
+                        child: _buildDealsList(
+                          theme: theme,
+                          deals: List.generate(
+                            5,
+                            (index) => const DealModel(
+                              id: 0,
+                              title: 'Loading...',
+                              description: 'Loading description...',
+                            ),
+                          ),
+                          status: state.getDealsState,
+                        ),
+                      ),
+                      onSuccess: hasData
+                          ? _buildDealsList(
+                              deals: state.dealsModel.deals,
+                              status: state.getDealsState,
+                              theme: theme,
+                            )
+                          : NoDataWidget(
+                              theme: theme,
+                              text: LocaleKeys.noDealsYet,
+                            ),
+                      onError: hasData
+                          ? _buildDealsList(
+                              deals: state.dealsModel.deals,
+                              status: state.getDealsState,
+                              theme: theme,
+                            )
+                          : NoDataWidget(
+                              theme: theme,
+                              text: LocaleKeys.noDealsYet,
+                            ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

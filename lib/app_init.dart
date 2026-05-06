@@ -14,6 +14,9 @@ import 'package:path_provider/path_provider.dart';
 class AppInitializer {
   static Future<void> init() async {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+     SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.edgeToEdge,
+  );
 
     Bloc.observer = MyBlocObserver();
     final sharedPrefHelper = await SharedPrefHelper.init();

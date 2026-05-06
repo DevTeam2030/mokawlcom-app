@@ -29,81 +29,83 @@ class SubscriptionScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 20.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            Text(
-              LocaleKeys.startYourJourney,
-              style: theme.textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 27),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                LocaleKeys.readyToGrowUp,
-                style: theme.textTheme.bodyLarge,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(horizontal: 20.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Text(
+                LocaleKeys.startYourJourney,
+                style: theme.textTheme.bodyMedium,
               ),
-            ),
-            const SizedBox(height: 27),
-            const Image(
-              width: 300,
-              height: 300,
-              fit: BoxFit.cover,
-              image: AssetImage(AssetsManager.subscriptionPackageImage),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              LocaleKeys.yourContractingPackageIsFreeForALimitedTime,
-              style: theme.textTheme.titleMedium!.copyWith(
-                fontWeight: FontWeight.bold,
-                color: ColorsManager.primaryColor,
+              const SizedBox(height: 27),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  LocaleKeys.readyToGrowUp,
+                  style: theme.textTheme.bodyLarge,
+                ),
               ),
-            ),
-            const Spacer(),
-            BlocConsumer<AuthCubit, AuthState>(
-              listenWhen: (prev, curr) =>
-                  prev.subscibePlanState != curr.subscibePlanState,
-              buildWhen: (prev, curr) =>
-                  prev.subscibePlanState != curr.subscibePlanState,
-              listener: (context, state) async {
-                if (state.subscibePlanState.isError) {
-                  showDialog(
-                    context: context,
-                    builder: (context) =>
-                        ErrorDialog(theme: theme, message: state.errorMessage),
-                  );
-                }
-                if (state.subscibePlanState.isSuccess) {
-                  await showDialog(
-                    context: context,
-                    builder: (context) => SuccessDialog(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      theme: theme,
-                      text: LocaleKeys.completeData,
-                      message: state.successMessage,
-                    ),
-                  );
-                  if (context.mounted) {
-                    context.replaceRoute(const CompleteDataRoute());
+              const SizedBox(height: 27),
+              const Image(
+                width: 300,
+                height: 300,
+                fit: BoxFit.cover,
+                image: AssetImage(AssetsManager.subscriptionPackageImage),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                LocaleKeys.yourContractingPackageIsFreeForALimitedTime,
+                style: theme.textTheme.titleMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: ColorsManager.primaryColor,
+                ),
+              ),
+              const Spacer(),
+              BlocConsumer<AuthCubit, AuthState>(
+                listenWhen: (prev, curr) =>
+                    prev.subscibePlanState != curr.subscibePlanState,
+                buildWhen: (prev, curr) =>
+                    prev.subscibePlanState != curr.subscibePlanState,
+                listener: (context, state) async {
+                  if (state.subscibePlanState.isError) {
+                    showDialog(
+                      context: context,
+                      builder: (context) =>
+                          ErrorDialog(theme: theme, message: state.errorMessage),
+                    );
                   }
-                }
-              },
-              builder: (context, state) {
-                return PrimaryButton(
-                  isLoading: state.subscibePlanState.isLoading,
-                  onPressed: () async {
-                    await context.read<AuthCubit>().subscibePlan();
-                  },
-                  text: LocaleKeys.tryNow,
-                );
-              },
-            ),
-            const Spacer(),
-          ],
+                  if (state.subscibePlanState.isSuccess) {
+                    await showDialog(
+                      context: context,
+                      builder: (context) => SuccessDialog(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        theme: theme,
+                        text: LocaleKeys.completeData,
+                        message: state.successMessage,
+                      ),
+                    );
+                    if (context.mounted) {
+                      context.replaceRoute(const CompleteDataRoute());
+                    }
+                  }
+                },
+                builder: (context, state) {
+                  return PrimaryButton(
+                    isLoading: state.subscibePlanState.isLoading,
+                    onPressed: () async {
+                      await context.read<AuthCubit>().subscibePlan();
+                    },
+                    text: LocaleKeys.tryNow,
+                  );
+                },
+              ),
+              const Spacer(),
+            ],
+          ),
         ),
       ),
     );

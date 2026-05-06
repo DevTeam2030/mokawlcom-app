@@ -46,75 +46,77 @@ class _UserSignupScreenState extends State<UserSignupScreen> {
           ),
         ),
       ),
-      body: BlocListener<AuthCubit, AuthState>(
-        listenWhen: (previous, current) =>
-            previous.googleLoginState != current.googleLoginState,
-        listener: (context, state) async {
-          if (state.googleLoginState.isError) {
-            showDialog(
-              context: context,
-              builder: (context) =>
-                  ErrorDialog(theme: theme, message: state.errorMessage),
-            );
-          }
-          if (state.googleLoginState.isSuccess) {
-            await showDialog(
-              context: context,
-              builder: (context) => SuccessDialog(
-                theme: theme,
-                message: state.successMessage,
-                text: LocaleKeys.continueKey,
-              ),
-            );
-            if (context.mounted) {
-              context.replaceRoute(const AuthenticatedRoute());
+      body: SafeArea(
+        child: BlocListener<AuthCubit, AuthState>(
+          listenWhen: (previous, current) =>
+              previous.googleLoginState != current.googleLoginState,
+          listener: (context, state) async {
+            if (state.googleLoginState.isError) {
+              showDialog(
+                context: context,
+                builder: (context) =>
+                    ErrorDialog(theme: theme, message: state.errorMessage),
+              );
             }
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsetsDirectional.all(20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SignupForm(theme: theme),
-                const SizedBox(height: 16.0),
-                const CustomAuthDivider(),
-                const SizedBox(height: 16.0),
-                GoogleAndAppleSignInWidgets(
-                  onGoogleTap: () async {
-                    await context.read<AuthCubit>().googleLogin();
-                  },
-                  onAppleTap: () async {
-                    await context.read<AuthCubit>().appleLogin();
-                  },
+            if (state.googleLoginState.isSuccess) {
+              await showDialog(
+                context: context,
+                builder: (context) => SuccessDialog(
+                  theme: theme,
+                  message: state.successMessage,
+                  text: LocaleKeys.continueKey,
                 ),
-                const SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      LocaleKeys.alreadyHaveAnAccount,
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        color: ColorsManager.primaryColor,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        context.pop();
-                      },
-                      child: Text(
-                        LocaleKeys.login,
+              );
+              if (context.mounted) {
+                context.replaceRoute(const AuthenticatedRoute());
+              }
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsetsDirectional.all(20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SignupForm(theme: theme),
+                  const SizedBox(height: 16.0),
+                  const CustomAuthDivider(),
+                  const SizedBox(height: 16.0),
+                  GoogleAndAppleSignInWidgets(
+                    onGoogleTap: () async {
+                      await context.read<AuthCubit>().googleLogin();
+                    },
+                    onAppleTap: () async {
+                      await context.read<AuthCubit>().appleLogin();
+                    },
+                  ),
+                  const SizedBox(height: 16.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        LocaleKeys.alreadyHaveAnAccount,
                         style: theme.textTheme.bodyMedium!.copyWith(
                           color: ColorsManager.primaryColor,
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      InkWell(
+                        onTap: () {
+                          context.pop();
+                        },
+                        child: Text(
+                          LocaleKeys.login,
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            color: ColorsManager.primaryColor,
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

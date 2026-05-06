@@ -33,7 +33,7 @@ class _SignupFormState extends State<SignupForm> {
   late String _email;
   late String _password;
   late String _confirmPassword;
-  late String _phone;
+   String _phone = "";
   @override
   void initState() {
     super.initState();

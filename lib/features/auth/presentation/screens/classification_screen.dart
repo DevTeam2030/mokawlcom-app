@@ -79,64 +79,66 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
           ),
         ),
       ),
-      body: BlocConsumer<AuthCubit, AuthState>(
-        listenWhen: (p, c) =>
-            p.getClassificationsState != c.getClassificationsState,
-        listener: (context, state) {
-          if (state.getClassificationsState.isError) {
-            showDialog(
-              context: context,
-              builder: (context) =>
-                  ErrorDialog(theme: theme, message: state.errorMessage),
-            );
-          }
-        },
-        builder: (context, state) {
-          final hasData = state.classificationsModel.classifications.isNotEmpty;
-
-          if (!state.isConnected && !hasData) {
-            return NoInternetWidget(
-              errorMessage: state.errorMessage,
+      body: SafeArea(
+        child: BlocConsumer<AuthCubit, AuthState>(
+          listenWhen: (p, c) =>
+              p.getClassificationsState != c.getClassificationsState,
+          listener: (context, state) {
+            if (state.getClassificationsState.isError) {
+              showDialog(
+                context: context,
+                builder: (context) =>
+                    ErrorDialog(theme: theme, message: state.errorMessage),
+              );
+            }
+          },
+          builder: (context, state) {
+            final hasData = state.classificationsModel.classifications.isNotEmpty;
+        
+            if (!state.isConnected && !hasData) {
+              return NoInternetWidget(
+                errorMessage: state.errorMessage,
+                theme: theme,
+                onPressed: () => context.read<AuthCubit>().getClassifications(),
+              );
+            }
+        
+            return UiStateBuilder(
+              state: state.getClassificationsState,
               theme: theme,
-              onPressed: () => context.read<AuthCubit>().getClassifications(),
-            );
-          }
-
-          return UiStateBuilder(
-            state: state.getClassificationsState,
-            theme: theme,
-            errorMessage: state.errorMessage,
-            onLoading: Skeletonizer(
-              containersColor: ColorsManager.skeletonColor,
-              enabled: state.getClassificationsState.isLoading && !hasData,
-              child: _buildList(
-                theme,
-                hasData
-                    ? state.classificationsModel.classifications
-                    : List.generate(
-                        6,
-                        (i) => ClassificationModel(
-                          id: i,
-                          name: 'Loading',
-                          image: '',
-                          numberOfServices: i,
+              errorMessage: state.errorMessage,
+              onLoading: Skeletonizer(
+                containersColor: ColorsManager.skeletonColor,
+                enabled: state.getClassificationsState.isLoading && !hasData,
+                child: _buildList(
+                  theme,
+                  hasData
+                      ? state.classificationsModel.classifications
+                      : List.generate(
+                          6,
+                          (i) => ClassificationModel(
+                            id: i,
+                            name: 'Loading',
+                            image: '',
+                            numberOfServices: i,
+                          ),
                         ),
-                      ),
+                  state.getClassificationsState,
+                ),
+              ),
+              onSuccess: _buildList(
+                theme,
+                state.classificationsModel.classifications,
                 state.getClassificationsState,
               ),
-            ),
-            onSuccess: _buildList(
-              theme,
-              state.classificationsModel.classifications,
-              state.getClassificationsState,
-            ),
-            onError: _buildList(
-              theme,
-              state.classificationsModel.classifications,
-              state.getClassificationsState,
-            ),
-          );
-        },
+              onError: _buildList(
+                theme,
+                state.classificationsModel.classifications,
+                state.getClassificationsState,
+              ),
+            );
+          },
+        ),
       ),
     );
   }

@@ -75,150 +75,152 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: 20,
-          vertical: 32,
-        ),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            autovalidateMode: _autovalidateMode,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  LocaleKeys.serviceName,
-                  style: widget.theme.textTheme.bodySmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: ColorsManager.primaryColor,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: 20,
+            vertical: 32,
+          ),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              autovalidateMode: _autovalidateMode,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    LocaleKeys.serviceName,
+                    style: widget.theme.textTheme.bodySmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: ColorsManager.primaryColor,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                CustomTextFormField(
-                  textInputAction: TextInputAction.next,
-                  type: TextInputType.text,
-                  fieldName: LocaleKeys.serviceName,
-                  onSaved: (value) => serviceName = value!,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  LocaleKeys.classification,
-                  style: widget.theme.textTheme.bodySmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: ColorsManager.primaryColor,
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textInputAction: TextInputAction.next,
+                    type: TextInputType.text,
+                    fieldName: LocaleKeys.serviceName,
+                    onSaved: (value) => serviceName = value!,
                   ),
-                ),
-                const SizedBox(height: 8),
-                BlocSelector<AppCubit, AppState, String>(
-                  selector: (state) =>
-                      state.classification,
-                  builder: (context, classification) {
-                    return CustomDropdownField<String>(
-                      theme: widget.theme,
-                     hintText: classification,
-                      items: const [],
-                      readOnly: true,
-                    );
-                  },
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  LocaleKeys.priceAverage,
-                  style: widget.theme.textTheme.bodySmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: ColorsManager.primaryColor,
+                  const SizedBox(height: 16),
+                  Text(
+                    LocaleKeys.classification,
+                    style: widget.theme.textTheme.bodySmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: ColorsManager.primaryColor,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                CustomTextFormField(
-                  textInputAction: TextInputAction.next,
-                  type: TextInputType.number,
-                  fieldName: LocaleKeys.priceAverage,
-                  onSaved: (value) => servicePrice = value!,
-                  isPrice: true,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  LocaleKeys.serviceDetails,
-                  style: widget.theme.textTheme.bodySmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: ColorsManager.primaryColor,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                CustomTextFormField(
-                  textInputAction: TextInputAction.next,
-                  type: TextInputType.multiline,
-                  maxLines: 5,
-                  fieldName: LocaleKeys.serviceDetails,
-                  onSaved: (value) => serviceDetails = value!,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  LocaleKeys.servicePhotos,
-                  style: widget.theme.textTheme.bodySmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: ColorsManager.primaryColor,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                UploadImagesSection(theme: widget.theme),
-                const SizedBox(height: 24),
-                BlocConsumer<UserDetailsCubit, UserDetailsState>(
-                  listenWhen: (previous, current) =>
-                      previous.addNewServiceState != current.addNewServiceState,
-                  buildWhen: (previous, current) =>
-                      previous.addNewServiceState != current.addNewServiceState,
-                  listener: (context, state) async {
-                    if (state.addNewServiceState.isError) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => ErrorDialog(
-                          message: state.errorMessage,
-
-                          theme: widget.theme,
-                        ),
+                  const SizedBox(height: 8),
+                  BlocSelector<AppCubit, AppState, String>(
+                    selector: (state) =>
+                        state.classification,
+                    builder: (context, classification) {
+                      return CustomDropdownField<String>(
+                        theme: widget.theme,
+                       hintText: classification,
+                        items: const [],
+                        readOnly: true,
                       );
-                    }
-                    if (state.addNewServiceState.isSuccess) {
-                      await showDialog(
-                        context: context,
-                        builder: (context) => SuccessDialog(
-                          text: LocaleKeys.back,
-                          message: state.successMessage,
-                          onPressed: () => context.pop(),
-                          theme: widget.theme,
-                        ),
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    LocaleKeys.priceAverage,
+                    style: widget.theme.textTheme.bodySmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: ColorsManager.primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textInputAction: TextInputAction.next,
+                    type: TextInputType.number,
+                    fieldName: LocaleKeys.priceAverage,
+                    onSaved: (value) => servicePrice = value!,
+                    isPrice: true,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    LocaleKeys.serviceDetails,
+                    style: widget.theme.textTheme.bodySmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: ColorsManager.primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textInputAction: TextInputAction.next,
+                    type: TextInputType.multiline,
+                    maxLines: 5,
+                    fieldName: LocaleKeys.serviceDetails,
+                    onSaved: (value) => serviceDetails = value!,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    LocaleKeys.servicePhotos,
+                    style: widget.theme.textTheme.bodySmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: ColorsManager.primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  UploadImagesSection(theme: widget.theme),
+                  const SizedBox(height: 24),
+                  BlocConsumer<UserDetailsCubit, UserDetailsState>(
+                    listenWhen: (previous, current) =>
+                        previous.addNewServiceState != current.addNewServiceState,
+                    buildWhen: (previous, current) =>
+                        previous.addNewServiceState != current.addNewServiceState,
+                    listener: (context, state) async {
+                      if (state.addNewServiceState.isError) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => ErrorDialog(
+                            message: state.errorMessage,
+        
+                            theme: widget.theme,
+                          ),
+                        );
+                      }
+                      if (state.addNewServiceState.isSuccess) {
+                        await showDialog(
+                          context: context,
+                          builder: (context) => SuccessDialog(
+                            text: LocaleKeys.back,
+                            message: state.successMessage,
+                            onPressed: () => context.pop(),
+                            theme: widget.theme,
+                          ),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      return PrimaryButton(
+                        isLoading:
+                            state.addNewServiceState.isLoading &&
+                            state.selectedImages.isEmpty,
+                        text: LocaleKeys.save,
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            context.read<UserDetailsCubit>().addService(
+                              name: serviceName,
+                              description: serviceDetails,
+                              price: servicePrice,
+                            );
+                          } else {
+                            setState(() {
+                              _autovalidateMode = AutovalidateMode.always;
+                            });
+                          }
+                        },
                       );
-                    }
-                  },
-                  builder: (context, state) {
-                    return PrimaryButton(
-                      isLoading:
-                          state.addNewServiceState.isLoading &&
-                          state.selectedImages.isEmpty,
-                      text: LocaleKeys.save,
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          context.read<UserDetailsCubit>().addService(
-                            name: serviceName,
-                            description: serviceDetails,
-                            price: servicePrice,
-                          );
-                        } else {
-                          setState(() {
-                            _autovalidateMode = AutovalidateMode.always;
-                          });
-                        }
-                      },
-                    );
-                  },
-                ),
-
-                const SizedBox(height: 16),
-              ],
+                    },
+                  ),
+        
+                  const SizedBox(height: 16),
+                ],
+              ),
             ),
           ),
         ),

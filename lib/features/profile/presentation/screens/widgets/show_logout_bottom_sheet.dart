@@ -26,60 +26,63 @@ Future<void> showLogoutBottomSheet({
   await showModalBottomSheet(
     context: context,
     isScrollControlled: true,
+    useSafeArea: true,
     backgroundColor: Colors.white,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
     builder: (_) {
-      return BlocProvider.value(
-        value: profileCubit,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(2),
+      return SafeArea(
+        child: BlocProvider.value(
+          value: profileCubit,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 40),
-              Text(
-                LocaleKeys.doYouWantToLogout,
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.w400,
+                const SizedBox(height: 40),
+                Text(
+                  LocaleKeys.doYouWantToLogout,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 50),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: ColorsManager.errorLight),
+                const SizedBox(height: 50),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: ColorsManager.errorLight),
+                  ),
+                  child: PrimaryButton(
+                    backgroundColor: Colors.white,
+                    textColor: Colors.black,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    text: LocaleKeys.cancel,
+                  ),
                 ),
-                child: PrimaryButton(
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
+                const SizedBox(height: 8),
+                PrimaryButton(
+                  backgroundColor: ColorsManager.errorLight,
+                  textColor: Colors.white,
                   onPressed: () {
-                    Navigator.pop(context);
+                    profileCubit.logout();
+                    context.replaceRoute(const AuthRoute());
                   },
-                  text: LocaleKeys.cancel,
+                  text: LocaleKeys.exit,
                 ),
-              ),
-              const SizedBox(height: 8),
-              PrimaryButton(
-                backgroundColor: ColorsManager.errorLight,
-                textColor: Colors.white,
-                onPressed: () {
-                  profileCubit.logout();
-                  context.replaceRoute(const AuthRoute());
-                },
-                text: LocaleKeys.exit,
-              ),
-              const SizedBox(height: 8),
-            ],
+                const SizedBox(height: 8),
+              ],
+            ),
           ),
         ),
       );

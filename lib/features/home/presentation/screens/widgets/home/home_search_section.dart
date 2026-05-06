@@ -96,14 +96,15 @@ class _HomeSearchSectionState extends State<HomeSearchSection> {
                         await showModalBottomSheet(
                           backgroundColor: Colors.white,
                           isScrollControlled: true,
+                          useSafeArea: true,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(12),
+                              top: Radius.circular(12), 
                             ),
                           ),
                           context: context,
                           builder: (context) =>
-                              HomeFilterBottomSheet(query: value),
+                              SafeArea(child: HomeFilterBottomSheet(query: value)),
                         );
                       },
                       icon: const Icon(Icons.filter_list, size: 46),

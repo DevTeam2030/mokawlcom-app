@@ -40,11 +40,13 @@ class UploadFileItem extends StatelessWidget {
                     backgroundColor: Colors.white,
                     builder: (bottomSheetContext) => BlocProvider.value(
                       value: filesCubit,
-                      child: UploadFileBottomSheet(
-                        theme: theme,
-                        text: text,
-                        index: index,
-                        userId: userId,
+                      child: SafeArea(
+                        child: UploadFileBottomSheet(
+                          theme: theme,
+                          text: text,
+                          index: index,
+                          userId: userId,
+                        ),
                       ),
                     ),
                   );

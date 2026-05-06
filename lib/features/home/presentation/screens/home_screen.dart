@@ -244,34 +244,36 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(vertical: 10),
-        child: SafeArea(
-          child: BlocBuilder<HomeCubit, HomeState>(
-            buildWhen: (previous, current) =>
-                previous.isConnected != current.isConnected,
-            builder: (context, state) {
-              if (!state.isConnected &&
-                  state.classificationsModel.classifications.isEmpty) {
-                return NoInternetWidget(
-                  errorMessage: state.bannersErrorMessage,
-                  theme: theme,
-                  onPressed: () async {
-                    await _loadData();
-                  },
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(vertical: 10),
+          child: SafeArea(
+            child: BlocBuilder<HomeCubit, HomeState>(
+              buildWhen: (previous, current) =>
+                  previous.isConnected != current.isConnected,
+              builder: (context, state) {
+                if (!state.isConnected &&
+                    state.classificationsModel.classifications.isEmpty) {
+                  return NoInternetWidget(
+                    errorMessage: state.bannersErrorMessage,
+                    theme: theme,
+                    onPressed: () async {
+                      await _loadData();
+                    },
+                  );
+                }
+                return CustomScrollView(
+                  slivers: [
+                    const SliverToBoxAdapter(child: HomeHeader()),
+                    SliverToBoxAdapter(child: HomeBannerSection(theme: theme)),
+                    SliverToBoxAdapter(child: HomeSearchSection(theme: theme)),
+                    SliverToBoxAdapter(
+                      child: HomeDepartmentsSection(theme: theme),
+                    ),
+                  ],
                 );
-              }
-              return CustomScrollView(
-                slivers: [
-                  const SliverToBoxAdapter(child: HomeHeader()),
-                  SliverToBoxAdapter(child: HomeBannerSection(theme: theme)),
-                  SliverToBoxAdapter(child: HomeSearchSection(theme: theme)),
-                  SliverToBoxAdapter(
-                    child: HomeDepartmentsSection(theme: theme),
-                  ),
-                ],
-              );
-            },
+              },
+            ),
           ),
         ),
       ),

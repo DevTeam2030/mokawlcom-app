@@ -62,98 +62,100 @@ class _SendOfferToContractorsScreenState
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: 20,
-          vertical: 32,
-        ),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            autovalidateMode: _autoValidateMode,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  LocaleKeys.shareYourDealNow,
-                  style: theme.textTheme.labelMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: ColorsManager.primaryColor,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: 20,
+            vertical: 32,
+          ),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              autovalidateMode: _autoValidateMode,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    LocaleKeys.shareYourDealNow,
+                    style: theme.textTheme.labelMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: ColorsManager.primaryColor,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  LocaleKeys.offerAddress,
-                  style: theme.textTheme.bodySmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: ColorsManager.primaryColor,
+                  const SizedBox(height: 24),
+                  Text(
+                    LocaleKeys.offerAddress,
+                    style: theme.textTheme.bodySmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: ColorsManager.primaryColor,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                CustomTextFormField(
-                  textInputAction: TextInputAction.next,
-                  type: TextInputType.text,
-                  hintText: "",
-                  fieldName: LocaleKeys.offerAddress,
-                  onSaved: (value) => title = value!,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  LocaleKeys.offerDetails,
-                  style: theme.textTheme.bodySmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: ColorsManager.primaryColor,
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textInputAction: TextInputAction.next,
+                    type: TextInputType.text,
+                    hintText: "",
+                    fieldName: LocaleKeys.offerAddress,
+                    onSaved: (value) => title = value!,
                   ),
-                ),
-                const SizedBox(height: 8),
-                CustomTextFormField(
-                  textInputAction: TextInputAction.done,
-                  type: TextInputType.multiline,
-                  maxLines: 20,
-                  hintText: "",
-                  fieldName: LocaleKeys.offerDetails,
-                  onSaved: (value) => description = value!,
-                  onSubmit: (_) => _submit(),
-                ),
-                const SizedBox(height: 72),
-                BlocConsumer<UserDetailsCubit, UserDetailsState>(
-                  listenWhen: (previous, current) =>
-                      previous.addDealState != current.addDealState,
-                  listener: (context, state) {
-                    if (state.addDealState.isError) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => ErrorDialog(
-                          theme: theme,
-                          message: state.errorMessage,
-                        ),
+                  const SizedBox(height: 16),
+                  Text(
+                    LocaleKeys.offerDetails,
+                    style: theme.textTheme.bodySmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: ColorsManager.primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textInputAction: TextInputAction.done,
+                    type: TextInputType.multiline,
+                    maxLines: 20,
+                    hintText: "",
+                    fieldName: LocaleKeys.offerDetails,
+                    onSaved: (value) => description = value!,
+                    onSubmit: (_) => _submit(),
+                  ),
+                  const SizedBox(height: 72),
+                  BlocConsumer<UserDetailsCubit, UserDetailsState>(
+                    listenWhen: (previous, current) =>
+                        previous.addDealState != current.addDealState,
+                    listener: (context, state) {
+                      if (state.addDealState.isError) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => ErrorDialog(
+                            theme: theme,
+                            message: state.errorMessage,
+                          ),
+                        );
+                      }
+                      if (state.addDealState.isSuccess) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => SuccessDialog(
+                            theme: theme,
+                            message: state.successMessage,
+                            onPressed: () => context.pop(),
+                            text: LocaleKeys.back,
+                          ),
+                        );
+                      }
+                    },
+                    buildWhen: (previous, current) =>
+                        previous.addDealState != current.addDealState,
+                    builder: (context, state) {
+                      return PrimaryButton(
+                        onPressed: _submit,
+                        text: LocaleKeys.send,
+                        isLoading: state.addDealState.isLoading,
                       );
-                    }
-                    if (state.addDealState.isSuccess) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => SuccessDialog(
-                          theme: theme,
-                          message: state.successMessage,
-                          onPressed: () => context.pop(),
-                          text: LocaleKeys.back,
-                        ),
-                      );
-                    }
-                  },
-                  buildWhen: (previous, current) =>
-                      previous.addDealState != current.addDealState,
-                  builder: (context, state) {
-                    return PrimaryButton(
-                      onPressed: _submit,
-                      text: LocaleKeys.send,
-                      isLoading: state.addDealState.isLoading,
-                    );
-                  },
-                ),
-              ],
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

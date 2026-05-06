@@ -31,22 +31,24 @@ class CompleteDataScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 28.0),
-              AuthUserImage(
-                onEditTap: () async {
-                  await context.read<AuthCubit>().pickFile();
-                },
-              ),
-              const SizedBox(height: 8.0),
-              CompleteContractorDataForm(theme: theme),
-              const SizedBox(height: 40.0),
-            ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(horizontal: 20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 28.0),
+                AuthUserImage(
+                  onEditTap: () async {
+                    await context.read<AuthCubit>().pickFile();
+                  },
+                ),
+                const SizedBox(height: 8.0),
+                CompleteContractorDataForm(theme: theme),
+                const SizedBox(height: 40.0),
+              ],
+            ),
           ),
         ),
       ),

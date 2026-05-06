@@ -135,13 +135,15 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
                   ],
                 )
               : null,
-          body: Padding(
-            padding: const EdgeInsetsDirectional.only(
-              start: 16,
-              end: 16,
-              bottom: 20,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(
+                start: 16,
+                end: 16,
+                bottom: 20,
+              ),
+              child: _buildBody(state, theme),
             ),
-            child: _buildBody(state, theme),
           ),
         );
       },
@@ -260,12 +262,14 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
       useSafeArea: true,
       backgroundColor: Colors.white,
       builder: (_) {
-        return FractionallySizedBox(
-          heightFactor: 1,
-          child: OfferPriceBottomSheet(
-            contractorInfoCubit: contractorInfoCubit,
-            address: LocaleKeys.offerPrice,
-            contractorId: contractorId,
+        return SafeArea(
+          child: FractionallySizedBox(
+            heightFactor: 1,
+            child: OfferPriceBottomSheet(
+              contractorInfoCubit: contractorInfoCubit,
+              address: LocaleKeys.offerPrice,
+              contractorId: contractorId,
+            ),
           ),
         );
       },

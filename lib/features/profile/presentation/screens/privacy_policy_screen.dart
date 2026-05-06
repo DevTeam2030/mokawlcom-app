@@ -43,34 +43,36 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           ),
         ),
       ),
-      body: Center(
-        child: BlocBuilder<ProfileCubit, ProfileState>(
-          buildWhen: (previous, current) =>
-              previous.getSettingsRequestStatus !=
-                  current.getSettingsRequestStatus ||
-              previous.settingsModel != current.settingsModel,
-          builder: (context, state) => state.isConnected
-              ? UiStateBuilder(
-                  state: state.getSettingsRequestStatus,
-                  onLoading: const CircularProgressIndicator(
-                    color: ColorsManager.primaryColor,
-                  ),
-                  onSuccess: SingleChildScrollView(
-                    padding: const EdgeInsetsDirectional.all(16),
-                    child: Text(
-                      state.settingsModel.privacyPolicy,
-                      style: Theme.of(context).textTheme.bodyLarge,
+      body: SafeArea(
+        child: Center(
+          child: BlocBuilder<ProfileCubit, ProfileState>(
+            buildWhen: (previous, current) =>
+                previous.getSettingsRequestStatus !=
+                    current.getSettingsRequestStatus ||
+                previous.settingsModel != current.settingsModel,
+            builder: (context, state) => state.isConnected
+                ? UiStateBuilder(
+                    state: state.getSettingsRequestStatus,
+                    onLoading: const CircularProgressIndicator(
+                      color: ColorsManager.primaryColor,
                     ),
+                    onSuccess: SingleChildScrollView(
+                      padding: const EdgeInsetsDirectional.all(16),
+                      child: Text(
+                        state.settingsModel.privacyPolicy,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                    errorMessage: state.errorMessage,
+        
+                    theme: Theme.of(context),
+                  )
+                : NoInternetWidget(
+                    errorMessage: state.errorMessage,
+                    theme: Theme.of(context),
+                    onPressed: () => context.read<ProfileCubit>().getSettings(),
                   ),
-                  errorMessage: state.errorMessage,
-
-                  theme: Theme.of(context),
-                )
-              : NoInternetWidget(
-                  errorMessage: state.errorMessage,
-                  theme: Theme.of(context),
-                  onPressed: () => context.read<ProfileCubit>().getSettings(),
-                ),
+          ),
         ),
       ),
     );

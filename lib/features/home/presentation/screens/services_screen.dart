@@ -81,99 +81,101 @@ class _ServicesScreenState extends State<ServicesScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 18),
-          Padding(
-            padding: const EdgeInsetsDirectional.only(start: 16),
-            child: Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                widget.classificationModel.name,
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: ColorsManager.grayText,
+      body: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 18),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: 16),
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  widget.classificationModel.name,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: ColorsManager.grayText,
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 16),
-          BlocConsumer<HomeCubit, HomeState>(
-            listenWhen: (p, c) => p.getServicesState != c.getServicesState,
-            buildWhen: (p, c) => p.getServicesState != c.getServicesState,
-            listener: (context, state) {
-              if (state.getServicesState.isError) {
-                showDialog(
-                  context: context,
-                  builder: (context) => ErrorDialog(
-                    theme: theme,
-                    message: state.servicesErrorMessage,
-                  ),
-                );
-              }
-            },
-            builder: (context, state) {
-              final hasData = state.servicesModel.services.isNotEmpty;
-
-              if (!state.isConnected && !hasData) {
-                return NoInternetWidget(
-                  errorMessage: state.servicesErrorMessage,
-                  theme: theme,
-                  onPressed: () {
-                    context.read<HomeCubit>().getServices(
-                      classificationId: widget.classificationModel.id,
-                    );
-                  },
-                );
-              }
-
-              return Expanded(
-                child: UiStateBuilder(
-                  theme: theme,
-                  state: state.getServicesState,
-                  errorMessage: state.servicesErrorMessage,
-                  onLoading: Skeletonizer(
-                    containersColor: ColorsManager.skeletonColor,
-                    enabled: state.getServicesState.isLoading,
-                    child: _buildServices(
+            const SizedBox(height: 16),
+            BlocConsumer<HomeCubit, HomeState>(
+              listenWhen: (p, c) => p.getServicesState != c.getServicesState,
+              buildWhen: (p, c) => p.getServicesState != c.getServicesState,
+              listener: (context, state) {
+                if (state.getServicesState.isError) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => ErrorDialog(
                       theme: theme,
-                      services: List.generate(
-                        9,
-                        (i) => ServiceModel(
-                          id: i,
-                          name: '******',
-                          image: '',
-                          numberOfContractors: i,
-                        ),
-                      ),
-                      status: state.getServicesState,
+                      message: state.servicesErrorMessage,
                     ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                final hasData = state.servicesModel.services.isNotEmpty;
+        
+                if (!state.isConnected && !hasData) {
+                  return NoInternetWidget(
+                    errorMessage: state.servicesErrorMessage,
+                    theme: theme,
+                    onPressed: () {
+                      context.read<HomeCubit>().getServices(
+                        classificationId: widget.classificationModel.id,
+                      );
+                    },
+                  );
+                }
+        
+                return Expanded(
+                  child: UiStateBuilder(
+                    theme: theme,
+                    state: state.getServicesState,
+                    errorMessage: state.servicesErrorMessage,
+                    onLoading: Skeletonizer(
+                      containersColor: ColorsManager.skeletonColor,
+                      enabled: state.getServicesState.isLoading,
+                      child: _buildServices(
+                        theme: theme,
+                        services: List.generate(
+                          9,
+                          (i) => ServiceModel(
+                            id: i,
+                            name: '******',
+                            image: '',
+                            numberOfContractors: i,
+                          ),
+                        ),
+                        status: state.getServicesState,
+                      ),
+                    ),
+                    onSuccess: hasData
+                        ? _buildServices(
+                            theme: theme,
+                            services: state.servicesModel.services,
+                            status: state.getServicesState,
+                          )
+                        : NoDataWidget(
+                            text: LocaleKeys.noServicesYet,
+                            theme: theme,
+                          ),
+                    onError: hasData
+                        ? _buildServices(
+                            theme: theme,
+                            services: state.servicesModel.services,
+                            status: state.getServicesState,
+                          )
+                        : NoDataWidget(
+                            text: LocaleKeys.noServicesYet,
+                            theme: theme,
+                          ),
                   ),
-                  onSuccess: hasData
-                      ? _buildServices(
-                          theme: theme,
-                          services: state.servicesModel.services,
-                          status: state.getServicesState,
-                        )
-                      : NoDataWidget(
-                          text: LocaleKeys.noServicesYet,
-                          theme: theme,
-                        ),
-                  onError: hasData
-                      ? _buildServices(
-                          theme: theme,
-                          services: state.servicesModel.services,
-                          status: state.getServicesState,
-                        )
-                      : NoDataWidget(
-                          text: LocaleKeys.noServicesYet,
-                          theme: theme,
-                        ),
-                ),
-              );
-            },
-          ),
-        ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

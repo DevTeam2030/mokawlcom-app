@@ -22,62 +22,64 @@ class BottomNavBarScreen extends StatelessWidget {
     return AutoTabsScaffold(
       routes: const [HomeRoute(), NotificationsRoute(), ProfileRoute()],
       bottomNavigationBuilder: (context, tabsRouter) {
-        return Container(
-          height: 72,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          decoration: const BoxDecoration(
-            color: ColorsManager.surfaceColor,
-            border: Border(
-              top: BorderSide(color: ColorsManager.navBorderColor, width: 1.5),
+        return SafeArea(
+          child: Container(
+            height: 72,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            decoration: const BoxDecoration(
+              color: ColorsManager.surfaceColor,
+              border: Border(
+                top: BorderSide(color: ColorsManager.navBorderColor, width: 1.5),
+              ),
+              borderRadius: BorderRadiusDirectional.only(
+                topStart: Radius.circular(16),
+                topEnd: Radius.circular(16),
+              ),
             ),
-            borderRadius: BorderRadiusDirectional.only(
-              topStart: Radius.circular(16),
-              topEnd: Radius.circular(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _NavItem(
+                  icon: MyIcons.home,
+                  label: LocaleKeys.home,
+                  isSelected: tabsRouter.activeIndex == 0,
+                  onTap: () => tabsRouter.setActiveIndex(0),
+                ),
+                BlocBuilder<NotificationsCubit, NotificationsState>(
+                  buildWhen: (previous, current) {
+                    return previous.unReadPublicNotifications !=
+                            current.unReadPublicNotifications ||
+                        previous.unReadOfferNotifications !=
+                            current.unReadOfferNotifications;
+                  },
+                  builder: (context, state) {
+                    final totalUnread =
+                        state.unReadPublicNotifications.length +
+                        state.unReadOfferNotifications.length;
+                    return _NavItem(
+                      icon: MyIcons.notification,
+                      label: LocaleKeys.notifications,
+                      isSelected: tabsRouter.activeIndex == 1,
+                      badgeCount: totalUnread,
+                      onTap: () {
+                        context.read<AppCubit>().handleProtectedNavigation(
+                          context: context,
+                          onAllowed: () {
+                            tabsRouter.setActiveIndex(1);
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
+                _NavItem(
+                  icon: MyIcons.user,
+                  label: LocaleKeys.profile,
+                  isSelected: tabsRouter.activeIndex == 2,
+                  onTap: () => tabsRouter.setActiveIndex(2),
+                ),
+              ],
             ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _NavItem(
-                icon: MyIcons.home,
-                label: LocaleKeys.home,
-                isSelected: tabsRouter.activeIndex == 0,
-                onTap: () => tabsRouter.setActiveIndex(0),
-              ),
-              BlocBuilder<NotificationsCubit, NotificationsState>(
-                buildWhen: (previous, current) {
-                  return previous.unReadPublicNotifications !=
-                          current.unReadPublicNotifications ||
-                      previous.unReadOfferNotifications !=
-                          current.unReadOfferNotifications;
-                },
-                builder: (context, state) {
-                  final totalUnread =
-                      state.unReadPublicNotifications.length +
-                      state.unReadOfferNotifications.length;
-                  return _NavItem(
-                    icon: MyIcons.notification,
-                    label: LocaleKeys.notifications,
-                    isSelected: tabsRouter.activeIndex == 1,
-                    badgeCount: totalUnread,
-                    onTap: () {
-                      context.read<AppCubit>().handleProtectedNavigation(
-                        context: context,
-                        onAllowed: () {
-                          tabsRouter.setActiveIndex(1);
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
-              _NavItem(
-                icon: MyIcons.user,
-                label: LocaleKeys.profile,
-                isSelected: tabsRouter.activeIndex == 2,
-                onTap: () => tabsRouter.setActiveIndex(2),
-              ),
-            ],
           ),
         );
       },

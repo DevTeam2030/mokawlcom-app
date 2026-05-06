@@ -48,71 +48,73 @@ class _ConnectUsScreenState extends State<ConnectUsScreen> {
           ),
         ),
       ),
-      body: Center(
-        child: BlocBuilder<ProfileCubit, ProfileState>(
-          buildWhen: (previous, current) =>
-              previous.getSettingsRequestStatus !=
-                  current.getSettingsRequestStatus ||
-              previous.settingsModel != current.settingsModel,
-          builder: (context, state) => state.isConnected
-              ? UiStateBuilder(
-                  state: state.getSettingsRequestStatus,
-                  onLoading: const CircularProgressIndicator(
-                    color: ColorsManager.primaryColor,
-                  ),
-                  onSuccess: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.email_outlined,
-                          size: 100,
-                          color: ColorsManager.primaryColor,
-                        ),
-                        const SizedBox(height: 24),
-                        Text(
-                          state.settingsModel.email,
-                          style: theme.textTheme.titleLarge!.copyWith(
-                            color: ColorsManager.primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 48),
-                        PrimaryButton(
-                          onPressed: () {
-                            if (state.settingsModel.email.isNotEmpty) {
-                              LaunchUtils.email(
-                                email: state.settingsModel.email,
-                                onError: (msg) => showDialog(
-                                  context: context,
-                                  builder: (context) => ErrorDialog(
-                                    message: msg,
-                                    buttonText: LocaleKeys.exit,
-                                    theme: theme,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          text: LocaleKeys.connectUs,
-                          icon: const Icon(
-                            Icons.send,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                        ),
-                      ],
+      body: SafeArea(
+        child: Center(
+          child: BlocBuilder<ProfileCubit, ProfileState>(
+            buildWhen: (previous, current) =>
+                previous.getSettingsRequestStatus !=
+                    current.getSettingsRequestStatus ||
+                previous.settingsModel != current.settingsModel,
+            builder: (context, state) => state.isConnected
+                ? UiStateBuilder(
+                    state: state.getSettingsRequestStatus,
+                    onLoading: const CircularProgressIndicator(
+                      color: ColorsManager.primaryColor,
                     ),
+                    onSuccess: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.email_outlined,
+                            size: 100,
+                            color: ColorsManager.primaryColor,
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            state.settingsModel.email,
+                            style: theme.textTheme.titleLarge!.copyWith(
+                              color: ColorsManager.primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 48),
+                          PrimaryButton(
+                            onPressed: () {
+                              if (state.settingsModel.email.isNotEmpty) {
+                                LaunchUtils.email(
+                                  email: state.settingsModel.email,
+                                  onError: (msg) => showDialog(
+                                    context: context,
+                                    builder: (context) => ErrorDialog(
+                                      message: msg,
+                                      buttonText: LocaleKeys.exit,
+                                      theme: theme,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                            text: LocaleKeys.connectUs,
+                            icon: const Icon(
+                              Icons.send,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    errorMessage: state.errorMessage,
+                    theme: theme,
+                  )
+                : NoInternetWidget(
+                    errorMessage: state.errorMessage,
+                    theme: theme,
+                    onPressed: () => context.read<ProfileCubit>().getSettings(),
                   ),
-                  errorMessage: state.errorMessage,
-                  theme: theme,
-                )
-              : NoInternetWidget(
-                  errorMessage: state.errorMessage,
-                  theme: theme,
-                  onPressed: () => context.read<ProfileCubit>().getSettings(),
-                ),
+          ),
         ),
       ),
     );

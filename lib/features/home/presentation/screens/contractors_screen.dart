@@ -154,82 +154,84 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: 16,
-          vertical: 13,
-        ),
-        child: BlocConsumer<SearchCubit, SearchState>(
-          listenWhen: (previous, current) =>
-              previous.getContractorsState != current.getContractorsState,
-          buildWhen: (previous, current) =>
-              previous.getContractorsState != current.getContractorsState,
-          listener: (context, state) {
-            if (state.getContractorsState.isError) {
-              showDialog(
-                context: context,
-                builder: (context) =>
-                    ErrorDialog(theme: theme, message: state.errorMessage),
-              );
-            }
-          },
-          builder: (context, state) {
-            final bool hasData = state.contractorsModel.contractors.isNotEmpty;
-            if (!state.isConnected && !hasData) {
-              return NoInternetWidget(
-                errorMessage: state.errorMessage,
-                theme: theme,
-                onPressed: () {
-                  context.read<SearchCubit>().getContractors(
-                    classificationId: widget.classificationModel?.id,
-                    serviceId: widget.serviceModel?.id,
-                  );
-                },
-              );
-            }
-
-            return UiStateBuilder(
-              state: state.getContractorsState,
-              theme: theme,
-              errorMessage: state.errorMessage,
-              onLoading: Skeletonizer(
-                containersColor: ColorsManager.skeletonColor,
-                ignoreContainers: true,
-                child: _buildContractorsList(
-                  contractors: List.generate(
-                    4,
-                    (_) => const ContractorModel(
-                      id: 0,
-                      name: 'Contractor',
-                      image: '',
-                      address: 'Address',
-                      rating: 5,
-                      description: 'Description',
-                      phone: '',
-                      whatsApp: '',
-                      category: '---',
-                    ),
-                  ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: 16,
+            vertical: 13,
+          ),
+          child: BlocConsumer<SearchCubit, SearchState>(
+            listenWhen: (previous, current) =>
+                previous.getContractorsState != current.getContractorsState,
+            buildWhen: (previous, current) =>
+                previous.getContractorsState != current.getContractorsState,
+            listener: (context, state) {
+              if (state.getContractorsState.isError) {
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      ErrorDialog(theme: theme, message: state.errorMessage),
+                );
+              }
+            },
+            builder: (context, state) {
+              final bool hasData = state.contractorsModel.contractors.isNotEmpty;
+              if (!state.isConnected && !hasData) {
+                return NoInternetWidget(
+                  errorMessage: state.errorMessage,
                   theme: theme,
-                  status: state.getContractorsState,
+                  onPressed: () {
+                    context.read<SearchCubit>().getContractors(
+                      classificationId: widget.classificationModel?.id,
+                      serviceId: widget.serviceModel?.id,
+                    );
+                  },
+                );
+              }
+        
+              return UiStateBuilder(
+                state: state.getContractorsState,
+                theme: theme,
+                errorMessage: state.errorMessage,
+                onLoading: Skeletonizer(
+                  containersColor: ColorsManager.skeletonColor,
+                  ignoreContainers: true,
+                  child: _buildContractorsList(
+                    contractors: List.generate(
+                      4,
+                      (_) => const ContractorModel(
+                        id: 0,
+                        name: 'Contractor',
+                        image: '',
+                        address: 'Address',
+                        rating: 5,
+                        description: 'Description',
+                        phone: '',
+                        whatsApp: '',
+                        category: '---',
+                      ),
+                    ),
+                    theme: theme,
+                    status: state.getContractorsState,
+                  ),
                 ),
-              ),
-              onSuccess: hasData
-                  ? _buildContractorsList(
-                      contractors: state.contractorsModel.contractors,
-                      theme: theme,
-                      status: state.getContractorsState,
-                    )
-                  : NoDataWidget(text: LocaleKeys.noResultsFound, theme: theme),
-              onError: hasData
-                  ? _buildContractorsList(
-                      contractors: state.contractorsModel.contractors,
-                      theme: theme,
-                      status: state.getContractorsState,
-                    )
-                  : NoDataWidget(text: LocaleKeys.noResultsFound, theme: theme),
-            );
-          },
+                onSuccess: hasData
+                    ? _buildContractorsList(
+                        contractors: state.contractorsModel.contractors,
+                        theme: theme,
+                        status: state.getContractorsState,
+                      )
+                    : NoDataWidget(text: LocaleKeys.noResultsFound, theme: theme),
+                onError: hasData
+                    ? _buildContractorsList(
+                        contractors: state.contractorsModel.contractors,
+                        theme: theme,
+                        status: state.getContractorsState,
+                      )
+                    : NoDataWidget(text: LocaleKeys.noResultsFound, theme: theme),
+              );
+            },
+          ),
         ),
       ),
     );

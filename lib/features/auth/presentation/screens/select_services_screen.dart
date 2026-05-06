@@ -84,73 +84,75 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
           ),
         ),
       ),
-      body: BlocConsumer<AuthCubit, AuthState>(
-        listenWhen: (p, c) => p.getServicesState != c.getServicesState,
-        listener: (context, state) {
-          if (state.getServicesState.isError) {
-            showDialog(
-              context: context,
-              builder: (context) =>
-                  ErrorDialog(theme: theme, message: state.errorMessage),
-            );
-          }
-        },
-        builder: (context, state) {
-          final hasData = state.servicesModel.services.isNotEmpty;
-
-          if (!state.isConnected) {
-            return NoInternetWidget(
-              errorMessage: state.errorMessage,
-              theme: theme,
-              onPressed: () => context.read<AuthCubit>().getServices(
-                classificationId: widget.classificationId,
-              ),
-            );
-          }
-
-          return UiStateBuilder(
-            state: state.getServicesState,
-            theme: theme,
-            errorMessage: state.errorMessage,
-            onLoading: Skeletonizer(
-              containersColor: ColorsManager.skeletonColor,
-              enabled: state.getServicesState.isLoading,
-              child: _buildServices(
-                theme,
-                List.generate(
-                  6,
-                  (i) => const ServiceModel(
-                    id: 0,
-                    name: 'Loading',
-                    image: '',
-                    numberOfContractors: 0,
-                  ),
+      body: SafeArea(
+        child: BlocConsumer<AuthCubit, AuthState>(
+          listenWhen: (p, c) => p.getServicesState != c.getServicesState,
+          listener: (context, state) {
+            if (state.getServicesState.isError) {
+              showDialog(
+                context: context,
+                builder: (context) =>
+                    ErrorDialog(theme: theme, message: state.errorMessage),
+              );
+            }
+          },
+          builder: (context, state) {
+            final hasData = state.servicesModel.services.isNotEmpty;
+        
+            if (!state.isConnected) {
+              return NoInternetWidget(
+                errorMessage: state.errorMessage,
+                theme: theme,
+                onPressed: () => context.read<AuthCubit>().getServices(
+                  classificationId: widget.classificationId,
                 ),
-                state.getServicesState,
+              );
+            }
+        
+            return UiStateBuilder(
+              state: state.getServicesState,
+              theme: theme,
+              errorMessage: state.errorMessage,
+              onLoading: Skeletonizer(
+                containersColor: ColorsManager.skeletonColor,
+                enabled: state.getServicesState.isLoading,
+                child: _buildServices(
+                  theme,
+                  List.generate(
+                    6,
+                    (i) => const ServiceModel(
+                      id: 0,
+                      name: 'Loading',
+                      image: '',
+                      numberOfContractors: 0,
+                    ),
+                  ),
+                  state.getServicesState,
+                ),
               ),
-            ),
-            onSuccess: hasData
-                ? _buildServices(
-                    theme,
-                    state.servicesModel.services,
-                    state.getServicesState,
-                  )
-                : NoDataWidget(
-                    text: LocaleKeys.noServicesAvailable,
-                    theme: theme,
-                  ),
-            onError: hasData
-                ? _buildServices(
-                    theme,
-                    state.servicesModel.services,
-                    state.getServicesState,
-                  )
-                : NoDataWidget(
-                    text: LocaleKeys.noServicesAvailable,
-                    theme: theme,
-                  ),
-          );
-        },
+              onSuccess: hasData
+                  ? _buildServices(
+                      theme,
+                      state.servicesModel.services,
+                      state.getServicesState,
+                    )
+                  : NoDataWidget(
+                      text: LocaleKeys.noServicesAvailable,
+                      theme: theme,
+                    ),
+              onError: hasData
+                  ? _buildServices(
+                      theme,
+                      state.servicesModel.services,
+                      state.getServicesState,
+                    )
+                  : NoDataWidget(
+                      text: LocaleKeys.noServicesAvailable,
+                      theme: theme,
+                    ),
+            );
+          },
+        ),
       ),
     );
   }

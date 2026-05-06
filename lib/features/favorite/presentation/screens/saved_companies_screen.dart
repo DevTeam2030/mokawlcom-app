@@ -79,80 +79,82 @@ class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
           ),
         ),
       ),
-      body: BlocConsumer<FavoriteCubit, FavoriteState>(
-        listenWhen: (prev, curr) =>
-            prev.getFavoritesState != curr.getFavoritesState ||
-            prev.removeFavoriteState != curr.removeFavoriteState,
-        buildWhen: (prev, curr) =>
-            prev.getFavoritesState != curr.getFavoritesState ||
-            prev.favorites != curr.favorites,
-        listener: (context, state) {
-          if (state.getFavoritesState.isError) {
-            showDialog(
-              context: context,
-              builder: (context) =>
-                  ErrorDialog(theme: theme, message: state.errorMessage),
-            );
-          }
-          if (state.removeFavoriteState.isError) {
-            showDialog(
-              context: context,
-              builder: (context) =>
-                  ErrorDialog(theme: theme, message: state.errorMessage),
-            );
-          }
-        },
-        builder: (context, state) {
-          final hasData = state.favorites.isNotEmpty;
-
-          if (!state.isConnected && !hasData) {
-            return NoInternetWidget(
-              errorMessage: state.errorMessage,
+      body: SafeArea(
+        child: BlocConsumer<FavoriteCubit, FavoriteState>(
+          listenWhen: (prev, curr) =>
+              prev.getFavoritesState != curr.getFavoritesState ||
+              prev.removeFavoriteState != curr.removeFavoriteState,
+          buildWhen: (prev, curr) =>
+              prev.getFavoritesState != curr.getFavoritesState ||
+              prev.favorites != curr.favorites,
+          listener: (context, state) {
+            if (state.getFavoritesState.isError) {
+              showDialog(
+                context: context,
+                builder: (context) =>
+                    ErrorDialog(theme: theme, message: state.errorMessage),
+              );
+            }
+            if (state.removeFavoriteState.isError) {
+              showDialog(
+                context: context,
+                builder: (context) =>
+                    ErrorDialog(theme: theme, message: state.errorMessage),
+              );
+            }
+          },
+          builder: (context, state) {
+            final hasData = state.favorites.isNotEmpty;
+        
+            if (!state.isConnected && !hasData) {
+              return NoInternetWidget(
+                errorMessage: state.errorMessage,
+                theme: theme,
+                onPressed: () => context.read<FavoriteCubit>().getFavorites(),
+              );
+            }
+        
+            return UiStateBuilder(
+              state: state.getFavoritesState,
               theme: theme,
-              onPressed: () => context.read<FavoriteCubit>().getFavorites(),
-            );
-          }
-
-          return UiStateBuilder(
-            state: state.getFavoritesState,
-            theme: theme,
-            errorMessage: state.errorMessage,
-            onLoading: Skeletonizer(
-              enabled: state.getFavoritesState.isLoading && !hasData,
-              child: _buildList(
-                theme,
-                hasData
-                    ? state.favorites.values.toList()
-                    : List.generate(
-                        6,
-                        (index) => FavoriteModel(
-                          id: index,
-                          contractorId: 0,
-                          companyName: '',
-                          address: '',
-                          logo: '',
-                          rate: 0,
+              errorMessage: state.errorMessage,
+              onLoading: Skeletonizer(
+                enabled: state.getFavoritesState.isLoading && !hasData,
+                child: _buildList(
+                  theme,
+                  hasData
+                      ? state.favorites.values.toList()
+                      : List.generate(
+                          6,
+                          (index) => FavoriteModel(
+                            id: index,
+                            contractorId: 0,
+                            companyName: '',
+                            address: '',
+                            logo: '',
+                            rate: 0,
+                          ),
                         ),
-                      ),
-                state.getFavoritesState,
+                  state.getFavoritesState,
+                ),
               ),
-            ),
-            onSuccess: state.favorites.isNotEmpty
-                ? _buildList(
-                    theme,
-                    state.favorites.values.toList(),
-                    state.getFavoritesState,
-                  )
-                : NoDataWidget(text: LocaleKeys.noSavedCompanies, theme: theme),
-            onError: state.favorites.isNotEmpty
-                ? _buildList(
-                    theme,
-                    state.favorites.values.toList(),
-                    state.getFavoritesState,
-                  )
-                : NoDataWidget(text: LocaleKeys.noSavedCompanies, theme: theme),
-          );
-        },
+              onSuccess: state.favorites.isNotEmpty
+                  ? _buildList(
+                      theme,
+                      state.favorites.values.toList(),
+                      state.getFavoritesState,
+                    )
+                  : NoDataWidget(text: LocaleKeys.noSavedCompanies, theme: theme),
+              onError: state.favorites.isNotEmpty
+                  ? _buildList(
+                      theme,
+                      state.favorites.values.toList(),
+                      state.getFavoritesState,
+                    )
+                  : NoDataWidget(text: LocaleKeys.noSavedCompanies, theme: theme),
+            );
+          },
+        ),
       ),
     );
   }

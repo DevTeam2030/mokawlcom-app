@@ -68,164 +68,168 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.all(20.0),
-        child: SingleChildScrollView(
-          child: Form(
-            key: formKey,
-            autovalidateMode: _autovalidateMode,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16.0),
-                Text(
-                  LocaleKeys.oldPassword,
-                  style: theme.textTheme.bodyMedium!.copyWith(
-                    color: ColorsManager.primaryColor,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.all(20.0),
+          child: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              autovalidateMode: _autovalidateMode,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 16.0),
+                  Text(
+                    LocaleKeys.oldPassword,
+                    style: theme.textTheme.bodyMedium!.copyWith(
+                      color: ColorsManager.primaryColor,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8.0),
-                ValueListenableBuilder<AutovalidateMode>(
-                  valueListenable: _oldPasswordAutovalidateMode,
-                  builder: (context, autovalidateMode, _) {
-                    return PasswordField(
-                      autovalidateMode: autovalidateMode,
-                      hintText: "********",
-                      textInputAction: TextInputAction.next,
-                      onChanged: (value) {
-                        _oldPassword = value!;
-                        // Enable autovalidation once user starts typing
-                        _oldPasswordAutovalidateMode.value =
-                            AutovalidateMode.always;
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return LocaleKeys.passwordIsRequired;
-                        }
-                        if (value.length < 6) {
-                          return LocaleKeys.passwordIsTooShort;
-                        }
-                        return null;
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: 16.0),
-                Text(
-                  LocaleKeys.newPassword,
-                  style: theme.textTheme.bodyMedium!.copyWith(
-                    color: ColorsManager.primaryColor,
+                  const SizedBox(height: 8.0),
+                  ValueListenableBuilder<AutovalidateMode>(
+                    valueListenable: _oldPasswordAutovalidateMode,
+                    builder: (context, autovalidateMode, _) {
+                      return PasswordField(
+                        autovalidateMode: autovalidateMode,
+                        hintText: "********",
+                        textInputAction: TextInputAction.next,
+                        onChanged: (value) {
+                          _oldPassword = value!;
+                          // Enable autovalidation once user starts typing
+                          _oldPasswordAutovalidateMode.value =
+                              AutovalidateMode.always;
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return LocaleKeys.passwordIsRequired;
+                          }
+                          if (value.length < 6) {
+                            return LocaleKeys.passwordIsTooShort;
+                          }
+                          return null;
+                        },
+                      );
+                    },
                   ),
-                ),
-                const SizedBox(height: 8.0),
-                ValueListenableBuilder<AutovalidateMode>(
-                  valueListenable: _newPasswordAutovalidateMode,
-                  builder: (context, autovalidateMode, _) {
-                    return PasswordField(
-                      autovalidateMode: autovalidateMode,
-                      hintText: "********",
-                      textInputAction: TextInputAction.next,
-                      onChanged: (value) {
-                        _newPassword = value!;
-                        // Enable autovalidation once user starts typing
-                        _newPasswordAutovalidateMode.value =
-                            AutovalidateMode.always;
-                        // Enable autovalidation for confirm password once user starts typing
-                        if (_confirmPassword.isNotEmpty) {
+                  const SizedBox(height: 16.0),
+                  Text(
+                    LocaleKeys.newPassword,
+                    style: theme.textTheme.bodyMedium!.copyWith(
+                      color: ColorsManager.primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  ValueListenableBuilder<AutovalidateMode>(
+                    valueListenable: _newPasswordAutovalidateMode,
+                    builder: (context, autovalidateMode, _) {
+                      return PasswordField(
+                        autovalidateMode: autovalidateMode,
+                        hintText: "********",
+                        textInputAction: TextInputAction.next,
+                        onChanged: (value) {
+                          _newPassword = value!;
+                          // Enable autovalidation once user starts typing
+                          _newPasswordAutovalidateMode.value =
+                              AutovalidateMode.always;
+                          // Enable autovalidation for confirm password once user starts typing
+                          if (_confirmPassword.isNotEmpty) {
+                            _confirmPasswordAutovalidateMode.value =
+                                AutovalidateMode.always;
+                          }
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return LocaleKeys.passwordIsRequired;
+                          }
+                          if (value.length < 6) {
+                            return LocaleKeys.passwordIsTooShort;
+                          }
+                          return null;
+                        },
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    LocaleKeys.confirmPassword,
+                    style: theme.textTheme.bodyMedium!.copyWith(
+                      color: ColorsManager.primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  ValueListenableBuilder<AutovalidateMode>(
+                    valueListenable: _confirmPasswordAutovalidateMode,
+                    builder: (context, autovalidateMode, _) {
+                      return PasswordField(
+                        autovalidateMode: autovalidateMode,
+                        hintText: "********",
+                        textInputAction: TextInputAction.done,
+                        onChanged: (value) {
+                          _confirmPassword = value!;
+                          // Enable autovalidation once user starts typing
                           _confirmPasswordAutovalidateMode.value =
                               AutovalidateMode.always;
-                        }
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return LocaleKeys.passwordIsRequired;
-                        }
-                        if (value.length < 6) {
-                          return LocaleKeys.passwordIsTooShort;
-                        }
-                        return null;
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: 16.0),
-                Text(
-                  LocaleKeys.confirmPassword,
-                  style: theme.textTheme.bodyMedium!.copyWith(
-                    color: ColorsManager.primaryColor,
+                        },
+                        onSubmit: (_) => _onSubmit(),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return LocaleKeys.passwordIsRequired;
+                          }
+                          if (value.length < 6) {
+                            return LocaleKeys.passwordIsTooShort;
+                          }
+                          if (value != _newPassword) {
+                            return LocaleKeys.passwordsDoNotMatch;
+                          }
+                          return null;
+                        },
+                      );
+                    },
                   ),
-                ),
-                const SizedBox(height: 8.0),
-                ValueListenableBuilder<AutovalidateMode>(
-                  valueListenable: _confirmPasswordAutovalidateMode,
-                  builder: (context, autovalidateMode, _) {
-                    return PasswordField(
-                      autovalidateMode: autovalidateMode,
-                      hintText: "********",
-                      textInputAction: TextInputAction.done,
-                      onChanged: (value) {
-                        _confirmPassword = value!;
-                        // Enable autovalidation once user starts typing
-                        _confirmPasswordAutovalidateMode.value =
-                            AutovalidateMode.always;
-                      },
-                      onSubmit: (_) => _onSubmit(),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return LocaleKeys.passwordIsRequired;
-                        }
-                        if (value.length < 6) {
-                          return LocaleKeys.passwordIsTooShort;
-                        }
-                        if (value != _newPassword) {
-                          return LocaleKeys.passwordsDoNotMatch;
-                        }
-                        return null;
-                      },
-                    );
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
-        child: BlocConsumer<ProfileCubit, ProfileState>(
-          listenWhen: (previous, current) =>
-              previous.changePasswordRequestState !=
-              current.changePasswordRequestState,
-          listener: (context, state) {
-            if (state.changePasswordRequestState.isError) {
-              showDialog(
-                context: context,
-                builder: (context) =>
-                    ErrorDialog(theme: theme, message: state.errorMessage),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
+          child: BlocConsumer<ProfileCubit, ProfileState>(
+            listenWhen: (previous, current) =>
+                previous.changePasswordRequestState !=
+                current.changePasswordRequestState,
+            listener: (context, state) {
+              if (state.changePasswordRequestState.isError) {
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      ErrorDialog(theme: theme, message: state.errorMessage),
+                );
+              }
+              if (state.changePasswordRequestState.isSuccess) {
+                showDialog(
+                  context: context,
+                  builder: (context) => SuccessDialog(
+                    theme: theme,
+                    message: state.successMessage,
+                    onPressed: () => context.pop(),
+                    text: LocaleKeys.back,
+                  ),
+                );
+              }
+            },
+            buildWhen: (previous, current) =>
+                previous.changePasswordRequestState !=
+                current.changePasswordRequestState,
+            builder: (context, state) {
+              return PrimaryButton(
+                isLoading: state.changePasswordRequestState.isLoading,
+                onPressed: _onSubmit,
+                text: LocaleKeys.update,
               );
-            }
-            if (state.changePasswordRequestState.isSuccess) {
-              showDialog(
-                context: context,
-                builder: (context) => SuccessDialog(
-                  theme: theme,
-                  message: state.successMessage,
-                  onPressed: () => context.pop(),
-                  text: LocaleKeys.back,
-                ),
-              );
-            }
-          },
-          buildWhen: (previous, current) =>
-              previous.changePasswordRequestState !=
-              current.changePasswordRequestState,
-          builder: (context, state) {
-            return PrimaryButton(
-              isLoading: state.changePasswordRequestState.isLoading,
-              onPressed: _onSubmit,
-              text: LocaleKeys.update,
-            );
-          },
+            },
+          ),
         ),
       ),
     );
