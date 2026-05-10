@@ -82,6 +82,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           LocaleKeys.offerDetails,

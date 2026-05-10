@@ -133,7 +133,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
               crossAxisCount: 3,
               mainAxisSpacing: 14,
               crossAxisSpacing: 20,
-              childAspectRatio: 0.78,
+              childAspectRatio: 0.75,
             ),
             itemCount: classifications.length + (status.isLoadingMore ? 2 : 0),
             itemBuilder: (context, index) {

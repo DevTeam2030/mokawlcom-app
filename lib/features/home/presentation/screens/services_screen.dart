@@ -115,7 +115,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
               },
               builder: (context, state) {
                 final hasData = state.servicesModel.services.isNotEmpty;
-        
+
                 if (!state.isConnected && !hasData) {
                   return NoInternetWidget(
                     errorMessage: state.servicesErrorMessage,
@@ -127,7 +127,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     },
                   );
                 }
-        
+
                 return Expanded(
                   child: UiStateBuilder(
                     theme: theme,
@@ -197,7 +197,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
           crossAxisCount: 3,
           mainAxisSpacing: 14,
           crossAxisSpacing: 20,
-          childAspectRatio: 0.78,
+          childAspectRatio: 0.75,
         ),
         itemCount: services.length + (status.isLoadingMore ? 3 : 0),
         itemBuilder: (context, index) {

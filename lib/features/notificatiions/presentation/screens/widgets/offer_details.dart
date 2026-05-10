@@ -31,6 +31,10 @@ class OfferDetails extends StatelessWidget {
   final OfferDetailsCubit offerDetailsCubit;
   @override
   Widget build(BuildContext context) {
+    final isActuallyPdf =
+        offerNotificationModel.isPdf ||
+        offerNotificationModel.url.toLowerCase().endsWith('.pdf');
+
     return Padding(
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: 14,
@@ -150,8 +154,10 @@ class OfferDetails extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    offerNotificationModel.isPdf
+                    isActuallyPdf
                         ? InkWell(
                             onTap: () {
                               context.pushRoute(
@@ -164,79 +170,88 @@ class OfferDetails extends StatelessWidget {
                           )
                         : const SizedBox.shrink(),
                     const SizedBox(width: 10),
-                    !offerNotificationModel.isPdf &&
-                            offerNotificationModel.url.isNotEmpty
-                        ? InkWell(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (dialogContext) => Dialog(
-                                  backgroundColor: Colors.transparent,
-                                  child: AspectRatio(
-                                    aspectRatio: 3 / 4,
-                                    child: Stack(
-                                      children: [
-                                        InteractiveViewer(
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                              8,
-                                            ),
-                                            child: CustomCachedNetworkImage(
-                                              height: 350,
-                                              width: double.infinity,
-                                              imageUrl:
-                                                  offerNotificationModel.url,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                        PositionedDirectional(
-                                          top: 10,
-                                          start: 10,
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.pop(dialogContext);
-                                            },
-                                            child: Container(
-                                              padding: const EdgeInsets.all(4),
-                                              decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                shape: BoxShape.circle,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.black
-                                                        .withValues(alpha: .2),
-                                                    blurRadius: 4,
-                                                    offset: const Offset(0, 2),
-                                                  ),
-                                                ],
-                                              ),
-                                              child: const Icon(
-                                                Icons.close,
-                                                color: Colors.white,
-                                                size: 16,
+                    !isActuallyPdf && offerNotificationModel.url.isNotEmpty
+                        ? Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (dialogContext) => Dialog(
+                                    backgroundColor: Colors.transparent,
+                                    child: AspectRatio(
+                                      aspectRatio: 3 / 4,
+                                      child: Stack(
+                                        children: [
+                                          InteractiveViewer(
+                                            child: ClipRRect(
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: CustomCachedNetworkImage(
+                                                height: 350,
+                                                width: double.infinity,
+                                                imageUrl:
+                                                    offerNotificationModel.url,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                          PositionedDirectional(
+                                            top: 10,
+                                            start: 10,
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.pop(dialogContext);
+                                              },
+                                              child: Container(
+                                                padding: const EdgeInsets.all(
+                                                  4,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  shape: BoxShape.circle,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.black
+                                                          .withValues(
+                                                            alpha: .2,
+                                                          ),
+                                                      blurRadius: 4,
+                                                      offset: const Offset(
+                                                        0,
+                                                        2,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  color: Colors.white,
+                                                  size: 16,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
+                                );
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: CustomCachedNetworkImage(
+                                  width: 300,
+                                  height: 300,
+                                  imageUrl: offerNotificationModel.url,
+                                  fit: BoxFit.cover,
                                 ),
-                              );
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: CustomCachedNetworkImage(
-                                width: 300,
-                                height: 300,
-                                imageUrl: offerNotificationModel.url,
-                                fit: BoxFit.cover,
                               ),
                             ),
                           )
                         : const SizedBox.shrink(),
-                    const Spacer(),
+                    const SizedBox(width: 10),
                     if (isOffer)
                       TextButton(
                         onPressed: () async {
@@ -271,7 +286,7 @@ class OfferDetails extends StatelessWidget {
               ],
             ),
           ),
-          if (isOffer) const CustomDivider(thickness: 0.5, height: 3),
+          if (isOffer) const CustomDivider(thickness: 0.5, height: 10),
         ],
       ),
     );
