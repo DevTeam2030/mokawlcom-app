@@ -27,7 +27,6 @@ class ServicesDetailsScreen extends StatelessWidget {
       builder: (context, contractorServices) {
         return contractorServices.isNotEmpty
             ? ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) => ServiceDetailsListItem(
                   theme: theme,
                   contractorServiceModel: contractorServices[index],
