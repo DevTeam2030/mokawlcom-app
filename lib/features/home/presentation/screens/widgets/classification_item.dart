@@ -60,6 +60,7 @@ class ClassificationItem extends StatelessWidget {
           classificationModel.name,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
+          textAlign: TextAlign.center,
           style: theme.textTheme.labelSmall!.copyWith(
             fontWeight: FontWeight.w400,
             color: ColorsManager.textColor,
