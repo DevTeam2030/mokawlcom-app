@@ -19,6 +19,7 @@ import 'package:mokawlcom_app/features/home/presentation/screens/widgets/home/ho
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/shared/data/models/app_version_model.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
+import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
@@ -36,14 +37,13 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await _loadData();
-      if (mounted) {
-        final versionData = await context.read<AppCubit>().checkAppVersion();
-        if (mounted && versionData != null) {
-          await _showUpdateDialog(versionData);
-        }
-      }
+      await _getAppData(context);
     });
+  }
+
+  Future<void> _showMaintenanceScreen(String message) async {
+    if (!mounted) return;
+    await context.router.replaceAll([MaintenanceRoute(message: message)]);
   }
 
   Future<void> _showUpdateDialog(PlatformVersionModel versionData) async {
@@ -258,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     errorMessage: state.bannersErrorMessage,
                     theme: theme,
                     onPressed: () async {
-                      await _loadData();
+                      await _getAppData(context);
                     },
                   );
                 }
@@ -278,5 +278,19 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _getAppData(BuildContext context) async {
+    if (mounted) {
+      final versionData = await context.read<AppCubit>().checkAppVersion();
+      if (mounted && versionData != null) {
+        if (versionData.maintainanceMode) {
+          await _showMaintenanceScreen(versionData.maintainanceMessage);
+        } else {
+          await _showUpdateDialog(versionData);
+        }
+      }
+    }
+    await _loadData();
   }
 }

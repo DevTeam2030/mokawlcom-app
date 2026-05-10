@@ -67,6 +67,10 @@ class AppCubit extends HydratedCubit<AppState> {
       (versionData) async {
         final PlatformVersionModel platformData =
             Platform.isAndroid ? versionData.android : versionData.ios;
+        if (platformData.maintainanceMode) {
+          return platformData;
+        }
+
         final packageInfo = await PackageInfo.fromPlatform();
         final currentVersion = packageInfo.version;
         final requiresMandatoryUpdate =

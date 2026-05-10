@@ -55,6 +55,7 @@ import 'package:mokawlcom_app/features/profile/presentation/screens/submitted_pr
 import 'package:mokawlcom_app/features/profile/presentation/screens/terms_and_conditions_screen.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/features/shared/data/models/service_model.dart';
+import 'package:mokawlcom_app/features/shared/presentation/screens/maintenance_screen.dart';
 import 'package:mokawlcom_app/features/shared/presentation/screens/pdf_screen.dart';
 import 'package:mokawlcom_app/features/splash/on_boarding_screen.dart';
 import 'package:mokawlcom_app/features/splash/splash_screen.dart';
@@ -148,6 +149,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ConnectUsRoute.page),
       ],
     ),
+    AutoRoute(page: MaintenanceRoute.page),
   ];
 }
 

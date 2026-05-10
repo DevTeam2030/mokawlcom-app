@@ -649,6 +649,58 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [MaintenanceScreen]
+class MaintenanceRoute extends PageRouteInfo<MaintenanceRouteArgs> {
+  MaintenanceRoute({
+    Key? key,
+    String message = '',
+    List<PageRouteInfo>? children,
+  }) : super(
+         MaintenanceRoute.name,
+         args: MaintenanceRouteArgs(key: key, message: message),
+         rawQueryParams: {'message': message},
+         initialChildren: children,
+       );
+
+  static const String name = 'MaintenanceRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final queryParams = data.queryParams;
+      final args = data.argsAs<MaintenanceRouteArgs>(
+        orElse: () =>
+            MaintenanceRouteArgs(message: queryParams.getString('message', '')),
+      );
+      return MaintenanceScreen(key: args.key, message: args.message);
+    },
+  );
+}
+
+class MaintenanceRouteArgs {
+  const MaintenanceRouteArgs({this.key, this.message = ''});
+
+  final Key? key;
+
+  final String message;
+
+  @override
+  String toString() {
+    return 'MaintenanceRouteArgs{key: $key, message: $message}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! MaintenanceRouteArgs) return false;
+    return key == other.key && message == other.message;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ message.hashCode;
+}
+
+/// generated route for
 /// [MyCurrentPackageScreen]
 class MyCurrentPackageRoute extends PageRouteInfo<MyCurrentPackageRouteArgs> {
   MyCurrentPackageRoute({

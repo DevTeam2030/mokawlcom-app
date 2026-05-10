@@ -27,6 +27,8 @@ class PlatformVersionModel extends Equatable {
   final bool forceUpdate;
   final String updateUrl;
   final String message;
+  final bool maintainanceMode;
+  final String maintainanceMessage;
 
   const PlatformVersionModel({
     required this.minVersion,
@@ -34,6 +36,8 @@ class PlatformVersionModel extends Equatable {
     required this.forceUpdate,
     required this.updateUrl,
     required this.message,
+    required this.maintainanceMode,
+    required this.maintainanceMessage,
   });
 
   factory PlatformVersionModel.fromJson(Map<String, dynamic> json) {
@@ -43,6 +47,8 @@ class PlatformVersionModel extends Equatable {
       forceUpdate: json['force_update'] as bool? ?? false,
       updateUrl: json['update_url'] as String? ?? '',
       message: json['message'] as String? ?? '',
+      maintainanceMode: json['maintenance_mode'] as bool? ?? false,
+      maintainanceMessage: json['maintenance_message'] as String? ?? '',
     );
   }
 
@@ -53,5 +59,7 @@ class PlatformVersionModel extends Equatable {
     forceUpdate,
     updateUrl,
     message,
+    maintainanceMode,
+    maintainanceMessage,
   ];
 }
