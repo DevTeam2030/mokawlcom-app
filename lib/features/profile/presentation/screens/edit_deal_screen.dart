@@ -20,7 +20,7 @@ class EditDealScreen extends StatefulWidget implements AutoRouteWrapper {
     required this.deal,
     required this.dealIndex,
   });
-  
+
   final UserDetailsCubit userDetailsCubit;
   final DealModel deal;
   final int dealIndex;
@@ -37,21 +37,20 @@ class EditDealScreen extends StatefulWidget implements AutoRouteWrapper {
 class _EditDealScreenState extends State<EditDealScreen> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode _autoValidateMode;
-  
+
   late final TextEditingController _titleController;
   late final TextEditingController _descriptionController;
-  
 
   @override
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
     _autoValidateMode = AutovalidateMode.disabled;
-    
-    _titleController = TextEditingController(text: widget.deal.title);
-    _descriptionController = TextEditingController(text: widget.deal.description);
-    
 
+    _titleController = TextEditingController(text: widget.deal.title);
+    _descriptionController = TextEditingController(
+      text: widget.deal.description,
+    );
   }
 
   @override

@@ -18,7 +18,11 @@ import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
 class ReplyOnOfferBottomSheet extends StatefulWidget {
-  const ReplyOnOfferBottomSheet({super.key, required this.address, required this.offerId});
+  const ReplyOnOfferBottomSheet({
+    super.key,
+    required this.address,
+    required this.offerId,
+  });
   final String address;
   final String offerId;
 
@@ -131,9 +135,11 @@ class _ReplyOnOfferBottomSheetState extends State<ReplyOnOfferBottomSheet> {
               const SizedBox(height: 30),
               BlocConsumer<OfferDetailsCubit, OfferDetailsState>(
                 listenWhen: (previous, current) =>
-                    previous.replayOnOfferPriceState != current.replayOnOfferPriceState,
+                    previous.replayOnOfferPriceState !=
+                    current.replayOnOfferPriceState,
                 buildWhen: (previous, current) =>
-                    previous.replayOnOfferPriceState != current.replayOnOfferPriceState,
+                    previous.replayOnOfferPriceState !=
+                    current.replayOnOfferPriceState,
                 listener: (context, state) {
                   if (state.replayOnOfferPriceState.isError) {
                     showDialog(
@@ -181,7 +187,6 @@ class _ReplyOnOfferBottomSheetState extends State<ReplyOnOfferBottomSheet> {
         title: _title,
         message: _message,
         offerId: widget.offerId,
-       
       );
     } else {
       setState(() {

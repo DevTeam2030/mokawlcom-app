@@ -60,7 +60,7 @@ class _HomeSearchSectionState extends State<HomeSearchSection> {
                         searchNotifier.value = value;
                       },
                       onSubmitted: (value) {
-                        if(value.isNotEmpty){
+                        if (value.isNotEmpty) {
                           context.pushRoute(
                             ContractorsRoute(fromSearch: true, query: value),
                           );
@@ -99,12 +99,13 @@ class _HomeSearchSectionState extends State<HomeSearchSection> {
                           useSafeArea: true,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(12), 
+                              top: Radius.circular(12),
                             ),
                           ),
                           context: context,
-                          builder: (context) =>
-                              SafeArea(child: HomeFilterBottomSheet(query: value)),
+                          builder: (context) => SafeArea(
+                            child: HomeFilterBottomSheet(query: value),
+                          ),
                         );
                       },
                       icon: const Icon(Icons.filter_list, size: 46),

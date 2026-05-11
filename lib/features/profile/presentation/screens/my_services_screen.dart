@@ -103,7 +103,7 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-        
+
               Expanded(
                 child: BlocConsumer<UserDetailsCubit, UserDetailsState>(
                   listenWhen: (previous, current) =>
@@ -128,7 +128,7 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                   builder: (context, state) {
                     final hasData =
                         state.contractorServicesModel.services.isNotEmpty;
-        
+
                     if (!state.isConnected && !hasData) {
                       return NoInternetWidget(
                         errorMessage: state.errorMessage,
@@ -140,7 +140,7 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                         },
                       );
                     }
-        
+
                     return UiStateBuilder(
                       theme: theme,
                       state: state.getContractorServicesState,
@@ -205,9 +205,9 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
 
     return ListView.separated(
       controller: _scrollController,
-      
+
       itemCount: services.length + (status.isLoadingMore ? 1 : 0),
-      separatorBuilder: (_, __) => const SizedBox(height: 20),
+      separatorBuilder: (_, _) => const SizedBox(height: 20),
       itemBuilder: (context, index) {
         if (index == services.length && status.isLoadingMore) {
           return const Padding(

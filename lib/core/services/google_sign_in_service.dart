@@ -49,9 +49,7 @@ class GoogleSignInService {
     } on GoogleSignInException catch (e) {
       if (e.code == GoogleSignInExceptionCode.canceled) {
         debugPrint("User cancelled Google Sign-In");
-        throw const ServerException(
-          errorMessage: "",
-        );
+        throw const ServerException(errorMessage: "");
       }
       throw ServerException(errorMessage: e.toString());
     } catch (e) {

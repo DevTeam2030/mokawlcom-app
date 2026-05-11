@@ -31,7 +31,7 @@ class ServicesDetailsScreen extends StatelessWidget {
                   theme: theme,
                   contractorServiceModel: contractorServices[index],
                 ),
-                separatorBuilder: (_, __) => const SizedBox(height: 14),
+                separatorBuilder: (_, _) => const SizedBox(height: 14),
                 itemCount: contractorServices.length,
               )
             : NoDataWidget(text: LocaleKeys.noServicesYet, theme: theme);

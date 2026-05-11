@@ -2,7 +2,7 @@ class ApiConstants {
   ////base url
   static const String baseUrl = "https://mokawlcom.com/m/public/api";
   static const String appVerionEndpoint = "/app-version";
-  
+
   // user auth
   static const String userSignup = "/auth/register-user";
   static const String activateAccount = "/auth/activate-acount";
@@ -14,10 +14,13 @@ class ApiConstants {
   static const String getServices = "/sub-categories";
   static const String getBanners = "/banners";
   static const String contractorSignup = "/auth/register-contractor";
-  static const String uploadCommercialRegistry = "/auth/upload-commercial-registry";
+  static const String uploadCommercialRegistry =
+      "/auth/upload-commercial-registry";
   static const String uploadTradeLicense = "/auth/upload-trade-license";
-  static const String uploadEstablishmentCertificate = "/auth/upload-establishment-certificate";
-  static const String uploadAuthorizedSignature = "/auth/upload-authorized-signature";
+  static const String uploadEstablishmentCertificate =
+      "/auth/upload-establishment-certificate";
+  static const String uploadAuthorizedSignature =
+      "/auth/upload-authorized-signature";
   static const String completeContractorData = "/complete-contractor-data";
   static const String subscibePlan = "/subscribe-plan";
   static const String forgetPassword = "/auth/password-reset-email";

@@ -32,7 +32,6 @@ class _SubmittedPriceOffersScreenState
     extends State<SubmittedPriceOffersScreen> {
   late final ScrollController _scrollController;
   bool _isLoadingMore = false;
-  
 
   @override
   void initState() {
@@ -95,7 +94,7 @@ class _SubmittedPriceOffersScreenState
           }
         },
         buildWhen: (previous, current) =>
-            previous.getUserOffersState != current.getUserOffersState ,
+            previous.getUserOffersState != current.getUserOffersState,
         builder: (context, state) {
           final hasData = state.userOffersModel.offers.isNotEmpty;
 
@@ -177,7 +176,7 @@ class _SubmittedPriceOffersScreenState
       controller: _scrollController,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: offers.length + (status.isLoadingMore ? 1 : 0),
-      separatorBuilder: (_, __) =>
+      separatorBuilder: (_, _) =>
           const CustomDivider(thickness: 0.8, height: 1),
       itemBuilder: (context, index) {
         if (index == offers.length && status.isLoadingMore) {

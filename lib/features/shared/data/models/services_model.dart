@@ -21,18 +21,13 @@ class ServicesModel extends Equatable {
       ),
     ),
   );
-  const ServicesModel.empty() : this(
-    totalPages: 0,
-    currentPage: 0,
-    services: const [],
-  );
+  const ServicesModel.empty()
+    : this(totalPages: 0, currentPage: 0, services: const []);
 
-  ServicesModel copyWith({
-    List<ServiceModel>? services,
-  }) {
+  ServicesModel copyWith({List<ServiceModel>? services}) {
     return ServicesModel(
-      totalPages: totalPages ,
-      currentPage: currentPage ,
+      totalPages: totalPages,
+      currentPage: currentPage,
       services: services ?? this.services,
     );
   }

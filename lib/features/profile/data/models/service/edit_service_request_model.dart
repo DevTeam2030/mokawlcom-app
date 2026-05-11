@@ -31,11 +31,11 @@ class EditServiceRequestModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        serviceId,
-        classificationId,
-        name,
-        description,
-        price,
-        images,
-      ];
+    serviceId,
+    classificationId,
+    name,
+    description,
+    price,
+    images,
+  ];
 }

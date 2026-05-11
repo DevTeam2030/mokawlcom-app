@@ -68,7 +68,7 @@ class ClassificationListItem extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 10,),
+            const SizedBox(width: 10),
             Container(
               width: 20,
               height: 20,

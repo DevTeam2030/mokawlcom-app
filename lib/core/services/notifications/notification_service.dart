@@ -84,8 +84,8 @@ class NotificationService {
 
   late final StreamController<NotificationData> _notificationController =
       StreamController<NotificationData>.broadcast(
-    onListen: _flushPendingNotifications,
-  );
+        onListen: _flushPendingNotifications,
+      );
 
   Stream<NotificationData> get notificationStream =>
       _notificationController.stream;

@@ -31,12 +31,12 @@ class EditContractorProfileRequestModel extends Equatable {
     "sub_category_id": List<int>.from(serviceIds.map((x) => x)),
     "phone": phone,
     "whatsapp": whatsapp ?? "",
-    "facebook": facebook??"",
-    "twitter": twitter??"",
-    "instagram": instagram??"",
-    "latitude":"",
-    "longitude":"",
-    "spanchat": spanchat??"",
+    "facebook": facebook ?? "",
+    "twitter": twitter ?? "",
+    "instagram": instagram ?? "",
+    "latitude": "",
+    "longitude": "",
+    "spanchat": spanchat ?? "",
     "store_description": hintAboutCompany,
   };
 

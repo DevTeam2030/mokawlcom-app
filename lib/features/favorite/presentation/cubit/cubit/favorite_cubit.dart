@@ -81,7 +81,6 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   Future<void> addFavorite({required int contractorId}) async {
-    
     emit(state.copyWith(addFavoriteState: RequestStatus.loading));
     final result = await favoriteRepo.addFavorite(contractorId: contractorId);
     result.fold(

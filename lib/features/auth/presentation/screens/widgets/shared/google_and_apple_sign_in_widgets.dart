@@ -100,8 +100,10 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
                       state.errorMessage.isNotEmpty) {
                     showDialog(
                       context: context,
-                      builder: (context) =>
-                          ErrorDialog(theme: theme, message: state.errorMessage),
+                      builder: (context) => ErrorDialog(
+                        theme: theme,
+                        message: state.errorMessage,
+                      ),
                     );
                   }
                   if (state.appleLoginState.isSuccess) {
@@ -136,22 +138,22 @@ class GoogleAndAppleSignInWidgets extends StatelessWidget {
                               ),
                             )
                           : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        textDirection: TextDirection.rtl,
-                        children: [
-                          Text(
-                            "Sign in with Apple",
-                            style: theme.textTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Text(
+                                  "Sign in with Apple",
+                                  style: theme.textTheme.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const SizedBox(width: 24.0),
+                                const Image(
+                                  image: AssetImage(AssetsManager.appleIcon),
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(width: 24.0),
-                          const Image(
-                            image: AssetImage(AssetsManager.appleIcon),
-                          ),
-                        ],
-                      ),
                     ),
                   );
                 },

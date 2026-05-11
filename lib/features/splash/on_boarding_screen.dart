@@ -31,7 +31,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Future<void> next() async {
     final cacheHelper = getIt<CacheHelper>();
     await cacheHelper.setOnBoardingSeen();
-   if(mounted) context.replaceRoute(const AuthRoute());
+    if (mounted) context.replaceRoute(const AuthRoute());
   }
 
   @override

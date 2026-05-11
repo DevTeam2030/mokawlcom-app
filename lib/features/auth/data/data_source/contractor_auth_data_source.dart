@@ -14,7 +14,10 @@ import 'package:mokawlcom_app/features/shared/data/models/services_model.dart';
 
 abstract class ContractorAuthDataSource {
   Future<ClassificationsModel> getClassifications({required int page});
-  Future<ServicesModel> getServices({required int page, required int classificationId});
+  Future<ServicesModel> getServices({
+    required int page,
+    required int classificationId,
+  });
   Future<String> contractorSignUp({
     required ContractorSignUpRequestModel contractorSignUpRequestModel,
   });
@@ -52,22 +55,25 @@ class ContractorAuthDataSourceImpl implements ContractorAuthDataSource {
       queryParameters: {"page": page},
     );
     if (response.statusCode == 200) {
-     return ClassificationsModel.fromJson(response.data??{});
+      return ClassificationsModel.fromJson(response.data ?? {});
     } else {
       throw ServerException(errorMessage: response.data["message"]);
     }
   }
 
   @override
-  Future<ServicesModel> getServices({required int page, required int classificationId}) async {
+  Future<ServicesModel> getServices({
+    required int page,
+    required int classificationId,
+  }) async {
     final response = await dioHelper.get(
       url: ApiConstants.getServices,
       queryParameters: {"page": page, "category_id": classificationId},
     );
     if (response.statusCode == 200) {
-     return ServicesModel.fromJson(response.data??{});
+      return ServicesModel.fromJson(response.data ?? {});
     } else {
-      throw ServerException(errorMessage: response.data["message"]??"");
+      throw ServerException(errorMessage: response.data["message"] ?? "");
     }
   }
 

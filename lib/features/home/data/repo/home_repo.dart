@@ -23,4 +23,4 @@ abstract class HomeRepo {
     required AddOfferPriceRequestModel addOfferPriceRequestModel,
     required void Function(double progress) onProgress,
   });
-} 
+}

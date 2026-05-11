@@ -371,9 +371,7 @@ class ProfileDataSourceImpl implements ProfileDataSource {
 
   @override
   Future<SettingsModel> getSettings() async {
-    final response = await dioHelper.get(
-      url: ApiConstants.getSettings,
-    );
+    final response = await dioHelper.get(url: ApiConstants.getSettings);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return SettingsModel.fromJson(response.data["data"] ?? {});
     } else {

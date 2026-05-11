@@ -105,7 +105,7 @@ class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
           },
           builder: (context, state) {
             final hasData = state.favorites.isNotEmpty;
-        
+
             if (!state.isConnected && !hasData) {
               return NoInternetWidget(
                 errorMessage: state.errorMessage,
@@ -113,7 +113,7 @@ class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
                 onPressed: () => context.read<FavoriteCubit>().getFavorites(),
               );
             }
-        
+
             return UiStateBuilder(
               state: state.getFavoritesState,
               theme: theme,
@@ -144,14 +144,20 @@ class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
                       state.favorites.values.toList(),
                       state.getFavoritesState,
                     )
-                  : NoDataWidget(text: LocaleKeys.noSavedCompanies, theme: theme),
+                  : NoDataWidget(
+                      text: LocaleKeys.noSavedCompanies,
+                      theme: theme,
+                    ),
               onError: state.favorites.isNotEmpty
                   ? _buildList(
                       theme,
                       state.favorites.values.toList(),
                       state.getFavoritesState,
                     )
-                  : NoDataWidget(text: LocaleKeys.noSavedCompanies, theme: theme),
+                  : NoDataWidget(
+                      text: LocaleKeys.noSavedCompanies,
+                      theme: theme,
+                    ),
             );
           },
         ),
@@ -174,7 +180,7 @@ class _SavedCompaniesScreenState extends State<SavedCompaniesScreen> {
             child: ListView.separated(
               controller: _scrollController,
               itemCount: favorites.length + 1,
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
+              separatorBuilder: (_, _) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
                 if (index == favorites.length) {
                   if (status == RequestStatus.loadingMore) {

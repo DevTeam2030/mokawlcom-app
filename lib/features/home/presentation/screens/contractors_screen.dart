@@ -175,7 +175,8 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
               }
             },
             builder: (context, state) {
-              final bool hasData = state.contractorsModel.contractors.isNotEmpty;
+              final bool hasData =
+                  state.contractorsModel.contractors.isNotEmpty;
               if (!state.isConnected && !hasData) {
                 return NoInternetWidget(
                   errorMessage: state.errorMessage,
@@ -188,7 +189,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
                   },
                 );
               }
-        
+
               return UiStateBuilder(
                 state: state.getContractorsState,
                 theme: theme,
@@ -221,14 +222,20 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
                         theme: theme,
                         status: state.getContractorsState,
                       )
-                    : NoDataWidget(text: LocaleKeys.noResultsFound, theme: theme),
+                    : NoDataWidget(
+                        text: LocaleKeys.noResultsFound,
+                        theme: theme,
+                      ),
                 onError: hasData
                     ? _buildContractorsList(
                         contractors: state.contractorsModel.contractors,
                         theme: theme,
                         status: state.getContractorsState,
                       )
-                    : NoDataWidget(text: LocaleKeys.noResultsFound, theme: theme),
+                    : NoDataWidget(
+                        text: LocaleKeys.noResultsFound,
+                        theme: theme,
+                      ),
               );
             },
           ),
@@ -274,7 +281,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
           theme: theme,
         );
       },
-      separatorBuilder: (_, __) => const SizedBox(height: 13),
+      separatorBuilder: (_, _) => const SizedBox(height: 13),
       itemCount: contractors.length + 1,
     );
   }

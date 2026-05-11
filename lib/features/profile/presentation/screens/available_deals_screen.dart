@@ -143,7 +143,7 @@ class _AvailableDealsScreenState extends State<AvailableDealsScreen> {
                       previous.dealsModel != current.dealsModel,
                   builder: (context, state) {
                     final hasData = state.dealsModel.deals.isNotEmpty;
-        
+
                     if (!state.isConnected && !hasData) {
                       return NoInternetWidget(
                         errorMessage: state.errorMessage,
@@ -153,7 +153,7 @@ class _AvailableDealsScreenState extends State<AvailableDealsScreen> {
                         },
                       );
                     }
-        
+
                     return UiStateBuilder(
                       theme: theme,
                       state: state.getDealsState,
@@ -216,7 +216,7 @@ class _AvailableDealsScreenState extends State<AvailableDealsScreen> {
       controller: _scrollController,
       cacheExtent: 200,
       itemCount: deals.length + (status.isLoadingMore ? 1 : 0),
-      separatorBuilder: (_, __) => const SizedBox(height: 20),
+      separatorBuilder: (_, _) => const SizedBox(height: 20),
       itemBuilder: (context, index) {
         if (index == deals.length && status.isLoadingMore) {
           return const Padding(

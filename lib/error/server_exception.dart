@@ -1,4 +1,3 @@
-
 class ServerException implements Exception {
   final String errorMessage;
 

@@ -72,8 +72,10 @@ class SubscriptionScreen extends StatelessWidget {
                   if (state.subscibePlanState.isError) {
                     showDialog(
                       context: context,
-                      builder: (context) =>
-                          ErrorDialog(theme: theme, message: state.errorMessage),
+                      builder: (context) => ErrorDialog(
+                        theme: theme,
+                        message: state.errorMessage,
+                      ),
                     );
                   }
                   if (state.subscibePlanState.isSuccess) {

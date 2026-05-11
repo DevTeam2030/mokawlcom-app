@@ -5,7 +5,11 @@ class PlanModel extends Equatable {
   final String startDate;
   final String endDate;
 
-  const PlanModel({required this.numberOfMonths, required this.startDate, required this.endDate});
+  const PlanModel({
+    required this.numberOfMonths,
+    required this.startDate,
+    required this.endDate,
+  });
   factory PlanModel.fromJson(Map<String, dynamic> json) => PlanModel(
     numberOfMonths: json['no_months'] ?? 0,
     startDate: json['start_date'] ?? '',

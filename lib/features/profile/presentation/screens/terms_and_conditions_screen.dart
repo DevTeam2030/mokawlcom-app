@@ -9,11 +9,13 @@ import 'package:mokawlcom_app/core/widgets/no_internet_widget.dart';
 import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.dart';
 
 @RoutePage()
-class TermsAndConditionsScreen extends StatefulWidget implements AutoRouteWrapper {
+class TermsAndConditionsScreen extends StatefulWidget
+    implements AutoRouteWrapper {
   const TermsAndConditionsScreen({super.key});
 
   @override
-  State<TermsAndConditionsScreen> createState() => _TermsAndConditionsScreenState();
+  State<TermsAndConditionsScreen> createState() =>
+      _TermsAndConditionsScreenState();
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -38,16 +40,17 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
         title: Text(
           LocaleKeys.termsAndConditions,
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                fontWeight: FontWeight.bold,
-                color: ColorsManager.primaryColor,
-              ),
+            fontWeight: FontWeight.bold,
+            color: ColorsManager.primaryColor,
+          ),
         ),
       ),
       body: SafeArea(
         child: Center(
           child: BlocBuilder<ProfileCubit, ProfileState>(
             buildWhen: (previous, current) =>
-                previous.getSettingsRequestStatus != current.getSettingsRequestStatus ||
+                previous.getSettingsRequestStatus !=
+                    current.getSettingsRequestStatus ||
                 previous.settingsModel != current.settingsModel,
             builder: (context, state) => state.isConnected
                 ? UiStateBuilder(

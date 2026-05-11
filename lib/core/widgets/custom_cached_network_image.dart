@@ -37,14 +37,18 @@ class CustomCachedNetworkImage extends StatelessWidget {
         }
 
         final int? cacheWidth =
-            displayWidth != null && displayWidth != double.infinity && displayWidth > 0
-                ? (displayWidth * dpr).round()
-                : null;
+            displayWidth != null &&
+                displayWidth != double.infinity &&
+                displayWidth > 0
+            ? (displayWidth * dpr).round()
+            : null;
 
         final int? cacheHeight =
-            displayHeight != null && displayHeight != double.infinity && displayHeight > 0
-                ? (displayHeight * dpr).round()
-                : null;
+            displayHeight != null &&
+                displayHeight != double.infinity &&
+                displayHeight > 0
+            ? (displayHeight * dpr).round()
+            : null;
 
         return CachedNetworkImage(
           imageUrl: imageUrl,

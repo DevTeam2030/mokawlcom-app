@@ -140,7 +140,7 @@ class ServiceLocator {
         cacheHelper: getIt<CacheHelper>(),
       ),
     );
-   getIt.registerFactory<OfferDetailsCubit>(
+    getIt.registerFactory<OfferDetailsCubit>(
       () => OfferDetailsCubit(notificationsRepo: getIt<NotificationsRepo>()),
     );
     getIt.registerFactory<UserDetailsCubit>(

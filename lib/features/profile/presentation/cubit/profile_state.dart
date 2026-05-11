@@ -26,7 +26,7 @@ class ProfileState extends Equatable {
     this.userModel = const UserModel.empty(),
     this.isConnected = true,
     this.getPlanRequestStatus = RequestStatus.initial,
-    this.planModel = const PlanModel.empty(), 
+    this.planModel = const PlanModel.empty(),
     this.getSettingsRequestStatus = RequestStatus.loading,
     this.settingsModel = const SettingsModel.empty(),
   });
@@ -65,7 +65,8 @@ class ProfileState extends Equatable {
       isConnected: isConnected ?? this.isConnected,
       getPlanRequestStatus: getPlanRequestStatus ?? this.getPlanRequestStatus,
       planModel: planModel ?? this.planModel,
-      getSettingsRequestStatus: getSettingsRequestStatus ?? this.getSettingsRequestStatus,
+      getSettingsRequestStatus:
+          getSettingsRequestStatus ?? this.getSettingsRequestStatus,
       settingsModel: settingsModel ?? this.settingsModel,
     );
   }

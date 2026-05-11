@@ -112,9 +112,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future<void> getServices({
-    required int classificationId,
-  }) async {
+  Future<void> getServices({required int classificationId}) async {
     emit(
       state.copyWith(
         getServicesState: RequestStatus.loading,
@@ -144,9 +142,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future<void> loadMoreServices({
-    required int classificationId,
-  }) async {
+  Future<void> loadMoreServices({required int classificationId}) async {
     if (state.servicesPage >= state.servicesTotalPages ||
         state.getServicesState.isLoading) {
       return;
@@ -185,6 +181,4 @@ class HomeCubit extends Cubit<HomeState> {
       },
     );
   }
-
-   
 }

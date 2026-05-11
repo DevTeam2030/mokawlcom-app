@@ -36,7 +36,8 @@ abstract class ContractorAuthRepo {
     required void Function(double progress) onProgress,
   });
   Future<Either<Failure, String>> completeContractorData({
-    required CompleteContractorDataRequestModel completeContractorDataRequestModel,
+    required CompleteContractorDataRequestModel
+    completeContractorDataRequestModel,
   });
   Future<Either<Failure, String>> subscibePlan();
 }

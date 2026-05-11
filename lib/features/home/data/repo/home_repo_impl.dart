@@ -33,9 +33,8 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either<Failure, ContractorDetailsModel>> getContractorDetails({
     required int contractorId,
   }) async => await safeApiCall<ContractorDetailsModel>(
-    () async => await homeDataSource.getContractorDetails(
-      contractorId: contractorId,
-    ),
+    () async =>
+        await homeDataSource.getContractorDetails(contractorId: contractorId),
   );
   @override
   Future<Either<Failure, void>> rateContractor({

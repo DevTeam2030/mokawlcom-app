@@ -83,8 +83,7 @@ class _PublicNotificationsScreenState extends State<PublicNotificationsScreen> {
       buildWhen: (previous, current) =>
           previous.getPublicNotificationsState !=
               current.getPublicNotificationsState ||
-          previous.publicNotifications !=
-              current.publicNotifications,
+          previous.publicNotifications != current.publicNotifications,
       builder: (context, state) {
         final hasData = state.publicNotifications.notifications.isNotEmpty;
 
@@ -155,7 +154,7 @@ class _PublicNotificationsScreenState extends State<PublicNotificationsScreen> {
       controller: _scrollController,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: notifications.length + (status.isLoadingMore ? 1 : 0),
-      separatorBuilder: (_, __) =>
+      separatorBuilder: (_, _) =>
           const CustomDivider(thickness: 0.5, height: 1),
       itemBuilder: (context, index) {
         if (index == notifications.length && status.isLoadingMore) {

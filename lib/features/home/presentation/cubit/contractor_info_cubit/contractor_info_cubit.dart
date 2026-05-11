@@ -78,7 +78,7 @@ class ContractorInfoCubit extends Cubit<ContractorInfoState> {
 
   void toggleFavorite() => emit(state.copyWith(isSaved: !state.isSaved));
   void clearFile() => emit(state.copyWith(clearFile: true));
-  
+
   Future<void> pickFile() async {
     emit(
       state.copyWith(

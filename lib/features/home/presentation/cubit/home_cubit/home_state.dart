@@ -20,7 +20,7 @@ class HomeState extends Equatable {
   final String servicesErrorMessage;
   final int servicesPage;
   final int servicesTotalPages;
- 
+
   final bool isConnected;
 
   const HomeState({
@@ -63,9 +63,11 @@ class HomeState extends Equatable {
       classificationsModel: classificationsModel ?? this.classificationsModel,
       banners: banners ?? this.banners,
       bannersErrorMessage: bannersErrorMessage ?? this.bannersErrorMessage,
-      classificationsErrorMessage: classificationsErrorMessage ?? this.classificationsErrorMessage,
+      classificationsErrorMessage:
+          classificationsErrorMessage ?? this.classificationsErrorMessage,
       classificationsPage: classificationsPage ?? this.classificationsPage,
-      classificationsTotalPages: classificationsTotalPages ?? this.classificationsTotalPages,
+      classificationsTotalPages:
+          classificationsTotalPages ?? this.classificationsTotalPages,
       getServicesState: getServicesState ?? this.getServicesState,
       servicesModel: servicesModel ?? this.servicesModel,
       servicesErrorMessage: servicesErrorMessage ?? this.servicesErrorMessage,
@@ -84,7 +86,7 @@ class HomeState extends Equatable {
     bannersErrorMessage,
     classificationsErrorMessage,
     classificationsPage,
-    classificationsTotalPages,  
+    classificationsTotalPages,
     getServicesState,
     servicesModel,
     servicesErrorMessage,

@@ -43,8 +43,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         publicNotification:
             notificationData.notification as PublicNotificationModel,
       );
-    } else if (notificationData.type ==
-            NotificationType.offerNotification &&
+    } else if (notificationData.type == NotificationType.offerNotification &&
         AppConstants.userType == UserType.contractor) {
       addOfferNotification(
         offerModel: notificationData.notification as OfferModel,
@@ -305,7 +304,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     );
     unReadOfferNotifications.add(offerModel.offerId);
     emit(state.copyWith(unReadOfferNotifications: unReadOfferNotifications));
-    
+
     if (currentList.contains(offerModel)) {
       return;
     }

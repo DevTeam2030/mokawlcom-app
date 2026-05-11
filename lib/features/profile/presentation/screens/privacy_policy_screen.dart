@@ -64,7 +64,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       ),
                     ),
                     errorMessage: state.errorMessage,
-        
+
                     theme: Theme.of(context),
                   )
                 : NoInternetWidget(

@@ -215,7 +215,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
     return ListView.separated(
       controller: _scrollController,
       itemCount: replies.length + (status.isLoadingMore ? 1 : 0),
-      separatorBuilder: (_, __) => const SizedBox(height: 16),
+      separatorBuilder: (_, _) => const SizedBox(height: 16),
       itemBuilder: (_, index) {
         if (index == replies.length && status.isLoadingMore) {
           return const Padding(

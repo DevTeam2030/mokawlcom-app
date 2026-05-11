@@ -10,12 +10,12 @@ class ColorsManager {
 
   // Surface & Background Colors
   static const Color surfaceColor = Color(0xFFFBFCFE);
-  static const Color lightGrayBg = Color(0xFFF6F6F6);//
+  static const Color lightGrayBg = Color(0xFFF6F6F6); //
   static const Color lightBlueBg = Color(0xFFE9F0F4);
 
   // Border Colors
   static const Color borderGray = Color(0xFFDFDFDF);
-  static const Color borderLightBlue = Color(0xFFD3DFE7);//
+  static const Color borderLightBlue = Color(0xFFD3DFE7); //
   static const Color navBorderColor = Color(0xFFDEE7ED);
 
   // Text & Label Colors

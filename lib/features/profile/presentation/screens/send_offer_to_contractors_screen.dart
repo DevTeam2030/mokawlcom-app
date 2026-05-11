@@ -166,10 +166,7 @@ class _SendOfferToContractorsScreenState
   void _submit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      widget.userDetailsCubit.addDeal(
-        title: title,
-        description: description,
-      );
+      widget.userDetailsCubit.addDeal(title: title, description: description);
     } else {
       setState(() {
         _autoValidateMode = AutovalidateMode.always;

@@ -101,11 +101,11 @@ class MyServiceItem extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: OutlinedButton(
-                                    onPressed: () => Navigator.pop(dialogContext),
+                                    onPressed: () =>
+                                        Navigator.pop(dialogContext),
                                     style: OutlinedButton.styleFrom(
                                       side: const BorderSide(
                                         color: ColorsManager.primaryColor,
-                                       
                                       ),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
@@ -116,10 +116,11 @@ class MyServiceItem extends StatelessWidget {
                                     ),
                                     child: Text(
                                       LocaleKeys.cancel,
-                                      style: theme.textTheme.labelLarge!.copyWith(
-                                        color: ColorsManager.primaryColor,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      style: theme.textTheme.labelLarge!
+                                          .copyWith(
+                                            color: ColorsManager.primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                     ),
                                   ),
                                 ),
@@ -147,10 +148,11 @@ class MyServiceItem extends StatelessWidget {
                                     ),
                                     child: Text(
                                       LocaleKeys.deleteService,
-                                      style: theme.textTheme.labelLarge!.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      style: theme.textTheme.labelLarge!
+                                          .copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                     ),
                                   ),
                                 ),

@@ -42,8 +42,6 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
   late final GlobalKey<FormState> _formKey;
   late AutovalidateMode _autovalidateMode;
 
-
-
   String serviceName = '';
   String serviceDetails = '';
   String servicePrice = '';
@@ -54,7 +52,6 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
     widget.userDetailsCubit.clearImages();
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
-
   }
 
   @override
@@ -112,12 +109,11 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                   ),
                   const SizedBox(height: 8),
                   BlocSelector<AppCubit, AppState, String>(
-                    selector: (state) =>
-                        state.classification,
+                    selector: (state) => state.classification,
                     builder: (context, classification) {
                       return CustomDropdownField<String>(
                         theme: widget.theme,
-                       hintText: classification,
+                        hintText: classification,
                         items: const [],
                         readOnly: true,
                       );
@@ -168,16 +164,18 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                   const SizedBox(height: 24),
                   BlocConsumer<UserDetailsCubit, UserDetailsState>(
                     listenWhen: (previous, current) =>
-                        previous.addNewServiceState != current.addNewServiceState,
+                        previous.addNewServiceState !=
+                        current.addNewServiceState,
                     buildWhen: (previous, current) =>
-                        previous.addNewServiceState != current.addNewServiceState,
+                        previous.addNewServiceState !=
+                        current.addNewServiceState,
                     listener: (context, state) async {
                       if (state.addNewServiceState.isError) {
                         showDialog(
                           context: context,
                           builder: (context) => ErrorDialog(
                             message: state.errorMessage,
-        
+
                             theme: widget.theme,
                           ),
                         );
@@ -217,7 +215,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                       );
                     },
                   ),
-        
+
                   const SizedBox(height: 16),
                 ],
               ),

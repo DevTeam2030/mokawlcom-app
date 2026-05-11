@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class UpdateUserProfileRequestModel extends Equatable{
+class UpdateUserProfileRequestModel extends Equatable {
   final String name;
   final String email;
   final String phone;
 
- const UpdateUserProfileRequestModel({
+  const UpdateUserProfileRequestModel({
     required this.name,
     required this.email,
     required this.phone,
@@ -14,7 +14,6 @@ class UpdateUserProfileRequestModel extends Equatable{
     "name": name,
     //"email": email,
     "phone": phone,
-   
   };
 
   @override

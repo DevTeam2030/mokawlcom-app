@@ -206,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ScaffoldMessenger.of(dialogContext).showSnackBar(
           SnackBar(
             content: Text(
-              msg.tr(dialogContext),
+              msg,
               style: Theme.of(
                 dialogContext,
               ).textTheme.bodyMedium!.copyWith(color: ColorsManager.textColor),

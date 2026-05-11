@@ -10,7 +10,8 @@ class PrimaryButton extends StatelessWidget {
     this.icon,
     this.isLoading = false,
     this.width,
-    this.backgroundColor, this.textColor,
+    this.backgroundColor,
+    this.textColor,
   });
 
   final VoidCallback onPressed;
@@ -19,8 +20,7 @@ class PrimaryButton extends StatelessWidget {
   final bool isLoading;
   final double? width;
   final Color? backgroundColor;
-    final Color? textColor;
-
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,8 @@ class PrimaryButton extends StatelessWidget {
                   Text(
                     text,
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: textColor ?? Theme.of(context).colorScheme.onPrimary,
+                      color:
+                          textColor ?? Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                 ],

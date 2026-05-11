@@ -29,7 +29,7 @@ class PublicNotificationItem extends StatelessWidget {
           barrierDismissible: true,
           barrierColor: Colors.black12,
           transitionDuration: const Duration(milliseconds: 300),
-          pageBuilder: (_, __, ___) {
+          pageBuilder: (_, _, _) {
             return FractionallySizedBox(
               heightFactor: .5,
               child: Center(
@@ -105,7 +105,7 @@ class PublicNotificationItem extends StatelessWidget {
               ),
             );
           },
-          transitionBuilder: (_, anim, __, child) {
+          transitionBuilder: (_, anim, _, child) {
             return SlideTransition(
               position: Tween<Offset>(
                 begin: const Offset(0, 1),

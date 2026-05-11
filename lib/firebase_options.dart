@@ -63,9 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '200274876402',
     projectId: 'mokawlcom-app',
     storageBucket: 'mokawlcom-app.firebasestorage.app',
-    androidClientId: '200274876402-6fk17fu9gnqurct1g4oc1l91r6ijpi3l.apps.googleusercontent.com',
-    iosClientId: '200274876402-mg4uef4n38gnnrnh7plfilageaj38rl1.apps.googleusercontent.com',
+    androidClientId:
+        '200274876402-6fk17fu9gnqurct1g4oc1l91r6ijpi3l.apps.googleusercontent.com',
+    iosClientId:
+        '200274876402-mg4uef4n38gnnrnh7plfilageaj38rl1.apps.googleusercontent.com',
     iosBundleId: 'com.mokawlcom.qatar',
   );
-
 }

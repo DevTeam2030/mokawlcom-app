@@ -31,7 +31,7 @@ abstract class ProfileRepo {
   });
   Future<Either<Failure, String>> logout();
   Future<Either<Failure, UserModel>> getUserProfile();
- 
+
   Future<Either<Failure, ContractorServicesModel>> getContractorServices({
     required int page,
   });

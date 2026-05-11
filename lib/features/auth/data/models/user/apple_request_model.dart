@@ -12,11 +12,7 @@ class AppleRequestModel extends Equatable {
   });
 
   Map<String, dynamic> toJson() {
-    return {
-      "id_token": idToken,
-      "name": name,
-      "fcm_token": fcmToken,
-    };
+    return {"id_token": idToken, "name": name, "fcm_token": fcmToken};
   }
 
   @override

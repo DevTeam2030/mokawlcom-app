@@ -45,7 +45,7 @@ class CustomInterceptors extends Interceptor {
     } else if (responseData != null) {
       message = responseData.toString().toLowerCase();
     }
-  //  message = message.isEmpty ? (err.message?.toLowerCase() ?? '') : message;
+    //  message = message.isEmpty ? (err.message?.toLowerCase() ?? '') : message;
     if (statusCode == 401 &&
         message.contains('please login') &&
         !_isRedirectingToAuth) {

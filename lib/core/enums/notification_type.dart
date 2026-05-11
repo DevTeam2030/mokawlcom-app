@@ -1,5 +1,1 @@
-enum NotificationType {
-  publicNotification,
-  offerNotification,
-  replyOnOffer,
-}
+enum NotificationType { publicNotification, offerNotification, replyOnOffer }

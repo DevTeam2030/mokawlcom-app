@@ -18,4 +18,3 @@ class UploadFileModel extends Equatable {
   @override
   List<Object?> get props => [userId, fileNumber, file, expiryDate];
 }
-

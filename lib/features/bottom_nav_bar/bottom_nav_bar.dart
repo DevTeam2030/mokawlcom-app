@@ -29,7 +29,10 @@ class BottomNavBarScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               color: ColorsManager.surfaceColor,
               border: Border(
-                top: BorderSide(color: ColorsManager.navBorderColor, width: 1.5),
+                top: BorderSide(
+                  color: ColorsManager.navBorderColor,
+                  width: 1.5,
+                ),
               ),
               borderRadius: BorderRadiusDirectional.only(
                 topStart: Radius.circular(16),

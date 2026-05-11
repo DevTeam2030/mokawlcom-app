@@ -56,6 +56,7 @@ class OfferModel extends Equatable {
       url: url,
     );
   }
+
   @override
   List<Object> get props => [
     id,

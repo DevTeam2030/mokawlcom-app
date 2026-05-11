@@ -74,7 +74,9 @@ class ContractorProfileWidget extends StatelessWidget {
           title: LocaleKeys.subscriptionDetails,
           icon: MyIcons.subscribtion,
           onTap: () {
-            context.pushRoute( MyCurrentPackageRoute(profileCubit: profileCubit));
+            context.pushRoute(
+              MyCurrentPackageRoute(profileCubit: profileCubit),
+            );
           },
           iconSize: 20.0,
         ),

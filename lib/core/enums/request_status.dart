@@ -1,4 +1,4 @@
-enum RequestStatus { initial, loading,loadingMore, success, error }
+enum RequestStatus { initial, loading, loadingMore, success, error }
 
 extension RequestStatusExtension on RequestStatus {
   bool get isInitial => this == RequestStatus.initial;

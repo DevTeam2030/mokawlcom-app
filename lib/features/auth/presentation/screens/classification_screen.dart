@@ -93,8 +93,9 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
             }
           },
           builder: (context, state) {
-            final hasData = state.classificationsModel.classifications.isNotEmpty;
-        
+            final hasData =
+                state.classificationsModel.classifications.isNotEmpty;
+
             if (!state.isConnected && !hasData) {
               return NoInternetWidget(
                 errorMessage: state.errorMessage,
@@ -102,7 +103,7 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
                 onPressed: () => context.read<AuthCubit>().getClassifications(),
               );
             }
-        
+
             return UiStateBuilder(
               state: state.getClassificationsState,
               theme: theme,
@@ -159,12 +160,12 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
           const SizedBox(height: 20),
           ValueListenableBuilder<int>(
             valueListenable: activeIndex,
-            builder: (_, value, __) {
+            builder: (_, value, _) {
               return Expanded(
                 child: ListView.separated(
                   controller: _scrollController,
                   itemCount: classifications.length + 1,
-                  separatorBuilder: (_, __) => const SizedBox(height: 16),
+                  separatorBuilder: (_, _) => const SizedBox(height: 16),
                   itemBuilder: (context, index) {
                     if (index == classifications.length) {
                       if (status == RequestStatus.loadingMore) {

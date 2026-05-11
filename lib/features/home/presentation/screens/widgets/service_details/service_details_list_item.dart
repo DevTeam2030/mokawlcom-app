@@ -35,7 +35,7 @@ class ServiceDetailsListItem extends StatelessWidget {
                   ),
                   scrollDirection: Axis.horizontal,
                   itemCount: contractorServiceModel.images.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 10),
+                  separatorBuilder: (_, _) => const SizedBox(width: 10),
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () {
                       showDialog(

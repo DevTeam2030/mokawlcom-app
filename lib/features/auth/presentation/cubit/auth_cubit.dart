@@ -269,9 +269,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> getServices({
-    required int classificationId,
-  }) async {
+  Future<void> getServices({required int classificationId}) async {
     emit(
       state.copyWith(
         getServicesState: RequestStatus.loading,
@@ -301,9 +299,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> loadMoreServices({
-    required int classificationId,
-  }) async {
+  Future<void> loadMoreServices({required int classificationId}) async {
     if (state.servicesCurrentPage >= state.servicesTotalPages ||
         state.getServicesState.isLoading) {
       return;
@@ -460,7 +456,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> subscibePlan() async {
-    if (state.subscibePlanState.isLoading) return;  
+    if (state.subscibePlanState.isLoading) return;
     emit(state.copyWith(subscibePlanState: RequestStatus.loading));
     final result = await contractorAuthRepoImpl.subscibePlan();
     result.fold(
@@ -482,7 +478,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> forgetPassword({required String email}) async {
-    if (state.forgetPasswordState.isLoading) return;  
+    if (state.forgetPasswordState.isLoading) return;
     emit(state.copyWith(forgetPasswordState: RequestStatus.loading));
     final result = await userAuthRepoImpl.forgetPassword(email: email);
     result.fold(

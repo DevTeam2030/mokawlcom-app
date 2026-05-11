@@ -12,7 +12,5 @@ class AppRepoImpl implements AppRepo {
 
   @override
   Future<Either<Failure, AppVersionModel>> getAppVersion() async =>
-      await safeApiCall<AppVersionModel>(
-        () => appDataSource.getAppVersion(),
-      );
+      await safeApiCall<AppVersionModel>(() => appDataSource.getAppVersion());
 }

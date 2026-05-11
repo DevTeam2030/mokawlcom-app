@@ -36,7 +36,6 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<NotificationsCubit>().getOfferNotifications();
     });
-
   }
 
   void _onScroll() {
@@ -84,8 +83,7 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
       buildWhen: (previous, current) =>
           previous.getOfferNotificationsState !=
               current.getOfferNotificationsState ||
-          previous.offerNotifications!=
-              current.offerNotifications,
+          previous.offerNotifications != current.offerNotifications,
       builder: (context, state) {
         final hasData = state.offerNotifications.notifications.isNotEmpty;
 
@@ -134,20 +132,14 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
                   status: state.getOfferNotificationsState,
                   theme: theme,
                 )
-              : NoDataWidget(
-                  theme: theme,
-                  text: LocaleKeys.noOffersExist,
-                ),
+              : NoDataWidget(theme: theme, text: LocaleKeys.noOffersExist),
           onError: hasData
               ? _buildOffersList(
                   notifications: state.offerNotifications.notifications,
                   status: state.getOfferNotificationsState,
                   theme: theme,
                 )
-              : NoDataWidget(
-                  theme: theme,
-                  text: LocaleKeys.noOffersExist,
-                ),
+              : NoDataWidget(theme: theme, text: LocaleKeys.noOffersExist),
         );
       },
     );
@@ -164,7 +156,7 @@ class _PriceOffersScreenState extends State<PriceOffersScreen> {
       controller: _scrollController,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: notifications.length + (status.isLoadingMore ? 1 : 0),
-      separatorBuilder: (_, __) =>
+      separatorBuilder: (_, _) =>
           const CustomDivider(thickness: 0.8, height: 1),
       itemBuilder: (context, index) {
         if (index == notifications.length && status.isLoadingMore) {

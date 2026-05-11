@@ -18,8 +18,10 @@ class AppCubit extends HydratedCubit<AppState> {
   final AppRepo appRepo;
 
   AppCubit({required this.userAuthRepo, required this.appRepo})
-      : super(const AppState()) {
-    _userTypeSubscription = userAuthRepo.userTypeStream.listen((UserType userType) {
+    : super(const AppState()) {
+    _userTypeSubscription = userAuthRepo.userTypeStream.listen((
+      UserType userType,
+    ) {
       changeUserType(userType: userType);
     });
   }
@@ -62,30 +64,30 @@ class AppCubit extends HydratedCubit<AppState> {
     }
 
     final result = await appRepo.getAppVersion();
-    return await result.fold(
-      (failure) async => null,
-      (versionData) async {
-        final PlatformVersionModel platformData =
-            Platform.isAndroid ? versionData.android : versionData.ios;
-        if (platformData.maintainanceMode) {
-          return platformData;
-        }
-
-        final packageInfo = await PackageInfo.fromPlatform();
-        final currentVersion = packageInfo.version;
-        final requiresMandatoryUpdate =
-            _isVersionLower(currentVersion, platformData.minVersion) &&
-                platformData.forceUpdate;
-        final requiresOptionalUpdate =
-            _isVersionLower(currentVersion, platformData.latestVersion);
-
-        if (!requiresMandatoryUpdate && !requiresOptionalUpdate) {
-          return null;
-        }
-
+    return await result.fold((failure) async => null, (versionData) async {
+      final PlatformVersionModel platformData = Platform.isAndroid
+          ? versionData.android
+          : versionData.ios;
+      if (platformData.maintainanceMode) {
         return platformData;
-      },
-    );
+      }
+
+      final packageInfo = await PackageInfo.fromPlatform();
+      final currentVersion = packageInfo.version;
+      final requiresMandatoryUpdate =
+          _isVersionLower(currentVersion, platformData.minVersion) &&
+          platformData.forceUpdate;
+      final requiresOptionalUpdate = _isVersionLower(
+        currentVersion,
+        platformData.latestVersion,
+      );
+
+      if (!requiresMandatoryUpdate && !requiresOptionalUpdate) {
+        return null;
+      }
+
+      return platformData;
+    });
   }
 
   bool _isVersionLower(String currentVersion, String requiredVersion) {

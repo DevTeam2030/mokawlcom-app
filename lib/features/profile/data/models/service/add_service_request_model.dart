@@ -15,21 +15,10 @@ class AddServiceRequestModel extends Equatable {
     this.images,
   });
 
-  
-
   Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'description': description,
-      'price': price,
-    };
+    return {'name': name, 'description': description, 'price': price};
   }
 
   @override
-  List<Object?> get props => [
-        name,
-        description,
-        price,
-        images,
-      ];
+  List<Object?> get props => [name, description, price, images];
 }

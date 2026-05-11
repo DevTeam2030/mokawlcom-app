@@ -39,30 +39,30 @@ class LaunchUtils {
       onError(LocaleKeys.invalidNumber);
     }
   }
+
   static Future<void> email({
-  required String email,
-  String? subject,
-  String? body,
-  required Function(String msg) onError,
-}) async {
-  try {
-    final Uri uri = Uri(
-      scheme: 'mailto',
-      path: email,
-      queryParameters: {
-        if (subject != null && subject.isNotEmpty) 'subject': subject,
-        if (body != null && body.isNotEmpty) 'body': body,
-      },
-    );
+    required String email,
+    String? subject,
+    String? body,
+    required Function(String msg) onError,
+  }) async {
+    try {
+      final Uri uri = Uri(
+        scheme: 'mailto',
+        path: email,
+        queryParameters: {
+          if (subject != null && subject.isNotEmpty) 'subject': subject,
+          if (body != null && body.isNotEmpty) 'body': body,
+        },
+      );
 
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      onError(LocaleKeys.cannotOpenEmailApp);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        onError(LocaleKeys.cannotOpenEmailApp);
+      }
+    } catch (_) {
+      onError(LocaleKeys.invalidEmail);
     }
-  } catch (_) {
-    onError(LocaleKeys.invalidEmail);
   }
-}
-
 }

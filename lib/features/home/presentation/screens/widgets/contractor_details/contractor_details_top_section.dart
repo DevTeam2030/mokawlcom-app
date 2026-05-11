@@ -195,7 +195,7 @@ class ContractorDetailsTopSection extends StatelessWidget {
                       : null,
                   child: RatingBar.builder(
                     initialRating: state.rating,
-                     unratedColor: ColorsManager.borderLightBlue,
+                    unratedColor: ColorsManager.borderLightBlue,
                     ignoreGestures: AppConstants.userType == UserType.visitor,
                     itemSize: 24,
                     itemBuilder: (context, index) {

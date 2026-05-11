@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class GoogleSignInRequestModel extends Equatable{
+class GoogleSignInRequestModel extends Equatable {
   final String idToken;
   final String fcmToken;
 

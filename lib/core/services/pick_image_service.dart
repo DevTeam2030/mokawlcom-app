@@ -3,8 +3,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:localingo/localingo.dart';
 import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
-
-
 class ImagePickerService {
   static const int maxImageSizeInMB = 10;
   static const int maxImagesCount = 5;
@@ -14,7 +12,7 @@ class ImagePickerService {
   static Future<File?> pickImage() async {
     final XFile? pickedFile = await _picker.pickImage(
       source: ImageSource.gallery,
-      imageQuality: 90, 
+      imageQuality: 90,
     );
 
     if (pickedFile == null) return null;
@@ -36,7 +34,7 @@ class ImagePickerService {
 
   static Future<List<File>> pickMultipleImages() async {
     final List<XFile> pickedFiles = await _picker.pickMultiImage(
-      imageQuality: 90, 
+      imageQuality: 90,
     );
 
     if (pickedFiles.isEmpty) return [];

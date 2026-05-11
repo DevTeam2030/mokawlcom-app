@@ -163,10 +163,8 @@ class Auth extends AutoRouter implements AutoRouteWrapper {
   const Auth({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(
-    create: (context) => getIt<AuthCubit>(),
-    child: this,
-  );
+  Widget wrappedRoute(BuildContext context) =>
+      BlocProvider(create: (context) => getIt<AuthCubit>(), child: this);
 }
 
 @RoutePage(name: 'HomeTabRoute')

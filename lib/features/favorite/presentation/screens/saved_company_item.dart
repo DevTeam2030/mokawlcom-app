@@ -75,22 +75,22 @@ class SavedCompanyItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   RatingBar.builder(
-                      initialRating: favoriteModel.rate.toDouble(),
-                      ignoreGestures: true,
-                      itemSize: 18,
-                      itemBuilder: (context, index) {
-                        return const Icon(MyIcons.star, color: Colors.amber);
-                      },
-                      unratedColor: ColorsManager.borderLightBlue,
-                      onRatingUpdate: (_) {},
-                    ),
+                    initialRating: favoriteModel.rate.toDouble(),
+                    ignoreGestures: true,
+                    itemSize: 18,
+                    itemBuilder: (context, index) {
+                      return const Icon(MyIcons.star, color: Colors.amber);
+                    },
+                    unratedColor: ColorsManager.borderLightBlue,
+                    onRatingUpdate: (_) {},
+                  ),
                 ],
               ),
             ),
             IconButton(
               onPressed: () {
                 context.read<FavoriteCubit>().removeFavorite(
-                 contractorId: favoriteModel.contractorId,
+                  contractorId: favoriteModel.contractorId,
                 );
               },
               icon: const Icon(

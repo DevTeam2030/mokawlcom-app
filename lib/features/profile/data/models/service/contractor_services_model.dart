@@ -25,9 +25,7 @@ class ContractorServicesModel extends Equatable {
   const ContractorServicesModel.empty()
     : this(currentPage: 0, totalPages: 0, services: const []);
 
-  ContractorServicesModel copyWith({
-    List<ContractorServiceModel>? services,
-  }) {
+  ContractorServicesModel copyWith({List<ContractorServiceModel>? services}) {
     return ContractorServicesModel(
       currentPage: currentPage,
       totalPages: totalPages,

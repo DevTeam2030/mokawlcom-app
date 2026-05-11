@@ -50,26 +50,26 @@ dependencies:
   google_sign_in: ^7.2.0
   dio: ^5.9.0
   equatable: ^2.0.8 
-  sign_in_with_apple: ^7.0.1
+  sign_in_with_apple: ^8.0.0
   crypto: ^3.0.7
   pretty_dio_logger: ^1.4.0
   dartz: ^0.10.1
   bloc: ^9.2.0
   flutter_bloc: ^9.1.1
   firebase_messaging: ^16.1.0
-  awesome_notifications: ^0.10.1
+  awesome_notifications: ^0.11.0
   flutter_secure_storage: ^10.0.0
-  hydrated_bloc: ^10.1.1
+  hydrated_bloc: ^11.0.0
   path_provider: ^2.1.5
   skeletonizer: ^2.1.2
   cached_network_image: ^3.4.1
-  file_picker: ^10.3.8
+  file_picker: ^11.0.2
   shared_preferences: ^2.5.4
   collection: ^1.19.1
   url_launcher: ^6.3.2
   flutter_intl_phone_field: ^0.0.7
   image_picker: ^1.1.2
-  syncfusion_flutter_pdfviewer: ^32.1.24
+  syncfusion_flutter_pdfviewer: ^33.2.5
   package_info_plus: ^9.0.0
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4
@@ -84,7 +84,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

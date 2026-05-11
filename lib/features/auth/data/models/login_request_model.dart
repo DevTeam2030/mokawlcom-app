@@ -15,8 +15,7 @@ class LoginRequestModel extends Equatable {
     "password": password,
     "fcm_token": fcmToken,
   };
-  
+
   @override
-  List<Object> get props => [email,password,fcmToken];
-  
+  List<Object> get props => [email, password, fcmToken];
 }

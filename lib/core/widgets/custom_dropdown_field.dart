@@ -307,7 +307,7 @@ class _SingleSelectSheetState<T> extends State<_SingleSelectSheet<T>>
       minChildSize: 0.5,
       maxChildSize: 0.9,
       expand: false,
-      builder: (_, __) => SafeArea(
+      builder: (_, _) => SafeArea(
         child: Column(
           children: [
             const SizedBox(height: 8),
@@ -329,14 +329,14 @@ class _SingleSelectSheetState<T> extends State<_SingleSelectSheet<T>>
                   widget.itemsNotifier,
                   widget.isLoadingMoreNotifier,
                 ]),
-                builder: (_, __) {
+                builder: (_, _) {
                   final items = widget.itemsNotifier.value;
                   final isLoadingMore = widget.isLoadingMoreNotifier.value;
                   return ListView.separated(
                     controller: scrollController,
                     padding: const EdgeInsets.only(bottom: 20),
                     itemCount: items.length + (isLoadingMore ? 1 : 0),
-                    separatorBuilder: (_, __) => const Divider(
+                    separatorBuilder: (_, _) => const Divider(
                       height: 1,
                       indent: 24,
                       endIndent: 24,
@@ -466,14 +466,14 @@ class _MultiSelectSheetState<T> extends State<_MultiSelectSheet<T>>
                 widget.itemsNotifier,
                 widget.isLoadingMoreNotifier,
               ]),
-              builder: (_, __) {
+              builder: (_, _) {
                 final items = widget.itemsNotifier.value;
                 final isLoadingMore = widget.isLoadingMoreNotifier.value;
                 return ListView.separated(
                   controller: scrollController,
                   padding: const EdgeInsets.only(bottom: 20),
                   itemCount: items.length + (isLoadingMore ? 1 : 0),
-                  separatorBuilder: (_, __) => const Divider(
+                  separatorBuilder: (_, _) => const Divider(
                     height: 1,
                     indent: 24,
                     endIndent: 24,

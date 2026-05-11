@@ -20,7 +20,7 @@ class SettingsModel extends Equatable {
   }
 
   const SettingsModel.empty()
-      : this(privacyPolicy: "", termsAndConditions: "", email: "");
+    : this(privacyPolicy: "", termsAndConditions: "", email: "");
 
   @override
   List<Object> get props => [privacyPolicy, termsAndConditions, email];

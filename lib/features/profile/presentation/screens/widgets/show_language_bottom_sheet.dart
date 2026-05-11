@@ -44,7 +44,7 @@ Future<void> showLanguageBottomSheet(BuildContext context) async {
                       ),
                     ),
                   ),
-        
+
                   Align(
                     alignment: AlignmentDirectional.center,
                     child: Text(
@@ -53,7 +53,7 @@ Future<void> showLanguageBottomSheet(BuildContext context) async {
                     ),
                   ),
                   const SizedBox(height: 20),
-        
+
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(LocaleKeys.english),
@@ -71,7 +71,7 @@ Future<void> showLanguageBottomSheet(BuildContext context) async {
                       context.router.replaceAll([const SplashTabRoute()]);
                     },
                   ),
-        
+
                   const Divider(),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
@@ -87,11 +87,11 @@ Future<void> showLanguageBottomSheet(BuildContext context) async {
                         return;
                       }
                       context.read<AppCubit>().changeLanguage(isArabic: true);
-        
+
                       context.router.replaceAll([const SplashTabRoute()]);
                     },
                   ),
-        
+
                   const SizedBox(height: 10),
                 ],
               );

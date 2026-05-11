@@ -231,7 +231,7 @@ class _EditContractorFormState extends State<EditContractorForm> {
             fieldName: LocaleKeys.hintAboutCompany,
             validator: (_) => null,
             controller: _hintAboutCompanyController,
-            onSubmit: (_) => _onSubmit(context) ,
+            onSubmit: (_) => _onSubmit(context),
           ),
           const SizedBox(height: 40.0),
           BlocConsumer<ProfileCubit, ProfileState>(
@@ -282,11 +282,11 @@ class _EditContractorFormState extends State<EditContractorForm> {
   void _onSubmit(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      if(widget.serviceIds.isEmpty){
+      if (widget.serviceIds.isEmpty) {
         showDialog(
           context: context,
           builder: (context) => ErrorDialog(
-            message:LocaleKeys.pleaseSelectAtLeastOneService,
+            message: LocaleKeys.pleaseSelectAtLeastOneService,
             theme: Theme.of(context),
           ),
         );

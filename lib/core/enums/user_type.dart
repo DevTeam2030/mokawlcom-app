@@ -1,5 +1,1 @@
-enum UserType {
-  visitor,
-  user,
-  contractor,
-}
+enum UserType { visitor, user, contractor }

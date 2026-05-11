@@ -61,7 +61,11 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
     super.initState();
     if (widget.isOfferPrice) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showBottomSheet(context: context, contractorId: widget.contractorId, contractorInfoCubit: context.read<ContractorInfoCubit>());
+        _showBottomSheet(
+          context: context,
+          contractorId: widget.contractorId,
+          contractorInfoCubit: context.read<ContractorInfoCubit>(),
+        );
       });
     }
   }
@@ -168,9 +172,17 @@ class _ContractorDetailsScreenState extends State<ContractorDetailsScreen> {
       onLoading: Skeletonizer(
         containersColor: ColorsManager.skeletonColor,
         enabled: state.getContractorDetailsState.isLoading,
-        child: _buildContractorDetails(state, theme, context.read<ContractorInfoCubit>()),
+        child: _buildContractorDetails(
+          state,
+          theme,
+          context.read<ContractorInfoCubit>(),
+        ),
       ),
-      onSuccess: _buildContractorDetails(state, theme, context.read<ContractorInfoCubit>()),
+      onSuccess: _buildContractorDetails(
+        state,
+        theme,
+        context.read<ContractorInfoCubit>(),
+      ),
       errorMessage: state.errorMessage,
       theme: theme,
     );

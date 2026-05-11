@@ -98,7 +98,7 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
           },
           builder: (context, state) {
             final hasData = state.servicesModel.services.isNotEmpty;
-        
+
             if (!state.isConnected) {
               return NoInternetWidget(
                 errorMessage: state.errorMessage,
@@ -108,7 +108,7 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
                 ),
               );
             }
-        
+
             return UiStateBuilder(
               state: state.getServicesState,
               theme: theme,
@@ -171,11 +171,11 @@ class _SelectServicesScreenState extends State<SelectServicesScreen> {
           Expanded(
             child: ValueListenableBuilder<Set<int>>(
               valueListenable: selectedIndices,
-              builder: (_, value, __) {
+              builder: (_, value, _) {
                 return ListView.separated(
                   controller: _scrollController,
                   itemCount: services.length + 1,
-                  separatorBuilder: (_, __) => const SizedBox(height: 16),
+                  separatorBuilder: (_, _) => const SizedBox(height: 16),
                   itemBuilder: (context, index) {
                     if (index == services.length) {
                       if (status == RequestStatus.loadingMore) {

@@ -17,8 +17,7 @@ class ContractorAuthRepoImpl implements ContractorAuthRepo {
   ContractorAuthRepoImpl({required this.contractorAuthDataSource});
 
   @override
-  Future<Either<Failure, ClassificationsModel>>
-  getClassifications({
+  Future<Either<Failure, ClassificationsModel>> getClassifications({
     required int page,
   }) async {
     return await safeApiCall<ClassificationsModel>(
@@ -32,7 +31,10 @@ class ContractorAuthRepoImpl implements ContractorAuthRepo {
     required int classificationId,
   }) async {
     return await safeApiCall<ServicesModel>(
-      () => contractorAuthDataSource.getServices(page: page, classificationId: classificationId),
+      () => contractorAuthDataSource.getServices(
+        page: page,
+        classificationId: classificationId,
+      ),
     );
   }
 

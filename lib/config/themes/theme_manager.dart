@@ -23,7 +23,7 @@ class ThemeManager {
         elevation: 0,
         titleSpacing: 10,
         iconTheme: IconThemeData(color: ColorsManager.primaryColor, size: 24.0),
-        systemOverlayStyle:  SystemUiOverlayStyle(
+        systemOverlayStyle: SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
           statusBarBrightness: Brightness.light,
         ),

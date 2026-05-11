@@ -7,7 +7,6 @@ import 'package:mokawlcom_app/features/profile/data/models/deal/deals_model.dart
 import 'package:mokawlcom_app/features/notificatiions/data/models/user_offers_model.dart';
 
 class UserDetailsState extends Equatable {
- 
   final RequestStatus addNewServiceState;
   final RequestStatus editServiceState;
   final RequestStatus getDealsState;

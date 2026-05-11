@@ -15,9 +15,7 @@ class AppDataSourceImpl implements AppDataSource {
 
   @override
   Future<AppVersionModel> getAppVersion() async {
-    final result = await dioHelper.get(
-      url: ApiConstants.appVerionEndpoint,
-    );
+    final result = await dioHelper.get(url: ApiConstants.appVerionEndpoint);
 
     if (result.statusCode == 200) {
       return AppVersionModel.fromJson(

@@ -80,5 +80,4 @@
 //   _toastOverlay = null;
 // }
 
-
 // enum ToastStates { success, error, warning }

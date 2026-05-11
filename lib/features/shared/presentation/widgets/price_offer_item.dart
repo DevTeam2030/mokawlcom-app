@@ -31,7 +31,7 @@ class PriceOfferItem extends StatelessWidget {
         context.read<NotificationsCubit>().markOfferNotificationAsRead(
           offerId: offerModel.offerId,
         );
-    },
+      },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: BlocSelector<NotificationsCubit, NotificationsState, bool>(

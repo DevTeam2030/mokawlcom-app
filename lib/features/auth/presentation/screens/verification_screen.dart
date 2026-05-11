@@ -79,7 +79,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           email: widget.email,
                           verificationCode: verificationCode,
                         );
-                    }
+                      }
                     },
                     onChanged: (value) => verificationCode = value,
                     defaultPinTheme: PinTheme(
@@ -168,7 +168,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     context.replaceRoute(
                       UploadFilesRoute(
                         contractorId: state.activateAccountResponseModel.id,
-                        
                       ),
                     );
                   }

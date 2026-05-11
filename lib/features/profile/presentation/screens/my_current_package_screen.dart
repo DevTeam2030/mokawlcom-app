@@ -9,7 +9,8 @@ import 'package:mokawlcom_app/features/profile/presentation/cubit/profile_cubit.
 import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 
 @RoutePage()
-class MyCurrentPackageScreen extends StatefulWidget implements AutoRouteWrapper {
+class MyCurrentPackageScreen extends StatefulWidget
+    implements AutoRouteWrapper {
   const MyCurrentPackageScreen({super.key, required this.profileCubit});
   final ProfileCubit profileCubit;
 
@@ -18,10 +19,7 @@ class MyCurrentPackageScreen extends StatefulWidget implements AutoRouteWrapper 
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider.value(
-      value: profileCubit,
-      child: this,
-    );
+    return BlocProvider.value(value: profileCubit, child: this);
   }
 }
 

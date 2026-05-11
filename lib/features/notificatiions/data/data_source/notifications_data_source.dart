@@ -21,7 +21,7 @@ abstract class NotificationsDataSource {
     required ReplyOfferPriceRequestModel replyOfferPriceRequestModel,
     required void Function(double progress) onProgress,
   });
-   Future<UserOffersModel> getUserOffers({required int page});
+  Future<UserOffersModel> getUserOffers({required int page});
 }
 
 class NotificationsDataSourceImpl implements NotificationsDataSource {
@@ -44,7 +44,8 @@ class NotificationsDataSourceImpl implements NotificationsDataSource {
       throw ServerException(errorMessage: response.data["message"] ?? "");
     }
   }
- @override
+
+  @override
   Future<UserOffersModel> getUserOffers({required int page}) async {
     final response = await dioHelper.get(
       url: ApiConstants.userOffers,
@@ -57,6 +58,7 @@ class NotificationsDataSourceImpl implements NotificationsDataSource {
       throw ServerException(errorMessage: response.data["message"] ?? "");
     }
   }
+
   @override
   Future<OfferNotificationsModel> getOfferNotifications({
     required int page,

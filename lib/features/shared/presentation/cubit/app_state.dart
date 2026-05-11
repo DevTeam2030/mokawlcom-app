@@ -25,9 +25,5 @@ class AppState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        userType,
-        isArabic,
-        classification,
-      ];
+  List<Object?> get props => [userType, isArabic, classification];
 }

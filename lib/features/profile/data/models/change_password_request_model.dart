@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class ChangePasswordRequestModel extends Equatable{
+class ChangePasswordRequestModel extends Equatable {
   final String currentPassword;
   final String newPassword;
   final String confirmPassword;
 
- const ChangePasswordRequestModel({
+  const ChangePasswordRequestModel({
     required this.currentPassword,
     required this.newPassword,
     required this.confirmPassword,

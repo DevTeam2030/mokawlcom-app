@@ -106,7 +106,7 @@ class _UploadFilesScreenState extends State<UploadFilesScreen> {
                   text: LocaleKeys.continueKey,
                 ),
               );
-              if(context.mounted){
+              if (context.mounted) {
                 Navigator.pop(context);
               }
             }
@@ -133,14 +133,14 @@ class _UploadFilesScreenState extends State<UploadFilesScreen> {
             (FilesCubit cubit) => cubit.state.completedFiles.length == 4,
           )
           ? SafeArea(
-            child: Padding(
+              child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
                 child: PrimaryButton(
                   onPressed: () => context.pushRoute(const SubscriptionRoute()),
                   text: LocaleKeys.next,
                 ),
               ),
-          )
+            )
           : const SizedBox.shrink(),
     );
   }

@@ -70,8 +70,6 @@ class ProfileRepoImpl implements ProfileRepo {
   Future<Either<Failure, UserModel>> getUserProfile() async =>
       safeApiCall<UserModel>(() => profileDataSource.getUserProfile());
 
- 
-
   @override
   Future<Either<Failure, ContractorServicesModel>> getContractorServices({
     required int page,

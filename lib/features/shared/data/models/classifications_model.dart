@@ -22,15 +22,10 @@ class ClassificationsModel extends Equatable {
           ),
         ),
       );
-  const ClassificationsModel.empty() : this(
-    totalPages: 0,
-    currentPage: 0,
-    classifications: const [],
-  );
+  const ClassificationsModel.empty()
+    : this(totalPages: 0, currentPage: 0, classifications: const []);
 
-  ClassificationsModel copyWith({
-    List<ClassificationModel>? classifications,
-  }) {
+  ClassificationsModel copyWith({List<ClassificationModel>? classifications}) {
     return ClassificationsModel(
       totalPages: totalPages,
       currentPage: currentPage,

@@ -14,9 +14,7 @@ import 'package:path_provider/path_provider.dart';
 class AppInitializer {
   static Future<void> init() async {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-     SystemChrome.setEnabledSystemUIMode(
-    SystemUiMode.edgeToEdge,
-  );
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
     Bloc.observer = MyBlocObserver();
     final sharedPrefHelper = await SharedPrefHelper.init();
@@ -36,7 +34,7 @@ class AppInitializer {
     );
     await _initFirebase();
     SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
   }
@@ -55,7 +53,7 @@ class AppInitializer {
       await fcm.initAwesomeNotification();
       await fcm.setAwesomeNotificationListeners();
       await fcm.initFirebaseMessagingListeners();
-      
+
       // Delay navigation logic to avoid crashing the unmounted AppRouter
       Future.delayed(const Duration(milliseconds: 1000), () {
         fcm.handleInitialMessage();

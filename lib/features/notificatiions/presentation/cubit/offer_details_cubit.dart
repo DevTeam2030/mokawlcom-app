@@ -112,7 +112,7 @@ class OfferDetailsCubit extends Cubit<OfferDetailsState> {
     required String title,
     required String message,
   }) async {
-    if(state.replayOnOfferPriceState.isLoading){
+    if (state.replayOnOfferPriceState.isLoading) {
       return;
     }
     emit(state.copyWith(replayOnOfferPriceState: RequestStatus.loading));

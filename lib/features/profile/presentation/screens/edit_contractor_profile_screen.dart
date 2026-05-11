@@ -118,7 +118,7 @@ class _EditContractorProfileScreenState
                         ),
                       ),
                       const SizedBox(height: 8),
-        
+
                       BlocBuilder<HomeCubit, HomeState>(
                         buildWhen: (previous, current) =>
                             previous.classificationsModel !=
@@ -204,7 +204,7 @@ class _EditContractorProfileScreenState
                           );
                         },
                       ),
-        
+
                       const SizedBox(height: 16),
                       Text(
                         LocaleKeys.subcategory,
@@ -214,14 +214,15 @@ class _EditContractorProfileScreenState
                         ),
                       ),
                       const SizedBox(height: 8),
-        
+
                       BlocBuilder<HomeCubit, HomeState>(
                         buildWhen: (previous, current) =>
                             previous.servicesModel != current.servicesModel ||
-                            previous.getServicesState != current.getServicesState,
+                            previous.getServicesState !=
+                                current.getServicesState,
                         builder: (context, homeState) {
                           final services = homeState.servicesModel.services;
-        
+
                           if (homeState.getServicesState.isLoading) {
                             return const Center(
                               child: Padding(
@@ -230,7 +231,7 @@ class _EditContractorProfileScreenState
                               ),
                             );
                           }
-        
+
                           if (homeState.getServicesState.isError) {
                             return Container(
                               padding: const EdgeInsets.all(12),
@@ -246,7 +247,7 @@ class _EditContractorProfileScreenState
                               ),
                             );
                           }
-        
+
                           if (services.isEmpty &&
                               selectedServices.value.isEmpty) {
                             return Container(
@@ -265,7 +266,7 @@ class _EditContractorProfileScreenState
                               ),
                             );
                           }
-        
+
                           return ValueListenableBuilder<List<ServiceModel>>(
                             valueListenable: selectedServices,
                             builder: (context, selectedList, _) {
@@ -289,13 +290,18 @@ class _EditContractorProfileScreenState
                                       selectedServices.value = newList;
                                     },
                                     onLoadMore: () {
-                                      context.read<HomeCubit>().loadMoreServices(
-                                        classificationId:
-                                            selectedClassification.value!.id,
-                                      );
+                                      context
+                                          .read<HomeCubit>()
+                                          .loadMoreServices(
+                                            classificationId:
+                                                selectedClassification
+                                                    .value!
+                                                    .id,
+                                          );
                                     },
-                                    isLoadingMore:
-                                        homeState.getServicesState.isLoadingMore,
+                                    isLoadingMore: homeState
+                                        .getServicesState
+                                        .isLoadingMore,
                                     hasMoreData:
                                         homeState.servicesPage <
                                         homeState.servicesTotalPages,
@@ -347,14 +353,17 @@ class _EditContractorProfileScreenState
                           );
                         },
                       ),
-        
+
                       const SizedBox(height: 40),
                     ],
                   ),
                 ),
               ),
               onError: Center(
-                child: Text(state.errorMessage, style: theme.textTheme.bodyLarge),
+                child: Text(
+                  state.errorMessage,
+                  style: theme.textTheme.bodyLarge,
+                ),
               ),
               theme: theme,
               errorMessage: state.errorMessage,

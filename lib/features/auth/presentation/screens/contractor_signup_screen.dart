@@ -29,9 +29,7 @@ class ContractorSignupScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 ContractorSignupForm(
-                  theme:theme,
-                 ),
+                ContractorSignupForm(theme: theme),
                 const SizedBox(height: 16.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

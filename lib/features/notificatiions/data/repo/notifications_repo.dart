@@ -22,5 +22,5 @@ abstract class NotificationsRepo {
     required ReplyOfferPriceRequestModel replyOfferPriceRequestModel,
     required void Function(double progress) onProgress,
   });
-   Future<Either<Failure, UserOffersModel>> getUserOffers({required int page});
+  Future<Either<Failure, UserOffersModel>> getUserOffers({required int page});
 }
