@@ -11,11 +11,11 @@ class ThemeManager {
       colorScheme: ColorScheme.fromSeed(seedColor: ColorsManager.primaryColor),
       useMaterial3: true,
       pageTransitionsTheme: const PageTransitionsTheme(
-      builders: {
-        TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-      },
-    ),
+        builders: {
+          TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
+      ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         centerTitle: true,
@@ -23,10 +23,9 @@ class ThemeManager {
         elevation: 0,
         titleSpacing: 10,
         iconTheme: IconThemeData(color: ColorsManager.primaryColor, size: 24.0),
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
+        systemOverlayStyle:  SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
         ),
         titleTextStyle: TextStyle(
           fontSize: 18,
@@ -76,6 +75,4 @@ class ThemeManager {
       ),
     );
   }
-
- 
 }

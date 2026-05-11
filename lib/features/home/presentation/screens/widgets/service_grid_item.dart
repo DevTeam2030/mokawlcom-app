@@ -59,6 +59,7 @@ class ServiceGridItem extends StatelessWidget {
         Text(
           serviceModel.name,
           textAlign: TextAlign.center,
+          maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: theme.textTheme.labelSmall!.copyWith(
             fontWeight: FontWeight.w400,
