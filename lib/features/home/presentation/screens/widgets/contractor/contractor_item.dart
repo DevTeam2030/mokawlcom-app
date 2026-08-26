@@ -59,9 +59,10 @@ class ContractorItem extends StatelessWidget {
                       color: ColorsManager.secondaryColor,
                       shape: BoxShape.circle,
                     ),
-                    clipBehavior: .antiAliasWithSaveLayer,
+                    clipBehavior: .antiAlias,
                     child: ClipOval(
-                      clipBehavior: .antiAliasWithSaveLayer,
+                      // ignore: avoid_redundant_argument_values
+                      clipBehavior: .antiAlias,
                       child: CustomCachedNetworkImage(
                         imageUrl: contractorModel.image,
                         width: 50,

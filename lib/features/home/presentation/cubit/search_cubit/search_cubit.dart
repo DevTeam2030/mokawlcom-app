@@ -12,6 +12,8 @@ class SearchCubit extends Cubit<SearchState> {
   SearchCubit({required this.homeRepoImpl}) : super(const SearchState());
 
   Future<void> getContractors({int? classificationId, int? serviceId}) async {
+    if (state.getContractorsState.isLoading) return;
+
     emit(
       state.copyWith(
         getContractorsState: RequestStatus.loading,
@@ -47,6 +49,8 @@ class SearchCubit extends Cubit<SearchState> {
     int? classificationId,
     int? serviceId,
   }) async {
+    if (state.getContractorsState.isLoading) return;
+
     emit(
       state.copyWith(
         getContractorsState: RequestStatus.loading,

@@ -73,7 +73,7 @@ class ContractorInfoCubit extends Cubit<ContractorInfoState> {
           rating: oldRating,
         ),
       );
-    }, (_) {});
+    }, (_) => emit(state.copyWith(rateContractorState: RequestStatus.success)));
   }
 
   void toggleFavorite() => emit(state.copyWith(isSaved: !state.isSaved));

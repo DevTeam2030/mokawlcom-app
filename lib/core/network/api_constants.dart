@@ -47,6 +47,15 @@ class ApiConstants {
   static const String addService = "/add-service";
   static const String editService = "/edit-service";
   static const String getDeals = "/user-deals";
+  static const String myDeals = "/my-deals";
+  static const String myDealDetails = "/my-deal-details";
+  static const String addUserDeal = "/add-user-deal";
+  static const String updateUserDeal = "/update-user-deal";
+  static const String deleteUserDeal = "/delete-user-deal";
+  static const String deleteDealAttachment = "/delete-deal-attach";
+  static const String contractorDeals = "/contractor-deals";
+  static const String replyDeal = "/reply-deal";
+  static const String replyToContractor = "/reply-to-contractor";
   static const String addDeal = "/add-deal";
   static const String deleteDeal = "/delete-deal";
   static const String editDeal = "/update-deal";

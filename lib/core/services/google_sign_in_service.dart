@@ -66,7 +66,6 @@ class GoogleSignInService {
       final idToken = auth.idToken;
 
       debugPrint("User email: ${user.email}");
-      debugPrint("ID Token: $idToken");
 
       // Complete the sign-in with the idToken
       if (_currentCompleter != null && !_currentCompleter!.isCompleted) {

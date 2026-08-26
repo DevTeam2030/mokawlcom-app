@@ -71,6 +71,16 @@ class ContractorProfileWidget extends StatelessWidget {
         const SizedBox(height: 16.0),
         ProfileItem(
           theme: theme,
+          title: LocaleKeys.customerDeals,
+          icon: MyIcons.file,
+          onTap: () {
+            context.pushRoute(const AvailableCustomerDealsRoute());
+          },
+          iconSize: 20.0,
+        ),
+        const SizedBox(height: 16.0),
+        ProfileItem(
+          theme: theme,
           title: LocaleKeys.subscriptionDetails,
           icon: MyIcons.subscribtion,
           onTap: () {

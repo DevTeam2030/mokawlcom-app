@@ -12,6 +12,13 @@ import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo.dart';
 import 'package:mokawlcom_app/features/auth/data/repo/user/user_auth_repo_impl.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mokawlcom_app/features/auth/presentation/cubit/files_cubit.dart';
+import 'package:mokawlcom_app/features/customer_deals/data/data_source/customer_deals_data_source.dart';
+import 'package:mokawlcom_app/features/customer_deals/data/repo/customer_deals_repo.dart';
+import 'package:mokawlcom_app/features/customer_deals/data/repo/customer_deals_repo_impl.dart';
+import 'package:mokawlcom_app/features/customer_deals/presentation/cubit/add_customer_deal/add_customer_deal_cubit.dart';
+import 'package:mokawlcom_app/features/customer_deals/presentation/cubit/customer_deal_details/customer_deal_details_cubit.dart';
+import 'package:mokawlcom_app/features/customer_deals/presentation/cubit/customer_deals/customer_deals_cubit.dart';
+import 'package:mokawlcom_app/features/customer_deals/presentation/cubit/contractor_deals/contractor_deals_cubit.dart';
 import 'package:mokawlcom_app/features/favorite/data/data_source/favorite_data_source.dart';
 import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_cubit.dart';
 import 'package:mokawlcom_app/features/favorite/repo/favorite_repo.dart';
@@ -73,6 +80,9 @@ class ServiceLocator {
     getIt.registerLazySingleton<AppDataSource>(
       () => AppDataSourceImpl(dioHelper: getIt<DioHelper>()),
     );
+    getIt.registerLazySingleton<CustomerDealsDataSource>(
+      () => CustomerDealsDataSourceImpl(dioHelper: getIt<DioHelper>()),
+    );
 
     getIt.registerLazySingleton<UserAuthRepo>(
       () => UserAuthRepoImpl(userAuthDataSource: getIt<UserAuthDataSource>()),
@@ -98,6 +108,11 @@ class ServiceLocator {
     );
     getIt.registerLazySingleton<AppRepo>(
       () => AppRepoImpl(appDataSource: getIt<AppDataSource>()),
+    );
+    getIt.registerLazySingleton<CustomerDealsRepo>(
+      () => CustomerDealsRepoImpl(
+        customerDealsDataSource: getIt<CustomerDealsDataSource>(),
+      ),
     );
 
     getIt.registerFactory<AppCubit>(
@@ -145,6 +160,23 @@ class ServiceLocator {
     );
     getIt.registerFactory<UserDetailsCubit>(
       () => UserDetailsCubit(profileRepo: getIt<ProfileRepo>()),
+    );
+    getIt.registerFactory<CustomerDealsCubit>(
+      () => CustomerDealsCubit(customerDealsRepo: getIt<CustomerDealsRepo>()),
+    );
+    getIt.registerFactory<ContractorDealsCubit>(
+      () => ContractorDealsCubit(customerDealsRepo: getIt<CustomerDealsRepo>()),
+    );
+    getIt.registerFactory<CustomerDealDetailsCubit>(
+      () => CustomerDealDetailsCubit(
+        customerDealsRepo: getIt<CustomerDealsRepo>(),
+      ),
+    );
+    getIt.registerFactory<AddCustomerDealCubit>(
+      () => AddCustomerDealCubit(
+        contractorAuthRepo: getIt<ContractorAuthRepo>(),
+        customerDealsRepo: getIt<CustomerDealsRepo>(),
+      ),
     );
   }
 }

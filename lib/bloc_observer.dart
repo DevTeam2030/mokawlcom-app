@@ -13,15 +13,13 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    if (kDebugMode) {
-      print('onChange -- ${bloc.runtimeType}, $change');
-    }
+    // Verbose Bloc state logging is intentionally disabled.
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     if (kDebugMode) {
-      print('onError -- ${bloc.runtimeType}, $error');
+      print('onError -- ${bloc.runtimeType}, ${error.runtimeType}');
     }
     super.onError(bloc, error, stackTrace);
   }

@@ -11,6 +11,22 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [AddCustomerDealScreen]
+class AddCustomerDealRoute extends PageRouteInfo<void> {
+  const AddCustomerDealRoute({List<PageRouteInfo>? children})
+    : super(AddCustomerDealRoute.name, initialChildren: children);
+
+  static const String name = 'AddCustomerDealRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AddCustomerDealScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [AddNewServiceScreen]
 class AddNewServiceRoute extends PageRouteInfo<AddNewServiceRouteArgs> {
   AddNewServiceRoute({
@@ -104,6 +120,22 @@ class AuthenticatedRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return WrappedRoute(child: const Authenticated());
+    },
+  );
+}
+
+/// generated route for
+/// [AvailableCustomerDealsScreen]
+class AvailableCustomerDealsRoute extends PageRouteInfo<void> {
+  const AvailableCustomerDealsRoute({List<PageRouteInfo>? children})
+    : super(AvailableCustomerDealsRoute.name, initialChildren: children);
+
+  static const String name = 'AvailableCustomerDealsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AvailableCustomerDealsScreen();
     },
   );
 }
@@ -391,6 +423,70 @@ class ContractorsRouteArgs {
 }
 
 /// generated route for
+/// [CustomerDealDetailsScreen]
+class CustomerDealDetailsRoute
+    extends PageRouteInfo<CustomerDealDetailsRouteArgs> {
+  CustomerDealDetailsRoute({
+    Key? key,
+    required int dealId,
+    List<PageRouteInfo>? children,
+  }) : super(
+         CustomerDealDetailsRoute.name,
+         args: CustomerDealDetailsRouteArgs(key: key, dealId: dealId),
+         initialChildren: children,
+       );
+
+  static const String name = 'CustomerDealDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CustomerDealDetailsRouteArgs>();
+      return CustomerDealDetailsScreen(key: args.key, dealId: args.dealId);
+    },
+  );
+}
+
+class CustomerDealDetailsRouteArgs {
+  const CustomerDealDetailsRouteArgs({this.key, required this.dealId});
+
+  final Key? key;
+
+  final int dealId;
+
+  @override
+  String toString() {
+    return 'CustomerDealDetailsRouteArgs{key: $key, dealId: $dealId}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CustomerDealDetailsRouteArgs) return false;
+    return key == other.key && dealId == other.dealId;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ dealId.hashCode;
+}
+
+/// generated route for
+/// [CustomerDealsScreen]
+class CustomerDealsRoute extends PageRouteInfo<void> {
+  const CustomerDealsRoute({List<PageRouteInfo>? children})
+    : super(CustomerDealsRoute.name, initialChildren: children);
+
+  static const String name = 'CustomerDealsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CustomerDealsScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [EditContractorProfileScreen]
 class EditContractorProfileRoute extends PageRouteInfo<void> {
   const EditContractorProfileRoute({List<PageRouteInfo>? children})
@@ -653,12 +749,11 @@ class LoginRoute extends PageRouteInfo<void> {
 class MaintenanceRoute extends PageRouteInfo<MaintenanceRouteArgs> {
   MaintenanceRoute({
     Key? key,
-    String message = '',
+    required String message,
     List<PageRouteInfo>? children,
   }) : super(
          MaintenanceRoute.name,
          args: MaintenanceRouteArgs(key: key, message: message),
-         rawQueryParams: {'message': message},
          initialChildren: children,
        );
 
@@ -667,18 +762,14 @@ class MaintenanceRoute extends PageRouteInfo<MaintenanceRouteArgs> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final queryParams = data.queryParams;
-      final args = data.argsAs<MaintenanceRouteArgs>(
-        orElse: () =>
-            MaintenanceRouteArgs(message: queryParams.getString('message', '')),
-      );
+      final args = data.argsAs<MaintenanceRouteArgs>();
       return MaintenanceScreen(key: args.key, message: args.message);
     },
   );
 }
 
 class MaintenanceRouteArgs {
-  const MaintenanceRouteArgs({this.key, this.message = ''});
+  const MaintenanceRouteArgs({this.key, required this.message});
 
   final Key? key;
 

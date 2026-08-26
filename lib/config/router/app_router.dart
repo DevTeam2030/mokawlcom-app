@@ -17,6 +17,10 @@ import 'package:mokawlcom_app/features/auth/presentation/screens/upload_files_sc
 import 'package:mokawlcom_app/features/auth/presentation/screens/user_signup_screen.dart';
 import 'package:mokawlcom_app/features/auth/presentation/screens/verification_screen.dart';
 import 'package:mokawlcom_app/features/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:mokawlcom_app/features/customer_deals/presentation/screens/add_customer_deal_screen.dart';
+import 'package:mokawlcom_app/features/customer_deals/presentation/screens/available_customer_deals_screen.dart';
+import 'package:mokawlcom_app/features/customer_deals/presentation/screens/customer_deal_details_screen.dart';
+import 'package:mokawlcom_app/features/customer_deals/presentation/screens/customer_deals_screen.dart';
 import 'package:mokawlcom_app/features/favorite/presentation/cubit/cubit/favorite_cubit.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_details_model.dart';
 import 'package:mokawlcom_app/features/home/data/models/contractor_service_model.dart';
@@ -139,6 +143,10 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: AddNewServiceRoute.page),
         AutoRoute(page: MyCurrentPackageRoute.page),
         AutoRoute(page: AvailableDealsRoute.page),
+        AutoRoute(page: CustomerDealsRoute.page),
+        AutoRoute(page: AvailableCustomerDealsRoute.page),
+        AutoRoute(page: AddCustomerDealRoute.page),
+        AutoRoute(page: CustomerDealDetailsRoute.page),
         AutoRoute(page: SendOfferToContractorsRoute.page),
         AutoRoute(page: SavedCompaniesRoute.page),
         AutoRoute(page: EditDealRoute.page),

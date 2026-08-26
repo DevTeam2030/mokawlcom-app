@@ -128,7 +128,12 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           isConnected: failure.isConnected,
         ),
       ),
-      (message) {},
+      (message) => emit(
+        state.copyWith(
+          removeFavoriteState: RequestStatus.success,
+          successMessage: message,
+        ),
+      ),
     );
   }
 

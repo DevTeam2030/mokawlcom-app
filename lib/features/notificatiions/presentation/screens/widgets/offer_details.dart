@@ -265,7 +265,7 @@ class OfferDetails extends StatelessWidget {
                               child: BlocProvider.value(
                                 value: offerDetailsCubit,
                                 child: ReplyOnOfferBottomSheet(
-                                  address: LocaleKeys.replyToThePriceOffer,
+                                  address: LocaleKeys.replyToTheOfferPrice,
                                   offerId: offerNotificationModel.offerId
                                       .toString(),
                                 ),

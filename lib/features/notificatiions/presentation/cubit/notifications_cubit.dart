@@ -62,7 +62,8 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
   Future<void> getPublicNotifications() async {
-    if (state.publicNotifications.notifications.isNotEmpty) {
+    if (state.getPublicNotificationsState.isLoading ||
+        state.publicNotifications.notifications.isNotEmpty) {
       return;
     }
     emit(
@@ -157,7 +158,8 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
   Future<void> getOfferNotifications() async {
-    if (state.offerNotifications.notifications.isNotEmpty) {
+    if (state.getOfferNotificationsState.isLoading ||
+        state.offerNotifications.notifications.isNotEmpty) {
       return;
     }
     emit(
@@ -329,6 +331,8 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
   Future<void> getUserOffers() async {
+    if (state.getUserOffersState.isLoading) return;
+
     emit(
       state.copyWith(
         getUserOffersState: RequestStatus.loading,

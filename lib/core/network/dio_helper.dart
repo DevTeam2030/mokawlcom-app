@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:mokawlcom_app/core/network/api_constants.dart';
 import 'package:mokawlcom_app/core/network/custom_interceptors.dart';
 import 'package:mokawlcom_app/core/utils/app_constants.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioHelper {
   final Dio _dio;
@@ -18,10 +17,8 @@ class DioHelper {
           queryParameters: {"lang": AppConstants.language},
         ),
       ) {
-    _dio.interceptors.addAll([
-      CustomInterceptors(),
-      PrettyDioLogger(requestHeader: true, requestBody: true),
-    ]);
+    // Verbose request and response logging is intentionally disabled.
+    _dio.interceptors.add(CustomInterceptors());
   }
 
   Future<Response> get({

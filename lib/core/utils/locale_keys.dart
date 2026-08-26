@@ -4,73 +4,38 @@
 import 'package:localingo/localingo.dart';
 
 /// Type-safe translation keys
-/// Usage: Text(LocaleKeys.appName)
 class LocaleKeys {
   static String get welcome => 'welcome'.tr();
-
   static String get mokawlcomApp => 'mokawlcom_app'.tr();
-
   static String get welcome2 => 'welcome2'.tr();
-
   static String get welcomeAgain => 'welcome_again'.tr();
-
   static String get email => 'email'.tr();
-
   static String get password => 'password'.tr();
-
   static String get forgetPassword => 'forget_password'.tr();
-
   static String get login => 'login'.tr();
-
   static String get or => 'or'.tr();
-
   static String get doNotHaveAnAccount => 'do_not_have_an_account'.tr();
-
   static String get signUp => 'sign_up'.tr();
-
   static String get signInAsVisitor => 'sign_in_as_visitor'.tr();
-
   static String get name => 'name'.tr();
-
   static String get phone => 'phone'.tr();
-
   static String get confirmPassword => 'confirm_password'.tr();
-
   static String get alreadyHaveAnAccount => 'already_have_an_account'.tr();
-
   static String get createAccount => 'create_account'.tr();
-
   static String get registerNewUser => 'register_new_user'.tr();
-
   static String get registerNewContractor => 'register_new_contractor'.tr();
-
   static String get chooseClassification => 'choose_classification'.tr();
-
   static String get chooseServices => 'choose_services'.tr();
-
   static String get next => 'next'.tr();
-
   static String get companyName => 'company_name'.tr();
-
   static String get verificationCode => 'verification_code'.tr();
-
   static String get verificationCodeSent => 'verification_code_sent'.tr();
-
   static String get verify => 'verify'.tr();
-
   static String get registerSuccess => 'register_success'.tr();
-
-  static String get yourAccountCreatedSuccessfully =>
-      'your_account_created_successfully'.tr();
-
+  static String get yourAccountCreatedSuccessfully => 'your_account_created_successfully'.tr();
   static String get continueKey => 'continue_key'.tr();
-
-  static String get verificationCodeIsInvalid =>
-      'verification_code_is_invalid'.tr();
-
-  static String get pleaseEnterTheCorrectCode =>
-      'please_enter_the_correct_code'.tr();
-
+  static String get verificationCodeIsInvalid => 'verification_code_is_invalid'.tr();
+  static String get pleaseEnterTheCorrectCode => 'please_enter_the_correct_code'.tr();
   static String get tryAgain => 'try_again'.tr();
   static String get uploadFiles => 'upload_files'.tr();
   static String get commercialRegister => 'commercial_register'.tr();
@@ -85,19 +50,13 @@ class LocaleKeys {
   static String get subscriptionPackages => 'subscription_packages'.tr();
   static String get startYourJourney => 'start_your_journey'.tr();
   static String get readyToGrowUp => 'ready_to_grow_up'.tr();
-  static String get yourContractingPackageIsFreeForALimitedTime =>
-      'your_contracting_package_is_free_for_a_limited_time'.tr();
+  static String get yourContractingPackageIsFreeForALimitedTime => 'your_contracting_package_is_free_for_a_limited_time'.tr();
   static String get tryNow => 'try_now'.tr();
   static String get completeData => 'complete_data'.tr();
-
   static String get whatsApp => 'whats_app'.tr();
-
   static String get snapchat => 'snapchat'.tr();
-
   static String get twitter => 'twitter'.tr();
-
   static String get facebook => 'facebook'.tr();
-
   static String get hintAboutCompany => 'hint_about_company'.tr();
   static String get save => 'save'.tr();
   static String get home => 'home'.tr();
@@ -106,13 +65,12 @@ class LocaleKeys {
   static String get socialMedia => 'social_media'.tr();
   static String get mokawlatcom => 'mokawlatcom'.tr();
   static String get fasterAcessBestResults => 'faster_acess_best_results'.tr();
-  static String get searchForWordOrDepartment =>
-      'search_for_word_or_department'.tr();
+  static String get searchForWordOrDepartment => 'search_for_word_or_department'.tr();
   static String get departments => 'departments'.tr();
   static String get resultsFilter => 'results_filter'.tr();
-  static String get applyFilter => 'apply_filter'.tr();
   static String get classification => 'classification'.tr();
   static String get services => 'services'.tr();
+  static String get applyFilter => 'apply_filter'.tr();
   static String get showPrice => 'show_price'.tr();
   static String get companyDetails => 'company_details'.tr();
   static String get commuincationsData => 'commuincations_data'.tr();
@@ -120,27 +78,19 @@ class LocaleKeys {
   static String get phoneNumber => 'phone_number'.tr();
   static String get whatsNumber => 'whats_number'.tr();
   static String get serviceName => 'service_name'.tr();
-
   static String get offerPrice => 'offer_price'.tr();
   static String get price => 'price'.tr();
   static String get message => 'message'.tr();
   static String get attachAFile => 'attach_a_file'.tr();
-
   static String get publicNotifications => 'public_notifications'.tr();
-
   static String get pricesOffers => 'prices_offers'.tr();
   static String get offerAddress => 'offer_address'.tr();
-
   static String get offeredBy => 'offered_by'.tr();
-
   static String get offerDetails => 'offer_details'.tr();
-
   static String get addReply => 'add_reply'.tr();
-
   static String get replys => 'replys'.tr();
-
   static String get messageAddress => 'message_address'.tr();
-  static String get replyToThePriceOffer => 'reply_to_the_offer_price'.tr();
+  static String get replyToTheOfferPrice => 'reply_to_the_offer_price'.tr();
   static String get registerAsContractor => 'register_as_contractor'.tr();
   static String get language => 'language'.tr();
   static String get english => 'english'.tr();
@@ -160,13 +110,12 @@ class LocaleKeys {
   static String get addNewService => 'add_new_service'.tr();
   static String get serviceAddress => 'service_address'.tr();
   static String get priceAverage => 'price_average'.tr();
+  static String get addService => 'add_service'.tr();
   static String get serviceDetails => 'service_details'.tr();
-  static String get uploadPhoto => 'upload_photo'.tr();
   static String get servicePhotos => 'service_photos'.tr();
   static String get uploadPhotos => 'upload_photos'.tr();
   static String get myCurrentPackage => 'my_current_package'.tr();
-  static String get youAreNowSubscribedToTheFreePackage =>
-      'you_are_now_subscribed_to_the_free_package'.tr();
+  static String get youAreNowSubscribedToTheFreePackage => 'you_are_now_subscribed_to_the_free_package'.tr();
   static String get subscriptionDate => 'subscription_date'.tr();
   static String get expireAt => 'expire_at'.tr();
   static String get addNewOffer => 'add_new_offer'.tr();
@@ -182,10 +131,8 @@ class LocaleKeys {
   static String get close => 'close'.tr();
   static String get passwordIsRequired => 'password_is_required'.tr();
   static String get passwordIsTooShort => 'password_is_too_short'.tr();
-  static String get confirmationPasswordIsRequired =>
-      'confirmation_password_is_required'.tr();
-  static String get confirmationPasswordIsTooShort =>
-      'confirmation_password_is_too_short'.tr();
+  static String get confirmationPasswordIsRequired => 'confirmation_password_is_required'.tr();
+  static String get confirmationPasswordIsTooShort => 'confirmation_password_is_too_short'.tr();
   static String get passwordsDoNotMatch => 'passwords_do_not_match'.tr();
   static String get required => 'required'.tr();
   static String get pleaseEnterYourAddress => 'please_enter_your_address'.tr();
@@ -196,8 +143,7 @@ class LocaleKeys {
   static String get loginRequired => 'login_required'.tr();
   static String get loginRequiredMessage => 'login_required_message'.tr();
   static String get continueAsVisitor => 'continue_as_visitor'.tr();
-  static String get pleaseSelectAtLeastOneService =>
-      'please_select_at_least_one_service'.tr();
+  static String get pleaseSelectAtLeastOneService => 'please_select_at_least_one_service'.tr();
   static String get noResultsFound => 'no_results_found'.tr();
   static String get searchResults => 'search_results'.tr();
   static String get sar => 'sar'.tr();
@@ -207,63 +153,41 @@ class LocaleKeys {
   static String get pleaseSelectAnImage => 'please_select_an_image'.tr();
   static String get noRepliesYet => 'no_replies_yet'.tr();
   static String get deleteAccount => 'delete_account'.tr();
-  static String get doYouWantToDeleteYourAccount =>
-      'do_you_want_to_delete_your_account'.tr();
+  static String get doYouWantToDeleteYourAccount => 'do_you_want_to_delete_your_account'.tr();
   static String get back => 'back'.tr();
   static String get thereAreNoOffersMade => 'there_are_no_offers_made'.tr();
   static String get noServicesYet => 'no_services_yet'.tr();
   static String get noInternetConnection => 'no_internet_connection'.tr();
-
   static String get requestCancelled => 'request_cancelled'.tr();
-
   static String get connectionTimeout => 'connection_timeout'.tr();
-
   static String get sendTimeout => 'send_timeout'.tr();
-
   static String get receiveTimeout => 'receive_timeout'.tr();
-
   static String get unexpectedError => 'unexpected_error'.tr();
-
   static String get generalError => 'general_error'.tr();
-
   static String get requestNotFound => 'request_not_found'.tr();
-
   static String get internalServerError => 'internal_server_error'.tr();
-
   static String get cannotOpenLink => 'cannot_open_link'.tr();
-
   static String get invalidLink => 'invalid_link'.tr();
-
   static String get cannotOpenCallApp => 'cannot_open_call_app'.tr();
-
   static String get invalidNumber => 'invalid_number'.tr();
-
-  static String get fileSizeMustBeLessThan =>
-      'file_size_must_be_less_than'.tr();
-
   static String get pleaseSelectFile => 'please_select_file'.tr();
-
+  static String get fileSizeMustBeLessThan => 'file_size_must_be_less_than'.tr();
   static String get pleaseSelectLogo => 'please_select_logo'.tr();
-
   static String get maxImagesReached => 'max_images_reached'.tr();
-
   static String get imageSizeExceeded => 'image_size_exceeded'.tr();
-
   static String get errorPickingImages => 'error_picking_images'.tr();
   static String get noDealsYet => 'no_deals_yet'.tr();
   static String get editDeal => 'edit_deal'.tr();
   static String get packageIsValidFor => 'package_is_valid_for'.tr();
   static String get months => 'months'.tr();
   static String get editService => 'edit_service'.tr();
-  static String get googleSignInNotSupportedOnThisPlatform =>
-      'google_sign_in_not_supported_on_this_platform'.tr();
+  static String get googleSignInNotSupportedOnThisPlatform => 'google_sign_in_not_supported_on_this_platform'.tr();
   static String get appleSignInFailed => 'apple_sign_in_failed'.tr();
   static String get cannotOpenEmailApp => 'cannot_open_email_app'.tr();
   static String get invalidEmail => 'invalid_email'.tr();
   static String get done => 'done'.tr();
   static String get noServicesAvailable => 'no_services_available'.tr();
-  static String get pleaseSelectClassification =>
-      'please_select_classification'.tr();
+  static String get pleaseSelectClassification => 'please_select_classification'.tr();
   static String get searchCountry => 'search_country'.tr();
   static String get deleteService => 'delete_service'.tr();
   static String get deleteServiceMessage => 'delete_service_message'.tr();
@@ -282,4 +206,12 @@ class LocaleKeys {
   static String get termsAndConditions => 'terms_and_conditions'.tr();
   static String get connectUs => 'connect_us'.tr();
   static String get appUnderMaintenance => 'app_under_maintenance'.tr();
+  static String get customerDeals => 'customer_deals'.tr();
+  static String get addDeal => 'add_deal'.tr();
+  static String get selectCategories => 'select_categories'.tr();
+  static String get dealTitle => 'deal_title'.tr();
+  static String get dealDetails => 'deal_details'.tr();
+  static String get categorySelectionRequired => 'category_selection_required'.tr();
+  static String get noCategoriesAvailable => 'no_categories_available'.tr();
+  static String get allowedFileTypes => 'allowed_file_types'.tr();
 }

@@ -36,14 +36,15 @@ class ServiceGridItem extends StatelessWidget {
                 replacement: Container(
                   width: 100,
                   height: 100,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: ColorsManager.skeletonColor,
                   ),
                 ),
                 child: ClipOval(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  // ignore: avoid_redundant_argument_values
+                  clipBehavior: Clip.antiAlias,
                   child: CustomCachedNetworkImage(
                     imageUrl: serviceModel.image,
                     width: 100,

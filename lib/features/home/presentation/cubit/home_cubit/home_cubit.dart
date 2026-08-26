@@ -113,6 +113,8 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> getServices({required int classificationId}) async {
+    if (state.getServicesState.isLoading) return;
+
     emit(
       state.copyWith(
         getServicesState: RequestStatus.loading,

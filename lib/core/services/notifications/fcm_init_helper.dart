@@ -212,7 +212,6 @@ class FcmInitHelper {
 
   Future<String?> getFcmToken() async {
     final token = await firebaseMessaging.getToken();
-    debugPrint("📱 Device FCM Token: $token");
     return token;
   }
 }

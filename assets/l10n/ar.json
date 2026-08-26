@@ -199,5 +199,13 @@
   "privacy_policy": "سياسة الخصوصية",
   "terms_and_conditions": "الشروط والأحكام",
   "connect_us": "تواصل معنا",
-  "app_under_maintenance": "التطبيق تحت الصيانة"
+  "app_under_maintenance": "التطبيق تحت الصيانة",
+  "customer_deals": "صفقات العملاء",
+  "add_deal": "إضافة صفقة",
+  "select_categories": "اختر الأقسام",
+  "deal_title": "عنوان الصفقة",
+  "deal_details": "تفاصيل الصفقة",
+  "category_selection_required": "يجب اختيار قسم واحد على الأقل",
+  "no_categories_available": "لا توجد أقسام متاحة",
+  "allowed_file_types": "أنواع الملفات المسموح بها: PDF / JPG / JPEG / PNG"
 }

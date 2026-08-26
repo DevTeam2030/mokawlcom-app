@@ -172,7 +172,7 @@
   "error_picking_images": "Error picking images",
   "no_deals_yet": "No deals yet",
   "edit_deal": "Edit Deal",
-  "The_package_is_valid_for": "The package is valid for",
+  "package_is_valid_for": "The package is valid for",
   "months": "months",
   "edit_service": "Edit Service",
   "google_sign_in_not_supported_on_this_platform": "Google Sign-In not supported on this platform",
@@ -199,5 +199,13 @@
   "privacy_policy": "Privacy Policy",
   "terms_and_conditions": "Terms and Conditions",
   "connect_us": "Connect Us",
-  "app_under_maintenance": "App Under Maintenance"
+  "app_under_maintenance": "App Under Maintenance",
+  "customer_deals": "Customer Deals",
+  "add_deal": "Add Deal",
+  "select_categories": "Select Categories",
+  "deal_title": "Deal Title",
+  "deal_details": "Deal Details",
+  "category_selection_required": "At least one category must be selected",
+  "no_categories_available": "No categories available",
+  "allowed_file_types": "Allowed file types: PDF / JPG / JPEG / PNG"
 }
