@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
@@ -211,7 +212,22 @@ class FcmInitHelper {
   }
 
   Future<String?> getFcmToken() async {
-    final token = await firebaseMessaging.getToken();
-    return token;
+    try {
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+        final apnsToken = await firebaseMessaging.getAPNSToken();
+        if (apnsToken == null || apnsToken.isEmpty) {
+          debugPrint(
+            'Skipping FCM token retrieval: APNS token is not available yet.',
+          );
+          return null;
+        }
+      }
+
+      final token = await firebaseMessaging.getToken();
+      return token == null || token.isEmpty ? null : token;
+    } catch (error) {
+      debugPrint('FCM token retrieval failed; continuing without it: $error');
+      return null;
+    }
   }
 }

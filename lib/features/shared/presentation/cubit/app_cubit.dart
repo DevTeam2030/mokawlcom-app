@@ -50,8 +50,14 @@ class AppCubit extends HydratedCubit<AppState> {
   }
 
   Future<void> checkNotificationPermission() async {
-    final settings = await FirebaseMessaging.instance.requestPermission();
-    debugPrint('User granted permission: ${settings.authorizationStatus}');
+    try {
+      final settings = await FirebaseMessaging.instance.requestPermission();
+      debugPrint('User granted permission: ${settings.authorizationStatus}');
+    } catch (error) {
+      debugPrint(
+        'Notification permission request failed; continuing without it: $error',
+      );
+    }
   }
 
   void changeClassification({required String classification}) {
