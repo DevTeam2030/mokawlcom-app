@@ -61,7 +61,7 @@ class ContractorProfileWidget extends StatelessWidget {
         const SizedBox(height: 16.0),
         ProfileItem(
           theme: theme,
-          title: LocaleKeys.availableDeals,
+          title: LocaleKeys.sellBuildingMaterials,
           icon: MyIcons.send,
           onTap: () {
             context.pushRoute(const AvailableDealsRoute());

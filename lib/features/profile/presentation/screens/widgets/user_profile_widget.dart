@@ -64,7 +64,7 @@ class UserProfileWidget extends StatelessWidget {
           const SizedBox(height: 16.0),
           ProfileItem(
             theme: theme,
-            title: LocaleKeys.customerDeals,
+            title: LocaleKeys.requestQuote,
             icon: MyIcons.file,
             onTap: () {
               context.pushRoute(const CustomerDealsRoute());

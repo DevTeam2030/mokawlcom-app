@@ -71,7 +71,7 @@ class _AvailableDealsScreenState extends State<AvailableDealsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          LocaleKeys.availableDeals,
+          LocaleKeys.sellBuildingMaterials,
           style: theme.textTheme.headlineSmall!.copyWith(
             color: ColorsManager.primaryColor,
             fontWeight: FontWeight.bold,

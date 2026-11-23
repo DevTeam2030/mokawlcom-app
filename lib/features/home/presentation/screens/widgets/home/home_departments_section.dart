@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/enums/request_status.dart';
+import 'package:mokawlcom_app/core/enums/user_type.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/core/utils/ui_state_builder.dart';
 import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:mokawlcom_app/features/home/presentation/cubit/home_cubit/home_s
 import 'package:mokawlcom_app/features/home/presentation/screens/widgets/classification_item.dart';
 import 'package:mokawlcom_app/features/shared/data/models/classification_model.dart';
 import 'package:mokawlcom_app/core/utils/locale_keys.dart';
+import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeDepartmentsSection extends StatefulWidget {
@@ -56,6 +58,10 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
 
   @override
   Widget build(BuildContext context) {
+    final isCustomer = context.select(
+      (AppCubit cubit) => cubit.state.userType == UserType.user,
+    );
+
     return BlocBuilder<HomeCubit, HomeState>(
       buildWhen: (p, c) =>
           p.getClassificationsState != c.getClassificationsState,
@@ -81,18 +87,21 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
                 ),
               ),
               status: state.getClassificationsState,
+              showRequestQuote: isCustomer,
             ),
           ),
           onSuccess: _buildGrid(
             context,
             classifications: state.classificationsModel.classifications,
             status: state.getClassificationsState,
+            showRequestQuote: isCustomer,
           ),
           onError: hasData
               ? _buildGrid(
                   context,
                   classifications: state.classificationsModel.classifications,
                   status: state.getClassificationsState,
+                  showRequestQuote: isCustomer,
                 )
               : const SizedBox.shrink(),
         );
@@ -104,6 +113,7 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
     BuildContext context, {
     required List<ClassificationModel> classifications,
     required RequestStatus status,
+    required bool showRequestQuote,
   }) {
     _resetLoading(status);
 
@@ -135,9 +145,14 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
               crossAxisSpacing: 20,
               childAspectRatio: 0.75,
             ),
-            itemCount: classifications.length + (status.isLoadingMore ? 2 : 0),
+            itemCount:
+                classifications.length +
+                (showRequestQuote ? 1 : 0) +
+                (status.isLoadingMore ? 2 : 0),
             itemBuilder: (context, index) {
-              if (index >= classifications.length && status.isLoadingMore) {
+              final categoryOffset = showRequestQuote ? 1 : 0;
+              final categoryItemCount = classifications.length + categoryOffset;
+              if (index >= categoryItemCount && status.isLoadingMore) {
                 return Container(
                   decoration: BoxDecoration(
                     color: ColorsManager.skeletonColor,
@@ -146,12 +161,30 @@ class _HomeDepartmentsSectionState extends State<HomeDepartmentsSection> {
                 );
               }
 
+              if (showRequestQuote && index == 0) {
+                return ClassificationItem(
+                  theme: widget.theme,
+                  classificationModel: const ClassificationModel(
+                    id: 0,
+                    name: '',
+                    image: '',
+                    numberOfServices: 0,
+                  ),
+                  assetImage: 'assets/images/request_quote.png',
+                  label: LocaleKeys.requestQuote,
+                  showServiceCount: false,
+                  onTap: () => context.pushRoute(const CustomerDealsRoute()),
+                );
+              }
+
+              final classification = classifications[index - categoryOffset];
+
               return ClassificationItem(
                 theme: widget.theme,
-                classificationModel: classifications[index],
+                classificationModel: classification,
                 onTap: () {
                   context.pushRoute(
-                    ServicesRoute(classificationModel: classifications[index]),
+                    ServicesRoute(classificationModel: classification),
                   );
                 },
               );

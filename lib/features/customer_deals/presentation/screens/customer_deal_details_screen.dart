@@ -419,7 +419,7 @@ class _CustomerDealDetailsViewState extends State<_CustomerDealDetailsView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          LocaleKeys.customerDeals,
+          isCustomer ? LocaleKeys.requestQuote : LocaleKeys.customerDeals,
           style: theme.textTheme.headlineSmall!.copyWith(
             color: ColorsManager.primaryColor,
             fontWeight: FontWeight.bold,

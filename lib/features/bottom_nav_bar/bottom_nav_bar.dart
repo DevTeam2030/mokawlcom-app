@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mokawlcom_app/config/router/app_router.dart';
 import 'package:mokawlcom_app/core/enums/user_type.dart';
-import 'package:mokawlcom_app/core/utils/app_constants.dart';
 import 'package:mokawlcom_app/core/utils/colors_manager.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_cubit.dart';
 import 'package:mokawlcom_app/features/notificatiions/presentation/cubit/notifications_state.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_cubit.dart';
 import 'package:mokawlcom_app/features/shared/presentation/cubit/app_state.dart';
-import 'package:mokawlcom_app/features/shared/presentation/widgets/visitor_access_dialog.dart';
 import 'package:mokawlcom_app/core/utils/locale_keys.dart';
 import 'package:mokawlcom_app/core/utils/my_icons.dart';
 
@@ -19,73 +17,77 @@ class BottomNavBarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AutoTabsScaffold(
-      routes: const [HomeRoute(), NotificationsRoute(), ProfileRoute()],
-      bottomNavigationBuilder: (context, tabsRouter) {
-        return SafeArea(
-          child: Container(
-            height: 72,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            decoration: const BoxDecoration(
-              color: ColorsManager.surfaceColor,
-              border: Border(
-                top: BorderSide(
-                  color: ColorsManager.navBorderColor,
-                  width: 1.5,
+    return BlocSelector<AppCubit, AppState, UserType>(
+      selector: (state) => state.userType,
+      builder: (context, userType) => AutoTabsScaffold(
+        key: ValueKey(userType),
+        routes: const [HomeRoute(), NotificationsRoute(), ProfileRoute()],
+        bottomNavigationBuilder: (context, tabsRouter) {
+          return SafeArea(
+            child: Container(
+              height: 72,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              decoration: const BoxDecoration(
+                color: ColorsManager.surfaceColor,
+                border: Border(
+                  top: BorderSide(
+                    color: ColorsManager.navBorderColor,
+                    width: 1.5,
+                  ),
+                ),
+                borderRadius: BorderRadiusDirectional.only(
+                  topStart: Radius.circular(16),
+                  topEnd: Radius.circular(16),
                 ),
               ),
-              borderRadius: BorderRadiusDirectional.only(
-                topStart: Radius.circular(16),
-                topEnd: Radius.circular(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _NavItem(
+                    icon: MyIcons.home,
+                    label: LocaleKeys.home,
+                    isSelected: tabsRouter.activeIndex == 0,
+                    onTap: () => tabsRouter.setActiveIndex(0),
+                  ),
+                  BlocBuilder<NotificationsCubit, NotificationsState>(
+                    buildWhen: (previous, current) {
+                      return previous.unReadPublicNotifications !=
+                              current.unReadPublicNotifications ||
+                          previous.unReadOfferNotifications !=
+                              current.unReadOfferNotifications;
+                    },
+                    builder: (context, state) {
+                      final totalUnread =
+                          state.unReadPublicNotifications.length +
+                          state.unReadOfferNotifications.length;
+                      return _NavItem(
+                        icon: MyIcons.notification,
+                        label: LocaleKeys.notifications,
+                        isSelected: tabsRouter.activeIndex == 1,
+                        badgeCount: totalUnread,
+                        onTap: () {
+                          context.read<AppCubit>().handleProtectedNavigation(
+                            context: context,
+                            onAllowed: () {
+                              tabsRouter.setActiveIndex(1);
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  _NavItem(
+                    icon: MyIcons.user,
+                    label: LocaleKeys.profile,
+                    isSelected: tabsRouter.activeIndex == 2,
+                    onTap: () => tabsRouter.setActiveIndex(2),
+                  ),
+                ],
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _NavItem(
-                  icon: MyIcons.home,
-                  label: LocaleKeys.home,
-                  isSelected: tabsRouter.activeIndex == 0,
-                  onTap: () => tabsRouter.setActiveIndex(0),
-                ),
-                BlocBuilder<NotificationsCubit, NotificationsState>(
-                  buildWhen: (previous, current) {
-                    return previous.unReadPublicNotifications !=
-                            current.unReadPublicNotifications ||
-                        previous.unReadOfferNotifications !=
-                            current.unReadOfferNotifications;
-                  },
-                  builder: (context, state) {
-                    final totalUnread =
-                        state.unReadPublicNotifications.length +
-                        state.unReadOfferNotifications.length;
-                    return _NavItem(
-                      icon: MyIcons.notification,
-                      label: LocaleKeys.notifications,
-                      isSelected: tabsRouter.activeIndex == 1,
-                      badgeCount: totalUnread,
-                      onTap: () {
-                        context.read<AppCubit>().handleProtectedNavigation(
-                          context: context,
-                          onAllowed: () {
-                            tabsRouter.setActiveIndex(1);
-                          },
-                        );
-                      },
-                    );
-                  },
-                ),
-                _NavItem(
-                  icon: MyIcons.user,
-                  label: LocaleKeys.profile,
-                  isSelected: tabsRouter.activeIndex == 2,
-                  onTap: () => tabsRouter.setActiveIndex(2),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
@@ -155,13 +157,21 @@ class _NavItem extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 4),
-            Text(
-              label,
-              style: theme.textTheme.labelSmall!.copyWith(
-                color: isSelected
-                    ? ColorsManager.primaryColor
-                    : ColorsManager.unselectedNavColor,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            SizedBox(
+              width: double.infinity,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  label,
+                  style: theme.textTheme.labelSmall!.copyWith(
+                    color: isSelected
+                        ? ColorsManager.primaryColor
+                        : ColorsManager.unselectedNavColor,
+                    fontWeight: isSelected
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                  ),
+                ),
               ),
             ),
           ],

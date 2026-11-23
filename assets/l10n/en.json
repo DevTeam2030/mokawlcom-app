@@ -97,6 +97,7 @@
   "logout": "Logout",
   "my_services": "My Services",
   "available_deals": "Available Deals",
+  "sell_building_materials": "Sell Building Materials",
   "subscription_details": "Subscription Details",
   "update": "Update",
   "main_classification": "Main Classification",
@@ -201,11 +202,16 @@
   "connect_us": "Connect Us",
   "app_under_maintenance": "App Under Maintenance",
   "customer_deals": "Customer Deals",
-  "add_deal": "Add Deal",
+  "request_quote": "Request a Quote",
+  "add_deal": "New Quote Request",
   "select_categories": "Select Categories",
-  "deal_title": "Deal Title",
-  "deal_details": "Deal Details",
+  "deal_title": "Quote Request Title",
+  "deal_details": "Quote Request Details",
   "category_selection_required": "At least one category must be selected",
   "no_categories_available": "No categories available",
-  "allowed_file_types": "Allowed file types: PDF / JPG / JPEG / PNG"
+  "allowed_file_types": "Allowed file types: PDF / JPG / JPEG / PNG",
+  "edit_quote_request": "Edit Quote Request",
+  "no_quote_requests_yet": "No quote requests yet",
+  "delete_quote_request": "Delete Quote Request",
+  "delete_quote_request_message": "Are you sure you want to delete this quote request?"
 }

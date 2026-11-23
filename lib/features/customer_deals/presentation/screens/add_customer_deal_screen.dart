@@ -83,7 +83,9 @@ class _AddCustomerDealFormState extends State<_AddCustomerDealForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.deal == null ? LocaleKeys.addDeal : LocaleKeys.editDeal,
+          widget.deal == null
+              ? LocaleKeys.addDeal
+              : LocaleKeys.editQuoteRequest,
           style: theme.textTheme.headlineSmall!.copyWith(
             color: ColorsManager.primaryColor,
             fontWeight: FontWeight.bold,
@@ -257,7 +259,7 @@ class _AddCustomerDealFormState extends State<_AddCustomerDealForm> {
                         onPressed: _submit,
                         text: widget.deal == null
                             ? LocaleKeys.save
-                            : LocaleKeys.editDeal,
+                            : LocaleKeys.editQuoteRequest,
                         isLoading: isSubmitting,
                       ),
                     ),

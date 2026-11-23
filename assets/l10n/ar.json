@@ -97,6 +97,7 @@
   "logout": "تسجيل خروج",
   "my_services": "خدماتي",
   "available_deals": "صفقات متاحة",
+  "sell_building_materials": "بيع منتجات البناء",
   "subscription_details": "تفاصيل الاشتراك",
   "update": "تحديث",
   "main_classification": "التصنيف الرئيسي",
@@ -201,11 +202,16 @@
   "connect_us": "تواصل معنا",
   "app_under_maintenance": "التطبيق تحت الصيانة",
   "customer_deals": "صفقات العملاء",
-  "add_deal": "إضافة صفقة",
+  "request_quote": "طلب سعر",
+  "add_deal": "طلب سعر جديد",
   "select_categories": "اختر الأقسام",
-  "deal_title": "عنوان الصفقة",
-  "deal_details": "تفاصيل الصفقة",
+  "deal_title": "عنوان طلب السعر",
+  "deal_details": "تفاصيل طلب السعر",
   "category_selection_required": "يجب اختيار قسم واحد على الأقل",
   "no_categories_available": "لا توجد أقسام متاحة",
-  "allowed_file_types": "أنواع الملفات المسموح بها: PDF / JPG / JPEG / PNG"
+  "allowed_file_types": "أنواع الملفات المسموح بها: PDF / JPG / JPEG / PNG",
+  "edit_quote_request": "تعديل طلب سعر",
+  "no_quote_requests_yet": "لا توجد طلبات سعر بعد",
+  "delete_quote_request": "حذف طلب السعر",
+  "delete_quote_request_message": "هل أنت متأكد من حذف طلب السعر؟"
 }

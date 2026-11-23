@@ -62,7 +62,7 @@ class _CustomerDealsScreenState extends State<CustomerDealsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          LocaleKeys.customerDeals,
+          LocaleKeys.requestQuote,
           style: theme.textTheme.headlineSmall!.copyWith(
             color: ColorsManager.primaryColor,
             fontWeight: FontWeight.bold,
@@ -168,7 +168,10 @@ class _CustomerDealsScreenState extends State<CustomerDealsScreen> {
             children: [
               SizedBox(
                 height: constraints.maxHeight,
-                child: NoDataWidget(text: LocaleKeys.noDealsYet, theme: theme),
+                child: NoDataWidget(
+                  text: LocaleKeys.noQuoteRequestsYet,
+                  theme: theme,
+                ),
               ),
             ],
           ),
@@ -305,7 +308,7 @@ class _CustomerDealsScreenState extends State<CustomerDealsScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                LocaleKeys.deleteDeal,
+                LocaleKeys.deleteQuoteRequest,
                 style: theme.textTheme.titleMedium!.copyWith(
                   color: ColorsManager.primaryColor,
                   fontWeight: FontWeight.bold,
@@ -313,7 +316,7 @@ class _CustomerDealsScreenState extends State<CustomerDealsScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                LocaleKeys.deleteDealMessage,
+                LocaleKeys.deleteQuoteRequestMessage,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium!.copyWith(
                   color: ColorsManager.grayText,
@@ -362,7 +365,7 @@ class _CustomerDealsScreenState extends State<CustomerDealsScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       child: Text(
-                        LocaleKeys.deleteDeal,
+                        LocaleKeys.deleteQuoteRequest,
                         style: theme.textTheme.labelLarge!.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
